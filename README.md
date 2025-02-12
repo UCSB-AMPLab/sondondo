@@ -1,1 +1,3 @@
-# sondondo
+# Data processing for Sondondo's valley prosopographic database
+
+Description comming soon...
