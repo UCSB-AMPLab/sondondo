@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 
-files = ["entierros", "matrimonios"]
+files = ["bautismos", "entierros", "matrimonios"]
 
 for file in files:
     csvfile = f"data/raw/{file}.csv"
@@ -11,7 +11,7 @@ for file in files:
 
     # Transform the columns list into a dictionary
     columns = df.columns.to_series().to_dict()
-    
+
     with open(jsonfile, "w") as f:
         json.dump(columns, f, indent=4, ensure_ascii=False)
 
