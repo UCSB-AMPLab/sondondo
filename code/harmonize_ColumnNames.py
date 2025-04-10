@@ -1,167 +1,37 @@
+from pathlib import Path
+import json
 import pandas as pd
-# harmonize bautismos column names
-df_bautismos = pd.read_csv("/Users/xuedongchi/sondondo/data/raw/bautismos.csv") #import the file location
 
-baptismMapping = {  #create dictionary
-    "Secuencia": "id",
-    "Unidad Documental Compuesta (a la que pertenece)": "file",
-    "Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)": "identifier",
-    "Título (incluir un título breve para cada documento)": "title",
-    "Folio inicial del documento (convertir como se muestra abajo)": "start_folio",
-    "Folio final del documento (convertir como se muestra abajo)": "end_folio",
-    "Imagen inicial (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)": "start_image",
-    "Imagen final (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)": "end_image",
-    "Tipo de evento": "event_type",
-    "Fecha aaaa-mm-dd": "date",
-    "Nombre del bautizado (a)": "baptized_name",
-    "Procedencia": "procedence",
-    "Fecha Nacimiento aaaa-mm-dd / número de días, meses, etc.": "birth_date",
-    "Condición": "condition",
-    "Nombre del padre": "father_name",
-    "Apellido del padre": "father_lastname",
-    "Condición del padre": "father_condition",
-    "Nombre de la madre": "mother_name",
-    "Apellido de la madre": "mother_lastname",
-    "Condición de la madre": "mother_condition",
-    "Condición de ambos padres": "parents_condition",
-    "Nombre del padrino": "godfather_name",
-    "Apellido del padrino": "godfather_lastname",
-    "Condición del padrino": "godfather_condition",
-    "Nombre de la madrina": "godmother_name",
-    "Apellido de la madrina": "godmother_lastname",
-    "Condición de la madrina": "godmother_condition",
-    "Lugar de bautizo": "baptism_place",
-    "Notas adicionales del documento": "additional_notes",
-    "Descriptor Geográfico 1": "geographic_descriptor_1",
-    "Descriptor Geográfico 2": "geographic_descriptor_2",
-    "Descriptor Geográfico 3": "geographic_descriptor_3",
-    "Descriptor Geográfico 4": "geographic_descriptor_4",
-    "5": "other",
-    "Características físicas (Estado de conservación de los materiales físicos)": "record_physical_characteristics",
-    "Historia de revisión (de los materiales digitalizados)": "revision_history"
-}
+BASE_DIR = Path(__file__).resolve().parent.parent #Use relative paths and Path objects
 
-df_bautismos = df_bautismos.rename(columns=baptismMapping) #update the column names
+def load_mapping(mapping_path):  #return dictionary that used for mapping
+    with open(mapping_path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-# harmonize entierros column names
-df_entierros = pd.read_csv("/Users/xuedongchi/sondondo/data/raw/entierros.csv")
-
-entierrosMappings = {
-    "Secuencia": "id",
-    "Unidad Documental Compuesta (a la que pertenece)": "file",
-    "Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)": "identifier",
-    "Título (incluir un título breve para cada documento)": "title",
-    "Nivel de descripción": "description_level",
-    "Folio inicial del documento (convertir como se muestra abajo)": "start_folio",
-    "Folio final del documento (convertir como se muestra abajo)": "end_folio",
-    "Imagen inicial (estos valores serán añadidos cuando comience el proceso de revisión de imágenes)": "start_image",
-    "Imagen final (estos valores serán añadidos cuando comience el proceso de revisión de imágenes)": "end_image",
-    "Tipo de evento": "event_type",
-    "Fecha aaaa-mm-dd": "date",
-    "Doctrina": "doctrine",
-    "Lugar donde se toma la declaración de fallecimiento / O desde donde se manda dar sepultura": "place",
-    "Tipo de entierro/Cruz Alta o Baja": "burial_type",
-    "Nombre del difunto (a)": "deceased_name",
-    "Apellido del difunto (a)": "deceased_lastname",
-    "Edad": "age",
-    "Procedencia": "origin",
-    "Condición": "condition",
-    "Estado": "marital_status",
-    "Hijo legítimo/ natural": "legal_child",
-    "Nombre del padre": "father_name",
-    "Apellido del padre": "father_lastname",
-    "Nombre de la madre": "mother_name",
-    "Apellido de la madre": "mother_lastname",
-    "Marido (añadir una + después del nombre si es difunto)": "husband_name",
-    "Esposa (añadir una + después del nombre si es difunta)": "wife_name",
-    "Causa de muerte": "cause_of_death",
-    "Lugar de enterramiento": "burial_place",
-    "Recibió auxilio espiritual": "received_spiritual_assistance",
-    "Notas adicionales del documento": "additional_notes",
-    "Descriptor Geográfico 1": "geographic_descriptor_1",
-    "Descriptor Geográfico 2": "geographic_descriptor_2",
-    "Descriptor Geográfico 3": "geographic_descriptor_3",
-    "Descriptor Geográfico 4": "geographic_descriptor_4",
-    "Caracterísitcas físicas (Estado de Conservación de los materiales fisicos)": "record_physical_characteristics",
-    "Historial de revisión (de los materiales digitalizados)": "revision_history"
-}
-df_entierros = df_entierros.rename(columns=entierrosMappings)
-
-#harmonize matrimonios column names
-df_matrimonios = pd.read_csv("/Users/xuedongchi/sondondo/data/raw/matrimonios.csv")
-
-matrimoniosMappings = {
-    "Secuencia": "id",
-    "Unidad Documental Compuesta (a la que pertenece)": "file",
-    "Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)": "identifier",
-    "Título (incluir un título breve para cada documento)": "title",
-    "Nivel de descripción": "description_level",
-    "Folio inicial del documento (convertir como se muestra abajo)": "start_folio",
-    "Folio final del documento (convertir como se muestra abajo)": "end_folio",
-    "Imagen inicial (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)": "start_image",
-    "Imagen final (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)": "end_image",
-    "Tipo de evento": "event_type",
-    "Fecha aaaa-mm-dd": "date",
-    "Nombre del contrayente": "groom_name",
-    "Apellido del contrayente": "groom_lastname",
-    "Condición del contrayente": "groom_condition",
-    "Estado": "marital_status",
-    "Edad": "age",
-    "Natural de": "natural_of",
-    "Residente en": "resident_in",
-    "Hijo legítimo / natural": "legitimate_child",
-    "Nombre del padre del contrayente": "father_name",
-    "Apellido del padre del contrayente": "father_lastname",
-    "Condición del padre del contrayente": "father_condition",
-    "Nombre de la madre del contrayente": "mother_name",
-    "Apellido de la madre del contrayente": "mother_lastname",
-    "Condición de la madre del contrayente": "mother_condition",
-    "Nombre de la contrayente": "bride_name",
-    "Apellido de la contrayente": "bride_lastname",
-    "Condición de la contrayente": "bride_condition",
-    "Estado.1": "marital_status",
-    "Edad.1": "age",
-    "Natural de.1": "natural_of",
-    "Residente en.1": "resident_in",
-    "Hija legítima / natural": "legitimate_child",
-    "Nombre del padre de la contrayente": "father_name",
-    "Apellido del padre del contrayente.1": "father_lastname",
-    "Condición del padre de la contrayente": "father_condition",
-    "Nombre de la madre de la contrayente": "mother_name",
-    "Apellido de la madre de la contrayente": "mother_lastname",
-    "Condición de la madre de la contrayente": "mother_condition",
-    "Nombre del padrino / madrina (1)": "godparent_1_name",
-    "Apellido del padrino / madrina (2)": "godparent_1_lastname",
-    "Condición del padrino/madrina (1)": "godparent_1_condition",
-    "Nombre del padrino / madrina (2)": "godparent_2_name",
-    "Apellido del padrino / madrina (2).1": "godparent_2_lastname",
-    "Condición del padrino / madrina (2)": "godparent_2_condition",
-    "Nombre del padrino / madrina (3)": "godparent_3_name",
-    "Apellido del padrino / madrina (3)": "godparent_3_lastname",
-    "Condición del padrino / madrina (3)": "godparent_3_condition",
-    "Nombre del testigo (1)": "witness_1_name",
-    "Apellido del testigo (1)": "witness_1_lastname",
-    "Nombre del testigo (2)": "witness_2_name",
-    "Apellido del testigo (2)": "witness_2_lastname",
-    "Nombre del testigo (3)": "witness_3_name",
-    "Apellido del testigo (3)": "witness_3_lastname",
-    "Nombre del testigo (4)": "witness_4_name",
-    "Apellido del testigo (4)": "witness_4_lastname",
-    "Lugar de casamiento": "marriage_place",
-    "Descriptor Geográfico 1": "geographic_descriptor_1",
-    "Descriptor Geográfico 2": "geographic_descriptor_2",
-    "Descriptor Geográfico 3": "geographic_descriptor_3",
-    "Descriptor Geográfico 4": "geographic_descriptor_4",
-    "Descriptor Geográfico 5": "geographic_descriptor_5",
-    "Descriptor Geográfico 6": "geographic_descriptor_6",
-    "Notas adicionales del documento": "additional_notes",
-    "Caracterísitcas físicas (Estado de Convervación de los materiales fisicos)": "record_physical_characteristics",
-    "Historia de revisión (de los materiales digitalizados)": "revision_history"
-}
-df_matrimonios = df_matrimonios.rename(columns= matrimoniosMappings)
-
-#print(df_bautismos)
-#print(df_entierros)
-#print(df_matrimonios)
+def harmonize_columns(csv_file, mapping_file):
+    df = pd.read_csv(csv_file, encoding="utf-8", dtype=str)
+    mapping = load_mapping(mapping_file)
+    return df.rename(columns=mapping)
 
 
+def main():
+    events = ["bautismos", "entierros", "matrimonios"] #DRY
+
+    raw_dir = BASE_DIR / "data" / "raw"
+    mappings_dir = BASE_DIR / "data" / "mappings"
+    harmonized_dir = BASE_DIR / "data" / "harmonized"
+    harmonized_dir.mkdir(exist_ok=True)
+
+    for event in events:
+        csv_path = raw_dir / f"{event}.csv"
+        mapping_path = mappings_dir / f"{event}Mapping.json"
+
+        df_harmonized = harmonize_columns(csv_path, mapping_path)
+
+        print(df_harmonized.head(3)) #test the result by looking at first three rows
+        output_path = harmonized_dir / f"{event}Harmonized.csv"
+        df_harmonized.to_csv(output_path, index = False, encoding = "utf-8")
+        print(f"Saved: {output_path}")
+
+if __name__ == "__main__":
+    main()
