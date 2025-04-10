@@ -9,7 +9,7 @@ def load_mapping(mapping_path):  #return dictionary that used for mapping
         return json.load(f)
 
 def harmonize_columns(csv_file, mapping_file):
-    df = pd.read_csv(csv_file, encoding="utf-8", dtype=str)
+    df = pd.read_csv(csv_file, encoding="utf-8")
     mapping = load_mapping(mapping_file)
     return df.rename(columns=mapping)
 
