@@ -10,7 +10,7 @@
     "Tipo de evento": "event_type",
     "Fecha aaaa-mm-dd": "date",
     "Nombre del bautizado (a)": "baptized_name",
-    "Procedencia": "procedence",
+    "Procedencia": "hometown",
     "Fecha Nacimiento aaaa-mm-dd / número de días, meses, etc.": "birth_date",
     "Condición": "condition",
     "Nombre del padre": "father_name",
