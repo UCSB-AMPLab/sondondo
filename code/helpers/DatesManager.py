@@ -2,6 +2,11 @@ import pandas as pd
 from pathlib import Path
 from datetime import datetime
 from typing import Tuple, List, Optional
+import logging
+
+logging.basicConfig(level=logging.INFO, filename="logs/dates_explorer.log")
+logger = logging.getLogger(__name__)
+
 
 class DatesExplorer:
     """A class for exploring and validating date columns in a DataFrame."""
@@ -99,6 +104,6 @@ class DatesExplorer:
             f.write(f"Invalid Dates: {len(invalid_dates)}\n")
             f.write("\n".join(invalid_dates))
 
-        print(f"Report saved to {filename_stem}")
+        logger.info(f"Report saved to {filename_stem} with {len(valid_dates)} valid dates and {len(invalid_dates)} invalid dates")
         
         

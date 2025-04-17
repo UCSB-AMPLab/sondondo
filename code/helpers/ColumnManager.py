@@ -1,7 +1,10 @@
 from pathlib import Path
 import json
 import pandas as pd
+import logging
 
+logging.basicConfig(level=logging.INFO, filename="logs/column_manager.log")
+logger = logging.getLogger(__name__)
 
 class ColumnManager:
     """
@@ -14,11 +17,14 @@ class ColumnManager:
         """
         Create a mapping from a CSV file.
         """
+        logger.info(f"Creating mapping from {csv_file} to {mapping_file} with dry_run={dry_run}")
         df = pd.read_csv(csv_file, encoding="utf-8")
         mapping = df.columns.to_series().to_dict()
         if not dry_run:
             with open(mapping_file, "w", encoding="utf-8") as f:
                 json.dump(mapping, f, indent=4, ensure_ascii=False)
+            logger.info(f"Mapping created and saved to {mapping_file}")
+        
         return mapping
 
     def load_mapping(self, mapping_path):  #return dictionary that used for mapping
@@ -34,4 +40,9 @@ class ColumnManager:
         """
         df = pd.read_csv(csv_file, encoding="utf-8")
         mapping = self.load_mapping(mapping_file)
-        return df.rename(columns=mapping)
+        logger.info(f"Harmonizing columns from {csv_file} using mapping from {mapping_file}")
+        try:
+            return df.rename(columns=mapping)
+        except Exception as e:
+            logger.error(f"Error harmonizing columns: {e}")
+            raise e
