@@ -23,13 +23,21 @@ class PreprocessingDates:
         Reverse the date string from "%d-%m-%Y" to "%Y-%m-%d".
         """
 
+        if not isinstance(date_string, str):
+            return date_string
+
         pattern = r"(\d{2})-(\d{2})-(\d{4})"
         match = re.match(pattern, date_string)
         if match:
             day, month, year = match.groups()
-            return f"{year}-{month}-{day}"
-        else:
-            return date_string
+            try:
+                if not (1 <= int(month) <= 12 and 1 <= int(day) <= 31):
+                    return date_string
+                return f"{year}-{month}-{day}"
+            except ValueError:
+                return date_string
+
+        return date_string
 
     def normalize_date_strings(self) -> pd.Series:
         """
