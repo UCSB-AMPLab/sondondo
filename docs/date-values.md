@@ -15,6 +15,12 @@ dates_explorer.report_column_dates("birth_date", save_report=True) # Declare the
 
 If `save_report` is `True`, it will be saved in the `reports` folder with the name of the dataframe and the column name. A separate report will be saved for valid and invalid dates.
 
+## Columns with date values
+
+- `bautismos.csv` -> `date` and `birth_date`
+- `entierros.csv` -> `date`
+- `matrimonios.csv` -> `date`
+
 ## Cases
 
 This are some of the cases found in the data and some suggestions to fix them:
