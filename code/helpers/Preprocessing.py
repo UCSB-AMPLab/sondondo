@@ -1,4 +1,5 @@
 import re
+from typing import Union
 import pandas as pd
 
 class PreprocessingDates:
@@ -6,7 +7,9 @@ class PreprocessingDates:
     A series of methods to clean and normalize date strings following some common patterns.
     """
 
-    def __init__(self, date_series: pd.Series | list[str]) -> None:
+    def __init__(self, date_series: Union[pd.Series, list[str]]) -> None:
+        if isinstance(date_series, list):
+            date_series = pd.Series(date_series)
         self.date_series = date_series
 
     def clean_date_strings(self) -> pd.Series:
