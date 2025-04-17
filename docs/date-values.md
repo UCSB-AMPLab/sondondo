@@ -21,6 +21,19 @@ If `save_report` is `True`, it will be saved in the `reports` folder with the na
 - `entierros.csv` -> `date`
 - `matrimonios.csv` -> `date`
 
+## Preprocessing methods
+
+`DatesExplorer.report_column_dates` method validates the dates as is in the original dataframe. A `cleaning` parameter can be set to `True` to apply some basic cleaning to the values before validation.
+
+This action will:
+
+- Replace all `/` characters with `-`
+- Remove all non-numeric characters (except for the `-` character)
+- Replace all multiple spaces with a single space
+- Trim spaces at the beginning and end of the string
+
+A `normalization` parameter can be set to `True` to try to transform dates written in different formats to a valid date. Both parameters can be set to `True` at the same time and the report will be saved with the suffix `_cleaned` and `_normalized` respectively.
+
 ## Cases
 
 This are some of the cases found in the data and some suggestions to fix them:
@@ -31,4 +44,15 @@ Dates that not exist in the Gregorian calendar, for instance:
 
 - "1790-11-31"
 - "1793-02-29"
+- "1916-09-31"
+- "1904-09-31"
+- "1894-02-29"
+
+Due to the impossibility to known with certainty if the mistaked date comes from a transcription error or from the original document, this case will be handled by replacing the date for its nearest past valid date. For example:
+
+- "1790-11-31" -> "1790-11-30"
+- "1793-02-29" -> "1793-02-28"
+- "1916-09-31" -> "1916-09-30"
+- "1904-09-31" -> "1904-09-30"
+- "1894-02-29" -> "1894-02-28"
 
