@@ -25,7 +25,8 @@ class DatesExplorer:
         column_name: str,
         date_format: str = "%Y-%m-%d",
         save_report: bool = False,
-        only_invalid_dates: bool = False
+        only_invalid_dates: bool = False,
+        report_dir: Path = Path(__file__).parent.parent.parent / "reports"
     ) -> Tuple[List[str], List[str]]:
         """
         Evaluate the values of a column, check if they are dates and return a report of valid and invalid dates.
@@ -61,7 +62,6 @@ class DatesExplorer:
                 raise ValueError(f"Type error for value '{value}': {str(e)}")
 
         if save_report:
-            report_dir = Path(__file__).parent.parent.parent / "reports"
             report_dir.mkdir(parents=True, exist_ok=True)
             self._save_report(
                 valid_dates,
@@ -105,5 +105,4 @@ class DatesExplorer:
             f.write("\n".join(invalid_dates))
 
         logger.info(f"Report saved to {filename_stem} with {len(valid_dates)} valid dates and {len(invalid_dates)} invalid dates")
-        
         
