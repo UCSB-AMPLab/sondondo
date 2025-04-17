@@ -24,3 +24,5 @@ This are some of the cases found in the data and some suggestions to fix them:
 Dates that not exist in the Gregorian calendar, for instance:
 
 - "1790-11-31"
+- "1793-02-29"
+
