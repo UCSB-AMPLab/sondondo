@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class DatesExplorer:
     """A class for exploring and validating date columns in a DataFrame."""
     
-    def __init__(self, source_dataframe: pd.DataFrame) -> None:
+    def __init__(self, source_dataframe: pd.DataFrame, df_name: str) -> None:
         """
         Initialize the DatesExplorer with a source DataFrame.
         
@@ -19,6 +19,7 @@ class DatesExplorer:
             source_dataframe: The DataFrame containing the date columns to explore
         """
         self.source_dataframe = source_dataframe
+        self.df_name = df_name
 
     def report_column_dates(
         self,
@@ -92,15 +93,17 @@ class DatesExplorer:
         filename_stem = filename.stem
 
         report_date = datetime.now().strftime("%Y-%m-%d")
-        valid_dates_filename = f"{filename_stem}_valid_dates_{report_date}.txt"
-        invalid_dates_filename = f"{filename_stem}_invalid_dates_{report_date}.txt"
+        valid_dates_filename = f"{self.df_name}_{filename_stem}_valid_dates.txt"
+        invalid_dates_filename = f"{self.df_name}_{filename_stem}_invalid_dates.txt"
 
         if not only_invalid_dates:
             with open(Path(filepath, valid_dates_filename), "w") as f:
+                f.write(f"Report Date: {report_date}\n")
                 f.write(f"Valid Dates: {len(valid_dates)}\n")
                 f.write("\n".join(valid_dates))
 
         with open(Path(filepath, invalid_dates_filename), "w") as f:
+            f.write(f"Report Date: {report_date}\n")
             f.write(f"Invalid Dates: {len(invalid_dates)}\n")
             f.write("\n".join(invalid_dates))
 
