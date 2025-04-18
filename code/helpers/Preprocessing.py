@@ -12,17 +12,64 @@ class PreprocessingDates:
             date_series = pd.Series(date_series)
         self.date_series = date_series
 
-    def clean_date_strings(self) -> pd.Series:
+    def clean_date_strings(self, 
+            placeholder_pattern: str = r'(?:x+|\.{3}|\[(?:roto|ilegible|borroso)(?::[^]]*)?]|n/a|Sin fecha|a los dias|-\[(?:roto|ilegible)])',
+            replacement: str = "01") -> pd.Series:
         """
-        Clean the date strings by replacing all `/` characters with `-` and removing all non-numeric characters (except for the `-` character).
+        Clean date strings by standardizing formats and handling various placeholder patterns.
+        
+        The function handles:
+        - Forward slashes to hyphens conversion
+        - Multiple placeholder patterns:
+            * 'x', 'xx', 'xxx' etc.
+            * '...'
+            * '[roto]', '[roto: 01 al 21]'
+            * '[ilegible]', '[ilegible: fecha]'
+            * '[borroso]'
+            * 'n/a'
+            * 'Sin fecha'
+            * 'a los dias'
+            * '-[roto]', '-[ilegible]' (legacy format)
+        - Removes non-numeric characters except hyphens
+        - Strips trailing/leading hyphens and spaces
+        
+        Args:
+            placeholder_pattern: Regex pattern for matching placeholder text
+            replacement: String to replace placeholders with (default: "01")
+            
+        Returns:
+            pd.Series: Cleaned date strings
         """
-        return (self.date_series
-                .str.replace("/", "-")
-                .str.replace(r"[^0-9\-]", "", regex=True)
-                .str.strip("- ")
-                )
+        
+        cleaned = (self.date_series
+                  .fillna("")
+                  .str.lower()
+                  .str.strip()
+                 )
+        
+        cleaned = cleaned.str.replace("/", "-")
+        cleaned = cleaned.str.replace(placeholder_pattern, replacement, regex=True)
+        cleaned = cleaned.str.replace(r"[^0-9\-]", "", regex=True)
+        cleaned = (cleaned
+                  .str.replace(r"-+", "-", regex=True)
+                  .str.strip("- ")
+                 )
+        
+        cleaned = cleaned.replace("", pd.NA)
+        
+        return cleaned
 
-    def reverse_date_string(self, date_string: str) -> str:
+    def standardize_date_strings(self) -> pd.Series:
+        """
+        Standardize the date strings from "%d-%m-%Y" to "%Y-%m-%d".
+        """
+
+        cleaned_dates = self.clean_date_strings()
+        standardized_dates = cleaned_dates.apply(self._reverse_date_string)
+        return standardized_dates
+
+
+    def _reverse_date_string(self, date_string: str) -> str:
         """
         Reverse the date string from either "%d-%m-%Y" or "%m-%Y" to "%Y-%m-%d" or "%Y-%m" respectively.
         """
@@ -53,14 +100,3 @@ class PreprocessingDates:
                 return date_string
 
         return date_string
-
-    def standardize_date_strings(self) -> pd.Series:
-        """
-        Standardize the date strings from "%d-%m-%Y" to "%Y-%m-%d".
-        """
-        
-        cleaned_dates = self.clean_date_strings()
-        standardized_dates = cleaned_dates.apply(self.reverse_date_string)
-        return standardized_dates
-
-
