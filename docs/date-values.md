@@ -32,7 +32,7 @@ This action will:
 - Replace all multiple spaces with a single space
 - Trim spaces at the beginning and end of the string
 
-A `normalization` parameter can be set to `True` to try to transform dates written in different formats to a valid date. Both parameters can be set to `True` at the same time and the report will be saved with the suffix `_cleaned` and `_normalized` respectively.
+A `standardized` parameter can be set to `True` to try to transform dates written in different formats to a valid date. If this parameter is used, it's not necessary to use the `cleaning` parameter as the method will apply both actions.
 
 ## Cases
 
