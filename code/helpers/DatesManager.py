@@ -1,7 +1,7 @@
 import pandas as pd
 from pathlib import Path
 from datetime import datetime
-from typing import Tuple, List
+from typing import Tuple, List, Union
 from helpers.Preprocessing import PreprocessingDates
 import logging
 
@@ -117,3 +117,40 @@ class DatesExplorer:
 
         logger.info(f"Report saved to {filename_stem} with {len(valid_dates)} valid dates and {len(invalid_dates)} invalid dates")
         
+
+class DateNormalizer:
+    def __init__(self, date_series: pd.Series) -> None:
+        self.original_series = date_series
+        self.normalized_series = pd.Series([None] * len(date_series))
+
+    def normalize(self) -> pd.Series:
+        for idx, value in self.original_series.items():
+            self.normalized_series[idx] = self._normalize_single_value(value)
+        return self.normalized_series
+
+    def _normalize_single_value(self, value: str) -> str | None:
+        if self._is_valid_iso(value):
+            return value
+
+        if self._is_excel_serial(value):
+            return self._convert_excel_serial(value)
+
+        if self._is_false_date(value):
+            return self._correct_false_date(value)
+
+        if self._is_partial_date(value):
+            return self._complete_partial_date(value)
+
+        if self._is_roto_or_ilegible(value):
+            return self._resolve_roto(value)
+
+        return None
+
+
+
+class AgeInferrer:
+    """A class to infer the age of a person from a date of birth"""
+
+    def __init__(self, date_series: pd.Series) -> None:
+        self.date_series = date_series
+
