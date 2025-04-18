@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Tuple, List, Union
 from helpers.Preprocessing import PreprocessingDates
 import logging
@@ -146,6 +146,26 @@ class DateNormalizer:
 
         return None
 
+    def _is_valid_iso(self, value: str) -> bool:
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+            return True
+        except ValueError:
+            return False
+        
+    def _is_excel_serial(self, value: str) -> bool:
+        try:
+            date2int = int(value)
+            return 1922 <= date2int <= 9999 # Excel serial numbers start from 1922 to avoid conflicts with real years
+        except ValueError:
+            return False
+
+    def _convert_excel_serial(self, value: str) -> str:
+        date2int = int(value)
+        excel_epoch = datetime(1899, 12, 30)
+        result = excel_epoch + timedelta(days=date2int)
+        return result.strftime("%Y-%m-%d")
+        
 
 
 class AgeInferrer:
