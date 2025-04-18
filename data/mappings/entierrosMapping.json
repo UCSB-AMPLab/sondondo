@@ -16,7 +16,7 @@
     "Nombre del difunto (a)": "deceased_name",
     "Apellido del difunto (a)": "deceased_lastname",
     "Edad": "age",
-    "Procedencia": "origin",
+    "Procedencia": "hometown",
     "Condición": "condition",
     "Estado": "marital_status",
     "Hijo legítimo/ natural": "legal_child",

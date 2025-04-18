@@ -1,0 +1,3 @@
+[submodule "sondondo.wiki"]
+	path = sondondo.wiki
+	url = git@github.com:UCSB-AMPLab/sondondo.wiki.git

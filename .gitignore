@@ -6,3 +6,7 @@
 
 # Python cache
 __pycache__/
+logs/
+
+# Submodules
+sondondo.wiki/
