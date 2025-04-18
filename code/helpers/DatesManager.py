@@ -121,7 +121,7 @@ class DatesExplorer:
 class DateNormalizer:
     def __init__(self, date_series: pd.Series) -> None:
         self.original_series = date_series
-        self.normalized_series = pd.Series([None] * len(date_series))
+        self.normalized_series = pd.Series([None] * len(date_series), dtype=object)
 
     def normalize(self) -> pd.Series:
         for idx, value in self.original_series.items():
