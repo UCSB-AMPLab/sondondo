@@ -39,14 +39,14 @@ class PreprocessingDates:
 
         return date_string
 
-    def normalize_date_strings(self) -> pd.Series:
+    def standardize_date_strings(self) -> pd.Series:
         """
-        Normalize the date strings from "%d-%m-%Y" to "%Y-%m-%d".
+        Standardize the date strings from "%d-%m-%Y" to "%Y-%m-%d".
         """
         
         cleaned_dates = self.clean_date_strings()
-        normalized_dates = cleaned_dates.apply(self.reverse_date_string)
-        return normalized_dates
+        standardized_dates = cleaned_dates.apply(self.reverse_date_string)
+        return standardized_dates
 
 
         

@@ -1,7 +1,8 @@
 import pandas as pd
 from pathlib import Path
 from datetime import datetime
-from typing import Tuple, List, Optional
+from typing import Tuple, List
+from helpers.Preprocessing import PreprocessingDates
 import logging
 
 logging.basicConfig(level=logging.INFO, filename="logs/dates_explorer.log")
@@ -27,7 +28,10 @@ class DatesExplorer:
         date_format: str = "%Y-%m-%d",
         save_report: bool = False,
         only_invalid_dates: bool = False,
-        report_dir: Path = Path(__file__).parent.parent.parent / "reports"
+        report_dir: Path = Path(__file__).parent.parent.parent / "reports",
+        cleaned: bool = False,
+        standardized: bool = False,
+
     ) -> Tuple[List[str], List[str]]:
         """
         Evaluate the values of a column, check if they are dates and return a report of valid and invalid dates.
@@ -52,6 +56,10 @@ class DatesExplorer:
         invalid_dates = []
 
         column_values = self.source_dataframe[column_name].dropna()
+        if cleaned:
+            column_values = PreprocessingDates(column_values).clean_date_strings()
+        if standardized:
+            column_values = PreprocessingDates(column_values).standardize_date_strings()
 
         for value in column_values:
             try:
