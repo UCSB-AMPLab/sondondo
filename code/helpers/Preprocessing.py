@@ -24,20 +24,31 @@ class PreprocessingDates:
 
     def reverse_date_string(self, date_string: str) -> str:
         """
-        Reverse the date string from "%d-%m-%Y" to "%Y-%m-%d".
+        Reverse the date string from either "%d-%m-%Y" or "%m-%Y" to "%Y-%m-%d" or "%Y-%m" respectively.
         """
-
         if not isinstance(date_string, str):
             return date_string
 
-        pattern = r"(\d{2})-(\d{2})-(\d{4})"
-        match = re.match(pattern, date_string)
+        full_date_pattern = r"(\d{2})-(\d{2})-(\d{4})"
+        partial_date_pattern = r"(\d{2})-(\d{4})"
+
+        match = re.match(full_date_pattern, date_string)
         if match:
             day, month, year = match.groups()
             try:
                 if not (1 <= int(month) <= 12 and 1 <= int(day) <= 31):
                     return date_string
                 return f"{year}-{month}-{day}"
+            except ValueError:
+                return date_string
+
+        match = re.match(partial_date_pattern, date_string)
+        if match:
+            month, year = match.groups()
+            try:
+                if not (1 <= int(month) <= 12):
+                    return date_string
+                return f"{year}-{month}"
             except ValueError:
                 return date_string
 
@@ -53,7 +64,3 @@ class PreprocessingDates:
         return standardized_dates
 
 
-        
-        
-        
-        
