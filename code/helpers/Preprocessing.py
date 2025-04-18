@@ -16,7 +16,11 @@ class PreprocessingDates:
         """
         Clean the date strings by replacing all `/` characters with `-` and removing all non-numeric characters (except for the `-` character).
         """
-        return self.date_series.str.replace("/", "-").str.replace(r"[^0-9\-]", "", regex=True).str.strip()
+        return (self.date_series
+                .str.replace("/", "-")
+                .str.replace(r"[^0-9\-]", "", regex=True)
+                .str.strip("- ")
+                )
 
     def reverse_date_string(self, date_string: str) -> str:
         """
