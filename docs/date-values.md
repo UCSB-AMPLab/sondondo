@@ -34,6 +34,8 @@ This action will:
 
 A `standardized` parameter can be set to `True` to try to transform dates written in different formats to a valid date. If this parameter is used, it's not necessary to use the `cleaning` parameter as the method will apply both actions.
 
+> ⚠️ Applying this method slightly increases the number of valid dates. However, it also removes all textual clues that could be used to infer a birth date.
+
 ## Cases
 
 This are some of the cases found in the data and some suggestions to fix them:
