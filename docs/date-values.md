@@ -38,7 +38,7 @@ A `standardized` parameter can be set to `True` to try to transform dates writte
 
 ## Cases
 
-This are some of the cases found in the data and some suggestions to fix them:
+These are some of the cases found in the data and some suggestions to fix them:
 
 ### "False" dates
 
@@ -50,7 +50,7 @@ Dates that not exist in the Gregorian calendar, for instance:
 - "1904-09-31"
 - "1894-02-29"
 
-Due to the impossibility to known with certainty if the mistaked date comes from a transcription error or from the original document, this case will be handled by replacing the date for its nearest past valid date. For example:
+Due to the impossibility to known if the mistaked date comes from a transcription error or from the original document, this case will be handled by replacing the date for its nearest past valid date. For example:
 
 - "1790-11-31" -> "1790-11-30"
 - "1793-02-29" -> "1793-02-28"
@@ -95,3 +95,39 @@ Based on the report, the following strategies can be applied to standardize part
 - If the format is `%m/%Y`, reverse the order and fill the day with the first of the month
 
     Example: "02/1800" → "1800-02-01"
+
+### Invalid values
+
+All values (textual or numeric) that do not contribute to infer a valid date will be converted to `NULL`.
+
+For example:
+
+- "-"
+- "[ilegible]"
+- "Sin fecha"
+
+### Excel date values
+
+We have found some cases where the date is represented as an Excel serial number (`matrimonios.csv`):
+
+- 6443
+- 6445
+
+Date values can be converted to a valid date using the following script:
+
+```python
+from datetime import datetime, timedelta
+
+excel_origin = datetime(1899, 12, 30)
+serials = [6443, 6445]
+dates = [excel_origin + timedelta(days=s) for s in serials]
+print(dates)
+```
+
+This will return the following dates:
+
+- "1917-08-21"
+- "1917-08-23"
+
+Which are totally consistent with the previous and following dates in the dataset.
+
