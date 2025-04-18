@@ -58,3 +58,40 @@ Due to the impossibility to known with certainty if the mistaked date comes from
 - "1904-09-31" -> "1904-09-30"
 - "1894-02-29" -> "1894-02-28"
 
+### Partial dates
+
+Dates that are missing one or more components, for instance:
+
+- "1793-02-..."
+- "1796-03-.."
+- "17...-08-22"
+- "1800-10-..."
+- 1834-10-xx
+- "1834-xx-11"
+- "1834-xx-11"
+- "1834-xx-13"
+- "1896-07-[roto]"
+- "1900-04-xx"
+- "02/1800"
+- "01/1800"
+- "02/1800"
+
+Based on the report, the following strategies can be applied to standardize partial or malformed date values:
+
+- Use inferred placeholders when possible
+
+    If the year and month are present but the day is missing, assume the day to be the first of the month.
+
+    Example: "1800-10-..." → "1800-10-01"
+
+- If the month or year is missing, use the nearest valid value
+
+    For example:
+
+    "17...-08-22" → "1797-08-22" (from the previous date available "1797-08-28")
+
+    "1834-xx-11" → "1834-10-11" (from the previous date available "1834-10-20")
+
+- If the format is `%m/%Y`, reverse the order and fill the day with the first of the month
+
+    Example: "02/1800" → "1800-02-01"
