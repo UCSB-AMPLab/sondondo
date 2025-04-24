@@ -3,41 +3,37 @@ import numpy as np
 
 # Step 1: Read in original data
 unique_conditions_df = pd.DataFrame(
-    pd.read_csv("data/raw/bautismos.csv")["Condición"].dropna().unique(),
+    pd.read_csv("data/raw/bautismos.csv")["Condición"],
     columns=["Condición"]
 )
 
 # Lowercase everything
 unique_conditions_df["Condición"] = unique_conditions_df["Condición"].astype(str).str.lower()
 
-# Step 2: Create harmonized version
-harmonized_conditions_df = unique_conditions_df.copy()
+def harmonize_text(mapping_dictionary, data_to_transform):
+    def transform_value(value):
+        # Loop through each key in the mapping dictionary
+        for key in mapping_dictionary:
+            # If the key is contained within the value, return the mapped value
+            if key in value:
+                return mapping_dictionary[key]
+        # If no matches found, return the original value
+        return "default"
+    
+    # Apply the function to the Series
+    return data_to_transform.apply(transform_value)
 
-# Define keyword groups
-type_conditions = [
-    harmonized_conditions_df["Condición"].str.contains("hijo", na=False),
-    harmonized_conditions_df["Condición"].str.contains("hija", na=False)
-]
-type_values = ["hijo", "hija"]
+firstAttribute = {"hija": "hija", "hijo": "hijo"}
+secondAttribute = {"legitimo": "legítimo", 
+                   "legitima": "legítima",
+                   "legítimo" : "legítimo",
+                   "legítima": "legítima",
+                   "natural": "natural"
+                   }
+# Apply the function to the "Condición" column
+firstAttributeFrame = harmonize_text(firstAttribute, unique_conditions_df["Condición"])
+secondAttributeFrame = harmonize_text(secondAttribute, unique_conditions_df["Condición"])
 
-status_conditions = [
-    harmonized_conditions_df["Condición"].str.contains("legítimo|legitimo", na=False),
-    harmonized_conditions_df["Condición"].str.contains("legítima|legitima", na=False),
-    harmonized_conditions_df["Condición"].str.contains("natural", na=False)
-]
-status_values = ["legítimo", "legítima", "natural"]
+combinedAttributeFrame = firstAttributeFrame.str.strip() + " " + secondAttributeFrame.str.strip()
 
-# Apply np.select and convert to Series
-harmonized_type = pd.Series(np.select(type_conditions, type_values, default=""))
-harmonized_status = pd.Series(np.select(status_conditions, status_values, default=""))
-
-# Combine and clean
-harmonized_conditions_df["Condición"] = (
-    harmonized_type.str.strip() + " " + harmonized_status.str.strip()
-).str.strip()
-
-# Replace empty results with default
-harmonized_conditions_df["Condición"] = harmonized_conditions_df["Condición"].replace("", "(other data)")
-
-# Optional: save to CSV
-harmonized_conditions_df.to_csv("data/testing/unique_condiciones_harmonized.csv", index=False)
+combinedAttributeFrame.to_csv("data/testing/unique_condiciones_harmonized.csv", index=False)
