@@ -65,6 +65,8 @@ class DateNormalizer:
         return dt.strftime("%Y-%m-%d")
 
     def _is_false_date(self, value: str) -> bool:
+        if not isinstance(value, str): # skip the None case
+            return False
         # Detect date out of valid range, however, it will also include partial date as false date.
         try:
             datetime.strptime(value, "%Y-%m-%d")
@@ -91,8 +93,28 @@ class DateNormalizer:
         return any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "[roto]", "[ilegible]"])
 
     def _complete_partial_date(self, value: str):
-        # TODO: implement logic TO DETECT partial dates
-        return None
+        # In Progress
+        if bool(re.fullmatch(r"\d{4}-\d{2}-\D+", value)):
+            # match the pattern of date that day is missing
+            parts = value.split("-")
+            year = int(parts[0])
+            month = int(parts[1])
+            day = 1
+            value =  f"{year:04d}-{month:02d}-{day:02d}"
+
+       # if bool(re.fullmatch(r"\d{4}-\D+-\d{2}", value)):
+            # match the pattern of date that month is missing
+
+        if bool(re.fullmatch(r"\d{2}/\d{4}",value)):
+            # match the pattern like 01/1800
+            parts = value.split("/")
+            year = int(parts[1])
+            month = int(parts[0])
+            day = 1
+            value = f"{year:04d}-{month:02d}-{day:02d}"
+            
+        return value
+        
 
     def _is_roto_or_ilegible(self, value: str) -> bool:
         # TODO
