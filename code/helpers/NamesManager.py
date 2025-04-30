@@ -21,39 +21,26 @@ class NamesManager:
             return None
         
         name = name.lower()
-        name = re.sub(r"\(.*?\)", "", name)             # remove parentheses content
-        name = re.sub(r"\[.*?\]", "", name)             # remove bracketed content
         name = re.sub(r"[^a-zñáéíóúü\s]", "", name)      # keep only letters and spaces
         name = re.sub(r"\b(?:n/?a|na)\b", "", name)      # remove known filler terms
         name = re.sub(r"\s+", " ", name).strip()
 
         return name if name else None
     
-    def clean_dataframe(self, df: pd.DataFrame, name_columns: list[str]) -> pd.DataFrame:
+    def clean_series(self, series: pd.Series, label: str = "") -> pd.Series:
         """
         Cleans specified name-related columns in a pandas DataFrame.
         Returns a modified copy of the DataFrame with cleaned name fields.
         """
-        df_clean = df.copy()
-
-        for col in name_columns:
-            if col in df_clean.columns:
-                original = df_clean[col]
-                cleaned = original.apply(self.clean_name)
-                df_clean[col] = cleaned
-
-                total_entries += len(cleaned)
-                cleaned_entries += cleaned.notna().sum()
-
-        null_entries = total_entries - cleaned_entries
+        original_non_null = series.notna().sum()
+        cleaned_series = series.apply(self.clean_name)
+        cleaned_non_null = cleaned_series.notna().sum()
+        null_count = len(series) - cleaned_non_null
 
         logger.info(
-            f"Names cleaned in {filename_stem}: "
-            f"{len(name_columns)} columns processed, "
-            f"{cleaned_entries} cleaned entries, "
-            f"{null_entries} null or uncleanable entries"
+            f"[{label}] Cleaned {original_non_null} entries → "
+            f"{cleaned_non_null} valid, {null_count} null or uncleanable"
         )
 
-        return df_clean
-
+        return cleaned_series
 
