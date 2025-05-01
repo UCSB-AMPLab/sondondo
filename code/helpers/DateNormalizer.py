@@ -157,7 +157,61 @@ class DateNormalizer:
 
 
 class AgeInferrer:
-    """A class to infer the age of a person from a date of birth"""
-
+    """
+    Infer a true birth date by subtracting age from the baptism date.
+    """
     def __init__(self, date_series: pd.Series) -> None:
         self.date_series = date_series
+
+    def parse_birth_age_to_timedelta(self, text: str) -> timedelta|None:
+        t = text.lower().strip()
+        # 1) For patterns like "1 mes y medio":
+        m = re.match(r"(\d+)\s*mes(?:es)?\s*y\s*medio", t)
+        if m:
+            months = int(m.group(1))
+            return timedelta(days=months * 30 + 15)
+
+        # 2) Optional years, months, and optional "y Y dias"
+        m2 = re.match(
+            r"(?:(\d+)\s*a[nñ]os?)?\s*"      # years?
+            r"(?:(\d+)\s*mes(?:es)?)?"      # months?
+            r"(?:\s*y\s*(\d+)\s*d[ií]as?)?",# days?
+            t
+        ) 
+        if m2:
+            yrs   = int(m2.group(1)) if m2.group(1) else 0
+            mons  = int(m2.group(2)) if m2.group(2) else 0
+            days  = int(m2.group(3)) if m2.group(3) else 0
+            return timedelta(days=yrs * 365 + mons * 30 + days)
+
+        # 3) Single unit days
+        if "dia" in t:
+            num = int(re.search(r"(\d+)", t).group(1))
+            return timedelta(days=num)
+
+        # 4) Single unit months
+        if re.search(r"mes(?:es)?", t):
+            num = int(re.search(r"(\d+)", t).group(1))
+            return timedelta(days=num * 30)
+
+        # 5) Single unit years
+        if "año" in t or "ano" in t:
+            num = int(re.search(r"(\d+)", t).group(1))
+            return timedelta(days=num * 365)
+
+        return None
+
+    def infer_birthdate(self, idx: int, age: str) -> str|None:
+        # 1) Grab the baptism date
+        baptDate = self.date_series.loc[idx]
+        if pd.isna(baptDate):
+            return None
+
+        # 2) Parse the age description into a timedelta
+        delta = self.parse_birth_age_to_timedelta(age)
+        if delta is None:
+            return None
+
+        # 3) Subtract and return ISO
+        bd = baptDate - delta
+        return bd.strftime("%Y-%m-%d")
