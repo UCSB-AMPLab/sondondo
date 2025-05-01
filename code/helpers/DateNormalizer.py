@@ -1,29 +1,49 @@
 import pandas as pd
 from datetime import datetime, timedelta
 import calendar
+import re
+import logging
+
+# Configure logging
+t_logging_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+logging.basicConfig(
+    level=logging.INFO,
+    filename="logs/date_normalizer.log",
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.WARNING)
 
 class DateNormalizer:
     """
     A class to normalize a pandas Series of date values into a consistent YYYY-MM-DD format.
 
     Handles multiple date representations including:
-      - ISO strings (Done)
-      - Excel serial numbers (Done)
-      - False dates (nonexistent calendar dates) (Done)
-      - Partial dates (In progress)
-      - Roto/ilegible (TODO)
+      - ISO strings
+      - Excel serial numbers
+      - False dates (nonexistent calendar dates)
+      - Partial dates
+      - Roto/ilegible
     """
     def __init__(self, date_series: pd.Series) -> None:
         self.original_series = date_series
         self.normalized_series = pd.Series([None] * len(date_series), dtype=object)
+        logger.info(f"Initialized DateNormalizer with {len(date_series)} entries.")
 
     def normalize(self) -> pd.Series:
         for idx, value in self.original_series.items():
-            self.normalized_series[idx] = self._normalize_single_value(value)
+            try:
+                norm_value = self._normalize_single_value(value, idx)
+                if norm_value is None:
+                    logger.warning(f"Failed to normalize '{value}' at index {idx}.")
+                self.normalized_series[idx] = norm_value
+            except Exception as e:
+                logger.error(f"Error normalizing '{value}' at index {idx}: {e}")
+                self.normalized_series[idx] = None
+
         return self.normalized_series
 
-    def _normalize_single_value(self, value: str):
-        # Completed: dispatch based on detection
+    def _normalize_single_value(self, value: str,idx: int):
         if self._is_valid_iso(value):
             return value
 
@@ -31,7 +51,7 @@ class DateNormalizer:
             return self._convert_excel_serial(value)
 
         if self._is_partial_date(value):
-            return self._complete_partial_date(value)
+            return self._complete_partial_date(value, self.original_series, idx)
 
         if self._is_roto_or_ilegible(value):
             return self._resolve_roto(value)
@@ -39,10 +59,8 @@ class DateNormalizer:
         if self._is_false_date(value):
             return self._correct_false_date(value)
 
-        return None
 
     def _is_valid_iso(self, value: str) -> bool:
-        # Completed: checks strict YYYY-MM-DD calendar validity
         try:
             datetime.strptime(value, "%Y-%m-%d")
             return True
@@ -50,24 +68,21 @@ class DateNormalizer:
             return False
 
     def _is_excel_serial(self, value: str) -> bool:
-        # Completed
         try:
             date2int = int(value)
-            return 1922 <= date2int <= 9999 # Excel serial numbers start from 1922 to avoid conflicts with real years
-        except ValueError:
+            return 1922 <= date2int <= 9999
+        except (ValueError, TypeError):
             return False
 
     def _convert_excel_serial(self, value: str) -> str:
-        # Completed: converts Excel serial to date string
         serial = int(value)
         epoch = datetime(1899, 12, 30)
         dt = epoch + timedelta(days=serial)
         return dt.strftime("%Y-%m-%d")
 
     def _is_false_date(self, value: str) -> bool:
-        if not isinstance(value, str): # skip the None case
+        if not isinstance(value, str):
             return False
-        # Detect date out of valid range, however, it will also include partial date as false date.
         try:
             datetime.strptime(value, "%Y-%m-%d")
             return False
@@ -75,51 +90,74 @@ class DateNormalizer:
             return True
 
     def _correct_false_date(self, value: str) -> str:
-        # Fix the false date
         parts = value.split("-")
         year = int(parts[0])
         month = int(parts[1])
         day = int(parts[2])
         firstday = 1
         lastday = calendar.monthrange(year, month)[1]
-        if day == 0:
-            day = firstday
-        else:
-            day = lastday
+        day = firstday if day == 0 else lastday
         return f"{year:04d}-{month:02d}-{day:02d}"
 
-    def _is_partial_date(value: str) -> bool:
-        # In progress, there may be some other patterns haven't been detected
-        return any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "[roto]", "[ilegible]"])
+    def _is_partial_date(self, value: str) -> bool:
+        return isinstance(value, str) and any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "[roto]", "[ilegible]"])
 
-    def _complete_partial_date(self, value: str):
-        # In Progress
-        if bool(re.fullmatch(r"\d{4}-\d{2}-\D+", value)):
-            # match the pattern of date that day is missing
+
+    def _complete_partial_date(self, value: str, original_series: pd.Series, idx: int) -> str:
+        # 1. Missing day
+        if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value):
             parts = value.split("-")
-            year = int(parts[0])
-            month = int(parts[1])
-            day = 1
-            value =  f"{year:04d}-{month:02d}-{day:02d}"
+            return f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
 
-       # if bool(re.fullmatch(r"\d{4}-\D+-\d{2}", value)):
-            # match the pattern of date that month is missing
+        # 2. Missing month
+        if re.fullmatch(r"\d{4}-\D+-\d{2}", value):
+            parts = value.split("-")
+            year_str, month_str, day_str = parts
+            for j in range(idx - 1, -1, -1):
+                candidate = original_series.iloc[j]
+                if isinstance(candidate, str) and len(
+                        candidate) >= 10 and "x" not in candidate and "..." not in candidate:
+                    ref_parts = candidate[:10].split("-")
+                    if len(ref_parts) != 3:
+                        continue
+                    ref_month = ref_parts[1]
+                    return f"{year_str}-{ref_month}-{day_str}"
 
-        if bool(re.fullmatch(r"\d{2}/\d{4}",value)):
-            # match the pattern like 01/1800
+
+        # 3. Missing year
+        if ("x" in value[:4] or "..." in value[:4]) and re.fullmatch(r".{4}-\d{2}-\d{2}", value):
+            year_str, month_str, day_str = value.split("-")
+            for j in range(idx - 1, -1, -1):
+                candidate = original_series.iloc[j]
+                if isinstance(candidate, str) and len(
+                        candidate) >= 10 and "x" not in candidate and "..." not in candidate:
+                    ref_parts = candidate[:10].split("-")
+                    if len(ref_parts) != 3:
+                        continue
+                    return f"{ref_parts[0]}-{month_str}-{day_str}"
+
+        # 4. Wrong format
+        if re.fullmatch(r"\d{2}/\d{4}", value):
             parts = value.split("/")
-            year = int(parts[1])
-            month = int(parts[0])
-            day = 1
-            value = f"{year:04d}-{month:02d}-{day:02d}"
-            
-        return value
-        
+            return f"{int(parts[1]):04d}-{int(parts[0]):02d}-01"
+
 
     def _is_roto_or_ilegible(self, value: str) -> bool:
-        # TODO
-        return None
+        return isinstance(value, str) and any(keyword in value for keyword in ["[roto]", "[ilegible]"])
 
     def _resolve_roto(self, value: str):
-        # TODO: implement resolution for illegible entries
+        # TODO: implement proper resolution for illegible entries
         return None
+
+    def _is_birth_age_description(self, value: str) -> bool:
+        return isinstance(value, str) and any(
+            keyword in value.lower()
+            for keyword in ["dia", "mes", "año", "ano", "y medio"]
+        )
+
+
+class AgeInferrer:
+    """A class to infer the age of a person from a date of birth"""
+
+    def __init__(self, date_series: pd.Series) -> None:
+        self.date_series = date_series
