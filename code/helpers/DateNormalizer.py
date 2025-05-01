@@ -149,69 +149,66 @@ class DateNormalizer:
         # TODO: implement proper resolution for illegible entries
         return None
 
-    def _is_birth_age_description(self, value: str) -> bool:
-        return isinstance(value, str) and any(
-            keyword in value.lower()
-            for keyword in ["dia", "mes", "año", "ano", "y medio"]
-        )
-
-
 class AgeInferrer:
-    """
-    Infer a true birth date by subtracting age from the baptism date.
-    """
     def __init__(self, date_series: pd.Series) -> None:
-        self.date_series = date_series
+        self.date_series = pd.to_datetime(date_series)
 
-    def parse_birth_age_to_timedelta(self, text: str) -> timedelta|None:
+    def parse_birth_age_to_timedelta(self, text: str) -> timedelta | None:
         t = text.lower().strip()
-        # 1) For patterns like "1 mes y medio":
+
+        # Pattern 1: "X mes y medio"
         m = re.match(r"(\d+)\s*mes(?:es)?\s*y\s*medio", t)
         if m:
             months = int(m.group(1))
             return timedelta(days=months * 30 + 15)
 
-        # 2) Optional years, months, and optional "y Y dias"
+        # Pattern 2: years, months, days
         m2 = re.match(
-            r"(?:(\d+)\s*a[nñ]os?)?\s*"      # years?
-            r"(?:(\d+)\s*mes(?:es)?)?"      # months?
-            r"(?:\s*y\s*(\d+)\s*d[ií]as?)?",# days?
+            r"(?:(\d+)\s*a[nñ]os?)?\s*"
+            r"(?:(\d+)\s*mes(?:es)?)?"
+            r"(?:\s*y\s*(\d+)\s*d[ií]as?)?",
             t
-        ) 
+        )
         if m2:
-            yrs   = int(m2.group(1)) if m2.group(1) else 0
-            mons  = int(m2.group(2)) if m2.group(2) else 0
-            days  = int(m2.group(3)) if m2.group(3) else 0
-            return timedelta(days=yrs * 365 + mons * 30 + days)
+            years = int(m2.group(1)) if m2.group(1) else 0
+            months = int(m2.group(2)) if m2.group(2) else 0
+            days = int(m2.group(3)) if m2.group(3) else 0
+            return timedelta(days=years * 365 + months * 30 + days)
 
-        # 3) Single unit days
+        # Pattern 3: "8 dias", "4 meses", "1 año"
         if "dia" in t:
             num = int(re.search(r"(\d+)", t).group(1))
             return timedelta(days=num)
-
-        # 4) Single unit months
-        if re.search(r"mes(?:es)?", t):
+        if "mes" in t:
             num = int(re.search(r"(\d+)", t).group(1))
             return timedelta(days=num * 30)
-
-        # 5) Single unit years
         if "año" in t or "ano" in t:
             num = int(re.search(r"(\d+)", t).group(1))
             return timedelta(days=num * 365)
 
         return None
 
-    def infer_birthdate(self, idx: int, age: str) -> str|None:
-        # 1) Grab the baptism date
-        baptDate = self.date_series.loc[idx]
-        if pd.isna(baptDate):
+    def infer_birthdate(self, idx: int, age_desc: str) -> str | None:
+        bapt = self.date_series.loc[idx]
+        if pd.isna(bapt):
             return None
 
-        # 2) Parse the age description into a timedelta
-        delta = self.parse_birth_age_to_timedelta(age)
+        delta = self.parse_birth_age_to_timedelta(age_desc)
         if delta is None:
             return None
 
-        # 3) Subtract and return ISO
-        bd = baptDate - delta
-        return bd.strftime("%Y-%m-%d")
+        return (bapt - delta).strftime("%Y-%m-%d")
+
+    def infer_all(self, age_series: pd.Series) -> pd.Series:
+        results = []
+        for idx, val in age_series.items():
+            if isinstance(val, str) and any(k in val.lower() for k in ["dia", "mes", "año", "ano", "medio"]):
+                try:
+                    result = self.infer_birthdate(idx, val)
+                except:
+                    result = val  # keep the original value for non-age value
+            else:
+                result = val  # keep the original value for non-age value
+            results.append(result)
+        return pd.Series(results, index=age_series.index, dtype="object")
+
