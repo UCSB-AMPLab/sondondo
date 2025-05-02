@@ -5,14 +5,13 @@ import re
 import logging
 
 # Configure logging
-t_logging_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 logging.basicConfig(
     level=logging.INFO,
     filename="logs/date_normalizer.log",
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.WARNING)
+logger.setLevel(logging.INFO)
 
 class DateNormalizer:
     """
@@ -34,9 +33,15 @@ class DateNormalizer:
         for idx, value in self.original_series.items():
             try:
                 norm_value = self._normalize_single_value(value, idx)
+
                 if norm_value is None:
                     logger.warning(f"Failed to normalize '{value}' at index {idx}.")
+                elif norm_value != value and not self._is_valid_iso(value):
+                    # Only log if value was changed AND original was not valid ISO
+                    logger.info(f"Harmonized '{value}' to '{norm_value}' at index {idx}.")
+
                 self.normalized_series[idx] = norm_value
+
             except Exception as e:
                 logger.error(f"Error normalizing '{value}' at index {idx}: {e}")
                 self.normalized_series[idx] = None
@@ -59,6 +64,7 @@ class DateNormalizer:
         if self._is_false_date(value):
             return self._correct_false_date(value)
 
+        return None
 
     def _is_valid_iso(self, value: str) -> bool:
         try:
@@ -100,7 +106,8 @@ class DateNormalizer:
         return f"{year:04d}-{month:02d}-{day:02d}"
 
     def _is_partial_date(self, value: str) -> bool:
-        return isinstance(value, str) and any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "[roto]", "[ilegible]"])
+        return isinstance(value, str) and any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "[roto]",
+                                                                               "[ilegible]","primeros"])
 
 
     def _complete_partial_date(self, value: str, original_series: pd.Series, idx: int) -> str:
@@ -123,10 +130,10 @@ class DateNormalizer:
                     ref_month = ref_parts[1]
                     return f"{year_str}-{ref_month}-{day_str}"
 
-
         # 3. Missing year
-        if ("x" in value[:4] or "..." in value[:4]) and re.fullmatch(r".{4}-\d{2}-\d{2}", value):
-            year_str, month_str, day_str = value.split("-")
+        if (("x" in value[:4]) or ("." in value[:4])) and re.match(r".+-\d{2}-\d{2}", value):
+            parts = value.split("-")
+            year_str, month_str, day_str = parts
             for j in range(idx - 1, -1, -1):
                 candidate = original_series.iloc[j]
                 if isinstance(candidate, str) and len(
@@ -148,6 +155,8 @@ class DateNormalizer:
     def _resolve_roto(self, value: str):
         # TODO: implement proper resolution for illegible entries
         return None
+
+
 
 class AgeInferrer:
     def __init__(self, date_series: pd.Series) -> None:
@@ -211,4 +220,13 @@ class AgeInferrer:
                 result = val  # keep the original value for non-age value
             results.append(result)
         return pd.Series(results, index=age_series.index, dtype="object")
+
+
+
+
+
+
+
+
+
 
