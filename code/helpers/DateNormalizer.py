@@ -22,7 +22,8 @@ class DateNormalizer:
       - Excel serial numbers
       - False dates (nonexistent calendar dates)
       - Partial dates
-      - Roto/ilegible
+      - Roto/ilegible(TODO)
+      - Remove brackets and quotes 
     """
     def __init__(self, date_series: pd.Series) -> None:
         self.original_series = date_series
@@ -49,6 +50,9 @@ class DateNormalizer:
         return self.normalized_series
 
     def _normalize_single_value(self, value: str,idx: int):
+
+        value = self._strip_all_brackets_and_quotes(value)
+
         if self._is_valid_iso(value):
             return value
 
@@ -106,8 +110,9 @@ class DateNormalizer:
         return f"{year:04d}-{month:02d}-{day:02d}"
 
     def _is_partial_date(self, value: str) -> bool:
-        return isinstance(value, str) and any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "[roto]",
-                                                                               "[ilegible]","primeros"])
+        return isinstance(value, str) and any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "roto",
+                                                                               "ilegible","primeros",
+                                                                                          "a los dias"])
 
 
     def _complete_partial_date(self, value: str, original_series: pd.Series, idx: int) -> str:
@@ -148,15 +153,34 @@ class DateNormalizer:
             parts = value.split("/")
             return f"{int(parts[1]):04d}-{int(parts[0]):02d}-01"
 
+    def _strip_all_brackets_and_quotes(self, value: str) -> str:
+        if not isinstance(value, str):
+            return value
+        return re.sub(r'[\[\]"\'?]', '', value)
 
     def _is_roto_or_ilegible(self, value: str) -> bool:
-        return isinstance(value, str) and any(keyword in value for keyword in ["[roto]", "[ilegible]"])
+        return isinstance(value, str) and any(keyword in value for keyword in ["roto", "ilegible"])
 
     def _resolve_roto(self, value: str):
         # TODO: implement proper resolution for illegible entries
         return None
 
+ageinferrer_logger = logging.getLogger("AgeInferrer")
+ageinferrer_logger.setLevel(logging.INFO)
 
+ageinferrer_handler = logging.FileHandler("logs/age_inferrer.log", mode='w', encoding='utf-8')
+ageinferrer_handler.setLevel(logging.INFO)
+ageinferrer_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+ageinferrer_handler.setFormatter(ageinferrer_formatter)
+
+if not ageinferrer_logger.handlers:
+    ageinferrer_logger.addHandler(ageinferrer_handler)
+
+
+ageinferrer_logger.propagate = False
+
+if not ageinferrer_logger.handlers:
+    ageinferrer_logger.addHandler(ageinferrer_handler)
 
 class AgeInferrer:
     def __init__(self, date_series: pd.Series) -> None:
@@ -165,14 +189,12 @@ class AgeInferrer:
     def parse_birth_age_to_timedelta(self, text: str) -> timedelta | None:
         t = text.lower().strip()
 
-        # Pattern 1: "X mes y medio"
         m = re.match(r"(\d+)\s*mes(?:es)?\s*y\s*medio", t)
         if m:
             months = int(m.group(1))
             return timedelta(days=months * 30 + 15)
 
-        # Pattern 2: years, months, days
-        m2 = re.match(
+        m2 = re.fullmatch(
             r"(?:(\d+)\s*a[nñ]os?)?\s*"
             r"(?:(\d+)\s*mes(?:es)?)?"
             r"(?:\s*y\s*(\d+)\s*d[ií]as?)?",
@@ -185,9 +207,10 @@ class AgeInferrer:
             return timedelta(days=years * 365 + months * 30 + days)
 
         # Pattern 3: "8 dias", "4 meses", "1 año"
-        if "dia" in t:
-            num = int(re.search(r"(\d+)", t).group(1))
-            return timedelta(days=num)
+        if re.search(r"d[ií]as?", t):
+            m = re.search(r"(\d+)", t)
+            if m:
+                return timedelta(days=int(m.group(1)))
         if "mes" in t:
             num = int(re.search(r"(\d+)", t).group(1))
             return timedelta(days=num * 30)
@@ -208,16 +231,39 @@ class AgeInferrer:
 
         return (bapt - delta).strftime("%Y-%m-%d")
 
+    def _is_iso_date(self, val: str) -> bool:
+        try:
+            datetime.strptime(val, "%Y-%m-%d")
+            return True
+        except:
+            return False
+
     def infer_all(self, age_series: pd.Series) -> pd.Series:
         results = []
         for idx, val in age_series.items():
-            if isinstance(val, str) and any(k in val.lower() for k in ["dia", "mes", "año", "ano", "medio"]):
+            if isinstance(val, str) and any(
+                    k in val.lower() for k in ["dia", "mes", "año", "ano", "medio", "días", "día"]):
                 try:
                     result = self.infer_birthdate(idx, val)
-                except:
-                    result = val  # keep the original value for non-age value
+
+                    if result is not None:
+                        ageinferrer_logger.info(
+                            f"[AgeInferrer] Inferred birthdate at index {idx}: '{result}' from age='{val}' and baptism_date='{self.date_series.loc[idx]}'"
+                        )
+                    else:
+                        ageinferrer_logger.warning(
+                            f"[AgeInferrer] Failed to infer birthdate at index {idx} from age='{val}' and baptism_date='{self.date_series.loc[idx]}'"
+                        )
+                except Exception as e:
+                    ageinferrer_logger.error(
+                        f"[AgeInferrer] Error inferring birthdate at index {idx} with value '{val}': {e}"
+                    )
+                    result = val
             else:
-                result = val  # keep the original value for non-age value
+                if isinstance(val, str) and self._is_iso_date(val):
+                    result = val
+                else:
+                    result = val
             results.append(result)
         return pd.Series(results, index=age_series.index, dtype="object")
 
