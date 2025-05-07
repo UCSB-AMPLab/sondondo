@@ -8,7 +8,7 @@ import os.path
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    filename="logs/attributeNormalizer.log",
+    filename="code/logs/attributeNormalizer.log",
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
@@ -246,7 +246,7 @@ if __name__ == "__main__":
     import sys
     
     #Defines the config file path and then calls main function
-    config_path = "sondondo/code/helpers/config.json"
+    config_path = "code/helpers/config.json"
     logger.info(f"Using configuration file: {config_path}")
         
     result = main(config_path)

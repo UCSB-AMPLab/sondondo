@@ -1,0 +1,19 @@
+{
+    "data_path": "data/raw/bautismos.csv",
+    "columns_to_harmonize": [
+      "Condición"
+    ],
+    "attribute_mappings": {
+      "Condición": {
+        "role": {
+          "hijo": "hijo",
+          "hija": "hija"
+        },
+        "status": {
+          "legitimo": "legítimo",
+          "legitima": "legítima",
+          "natural": "natural"
+        }
+      }
+    }
+  }
