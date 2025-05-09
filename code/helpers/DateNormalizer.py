@@ -22,8 +22,8 @@ class DateNormalizer:
       - Excel serial numbers
       - False dates (nonexistent calendar dates)
       - Partial dates
-      - Roto/ilegible(TODO)
-      - Remove brackets and quotes 
+      - Roto/ilegible
+      - remove brackets and quotes
     """
     def __init__(self, date_series: pd.Series) -> None:
         self.original_series = date_series
@@ -59,11 +59,11 @@ class DateNormalizer:
         if self._is_excel_serial(value):
             return self._convert_excel_serial(value)
 
-        if self._is_partial_date(value):
-            return self._complete_partial_date(value, self.original_series, idx)
-
         if self._is_roto_or_ilegible(value):
             return self._resolve_roto(value)
+
+        if self._is_partial_date(value):
+            return self._complete_partial_date(value, self.original_series, idx)
 
         if self._is_false_date(value):
             return self._correct_false_date(value)
@@ -135,6 +135,7 @@ class DateNormalizer:
                     ref_month = ref_parts[1]
                     return f"{year_str}-{ref_month}-{day_str}"
 
+
         # 3. Missing year
         if (("x" in value[:4]) or ("." in value[:4])) and re.match(r".+-\d{2}-\d{2}", value):
             parts = value.split("-")
@@ -158,12 +159,22 @@ class DateNormalizer:
             return value
         return re.sub(r'[\[\]"\'?]', '', value)
 
+
     def _is_roto_or_ilegible(self, value: str) -> bool:
         return isinstance(value, str) and any(keyword in value for keyword in ["roto", "ilegible"])
 
-    def _resolve_roto(self, value: str):
-        # TODO: implement proper resolution for illegible entries
-        return None
+    def _resolve_roto(self,value: str) -> str:
+        m = re.search(r"roto:\s*(?:del\s*)?(\d{1,2})\s*(?:al|o)\s*(\d{1,2})", value)
+        if m:
+            start_day = int(m.group(1))
+            end_day = int(m.group(2))
+            avg_day = (start_day + end_day) // 2
+            prefix = value.split('[')[0].rstrip('-')
+            parts = prefix.split('-')
+            if len(parts) >= 2:
+                year, month = parts[0], parts[1]
+                return f"{int(year):04d}-{int(month):02d}-{avg_day:02d}"
+        return value
 
 ageinferrer_logger = logging.getLogger("AgeInferrer")
 ageinferrer_logger.setLevel(logging.INFO)
