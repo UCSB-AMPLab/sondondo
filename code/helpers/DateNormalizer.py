@@ -174,6 +174,10 @@ class DateNormalizer:
             if len(parts) >= 2:
                 year, month = parts[0], parts[1]
                 return f"{int(year):04d}-{int(month):02d}-{avg_day:02d}"
+
+        if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value):
+            parts = value.split("-")
+            return f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
         return value
 
 ageinferrer_logger = logging.getLogger("AgeInferrer")
