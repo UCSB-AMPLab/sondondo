@@ -203,6 +203,10 @@ class AgeInferrer:
 
     def parse_birth_age_to_timedelta(self, text: str) -> timedelta | None:
         t = text.lower().strip()
+        t = re.sub(r'^["“”\'«]+|["“”\'»]+$', '', t)
+
+        if t == "del día":
+            return timedelta(days=0)
 
         m = re.match(r"(\d+)\s*mes(?:es)?\s*y\s*medio", t)
         if m:
