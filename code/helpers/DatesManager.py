@@ -160,7 +160,7 @@ class DateNormalizer:
 
         return self.normalized_series
 
-    def _normalize_single_value(self, value: str,idx: int):
+    def _normalize_single_value(self, value: str, idx: int):
 
         value = self._strip_all_brackets_and_quotes(value)
 
@@ -226,7 +226,7 @@ class DateNormalizer:
                                                                                           "a los dias"])
 
 
-    def _complete_partial_date(self, value: str, original_series: pd.Series, idx: int) -> str:
+    def _complete_partial_date(self, value: str, original_series: pd.Series, idx: int) -> Union[str, None]:
         # 1. Missing day
         if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value):
             parts = value.split("-")
