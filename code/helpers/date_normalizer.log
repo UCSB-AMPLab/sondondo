@@ -1,0 +1,242 @@
+2025-05-16 13:48:53,252 - DateNormalizer - INFO - Initialized DateNormalizer with 6341 entries.
+2025-05-16 13:48:53,253 - DateNormalizer - INFO - Harmonized '1793-02-29' to '1793-02-28' at index 225.
+2025-05-16 13:48:53,253 - DateNormalizer - INFO - Harmonized '17...-08-22' to '1797-08-22' at index 262.
+2025-05-16 13:48:53,256 - DateNormalizer - INFO - Harmonized '1800-10-...' to '1800-10-01' at index 859.
+2025-05-16 13:48:53,261 - DateNormalizer - INFO - Harmonized '1814-11-31' to '1814-11-30' at index 1753.
+2025-05-16 13:48:53,262 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 1900.
+2025-05-16 13:48:53,263 - DateNormalizer - INFO - Harmonized '1824-09-[ilegible]' to '1824-09-01' at index 2148.
+2025-05-16 13:48:53,265 - DateNormalizer - INFO - Harmonized '1834-10-xx' to '1834-10-01' at index 2646.
+2025-05-16 13:48:53,266 - DateNormalizer - INFO - Harmonized '1834-xx-11' to '1834-10-11' at index 2648.
+2025-05-16 13:48:53,266 - DateNormalizer - INFO - Harmonized '1834-xx-11' to '1834-10-11' at index 2649.
+2025-05-16 13:48:53,266 - DateNormalizer - INFO - Harmonized '1834-xx-13' to '1834-10-13' at index 2650.
+2025-05-16 13:48:53,266 - DateNormalizer - INFO - Harmonized '1896-07-[roto]' to '1896-07-01' at index 2667.
+2025-05-16 13:48:53,266 - DateNormalizer - INFO - Harmonized '1900-04-xx' to '1900-04-01' at index 2814.
+2025-05-16 13:48:53,272 - DateNormalizer - INFO - Harmonized '1893-02-29' to '1893-02-28' at index 3723.
+2025-05-16 13:48:53,272 - DateNormalizer - INFO - Harmonized '1893-02-30' to '1893-02-28' at index 3724.
+2025-05-16 13:48:53,272 - DateNormalizer - INFO - Harmonized '1893-02-xx' to '1893-02-01' at index 3793.
+2025-05-16 13:48:53,275 - DateNormalizer - INFO - Harmonized '189x-01-01' to '1895-01-01' at index 4242.
+2025-05-16 13:48:53,275 - DateNormalizer - INFO - Harmonized '189x-01-01' to '1895-01-01' at index 4243.
+2025-05-16 13:48:53,276 - DateNormalizer - INFO - Harmonized '189x-01-03' to '1895-01-03' at index 4244.
+2025-05-16 13:48:53,276 - DateNormalizer - INFO - Harmonized '189x-01-03' to '1895-01-03' at index 4245.
+2025-05-16 13:48:53,276 - DateNormalizer - INFO - Harmonized '189x-01-01' to '1895-01-01' at index 4246.
+2025-05-16 13:48:53,281 - DateNormalizer - INFO - Harmonized '1866-09-00' to '1866-09-01' at index 5126.
+2025-05-16 13:48:53,281 - DateNormalizer - INFO - Harmonized '1866-09-00' to '1866-09-01' at index 5127.
+2025-05-16 13:48:53,283 - DateNormalizer - INFO - Harmonized '1870-09-31' to '1870-09-30' at index 5510.
+2025-05-16 13:48:53,284 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 5705.
+2025-05-16 13:48:53,284 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 5708.
+2025-05-16 13:48:53,285 - DateNormalizer - INFO - Harmonized '1884-01-primeros días' to '1884-01-01' at index 5875.
+2025-05-16 13:48:53,285 - DateNormalizer - INFO - Harmonized '1884-01-primeros días' to '1884-01-01' at index 5876.
+2025-05-16 13:48:53,285 - DateNormalizer - INFO - Harmonized '1884-04-primeros' to '1884-04-01' at index 5918.
+2025-05-16 13:48:53,286 - DateNormalizer - INFO - Harmonized '"1887-08-09"' to '1887-08-09' at index 6135.
+2025-05-16 13:48:53,434 - DateNormalizer - INFO - Initialized DateNormalizer with 2198 entries.
+2025-05-16 13:48:53,435 - DateNormalizer - INFO - Harmonized '[1866-09-31]' to '1866-09-30' at index 111.
+2025-05-16 13:48:53,435 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 164.
+2025-05-16 13:48:53,437 - DateNormalizer - WARNING - Failed to normalize '1885-n/a' at index 511.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 843.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 844.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 845.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 846.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 847.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 848.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 849.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 850.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 851.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 852.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 853.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 854.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 855.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 856.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 857.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 858.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 859.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 860.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 861.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 862.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 863.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 864.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 865.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 866.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 867.
+2025-05-16 13:48:53,438 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 868.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 869.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 870.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 871.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 872.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 873.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 874.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 875.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 876.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 877.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 878.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 879.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 880.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 881.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 882.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 883.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 884.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 885.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 886.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 887.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 888.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 889.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 890.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 891.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 892.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 893.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 894.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 895.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 896.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 897.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 898.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 899.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 900.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 901.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 902.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 903.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 904.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 905.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 906.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 907.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 908.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 909.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 910.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 911.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 912.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 913.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 914.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 915.
+2025-05-16 13:48:53,439 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 916.
+2025-05-16 13:48:53,440 - DateNormalizer - INFO - Harmonized '1904-09-31' to '1904-09-30' at index 1180.
+2025-05-16 13:48:53,441 - DateNormalizer - ERROR - Error normalizing 'Sin fecha' at index 1218: invalid literal for int() with base 10: 'Sin fecha'
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '[1907-05-22]' to '1907-05-22' at index 1297.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1909-01-[roto: 21 al 29]' to '1909-01-25' at index 1353.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1909-02-[roto: 01 al 21]' to '1909-02-11' at index 1355.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1909-02-[roto: 01 al 21]' to '1909-02-11' at index 1356.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1909-[roto: marzo o abril]-18' to '1909-roto: marzo o abril-18' at index 1358.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1909-05-[roto: 16 al 31]' to '1909-05-23' at index 1360.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1909-06-[roto: 01 al 11]' to '1909-06-06' at index 1361.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1909-07-2[roto: 24 al 29]' to '1909-07-26' at index 1364.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1909-09-[roto]' to '1909-09-01' at index 1367.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1909-12-[roto: 01 al 12]' to '1909-12-06' at index 1373.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1910-01-3[roto]' to '1910-01-3roto' at index 1379.
+2025-05-16 13:48:53,441 - DateNormalizer - INFO - Harmonized '1910-04-[roto: 13 al 19]' to '1910-04-16' at index 1382.
+2025-05-16 13:48:53,442 - DateNormalizer - INFO - Harmonized '1910-05-[roto: del 20 al 31]' to '1910-05-25' at index 1387.
+2025-05-16 13:48:53,442 - DateNormalizer - INFO - Harmonized '1910-07-[roto: 05 al 17]' to '1910-07-11' at index 1392.
+2025-05-16 13:48:53,442 - DateNormalizer - INFO - Harmonized '1910-09-2[roto]' to '1910-09-2roto' at index 1395.
+2025-05-16 13:48:53,442 - DateNormalizer - INFO - Harmonized '1911-01-[roto: 06 al 30]' to '1911-01-18' at index 1401.
+2025-05-16 13:48:53,442 - DateNormalizer - INFO - Harmonized '1911-05-[roto: 01 al 19]' to '1911-05-10' at index 1404.
+2025-05-16 13:48:53,442 - DateNormalizer - INFO - Harmonized '1911-07-[roto: 05 al 08]' to '1911-07-06' at index 1417.
+2025-05-16 13:48:53,442 - DateNormalizer - INFO - Harmonized '1911-08-[roto: 12 o 13]' to '1911-08-12' at index 1425.
+2025-05-16 13:48:53,442 - DateNormalizer - INFO - Harmonized '1911-09-[roto: 16 o 26]' to '1911-09-21' at index 1443.
+2025-05-16 13:48:53,442 - DateNormalizer - INFO - Harmonized '1912-07-[roto: 27 al 31]' to '1912-07-29' at index 1491.
+2025-05-16 13:48:53,443 - DateNormalizer - INFO - Harmonized '1920-12-[roto: 01 al 11]' to '1920-12-06' at index 1613.
+2025-05-16 13:48:53,443 - DateNormalizer - INFO - Harmonized '[ilegible: 1920-12-13, 30 o 31]' to 'ilegible: 1920-12-13, 30 o 31' at index 1615.
+2025-05-16 13:48:53,443 - DateNormalizer - INFO - Harmonized '1921-02-[roto: 07 al 24]' to '1921-02-15' at index 1619.
+2025-05-16 13:48:53,443 - DateNormalizer - INFO - Harmonized '1916-09-31' to '1916-09-30' at index 1716.
+2025-05-16 13:48:53,443 - DateNormalizer - INFO - Harmonized '1916-12-"a los dias"' to '1916-12-01' at index 1746.
+2025-05-16 13:48:53,454 - DateNormalizer - INFO - Initialized DateNormalizer with 2198 entries.
+2025-05-16 13:48:53,455 - DateNormalizer - INFO - Harmonized '[1866-09-31]' to '1866-09-30' at index 111.
+2025-05-16 13:48:53,455 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 164.
+2025-05-16 13:48:53,457 - DateNormalizer - WARNING - Failed to normalize '1885-n/a' at index 511.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 843.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 844.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 845.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 846.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 847.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 848.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 849.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 850.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 851.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 852.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 853.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 854.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 855.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 856.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 857.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 858.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 859.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 860.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 861.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 862.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 863.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 864.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 865.
+2025-05-16 13:48:53,458 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 866.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 867.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 868.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 869.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 870.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 871.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 872.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 873.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 874.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 875.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 876.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 877.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 878.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 879.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 880.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 881.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 882.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 883.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 884.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 885.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 886.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 887.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 888.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 889.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 890.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 891.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 892.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 893.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 894.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 895.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 896.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 897.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 898.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 899.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 900.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 901.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 902.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 903.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 904.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 905.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 906.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 907.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 908.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 909.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 910.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 911.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 912.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 913.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 914.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 915.
+2025-05-16 13:48:53,459 - DateNormalizer - WARNING - Failed to normalize 'nan' at index 916.
+2025-05-16 13:48:53,460 - DateNormalizer - INFO - Harmonized '1904-09-31' to '1904-09-30' at index 1180.
+2025-05-16 13:48:53,461 - DateNormalizer - ERROR - Error normalizing 'Sin fecha' at index 1218: invalid literal for int() with base 10: 'Sin fecha'
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '[1907-05-22]' to '1907-05-22' at index 1297.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1909-01-[roto: 21 al 29]' to '1909-01-25' at index 1353.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1909-02-[roto: 01 al 21]' to '1909-02-11' at index 1355.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1909-02-[roto: 01 al 21]' to '1909-02-11' at index 1356.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1909-[roto: marzo o abril]-18' to '1909-roto: marzo o abril-18' at index 1358.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1909-05-[roto: 16 al 31]' to '1909-05-23' at index 1360.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1909-06-[roto: 01 al 11]' to '1909-06-06' at index 1361.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1909-07-2[roto: 24 al 29]' to '1909-07-26' at index 1364.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1909-09-[roto]' to '1909-09-01' at index 1367.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1909-12-[roto: 01 al 12]' to '1909-12-06' at index 1373.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1910-01-3[roto]' to '1910-01-3roto' at index 1379.
+2025-05-16 13:48:53,461 - DateNormalizer - INFO - Harmonized '1910-04-[roto: 13 al 19]' to '1910-04-16' at index 1382.
+2025-05-16 13:48:53,462 - DateNormalizer - INFO - Harmonized '1910-05-[roto: del 20 al 31]' to '1910-05-25' at index 1387.
+2025-05-16 13:48:53,462 - DateNormalizer - INFO - Harmonized '1910-07-[roto: 05 al 17]' to '1910-07-11' at index 1392.
+2025-05-16 13:48:53,462 - DateNormalizer - INFO - Harmonized '1910-09-2[roto]' to '1910-09-2roto' at index 1395.
+2025-05-16 13:48:53,462 - DateNormalizer - INFO - Harmonized '1911-01-[roto: 06 al 30]' to '1911-01-18' at index 1401.
+2025-05-16 13:48:53,462 - DateNormalizer - INFO - Harmonized '1911-05-[roto: 01 al 19]' to '1911-05-10' at index 1404.
+2025-05-16 13:48:53,462 - DateNormalizer - INFO - Harmonized '1911-07-[roto: 05 al 08]' to '1911-07-06' at index 1417.
+2025-05-16 13:48:53,462 - DateNormalizer - INFO - Harmonized '1911-08-[roto: 12 o 13]' to '1911-08-12' at index 1425.
+2025-05-16 13:48:53,462 - DateNormalizer - INFO - Harmonized '1911-09-[roto: 16 o 26]' to '1911-09-21' at index 1443.
+2025-05-16 13:48:53,462 - DateNormalizer - INFO - Harmonized '1912-07-[roto: 27 al 31]' to '1912-07-29' at index 1491.
+2025-05-16 13:48:53,463 - DateNormalizer - INFO - Harmonized '1920-12-[roto: 01 al 11]' to '1920-12-06' at index 1613.
+2025-05-16 13:48:53,463 - DateNormalizer - INFO - Harmonized '[ilegible: 1920-12-13, 30 o 31]' to 'ilegible: 1920-12-13, 30 o 31' at index 1615.
+2025-05-16 13:48:53,463 - DateNormalizer - INFO - Harmonized '1921-02-[roto: 07 al 24]' to '1921-02-15' at index 1619.
+2025-05-16 13:48:53,463 - DateNormalizer - INFO - Harmonized '1916-09-31' to '1916-09-30' at index 1716.
+2025-05-16 13:48:53,464 - DateNormalizer - INFO - Harmonized '1916-12-"a los dias"' to '1916-12-01' at index 1746.
