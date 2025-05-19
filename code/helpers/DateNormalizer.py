@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Union
 import pandas as pd
 from helpers.Preprocessing import PreprocessingDates
 from datetime import datetime, timedelta
@@ -227,7 +227,7 @@ class DateNormalizer:
                                                                                           "a los dias"])
 
 
-    def _complete_partial_date(self, value: str, original_series: pd.Series, idx: int) -> str:
+    def _complete_partial_date(self, value: str, original_series: pd.Series, idx: int) -> Union[str, None]:
         # 1. Missing day
         if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value):
             parts = value.split("-")
