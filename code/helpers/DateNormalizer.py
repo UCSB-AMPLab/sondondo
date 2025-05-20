@@ -5,16 +5,7 @@ from helpers.Preprocessing import PreprocessingDates
 from datetime import datetime, timedelta
 import calendar
 import re
-import logging
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    filename="logs/date_normalizer.log",
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+from helpers.logerHandler import setup_logger
 
 class DatesExplorer:
     """A class for exploring and validating date columns in a DataFrame."""
@@ -28,6 +19,7 @@ class DatesExplorer:
         """
         self.source_dataframe = source_dataframe
         self.df_name = df_name
+        self.logger = setup_logger("DatesExplorer")
 
     def report_column_dates(
         self,
@@ -122,7 +114,7 @@ class DatesExplorer:
             f.write(f"Invalid Dates: {len(invalid_dates)}\n")
             f.write("\n".join(invalid_dates))
 
-        logger.info(f"Report saved to {filename_stem} with {len(valid_dates)} valid dates and {len(invalid_dates)} invalid dates")
+        self.logger.info(f"Report saved to {filename_stem} with {len(valid_dates)} valid dates and {len(invalid_dates)} invalid dates")
         
 
 class DateNormalizer:
@@ -140,7 +132,8 @@ class DateNormalizer:
     def __init__(self, date_series: pd.Series) -> None:
         self.original_series = date_series
         self.normalized_series = pd.Series([None] * len(date_series), dtype=object)
-        logger.info(f"Initialized DateNormalizer with {len(date_series)} entries.")
+        self.logger = setup_logger("DateNormalizer")
+        self.logger.info(f"Initialized DateNormalizer with {len(date_series)} entries.")
 
     def normalize(self) -> pd.Series:
         for idx, value in self.original_series.items():
@@ -148,15 +141,15 @@ class DateNormalizer:
                 norm_value = self._normalize_single_value(value, idx)
 
                 if norm_value is None:
-                    logger.warning(f"Failed to normalize '{value}' at index {idx}.")
+                    self.logger.warning(f"Failed to normalize '{value}' at index {idx}.")
                 elif norm_value != value and not self._is_valid_iso(value):
                     # Only log if value was changed AND original was not valid ISO
-                    logger.info(f"Harmonized '{value}' to '{norm_value}' at index {idx}.")
+                    self.logger.info(f"Harmonized '{value}' to '{norm_value}' at index {idx}.")
 
                 self.normalized_series[idx] = norm_value
 
             except Exception as e:
-                logger.error(f"Error normalizing '{value}' at index {idx}: {e}")
+                self.logger.error(f"Error normalizing '{value}' at index {idx}: {e}")
                 self.normalized_series[idx] = None
 
         return self.normalized_series
@@ -292,26 +285,11 @@ class DateNormalizer:
             return f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
         return value
 
-ageinferrer_logger = logging.getLogger("AgeInferrer")
-ageinferrer_logger.setLevel(logging.INFO)
-
-ageinferrer_handler = logging.FileHandler("logs/age_inferrer.log", mode='w', encoding='utf-8')
-ageinferrer_handler.setLevel(logging.INFO)
-ageinferrer_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-ageinferrer_handler.setFormatter(ageinferrer_formatter)
-
-if not ageinferrer_logger.handlers:
-    ageinferrer_logger.addHandler(ageinferrer_handler)
-
-
-ageinferrer_logger.propagate = False
-
-if not ageinferrer_logger.handlers:
-    ageinferrer_logger.addHandler(ageinferrer_handler)
 
 class AgeInferrer:
     def __init__(self, date_series: pd.Series) -> None:
         self.date_series = pd.to_datetime(date_series)
+        self.logger = setup_logger("AgeInferrer")
 
     def parse_birth_age_to_timedelta(self, text: str) -> timedelta | None:
         t = text.lower().strip()
@@ -378,15 +356,15 @@ class AgeInferrer:
                     result = self.infer_birthdate(idx, val)
 
                     if result is not None:
-                        ageinferrer_logger.info(
+                        self.logger.info(
                             f"[AgeInferrer] Inferred birthdate at index {idx}: '{result}' from age='{val}' and baptism_date='{self.date_series.loc[idx]}'"
                         )
                     else:
-                        ageinferrer_logger.warning(
+                        self.logger.warning(
                             f"[AgeInferrer] Failed to infer birthdate at index {idx} from age='{val}' and baptism_date='{self.date_series.loc[idx]}'"
                         )
                 except Exception as e:
-                    ageinferrer_logger.error(
+                    self.logger.error(
                         f"[AgeInferrer] Error inferring birthdate at index {idx} with value '{val}': {e}"
                     )
                     result = val
