@@ -10,8 +10,6 @@ class ColumnManager:
     """
     Class to manage column names and mappings for different events.
     """
-    def __init__(self, base_dir):
-        self.base_dir = base_dir
 
     def create_mapping(self, csv_file, mapping_file, dry_run=False):
         """
