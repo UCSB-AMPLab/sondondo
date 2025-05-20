@@ -160,15 +160,19 @@ class DateNormalizer:
 
         if self._is_valid_iso(value):
             return value
+        
+        if self._day_is_missing(value):
+            return self._add_missing_day(value)
+
+        if self._month_is_missing(value):
+            return self._add_missing_month(value, self.original_series, idx)
+
+        if self._year_is_missing(value):
+            self.logger.info(f"CATCH! Completing missing year for: {value}")
+            return self._add_missing_year(value, self.original_series, idx)
 
         if self._is_excel_serial(value):
             return self._convert_excel_serial(value)
-
-        if self._day_is_missing(value):
-            return self._add_missing_day(value)
-        
-        if self._month_is_missing(value):
-            return self._add_missing_month(value, self.original_series, idx)
 
         if self._is_false_date(value):
             return self._correct_false_date(value)
@@ -188,31 +192,6 @@ class DateNormalizer:
             return 1922 <= date2int <= 9999
         except (ValueError, TypeError):
             return False
-
-    def _convert_excel_serial(self, value: str) -> str:
-        serial = int(value)
-        epoch = datetime(1899, 12, 30)
-        dt = epoch + timedelta(days=serial)
-        return dt.strftime("%Y-%m-%d")
-
-    def _is_false_date(self, value: str) -> bool:
-        if not isinstance(value, str):
-            return False
-        try:
-            datetime.strptime(value, "%Y-%m-%d")
-            return False
-        except ValueError:
-            return True
-
-    def _correct_false_date(self, value: str) -> str:
-        parts = value.split("-")
-        year = int(parts[0])
-        month = int(parts[1])
-        day = int(parts[2])
-        firstday = 1
-        lastday = calendar.monthrange(year, month)[1]
-        day = firstday if day == 0 else lastday
-        return f"{year:04d}-{month:02d}-{day:02d}"
 
     def _day_is_missing(self, value:str) -> bool:
         if re.fullmatch(r"\d{4}-\d{2}-?", value) or re.fullmatch(r"\d{2}/\d{4}", value):
@@ -245,74 +224,65 @@ class DateNormalizer:
             candidate = original_series.iloc[j]
             if isinstance(candidate, str) and len(
                     candidate) >= 10 and "x" not in candidate and "..." not in candidate:
+                self.logger.info(f"Completing missing month for: {value} with {candidate}")
                 ref_parts = candidate[:10].split("-")
                 if len(ref_parts) != 3:
                     continue
                 ref_month = ref_parts[1]
                 return f"{year_str}-{ref_month}-{day_str}"
 
+    def _year_is_missing(self, value: str) -> bool:
+        if re.fullmatch(r"\d{2}-\d{2}-\d{2}", value):
+            return True
+        return False
 
-    def _is_partial_date(self, value: str) -> bool:
-        return isinstance(value, str) and any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "roto",
-                                                                               "ilegible","primeros",
-                                                                                          "a los dias"])
+    def _add_missing_year(self, value: str, original_series: pd.Series, idx: int) -> Union[str, None]:
+        parts = value.split("-")
+        year_str, month_str, day_str = parts
+        for j in range(idx - 1, -1, -1):
+            candidate = original_series.iloc[j]
+            if isinstance(candidate, str) and len(
+                    candidate) >= 10 and "x" not in candidate and "..." not in candidate:
+                self.logger.info(f"Completing missing year for: {value} with {candidate}")
+                ref_parts = candidate[:10].split("-")
+                if len(ref_parts) != 3:
+                    continue
+                return f"{ref_parts[0]}-{month_str}-{day_str}"
 
+    def _convert_excel_serial(self, value: str) -> str:
+        serial = int(value)
+        epoch = datetime(1899, 12, 30)
+        dt = epoch + timedelta(days=serial)
+        return dt.strftime("%Y-%m-%d")
 
-    def _complete_partial_date(self, value: str, original_series: pd.Series, idx: int) -> Union[str, None]:
-        self.logger.info(f"Completing partial date for: {value}")
-        # 1. Missing day (e.g., '1834-10-' or '1834-10')
-        if re.fullmatch(r"\d{4}-\d{2}-?", value):
-            self.logger.info(f"Completing missing day for: {value}")
-            parts = value.split("-")
-            if len(parts) >= 2:
-                year, month = parts[0], parts[1]
-                return f"{int(year):04d}-{int(month):02d}-01"
+    def _is_false_date(self, value: str) -> bool:
+        if not isinstance(value, str):
+            return False
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+            return False
+        except ValueError:
+            return True
 
-        # 2. Missing month
-        if re.fullmatch(r"\d{4}-\D+-\d{2}", value):
-            parts = value.split("-")
-            year_str, month_str, day_str = parts
-            for j in range(idx - 1, -1, -1):
-                candidate = original_series.iloc[j]
-                if isinstance(candidate, str) and len(
-                        candidate) >= 10 and "x" not in candidate and "..." not in candidate:
-                    ref_parts = candidate[:10].split("-")
-                    if len(ref_parts) != 3:
-                        continue
-                    ref_month = ref_parts[1]
-                    return f"{year_str}-{ref_month}-{day_str}"
+    def _correct_false_date(self, value: str) -> str:
+        parts = value.split("-")
+        year = int(parts[0])
+        month = int(parts[1])
+        day = int(parts[2])
+        firstday = 1
+        lastday = calendar.monthrange(year, month)[1]
+        day = firstday if day == 0 else lastday
+        return f"{year:04d}-{month:02d}-{day:02d}"
 
-
-        # 3. Missing year
-        if (("x" in value[:4]) or ("." in value[:4])) and re.match(r".+-\d{2}-\d{2}", value):
-            parts = value.split("-")
-            year_str, month_str, day_str = parts
-            for j in range(idx - 1, -1, -1):
-                candidate = original_series.iloc[j]
-                if isinstance(candidate, str) and len(
-                        candidate) >= 10 and "x" not in candidate and "..." not in candidate:
-                    ref_parts = candidate[:10].split("-")
-                    if len(ref_parts) != 3:
-                        continue
-                    return f"{ref_parts[0]}-{month_str}-{day_str}"
-
-        # 4. Wrong format
-        if re.fullmatch(r"\d{2}/\d{4}", value):
-            parts = value.split("/")
-            return f"{int(parts[1]):04d}-{int(parts[0]):02d}-01"
-        
-        return None
 
     def _strip_all_brackets_and_quotes(self, value: str) -> str:
         """
         Remove all characters except digits, dashes, and x (lowercase only)
         """
-        self.logger.info(f"Stripping brackets and quotes from: {value}")
         if not isinstance(value, str):
             return value
         value = re.sub(r'[^0-9\/\-]', '', value)
         value = value.lower()
-        self.logger.info(f"Stripped value: {value}")
         return value.strip()
 
 
