@@ -262,7 +262,9 @@ class DateNormalizer:
     def _strip_all_brackets_and_quotes(self, value: str) -> str:
         if not isinstance(value, str):
             return value
-        return re.sub(r'[\[\]"\'?]', '', value)
+        value = re.sub(r'[^0-9\/\-]', '', value) # Remove all characters except digits, dashes, and x (lowercase only)
+        value = value.lower()
+        return value.strip()
 
 
     def _is_roto_or_ilegible(self, value: str) -> bool:
