@@ -164,11 +164,8 @@ class DateNormalizer:
         if self._is_excel_serial(value):
             return self._convert_excel_serial(value)
 
-        if self._is_roto_or_ilegible(value):
-            return self._resolve_roto(value)
-
-        if self._is_partial_date(value):
-            return self._complete_partial_date(value, self.original_series, idx)
+        if self._day_is_missing(value):
+            return self._add_missing_day(value)
 
         if self._is_false_date(value):
             return self._correct_false_date(value)
@@ -214,6 +211,26 @@ class DateNormalizer:
         day = firstday if day == 0 else lastday
         return f"{year:04d}-{month:02d}-{day:02d}"
 
+    def _day_is_missing(self, value:str) -> bool:
+        if re.fullmatch(r"\d{4}-\d{2}-?", value) or re.fullmatch(r"\d{2}/\d{4}", value):
+            return True
+        return False
+
+    def _add_missing_day(self, value: str) -> Union[str, None]:
+        if re.fullmatch(r"\d{4}-\d{2}-?", value):
+            self.logger.info(f"Completing missing day for: {value}")
+            parts = value.split("-")
+            if len(parts) >= 2:
+                year, month = parts[0], parts[1]
+                return f"{int(year):04d}-{int(month):02d}-01"
+            
+        if re.fullmatch(r"\d{2}/\d{4}", value):
+            parts = value.split("/")
+            return f"{int(parts[1]):04d}-{int(parts[0]):02d}-01"
+
+        return None
+        
+
     def _is_partial_date(self, value: str) -> bool:
         return isinstance(value, str) and any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "roto",
                                                                                "ilegible","primeros",
@@ -221,10 +238,14 @@ class DateNormalizer:
 
 
     def _complete_partial_date(self, value: str, original_series: pd.Series, idx: int) -> Union[str, None]:
-        # 1. Missing day
-        if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value):
+        self.logger.info(f"Completing partial date for: {value}")
+        # 1. Missing day (e.g., '1834-10-' or '1834-10')
+        if re.fullmatch(r"\d{4}-\d{2}-?", value):
+            self.logger.info(f"Completing missing day for: {value}")
             parts = value.split("-")
-            return f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
+            if len(parts) >= 2:
+                year, month = parts[0], parts[1]
+                return f"{int(year):04d}-{int(month):02d}-01"
 
         # 2. Missing month
         if re.fullmatch(r"\d{4}-\D+-\d{2}", value):
@@ -258,34 +279,18 @@ class DateNormalizer:
         if re.fullmatch(r"\d{2}/\d{4}", value):
             parts = value.split("/")
             return f"{int(parts[1]):04d}-{int(parts[0]):02d}-01"
+        
+        return None
 
     def _strip_all_brackets_and_quotes(self, value: str) -> str:
+        """
+        Remove all characters except digits, dashes, and x (lowercase only)
+        """
         if not isinstance(value, str):
             return value
-        value = re.sub(r'[^0-9\/\-]', '', value) # Remove all characters except digits, dashes, and x (lowercase only)
+        value = re.sub(r'[^0-9\/\-]', '', value)
         value = value.lower()
         return value.strip()
-
-
-    def _is_roto_or_ilegible(self, value: str) -> bool:
-        return isinstance(value, str) and any(keyword in value for keyword in ["roto", "ilegible"])
-
-    def _resolve_roto(self,value: str) -> str:
-        m = re.search(r"roto:\s*(?:del\s*)?(\d{1,2})\s*(?:al|o)\s*(\d{1,2})", value)
-        if m:
-            start_day = int(m.group(1))
-            end_day = int(m.group(2))
-            avg_day = (start_day + end_day) // 2
-            prefix = value.split('[')[0].rstrip('-')
-            parts = prefix.split('-')
-            if len(parts) >= 2:
-                year, month = parts[0], parts[1]
-                return f"{int(year):04d}-{int(month):02d}-{avg_day:02d}"
-
-        if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value):
-            parts = value.split("-")
-            return f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
-        return value
 
 
 class AgeInferrer:

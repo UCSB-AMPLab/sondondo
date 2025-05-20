@@ -54,6 +54,11 @@ test_cases = {
     ]
 }
 
+invalid_dates_reports = [
+    "reports/bautismos_date_report_invalid_dates.txt",
+    "reports/entierros_date_report_invalid_dates.txt",
+    "reports/matrimonios_date_report_invalid_dates.txt"
+]
 
 def test_date_normalizer():
     """Test the DateNormalizer class with all test cases"""
@@ -137,6 +142,38 @@ def test_false_dates():
     
     pd.DataFrame(results).to_csv(LOGS_DIR / "false_dates_results.csv", index=False)
     logger.info(f"False dates results saved to {LOGS_DIR}/false_dates_results.csv")
+
+def test_missing_day():
+    """Test this case separatelly"""
+    logger = setup_test_logger("test_missing_day")
+
+    missing_days = [
+        ("1793-02-...", "1793-02-01"),
+        ("1796-03-..", "1796-03-01"),
+        ("1896-07-[roto]", "1896-07-01"),
+        ("02/1800", "1800-02-01")
+    ]
+
+    results = []
+    for input_date, expected in missing_days:
+        test_series = pd.Series([input_date])
+        normalizer = DateNormalizer(test_series)
+        result = normalizer.normalize().iloc[0]
+
+        logger.info(f"Testing missing day: '{input_date}'")
+        logger.info(f"Expected: {expected}, Got: {result}")
+
+        results.append({
+            'input': input_date,
+            'expected': expected,
+            'actual': result,
+            'passed': result == expected
+        })
+
+        assert result == expected, f"Failed for missing day '{input_date}': expected {expected}, got {result}"
+
+    pd.DataFrame(results).to_csv(LOGS_DIR / "missing_days_results.csv", index=False)
+    logger.info(f"Missing days results saved to {LOGS_DIR}/missing_days_results.csv")
 
 def test_partial_dates():
     """Test specifically partial dates normalization"""
