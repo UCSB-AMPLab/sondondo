@@ -321,11 +321,15 @@ class AgeInferrer:
             if m:
                 return timedelta(days=int(m.group(1)))
         if "mes" in t:
-            num = int(re.search(r"(\d+)", t).group(1))
-            return timedelta(days=num * 30)
+            m = re.search(r"(\d+)", t)
+            if m:
+                num = int(m.group(1))
+                return timedelta(days=num * 30)
         if "año" in t or "ano" in t:
-            num = int(re.search(r"(\d+)", t).group(1))
-            return timedelta(days=num * 365)
+            m = re.search(r"(\d+)", t)
+            if m:
+                num = int(m.group(1))
+                return timedelta(days=num * 365)
 
         return None
 
