@@ -168,7 +168,6 @@ class DateNormalizer:
             return self._add_missing_month(value, self.original_series, idx)
 
         if self._year_is_missing(value):
-            self.logger.info(f"CATCH! Completing missing year for: {value}")
             return self._add_missing_year(value, self.original_series, idx)
 
         if self._is_excel_serial(value):
