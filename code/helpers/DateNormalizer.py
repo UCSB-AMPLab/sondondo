@@ -161,7 +161,7 @@ class DateNormalizer:
 
         return self.normalized_series
 
-    def _normalize_single_value(self, value: str,idx: int):
+    def _normalize_single_value(self, value: str, idx) -> Union[str, None]:
 
         value = self._strip_all_brackets_and_quotes(value)
 
