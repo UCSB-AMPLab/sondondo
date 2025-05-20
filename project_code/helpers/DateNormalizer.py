@@ -166,6 +166,9 @@ class DateNormalizer:
 
         if self._day_is_missing(value):
             return self._add_missing_day(value)
+        
+        if self._month_is_missing(value):
+            return self._add_missing_month(value, self.original_series, idx)
 
         if self._is_false_date(value):
             return self._correct_false_date(value)
@@ -230,6 +233,24 @@ class DateNormalizer:
 
         return None
         
+    def _month_is_missing(self, value: str) -> bool:
+        if re.fullmatch(r"\d{4}--\d{2}", value):
+            return True
+        return False
+    
+    def _add_missing_month(self, value: str, original_series: pd.Series, idx: int) -> Union[str, None]:
+        parts = value.split("-")
+        year_str, month_str, day_str = parts
+        for j in range(idx - 1, -1, -1):
+            candidate = original_series.iloc[j]
+            if isinstance(candidate, str) and len(
+                    candidate) >= 10 and "x" not in candidate and "..." not in candidate:
+                ref_parts = candidate[:10].split("-")
+                if len(ref_parts) != 3:
+                    continue
+                ref_month = ref_parts[1]
+                return f"{year_str}-{ref_month}-{day_str}"
+
 
     def _is_partial_date(self, value: str) -> bool:
         return isinstance(value, str) and any(keyword in value for keyword in ["x", "xx", "...", "..", "/", "roto",
@@ -286,10 +307,12 @@ class DateNormalizer:
         """
         Remove all characters except digits, dashes, and x (lowercase only)
         """
+        self.logger.info(f"Stripping brackets and quotes from: {value}")
         if not isinstance(value, str):
             return value
         value = re.sub(r'[^0-9\/\-]', '', value)
         value = value.lower()
+        self.logger.info(f"Stripped value: {value}")
         return value.strip()
 
 
