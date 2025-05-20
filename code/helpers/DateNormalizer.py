@@ -361,11 +361,11 @@ class AgeInferrer:
 
                     if result is not None:
                         self.logger.info(
-                            f"[AgeInferrer] Inferred birthdate at index {idx}: '{result}' from age='{val}' and baptism_date='{self.date_series.loc[idx]}'"
+                            f"[AgeInferrer] Inferred birthdate at index {idx}: '{result}' from age='{val}' and baptism_date='{self.date_series.iloc[idx]}'" # type: ignore
                         )
                     else:
                         self.logger.warning(
-                            f"[AgeInferrer] Failed to infer birthdate at index {idx} from age='{val}' and baptism_date='{self.date_series.loc[idx]}'"
+                            f"[AgeInferrer] Failed to infer birthdate at index {idx} from age='{val}' and baptism_date='{self.date_series.loc[idx]}'" # type: ignore
                         )
                 except Exception as e:
                     self.logger.error(
