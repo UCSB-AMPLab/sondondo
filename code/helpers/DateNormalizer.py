@@ -357,7 +357,7 @@ class AgeInferrer:
             if isinstance(val, str) and any(
                     k in val.lower() for k in ["dia", "mes", "año", "ano", "medio", "días", "día"]):
                 try:
-                    result = self.infer_birthdate(idx, val)
+                    result = self.infer_birthdate(idx, val) # type: ignore
 
                     if result is not None:
                         self.logger.info(
