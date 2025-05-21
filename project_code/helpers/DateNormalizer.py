@@ -291,7 +291,7 @@ class DateNormalizer:
 
 class AgeInferrer:
     def __init__(self, date_series: pd.Series) -> None:
-        self.date_series = pd.to_datetime(date_series)
+        self.date_series = pd.to_datetime(date_series, errors='coerce')
         self.logger = setup_logger("AgeInferrer")
 
     def parse_birth_age_to_timedelta(self, text: str) -> timedelta | None:
