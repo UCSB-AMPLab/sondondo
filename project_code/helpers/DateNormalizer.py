@@ -370,7 +370,7 @@ class AgeInferrer:
         text = ''.join(c for c in text if unicodedata.category(c) != 'Mn')
 
         # Lower case and strip punctuation
-        text = re.sub(r'[^\w\s]', '', text.lower())
+        text = re.sub(r"[^\w\s]", "", text.lower())
 
         # Remove extra spaces
         text = re.sub(r'\s+', ' ', text).strip()
