@@ -1,39 +1,41 @@
 import re
 from typing import Union
+import unicodedata
 import numpy as np
 import pandas as pd
 from helpers.LogerHandler import setup_logger
 
 
 class NamesManager:
+    SIC_ILEGIBLE_PATTERN = re.compile(r"[\(\[\{]?\s*(sic|ilegible)\s*[\)\]\}]?", re.IGNORECASE)
+    QUOTED_TEXT_PATTERN = re.compile(r'"([^"]+)"')
+    COMMA_NAME_PATTERN = re.compile(r"^([^\n,]+),\s(.+)$")
+    NON_ALPHA_PATTERN = re.compile(r"[^a-zñáéíóúü\s]")
+    EXTRA_SPACES_PATTERN = re.compile(r"\s+")
+    FILLER_TERMS_PATTERN = re.compile(r"\b(?:n/?a|na)\b", re.IGNORECASE)
+
     def __init__(self):
-        # Add known filler terms or other annotation patterns here if needed
-        self.filler_terms = {"n/a", "na"}
         self.logger = setup_logger("NamesManager")
 
     def clean_name(self, name: str) -> Union[str, None]:
-        """
-        Cleans a name string by:
-        - Lowercasing
-        - Removing non-alphabetic characters (keeps spaces and accented letters)
-        - Removing known filler terms
-        - Removing extra spaces
-        """
         if not isinstance(name, str):
             return None
+
+        original_name = name
+        name = unicodedata.normalize("NFKC", name)
+
+        name = self.SIC_ILEGIBLE_PATTERN.sub("", name)
+        name = re.sub(r"N\.", "", name)
+        name = self.COMMA_NAME_PATTERN.sub(r"\2 \1", name)
+        name = self.QUOTED_TEXT_PATTERN.sub("", name)
         
-        self.logger.info(f"Original name: {name}")
-
-        name = re.sub(r"\b[\(\[\{]?\s*(sic|ilegible)\s*[\)\]\}9]?\b", "", name, flags=re.IGNORECASE).strip() # remove 'sic' and 'ilegible'
-        name = re.sub(r"N\.", "", name)  # remove 'N.'
-        name = re.sub(r"^([^\n,]+),\s(.+)$", r"\2 \1", name)  # swap first and last names if comma is present
-        name = re.sub(r'"([^"]+)"', "", name)  # remove everything between double quotes
         name = name.lower()
-        name = re.sub(r"\s+", " ", name).strip() # remove extra spaces
-        name = re.sub(r"[^a-zñáéíóúü\s]", "", name)         # keep only letters and spaces
-        name = re.sub(r"\b(?:n/?a|na)\b", "", name)         # remove known filler terms
+        name = self.EXTRA_SPACES_PATTERN.sub(" ", name).strip()
+        name = self.NON_ALPHA_PATTERN.sub("", name)
+        name = self.FILLER_TERMS_PATTERN.sub("", name)
+        name = self.EXTRA_SPACES_PATTERN.sub(" ", name).strip()
 
-        self.logger.info(f"Cleaned name: {name}")
+        self.logger.info(f"Original name: {original_name} → Cleaned: {name}")
 
         return name if name else None
 
