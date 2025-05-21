@@ -297,7 +297,7 @@ class AgeInferrer:
 
     def parse_birth_age_to_timedelta(self, text: str) -> Union[timedelta, None]:
         
-        if not isinstance(text, str):
+        if not isinstance(text, str) or text.strip() == "":
             return None
 
         t = self._normalize_text(text)
