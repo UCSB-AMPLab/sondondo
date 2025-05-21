@@ -294,7 +294,7 @@ class AgeInferrer:
         self.date_series = pd.to_datetime(date_series, errors='coerce')
         self.logger = setup_logger("AgeInferrer")
 
-    def parse_birth_age_to_timedelta(self, text: str) -> timedelta | None:
+    def parse_birth_age_to_timedelta(self, text: str) -> Union[timedelta, None]:
         t = text.lower().strip()
         t = re.sub(r'^["“”\'«]+|["“”\'»]+$', '', t)
 
@@ -336,7 +336,7 @@ class AgeInferrer:
 
         return None
 
-    def infer_birthdate(self, idx: int, age_desc: str) -> str | None:
+    def infer_birthdate(self, idx: int, age_desc: str) -> Union[str, None]:
         bapt = self.date_series.loc[idx]
         if pd.isna(bapt):
             return None
