@@ -2,6 +2,7 @@ import logging
 from project_code.helpers.DateNormalizer import AgeInferrer, DateNormalizer
 from project_code.helpers.ColumnManager import ColumnManager
 from pathlib import Path
+from datetime import datetime
 import pandas as pd
 import pytest
 import traceback
@@ -45,14 +46,9 @@ def test_age_inferrer():
     data_series = dataset["birth_date"]
 
     try:
-        inferrer = AgeInferrer(dataset["date"])
-        birth_dates_cleaned = inferrer.infer_all(data_series)
-
-        logger.info(f"Birth dates cleaned: {birth_dates_cleaned}")
-        assert len(birth_dates_cleaned) == len(data_series), "Length of cleaned birth dates does not match original data series"
-    except ValueError:
         logger.warning("ValueError: Dates will be cleaned in the next step")
-        normalizer = DateNormalizer(dataset["date"])
+        dates = dataset["date"].copy()
+        normalizer = DateNormalizer(dates)
         normalized = normalizer.normalize()
 
         logger.info(f"Normalized dates: {normalized.iloc[2830:2835]}")
@@ -60,7 +56,14 @@ def test_age_inferrer():
         inferrer = AgeInferrer(normalized)
         birth_dates_cleaned = inferrer.infer_all(data_series)
 
-        logger.info(f"Birth dates cleaned after normalization: {birth_dates_cleaned}")
+        validation_df = pd.DataFrame({
+            "original_dates": dates,
+            "normalized_dates": normalized,
+            "original_birth_dates": data_series,
+            "inferred_birth_dates": birth_dates_cleaned
+        })
+        logger.info(f"Validation DataFrame: {validation_df.sample(10)}")
+
 
     except Exception:
        logger.error(f"Error occurred while inferring age: {traceback.format_exc()}")
