@@ -1,15 +1,13 @@
 import re
 import pandas as pd
-import logging
+from project_code.helpers.LogerHandler import setup_logger
 
-# set up logging
-logging.basicConfig(level=logging.INFO, filename="logs/names_explorer.log")
-logger = logging.getLogger(__name__)
 
 class NamesManager:
     def __init__(self):
         # Add known filler terms or other annotation patterns here if needed
         self.filler_terms = {"n/a", "na"}
+        self.logger = setup_logger("NamesManager")
 
     def clean_name(self, name: str) -> str | None:
         """
@@ -40,7 +38,7 @@ class NamesManager:
 
         null_count = len(series) - cleaned_non_null         # number of null/uncleanable values
 
-        logger.info(
+        self.logger.info(
             f"[{label}] Cleaned {original_non_null} entries → "
             f"{cleaned_non_null} valid, {null_count} null or uncleanable"
         )
