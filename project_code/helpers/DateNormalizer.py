@@ -313,8 +313,8 @@ class AgeInferrer:
 
         # Pattern 2: Combined years/months/days e.g. "1 año 2 meses 10 dias"
         m2 = re.fullmatch(
-            r"(?:(\d+)\s*anos?)?\s*"
-            r"(?:(\d+)\s*mes(?:es)?)?\s*"
+            r"(?:(\d+)\s*anos?)?\s*(?:y\s*)?"
+            r"(?:(\d+)\s*mes(?:es)?)?\s*(?:y\s*)?"
             r"(?:(\d+)\s*dias?)?",
             t
         )
