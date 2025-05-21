@@ -2,7 +2,7 @@ import logging
 from project_code.helpers.DateNormalizer import AgeInferrer, DateNormalizer
 from project_code.helpers.ColumnManager import ColumnManager
 from pathlib import Path
-from datetime import datetime
+from datetime import timedelta
 import pandas as pd
 import pytest
 import traceback
@@ -68,4 +68,33 @@ def test_age_inferrer():
     except Exception:
        logger.error(f"Error occurred while inferring age: {traceback.format_exc()}")
        return
-    
+
+
+dummy_series = pd.Series(["1900-01-01"] * 10)
+
+@pytest.fixture
+def inferrer():
+    return AgeInferrer(dummy_series)
+
+@pytest.mark.parametrize("age_text,expected", [
+    ("del día", timedelta(days=0)),
+    ("5 días", timedelta(days=5)),
+    ("20 dias", timedelta(days=20)),
+    ("1 mes", timedelta(days=30)),
+    ("2 meses", timedelta(days=60)),
+    ("3 meses y medio", timedelta(days=105)),
+    ("1 año", timedelta(days=365)),
+    ("2 años", timedelta(days=730)),
+    ("1 año 2 meses", timedelta(days=365 + 60)),
+    ("1 año 2 meses 10 días", timedelta(days=365 + 60 + 10)),
+    ("3 meses y 10 días", timedelta(days=90 + 10)),
+    ("1 mes y 20 días", timedelta(days=30 + 20)),
+    ("  2    meses   y   medio ", timedelta(days=60 + 15)),
+    ("5 “días”", timedelta(days=5)),
+    ("1 año, 1 mes y 1 día", timedelta(days=365 + 30 + 1)),  # even with punctuation
+    ("", None),
+    ("edad desconocida", None),
+    ("año y medio", None),  # Not supported yet
+])
+def test_parse_birth_age_to_timedelta(inferrer, age_text, expected):
+    assert inferrer.parse_birth_age_to_timedelta(age_text) == expected
