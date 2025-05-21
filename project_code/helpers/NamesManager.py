@@ -24,22 +24,18 @@ class NamesManager:
         
         self.logger.info(f"Original name: {name}")
 
-        name = self._remove_transcription_indicators(name)
-
+        name = re.sub(r"\b[\(\[\{]?\s*(sic|ilegible)\s*[\)\]\}9]?\b", "", name, flags=re.IGNORECASE).strip() # remove 'sic' and 'ilegible'
+        name = re.sub(r"N\.", "", name)  # remove 'N.'
+        name = re.sub(r"^([^\n,]+),\s(.+)$", r"\2 \1", name)  # swap first and last names if comma is present
+        name = re.sub(r'"([^"]+)"', "", name)  # remove everything between double quotes
         name = name.lower()
+        name = re.sub(r"\s+", " ", name).strip() # remove extra spaces
         name = re.sub(r"[^a-zñáéíóúü\s]", "", name)         # keep only letters and spaces
         name = re.sub(r"\b(?:n/?a|na)\b", "", name)         # remove known filler terms
-        name = re.sub(r"\s+", " ", name).strip()            # removes double/extra spaces
 
         self.logger.info(f"Cleaned name: {name}")
 
         return name if name else None
-    
-    def _remove_transcription_indicators(self, name: str) -> str:
-        """
-        Remove the terms 'sic' and 'ilegible' from the name.
-        """
-        return re.sub(r"\b[\(\[\{]?\s*(sic|ilegible)\s*[\)\]\}]?\b", "", name, flags=re.IGNORECASE).strip()
 
     def clean_series(self, series: pd.Series, label: str = "") -> pd.Series:
         """
