@@ -1,5 +1,6 @@
 import re
 from typing import Union
+import numpy as np
 import pandas as pd
 from helpers.LogerHandler import setup_logger
 
@@ -21,10 +22,14 @@ class NamesManager:
         if not isinstance(name, str):
             return None
         
+        self.logger.info(f"Original name: {name}")
+        
         name = name.lower()
         name = re.sub(r"[^a-zñáéíóúü\s]", "", name)         # keep only letters and spaces
         name = re.sub(r"\b(?:n/?a|na)\b", "", name)         # remove known filler terms
         name = re.sub(r"\s+", " ", name).strip()            # removes double/extra spaces
+
+        self.logger.info(f"Cleaned name: {name}")
 
         return name if name else None
     
