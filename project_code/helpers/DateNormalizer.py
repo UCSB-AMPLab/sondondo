@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import List, Tuple, Union
+import numpy as np
 import pandas as pd
 from project_code.helpers.Preprocessing import PreprocessingDates
 from datetime import datetime, timedelta
@@ -154,7 +155,10 @@ class DateNormalizer:
 
         return self.normalized_series
 
-    def _normalize_single_value(self, value: str, idx) -> Union[str, None]:
+    def _normalize_single_value(self, value: str, idx) -> Union[str, float, None]:
+
+        if pd.isna(value):
+            return np.nan
 
         value = self._strip_all_brackets_and_quotes(value)
 
