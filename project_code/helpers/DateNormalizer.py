@@ -6,6 +6,7 @@ from project_code.helpers.Preprocessing import PreprocessingDates
 from datetime import datetime, timedelta
 import calendar
 import re
+import unicodedata
 from project_code.helpers.LogerHandler import setup_logger
 
 class DatesExplorer:
@@ -295,21 +296,24 @@ class AgeInferrer:
         self.logger = setup_logger("AgeInferrer")
 
     def parse_birth_age_to_timedelta(self, text: str) -> Union[timedelta, None]:
-        t = text.lower().strip()
-        t = re.sub(r'^["“”\'«]+|["“”\'»]+$', '', t)
+        t = self._normalize_text(text)
+        if not isinstance(t, str):
+            return None
 
         if t == "del día":
             return timedelta(days=0)
 
+        # Pattern 1: "3 meses y medio"
         m = re.match(r"(\d+)\s*mes(?:es)?\s*y\s*medio", t)
         if m:
             months = int(m.group(1))
             return timedelta(days=months * 30 + 15)
 
+        # Pattern 2: Combined years/months/days e.g. "1 año 2 meses 10 dias"
         m2 = re.fullmatch(
-            r"(?:(\d+)\s*a[nñ]os?)?\s*"
-            r"(?:(\d+)\s*mes(?:es)?)?"
-            r"(?:\s*y\s*(\d+)\s*d[ií]as?)?",
+            r"(?:(\d+)\s*anos?)?\s*"
+            r"(?:(\d+)\s*mes(?:es)?)?\s*"
+            r"(?:(\d+)\s*dias?)?",
             t
         )
         if m2:
@@ -319,19 +323,15 @@ class AgeInferrer:
             return timedelta(days=years * 365 + months * 30 + days)
 
         # Pattern 3: "8 dias", "4 meses", "1 año"
-        if re.search(r"d[ií]as?", t):
-            m = re.search(r"(\d+)", t)
-            if m:
-                return timedelta(days=int(m.group(1)))
-        if "mes" in t:
-            m = re.search(r"(\d+)", t)
-            if m:
-                num = int(m.group(1))
+        m = re.match(r"(\d+)\s*(dias?|mes(?:es)?|anos?)", t)
+        if m:
+            num = int(m.group(1))
+            unit = m.group(2)
+            if "dia" in unit:
+                return timedelta(days=num)
+            elif "mes" in unit:
                 return timedelta(days=num * 30)
-        if "año" in t or "ano" in t:
-            m = re.search(r"(\d+)", t)
-            if m:
-                num = int(m.group(1))
+            elif "ano" in unit:
                 return timedelta(days=num * 365)
 
         return None
@@ -353,6 +353,20 @@ class AgeInferrer:
             return True
         except:
             return False
+        
+    def _normalize_text(self, val: str) -> str:
+        
+        # Stripping accents and special characters
+        text = unicodedata.normalize('NFD', val)
+        text = ''.join(c for c in text if unicodedata.category(c) != 'Mn')
+
+        # Lower case and strip punctuation
+        text = re.sub(r'[^\w\s]', '', text.lower())
+
+        # Remove extra spaces
+        text = re.sub(r'\s+', ' ', text).strip()
+
+        return text
 
     def infer_all(self, age_series: pd.Series) -> pd.Series:
         results = []
