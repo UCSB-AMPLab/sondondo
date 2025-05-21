@@ -23,7 +23,9 @@ class NamesManager:
             return None
         
         self.logger.info(f"Original name: {name}")
-        
+
+        name = self._remove_transcription_indicators(name)
+
         name = name.lower()
         name = re.sub(r"[^a-zñáéíóúü\s]", "", name)         # keep only letters and spaces
         name = re.sub(r"\b(?:n/?a|na)\b", "", name)         # remove known filler terms
@@ -33,6 +35,12 @@ class NamesManager:
 
         return name if name else None
     
+    def _remove_transcription_indicators(self, name: str) -> str:
+        """
+        Remove the terms 'sic' and 'ilegible' from the name.
+        """
+        return re.sub(r"\b[\(\[\{]?\s*(sic|ilegible)\s*[\)\]\}]?\b", "", name, flags=re.IGNORECASE).strip()
+
     def clean_series(self, series: pd.Series, label: str = "") -> pd.Series:
         """
         Applies clean_name to a pandas Series.
