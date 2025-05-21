@@ -296,11 +296,13 @@ class AgeInferrer:
         self.logger = setup_logger("AgeInferrer")
 
     def parse_birth_age_to_timedelta(self, text: str) -> Union[timedelta, None]:
-        t = self._normalize_text(text)
-        if not isinstance(t, str):
+        
+        if not isinstance(text, str):
             return None
 
-        if t == "del día":
+        t = self._normalize_text(text)
+
+        if t == "del dia":
             return timedelta(days=0)
 
         # Pattern 1: "3 meses y medio"
