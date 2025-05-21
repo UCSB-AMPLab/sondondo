@@ -324,6 +324,13 @@ class AgeInferrer:
             days = int(m2.group(3)) if m2.group(3) else 0
             return timedelta(days=years * 365 + months * 30 + days)
 
+        # Pattern 2.5: "X meses y Y días"
+        m25 = re.fullmatch(r"(\d+)\s*mes(?:es)?\s*y\s*(\d+)\s*dias?", t)
+        if m25:
+            months = int(m25.group(1))
+            days = int(m25.group(2))
+            return timedelta(days=months * 30 + days)
+
         # Pattern 3: "8 dias", "4 meses", "1 año"
         m = re.match(r"(\d+)\s*(dias?|mes(?:es)?|anos?)", t)
         if m:
