@@ -1,4 +1,5 @@
 import re
+from typing import Union
 import pandas as pd
 from project_code.helpers.LogerHandler import setup_logger
 
@@ -9,7 +10,7 @@ class NamesManager:
         self.filler_terms = {"n/a", "na"}
         self.logger = setup_logger("NamesManager")
 
-    def clean_name(self, name: str) -> str | None:
+    def clean_name(self, name: str) -> Union[str, None]:
         """
         Cleans a name string by:
         - Lowercasing
