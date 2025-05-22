@@ -1,34 +1,44 @@
 import re
+from typing import Union
+import unicodedata
+import numpy as np
 import pandas as pd
-import logging
+from helpers.LogerHandler import setup_logger
 
-# set up logging
-logging.basicConfig(level=logging.INFO, filename="logs/names_explorer.log")
-logger = logging.getLogger(__name__)
 
 class NamesManager:
-    def __init__(self):
-        # Add known filler terms or other annotation patterns here if needed
-        self.filler_terms = {"n/a", "na"}
+    SIC_ILEGIBLE_PATTERN = re.compile(r"[\(\[\{]?\s*(sic|ilegible)\s*[\)\]\}]?", re.IGNORECASE)
+    QUOTED_TEXT_PATTERN = re.compile(r'"([^"]+)"')
+    COMMA_NAME_PATTERN = re.compile(r"^([^\n,]+),\s(.+)$")
+    NON_ALPHA_PATTERN = re.compile(r"[^a-zñáéíóúü\s]")
+    EXTRA_SPACES_PATTERN = re.compile(r"\s+")
+    FILLER_TERMS_PATTERN = re.compile(r"\b(?:n/?a|na)\b", re.IGNORECASE)
 
-    def clean_name(self, name: str) -> str | None:
-        """
-        Cleans a name string by:
-        - Lowercasing
-        - Removing non-alphabetic characters (keeps spaces and accented letters)
-        - Removing known filler terms
-        - Removing extra spaces
-        """
+    def __init__(self):
+        self.logger = setup_logger("NamesManager")
+
+    def clean_name(self, name: str) -> Union[str, None]:
         if not isinstance(name, str):
             return None
+
+        original_name = name
+        name = unicodedata.normalize("NFKC", name)
+
+        name = self.SIC_ILEGIBLE_PATTERN.sub("", name)
+        name = re.sub(r"N\.", "", name)
+        name = self.COMMA_NAME_PATTERN.sub(r"\2 \1", name)
+        name = self.QUOTED_TEXT_PATTERN.sub("", name)
         
         name = name.lower()
-        name = re.sub(r"[^a-zñáéíóúü\s]", "", name)         # keep only letters and spaces
-        name = re.sub(r"\b(?:n/?a|na)\b", "", name)         # remove known filler terms
-        name = re.sub(r"\s+", " ", name).strip()            # removes double/extra spaces
+        name = self.EXTRA_SPACES_PATTERN.sub(" ", name).strip()
+        name = self.NON_ALPHA_PATTERN.sub("", name)
+        name = self.FILLER_TERMS_PATTERN.sub("", name)
+        name = self.EXTRA_SPACES_PATTERN.sub(" ", name).strip()
+
+        self.logger.info(f"Original name: {original_name} → Cleaned: {name}")
 
         return name if name else None
-    
+
     def clean_series(self, series: pd.Series, label: str = "") -> pd.Series:
         """
         Applies clean_name to a pandas Series.
@@ -40,7 +50,7 @@ class NamesManager:
 
         null_count = len(series) - cleaned_non_null         # number of null/uncleanable values
 
-        logger.info(
+        self.logger.info(
             f"[{label}] Cleaned {original_non_null} entries → "
             f"{cleaned_non_null} valid, {null_count} null or uncleanable"
         )

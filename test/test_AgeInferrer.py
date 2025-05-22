@@ -1,6 +1,6 @@
 import logging
-from project_code.helpers.DateNormalizer import AgeInferrer, DateNormalizer
-from project_code.helpers.ColumnManager import ColumnManager
+from helpers.DateNormalizer import AgeInferrer, DateNormalizer
+from helpers.ColumnManager import ColumnManager
 from pathlib import Path
 from datetime import timedelta
 import pandas as pd
