@@ -6,7 +6,8 @@
 
 # Python cache
 __pycache__/
-logs/
+logs/*
+!logs/textanalysis.log
 
 # Submodules
 sondondo.wiki/

@@ -36,7 +36,10 @@ class ColumnManager:
         """
         Harmonize the columns of a CSV file using a mapping.
         """
-        df = pd.read_csv(csv_file, encoding="utf-8")
+        if not isinstance(csv_file, pd.DataFrame):
+            df = pd.read_csv(csv_file, encoding="utf-8")
+        else:
+            df = csv_file
         mapping = self.load_mapping(mapping_file)
         logger.info(f"Harmonizing columns from {csv_file} using mapping from {mapping_file}")
         try:

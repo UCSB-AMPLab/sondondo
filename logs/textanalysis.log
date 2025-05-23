@@ -1,0 +1,64 @@
+2025-05-22 20:33:12,304 - textAnalysis - INFO - re.compile('.*legitimacy.*')
+Top 15 keywords for each cluster:
+2025-05-22 20:33:12,304 - textAnalysis - INFO - Cluster 0
+2025-05-22 20:33:12,305 - textAnalysis - INFO - hijos,indigino,indigina,punas,natural,hijo natural,tributario,indio aucara,indio,espanol,legitimo,hijo legitimo,hijo,aucara,aucara hijo
+2025-05-22 20:33:12,305 - textAnalysis - INFO - Cluster 1
+2025-05-22 20:33:12,305 - textAnalysis - INFO - aucara hija,india ishua,india pampamarca,india chacralla,punas,legitima indigena,espanol,indigina,aucara,india aucara,legitima india,india,hija,legitima,hija legitima
+2025-05-22 20:33:12,305 - textAnalysis - INFO - Cluster 2
+2025-05-22 20:33:12,305 - textAnalysis - INFO - natural indio,chacralla,indijena,mestiza,indigina,pampamarca,hn,indigena,natural indigena,natural india,espanola,india,hija,natural,hija natural
+2025-05-22 20:33:12,305 - textAnalysis - INFO - Cluster 3
+2025-05-22 20:33:12,305 - textAnalysis - INFO - hn,hl hijo,hl hija,hl,indio,aucara,legitima,espanol,indo indio,indo,natural aucara,natural,hijo,hijo espurio,espurio
+2025-05-22 20:33:12,305 - textAnalysis - INFO - Cluster 4
+2025-05-22 20:33:12,305 - textAnalysis - INFO - hijo espurio,india,id,hn,hl hijo,hl hija,hl,hijos,hijo natural,hijo legitimo,id chacralla,vecino id,legitimo,natural,legitima
+2025-05-22 20:33:12,305 - textAnalysis - INFO - Cluster 5
+2025-05-22 20:33:12,305 - textAnalysis - INFO - indijino,indigena,legitimo india,legitimo espanol,indios,legitimo indigena,hija,ishua,natural,espanol,legitimo hija,legitimo natural,hijo legitimo,hijo,legitimo
+2025-05-22 20:33:12,305 - textAnalysis - INFO - Cluster 6
+2025-05-22 20:33:12,305 - textAnalysis - INFO - ishua,hl hijo,indigena,indo indio,indo,chacralla,indio ishua,pampamarca,indio chacralla,indio pampamarca,hijo,legitimo indio,hijo legitimo,legitimo,indio
+2025-05-22 20:33:12,305 - textAnalysis - INFO - Cluster 7
+2025-05-22 20:33:12,305 - textAnalysis - INFO - naturales,legitimos,hijo legitima,hl,legitima indio,legitima espanola,aucara,legitima natural,hija espuria,padre,espanola,espuria,hija legitima,legitima,hija
+2025-05-22 20:33:12,305 - textAnalysis - INFO - Cluster 8
+2025-05-22 20:33:12,305 - textAnalysis - INFO - indio pampamarca,indijina,natural indijina,chacralla,natural indigena,pampamarca,natural hija,chacralla hijo,espanol,natural natural,natural indio,indio,hijo,natural,hijo natural
+2025-05-22 20:33:55,452 - textAnalysis - INFO - re.compile('.*condition.*')
+Top 15 keywords for each cluster:
+2025-05-22 20:33:55,452 - textAnalysis - INFO - Cluster 0
+2025-05-22 20:33:55,452 - textAnalysis - INFO - tributarios dicho,ishua,aucara vecinos,pampamarca,pueblo ishua,tributarios,vecinos pueblo,pueblo pampamarca,vecinos dicho,aucara,vecinos,dicho pueblo,dicho,pueblo aucara,pueblo
+2025-05-22 20:33:55,452 - textAnalysis - INFO - Cluster 1
+2025-05-22 20:33:55,452 - textAnalysis - INFO - cabana,paire,ayacucho,aucara dona,huaycahuacho,chapa,aucara,mayo,caserio,pampamarca,chacralla,ishua,viceparroquia,dona,naturales
+2025-05-22 20:33:55,453 - textAnalysis - INFO - Cluster 2
+2025-05-22 20:33:55,453 - textAnalysis - INFO - viceparroquia,doctrina,doctrina aucara,aucara dona,tributarios,chapa,don,mayo,chacralla,ishua,aucara,pampamarca,indios aucara,dona,indios
+2025-05-22 20:33:55,453 - textAnalysis - INFO - Cluster 3
+2025-05-22 20:33:55,453 - textAnalysis - INFO - vecinos,cabana,vecino aucara,feligres,pampamarca,chacralla,vecino,aucara don,aucara,espanoles,espanol,dona don,don dona,dona,don
+2025-05-22 20:33:55,453 - textAnalysis - INFO - Cluster 4
+2025-05-22 20:33:55,453 - textAnalysis - INFO - indigena naturales,pampamarca naturales,india,raza india,india naturales,pampamarca,vecinos chacralla,raza,aucara naturales,vecinos pampamarca,aucara,vecinos aucara,naturales,naturales vecinos,vecinos
+2025-05-22 20:33:55,453 - textAnalysis - INFO - Cluster 5
+2025-05-22 20:33:55,453 - textAnalysis - INFO - residente,natural,mestiza,espanol,mestizos,naturales,raza,naturales feligreses,chacralla,indignas,feligreses,indigena,pampamarca,india,aucara
+2025-05-22 20:33:55,453 - textAnalysis - INFO - Cluster 6
+2025-05-22 20:33:55,453 - textAnalysis - INFO - vecinos,pueblo aucara,doctrina aucara,chacralla,viceparroquia,aucara don,pueblo,ayacucho,ishua,aucara dona,pampamarca,don,dona,aucara,espanoles
+2025-05-22 20:33:55,453 - textAnalysis - INFO - Cluster 7
+2025-05-22 20:33:55,453 - textAnalysis - INFO - india,aucara natural,umasi,raza,pampamarca,chacralla,indigena,vecino aucara,indigena natural,aucara,natural vecina,natural vecino,vecina,vecino,natural
+2025-05-22 20:33:55,453 - textAnalysis - INFO - Cluster 8
+2025-05-22 20:33:55,453 - textAnalysis - INFO - indigena,don dona,natural,indios aucara,ishua,viceparroquia,chapa,don,indios,india,dona,pampamarca,chacralla,aucara,indio
+2025-05-22 20:33:55,453 - textAnalysis - INFO - Cluster 9
+2025-05-22 20:33:55,453 - textAnalysis - INFO - mayo,chapa,aucara don,don dona,pueblo aucara,aucara dona,pueblo pampamarca,don,ishua,dona,pampamarca,pueblo,aucara,chacralla,indigenas
+2025-05-22 20:34:48,834 - textAnalysis - INFO - re.compile('.*marital.*')
+Top 15 keywords for each cluster:
+2025-05-22 20:34:48,834 - textAnalysis - INFO - Cluster 0
+2025-05-22 20:34:48,834 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,soltera,soltero,viuda,viudo
+2025-05-22 20:34:48,834 - textAnalysis - INFO - Cluster 1
+2025-05-22 20:34:48,834 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,soltera,viudo,viuda,soltero
+2025-05-22 20:34:48,834 - textAnalysis - INFO - Cluster 2
+2025-05-22 20:34:48,834 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,soltera,soltero,viudo,viuda
+2025-05-22 20:34:48,834 - textAnalysis - INFO - Cluster 3
+2025-05-22 20:34:48,835 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,soltera,soltero,viuda,viudo
+2025-05-22 20:34:48,835 - textAnalysis - INFO - Cluster 4
+2025-05-22 20:34:48,835 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,viuda,soltero,viudo,soltera
+2025-05-22 20:34:48,835 - textAnalysis - INFO - Cluster 5
+2025-05-22 20:34:48,835 - textAnalysis - INFO - casada,casado,esposa,mujer,soltera,soltero,viuda,viudo,marido
+2025-05-22 20:34:48,835 - textAnalysis - INFO - Cluster 6
+2025-05-22 20:34:48,835 - textAnalysis - INFO - casada,casado,esposa,marido,soltera,soltero,viuda,viudo,mujer
+2025-05-22 20:34:48,835 - textAnalysis - INFO - Cluster 7
+2025-05-22 20:34:48,835 - textAnalysis - INFO - casado,esposa,marido,mujer,soltera,soltero,viudo,viuda,casada
+2025-05-22 20:34:48,835 - textAnalysis - INFO - Cluster 8
+2025-05-22 20:34:48,835 - textAnalysis - INFO - casada,casado,marido,mujer,soltera,soltero,viuda,viudo,esposa
+2025-05-22 20:34:48,835 - textAnalysis - INFO - Cluster 9
+2025-05-22 20:34:48,835 - textAnalysis - INFO - casada,esposa,marido,mujer,soltera,soltero,viuda,viudo,casado
