@@ -1,0 +1,16 @@
+{
+  "legitimacy_status": {
+    "legítimo": "legitimo", "legitima": "legitimo", "legítima": "legitimo",
+    "ilegitimo": "ilegitimo", "ilegítimo": "ilegitimo", "espurio": "ilegitimo", "espuria": "ilegitimo",
+    "natural": "natural"
+  },
+  "marital_status": {
+    "soltero": "soltero", "soltera": "soltero", "casado": "casado", "casada": "casado", 
+    "viudo": "viudo", "viuda": "viudo", "divorciado": "divorciado", "divorciada": "divorciado",
+    "esposo": "casado", "esposa": "casado", "marido": "casado", "mujer": "casado"
+  },
+  "social_condition": [
+    "indio", "india", "indígena", "mestizo", "mestiza", 
+    "español", "española", "libre", "esclavo", "tributario", "vecino"
+  ]
+}
