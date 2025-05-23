@@ -236,7 +236,7 @@ class DateNormalizer:
                 return f"{year_str}-{ref_month}-{day_str}"
 
     def _year_is_missing(self, value: str) -> bool:
-        if re.fullmatch(r"\d{2}-\d{2}-\d{2}", value):
+        if re.fullmatch(r"\d{2,3}-\d{2}-\d{2}", value):
             return True
         return False
 
