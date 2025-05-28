@@ -5,7 +5,7 @@
     ],
     "attribute_mappings": {
       "Condición": {
-        "role": {
+        "gender": {
           "hijo": "hijo",
           "hija": "hija"
         }
