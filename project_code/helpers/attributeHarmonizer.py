@@ -64,8 +64,9 @@ def harmonize_text(mapping_dictionary: dict, data_to_transform: pd.Series) -> pd
             if key in value:
                 return lowercased_mapping[key]
                 
-        # If no matches are found, return NA
-        return pd.NA
+        # If no matches are found, log it and return the original
+        logger.warning(f"Unmapped value in column '{value}'")
+        return value
     
     # Apply the function to the Series
     return transformed.apply(transform_value)
