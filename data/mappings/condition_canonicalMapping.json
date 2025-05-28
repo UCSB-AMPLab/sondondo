@@ -2,7 +2,7 @@
   "legitimacy_status": {
     "legítimo": "legitimo", "legitima": "legitimo", "legítima": "legitimo",
     "ilegitimo": "ilegitimo", "ilegítimo": "ilegitimo", "espurio": "ilegitimo", "espuria": "ilegitimo",
-    "natural": "natural"
+    "natural": "ilegitimo"
   },
   "marital_status": {
     "soltero": "soltero", "soltera": "soltero", "casado": "casado", "casada": "casado", 
@@ -11,6 +11,7 @@
   },
   "social_condition": [
     "indio", "india", "indígena", "mestizo", "mestiza", 
-    "español", "española", "libre", "esclavo", "tributario", "vecino"
+    "español", "española", "libre", "esclavo", "tributario", "vecino",
+    "don", "dona"
   ]
 }
