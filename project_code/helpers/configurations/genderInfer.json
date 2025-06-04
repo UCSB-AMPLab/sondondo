@@ -1,14 +1,21 @@
 {
-    "data_path": "data/raw/bautismos.csv",
-    "columns_to_harmonize": [
-      "Condición"
-    ],
-    "attribute_mappings": {
-      "Condición": {
-        "gender": {
-          "hijo": "hijo",
-          "hija": "hija"
-        }
+
+  "data_path": "data/raw/bautismos.csv",
+  "input_csv":  "data/raw/bautismos.csv",
+  "output_csv": "data/interim/bautismos_with_genders.csv",
+
+  "columns_to_harmonize": [ "Condición" ],
+
+  "attribute_mappings": {
+    "Condición": {
+      "gender": {
+        "hijo":   "male",
+        "hija":   "female"
       }
     }
+  },
+  
+  "gender_guesser": {
+    "name_column": "Nombre del bautizado (a)"
   }
+}

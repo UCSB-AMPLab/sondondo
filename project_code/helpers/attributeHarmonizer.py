@@ -66,7 +66,7 @@ def harmonize_text(mapping_dictionary: dict, data_to_transform: pd.Series) -> pd
                 
         # If no matches are found, log it and return the original
         logger.warning(f"Unmapped value in column '{value}'")
-        return value
+        return "unknown"
     
     # Apply the function to the Series
     return transformed.apply(transform_value)
