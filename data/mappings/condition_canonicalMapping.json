@@ -9,9 +9,9 @@
     "viudo": "viudo", "viuda": "viudo", "divorciado": "divorciado", "divorciada": "divorciado",
     "esposo": "casado", "esposa": "casado", "marido": "casado", "mujer": "casado"
   },
-  "social_condition": [
-    "indio", "india", "indígena", "mestizo", "mestiza", 
-    "español", "española", "libre", "esclavo", "tributario", "vecino",
-    "don", "dona"
-  ]
+  "social_condition": {
+    "indio": "indio", "india": "indio", "indígena": "indio", "mestizo": "mestizo", "mestiza": "mestizo", 
+    "español": "español", "española": "español", "libre": "libre", "esclavo": "esclavo", "tributario": "tributario", "tributaria": "tributario", "vecino": "vecino", "vecina": "vecino",
+    "don": "don", "doña": "don"
+  }
 }
