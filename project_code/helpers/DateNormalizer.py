@@ -211,14 +211,18 @@ class DateNormalizer:
             parts = value.split("-")
             if len(parts) >= 2:
                 year, month = parts[0], parts[1]
-                return f"{int(year):04d}-{int(month):02d}-01"
+                value_clean = f"{int(year):04d}-{int(month):02d}-01"
+                return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+                    f"Invalid date after completing missing day: {value_clean}")
             
         if re.fullmatch(r"\d{2}/\d{4}", value):
             parts = value.split("/")
-            return f"{int(parts[1]):04d}-{int(parts[0]):02d}-01"
+            value_clean = f"{int(parts[1]):04d}-{int(parts[0]):02d}-01"
+            return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+                f"Invalid date after completing missing day: {value_clean}")
 
         return None
-        
+
     def _month_is_missing(self, value: str) -> bool:
         if re.fullmatch(r"\d{4}--\d{2}", value):
             return True
@@ -236,7 +240,9 @@ class DateNormalizer:
                 if len(ref_parts) != 3:
                     continue
                 ref_month = ref_parts[1]
-                return f"{year_str}-{ref_month}-{day_str}"
+                value_clean = f"{year_str}-{ref_month}-{day_str}"
+                return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+                    f"Invalid date after completing missing month: {value_clean}")
 
     def _year_is_missing(self, value: str) -> bool:
         if re.fullmatch(r"\d{2,3}-\d{2}-\d{2}", value):
@@ -254,13 +260,18 @@ class DateNormalizer:
                 ref_parts = candidate[:10].split("-")
                 if len(ref_parts) != 3:
                     continue
-                return f"{ref_parts[0]}-{month_str}-{day_str}"
+                value_clean = f"{ref_parts[0]}-{month_str}-{day_str}"
+                return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+                    f"Invalid date after completing missing year: {value_clean}")
 
-    def _convert_excel_serial(self, value: str) -> str:
+    def _convert_excel_serial(self, value: str) -> Union[str, None]:
         serial = int(value)
         epoch = datetime(1899, 12, 30)
         dt = epoch + timedelta(days=serial)
-        return dt.strftime("%Y-%m-%d")
+        value_clean = dt.strftime("%Y-%m-%d")
+        return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+            f"Invalid date after converting Excel serial: {value_clean}"
+        )
 
     def _is_false_date(self, value: str) -> bool:
         if not isinstance(value, str):
@@ -271,7 +282,7 @@ class DateNormalizer:
         except ValueError:
             return True
 
-    def _correct_false_date(self, value: str) -> str:
+    def _correct_false_date(self, value: str) -> Union[str, None]:
         parts = value.split("-")
         year = int(parts[0])
         month = int(parts[1])
@@ -279,7 +290,10 @@ class DateNormalizer:
         firstday = 1
         lastday = calendar.monthrange(year, month)[1]
         day = firstday if day == 0 else lastday
-        return f"{year:04d}-{month:02d}-{day:02d}"
+        value_clean = f"{year:04d}-{month:02d}-{day:02d}"
+        return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+            f"Invalid date after correcting false date: {value_clean}"
+        )
 
     def _strip_all_brackets_and_quotes(self, value: str) -> str:
         """
@@ -294,7 +308,8 @@ class DateNormalizer:
     def _is_roto_or_ilegible(self, value: str) -> bool:
         return isinstance(value, str) and any(keyword in value for keyword in ["roto", "ilegible"])
 
-    def _resolve_roto(self,value: str) -> str:
+    def _resolve_roto(self,value: str) -> Union[str, None]:
+        
         value_clean = re.sub(r'[\[\]"\'?]', '', value)
         m = re.search(r"roto:\s*(?:del\s*)?(\d{1,2})\s*(?:al|o)\s*(\d{1,2})", value_clean)
         if m:
@@ -305,12 +320,17 @@ class DateNormalizer:
             parts = prefix.split('-')
             if len(parts) >= 2:
                 year, month = parts[0], parts[1]
-                return f"{int(year):04d}-{int(month):02d}-{avg_day:02d}"
+                value_clean = f"{int(year):04d}-{int(month):02d}-{avg_day:02d}"
+                return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+                    f"Invalid date after resolving roto: {value_clean}")
 
         if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value_clean):
             parts = value_clean.split("-")
-            return f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
-        return value_clean
+            value_clean = f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
+            return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+                f"Invalid date after resolving roto: {value_clean}")
+        return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+            f"Invalid date after resolving roto: {value_clean}")
 
 
 class AgeInferrer:
