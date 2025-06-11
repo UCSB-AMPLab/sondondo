@@ -2,12 +2,12 @@ from pathlib import Path
 from typing import List, Tuple, Union
 import numpy as np
 import pandas as pd
-from helpers.Preprocessing import PreprocessingDates
+from project_code.helpers.Preprocessing import PreprocessingDates
 from datetime import datetime, timedelta
 import calendar
 import re
 import unicodedata
-from helpers.LogerHandler import setup_logger
+from project_code.helpers.LogerHandler import setup_logger
 
 class DatesExplorer:
     """A class for exploring and validating date columns in a DataFrame."""
@@ -161,6 +161,9 @@ class DateNormalizer:
         if pd.isna(value):
             return np.nan
 
+        if self._is_roto_or_ilegible(value):
+            return self._resolve_roto(value)
+
         value = self._strip_all_brackets_and_quotes(value)
 
         if self._is_valid_iso(value):
@@ -278,7 +281,6 @@ class DateNormalizer:
         day = firstday if day == 0 else lastday
         return f"{year:04d}-{month:02d}-{day:02d}"
 
-
     def _strip_all_brackets_and_quotes(self, value: str) -> str:
         """
         Remove all characters except digits, dashes, and x (lowercase only)
@@ -288,6 +290,27 @@ class DateNormalizer:
         value = re.sub(r'[^0-9\/\-]', '', value)
         value = value.lower()
         return value.strip()
+
+    def _is_roto_or_ilegible(self, value: str) -> bool:
+        return isinstance(value, str) and any(keyword in value for keyword in ["roto", "ilegible"])
+
+    def _resolve_roto(self,value: str) -> str:
+        value_clean = re.sub(r'[\[\]"\'?]', '', value)
+        m = re.search(r"roto:\s*(?:del\s*)?(\d{1,2})\s*(?:al|o)\s*(\d{1,2})", value_clean)
+        if m:
+            start_day = int(m.group(1))
+            end_day = int(m.group(2))
+            avg_day = (start_day + end_day) // 2
+            prefix = value.split('roto',1)[0].rstrip('-')
+            parts = prefix.split('-')
+            if len(parts) >= 2:
+                year, month = parts[0], parts[1]
+                return f"{int(year):04d}-{int(month):02d}-{avg_day:02d}"
+
+        if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value_clean):
+            parts = value_clean.split("-")
+            return f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
+        return value_clean
 
 
 class AgeInferrer:
