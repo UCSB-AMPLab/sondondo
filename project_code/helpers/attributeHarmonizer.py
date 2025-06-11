@@ -4,15 +4,10 @@ import json
 import os
 import logging
 import os.path
+from LogerHandler import setup_logger
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    filename="code/logs/attributeNormalizer.log",
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+# Set up logger using the centralized logging function
+logger = setup_logger("AttributeNormalizer")
 
 
 def harmonize_text(mapping_dictionary: dict, data_to_transform: pd.Series) -> pd.Series:
@@ -69,8 +64,9 @@ def harmonize_text(mapping_dictionary: dict, data_to_transform: pd.Series) -> pd
             if key in value:
                 return lowercased_mapping[key]
                 
-        # If no matches are found, return NA
-        return pd.NA
+        # If no matches are found, log it and return the original
+        logger.warning(f"Unmapped value in column '{value}'")
+        return "unknown"
     
     # Apply the function to the Series
     return transformed.apply(transform_value)
