@@ -1,9 +1,9 @@
 import pandas as pd
 from pathlib import Path
 
-from actions.helpers.handlers.LogerHandler import setup_logger
+from utils.LoggerHandler import setup_logger
 
-from actions.helpers.handlers.ColumnManager import ColumnManager
+from utils.ColumnManager import ColumnManager
 
 def setup_test_logger(test_name):
     """
