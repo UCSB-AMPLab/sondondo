@@ -1,4 +1,4 @@
-from helpers.ColumnManager import ColumnManager
+from actions.helpers.handlers.ColumnManager import ColumnManager
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -6,7 +6,7 @@ from sklearn.cluster import KMeans
 import nltk
 from nltk.corpus import stopwords
 nltk.download('stopwords')
-from helpers.LogerHandler import setup_logger
+from actions.helpers.handlers.LogerHandler import setup_logger
 logger = setup_logger("textAnalysis")
 
 import unicodedata

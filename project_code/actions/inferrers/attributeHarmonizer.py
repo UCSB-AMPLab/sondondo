@@ -4,7 +4,7 @@ import json
 import os
 import logging
 import os.path
-from LogerHandler import setup_logger
+from helpers.handlers.LogerHandler import setup_logger
 
 # Set up logger using the centralized logging function
 logger = setup_logger("AttributeNormalizer")

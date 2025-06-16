@@ -3,7 +3,7 @@ import json
 import pandas as pd
 
 from attributeHarmonizer import load_configuration, harmonize_dataframe
-from LogerHandler import setup_logger
+from helpers.handlers.LogerHandler import setup_logger
 
 import gender_guesser.detector as gender
 d = gender.Detector(case_sensitive=False)

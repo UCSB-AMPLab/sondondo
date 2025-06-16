@@ -3,7 +3,7 @@ from typing import Union
 import unicodedata
 import numpy as np
 import pandas as pd
-from helpers.LogerHandler import setup_logger
+from helpers.handlers.LogerHandler import setup_logger
 
 
 class NamesManager:
