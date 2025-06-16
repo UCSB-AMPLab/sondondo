@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-def setup_logger(class_name: str, log_dir: Path = Path(__file__).parent.parent.parent / "logs") -> logging.Logger:
+def setup_logger(class_name: str, log_dir: Path = Path(__file__).parent.parent.parent.parent / "logs") -> logging.Logger:
     """
     Set up a logger for a specific class with its own log file.
     

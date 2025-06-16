@@ -100,3 +100,25 @@ class PreprocessingDates:
                 return date_string
 
         return date_string
+
+
+class RecordIdGenerator:
+    """
+    Generates a unique ID record with the combination of columns
+    "file" and "identifier" from a specified DataFrame.
+    """
+
+    def __init__(self, df: pd.DataFrame) -> None:
+        self.df = df
+
+    def generate_id(self) -> pd.Series:
+        """
+        Generate the unique ID by combining "file" and "identifier" columns.
+        """
+        if "file" not in self.df.columns or "identifier" not in self.df.columns:
+            raise ValueError("DataFrame must contain 'file' and 'identifier' columns.")
+
+        raw_id = self.df["file"].astype(str) + "_" + self.df["identifier"].astype(str)
+        return raw_id.apply(lambda x: x.replace(" ", "_").replace("/", "_").replace("\\", "_"))
+    
+
