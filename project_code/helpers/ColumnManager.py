@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+from typing import Union
 import pandas as pd
 import logging
 
@@ -47,3 +48,18 @@ class ColumnManager:
         except Exception as e:
             logger.error(f"Error harmonizing columns: {e}")
             raise e
+
+    def return_useful_columns(self, df, useful_columns_mapping: Union[str, Path] = Path("data/mappings/usefulColumnsMapping.json")):
+        """
+        Return a DataFrame with only the useful columns specified in the mapping.
+        """
+        mapping = self.load_mapping(useful_columns_mapping)
+        mapkey = df["event_type"].iloc[0].lower()
+        if mapkey not in mapping:
+            logger.error(f"Event type '{mapkey}' not found in useful columns mapping.")
+            raise ValueError(f"Event type '{mapkey}' not found in useful columns mapping.")
+        
+        useful_columns = mapping[mapkey] # returns a list of columns
+        logger.info(f"Returning useful columns for event type '{mapkey}': {useful_columns}")
+        return df[useful_columns]
+    
