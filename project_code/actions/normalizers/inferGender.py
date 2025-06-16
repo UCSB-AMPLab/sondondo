@@ -2,7 +2,7 @@ import os
 import json
 import pandas as pd
 
-from attributeHarmonizer import load_configuration, harmonize_dataframe
+from project_code.actions.inferrers.attributeHarmonizer import load_configuration, harmonize_dataframe
 from project_code.utils.LoggerHandler import setup_logger
 
 import gender_guesser.detector as gender

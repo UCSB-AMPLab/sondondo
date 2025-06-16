@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from typing import Union, Dict, Optional, List
 import gender_guesser.detector as gender
-from helpers.handlers.LogerHandler import setup_logger
+from project_code.utils.LoggerHandler import setup_logger
 
 class GenderInferrer:
     """
