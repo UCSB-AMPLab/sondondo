@@ -62,3 +62,25 @@ Top 15 keywords for each cluster:
 2025-05-22 20:34:48,835 - textAnalysis - INFO - casada,casado,marido,mujer,soltera,soltero,viuda,viudo,esposa
 2025-05-22 20:34:48,835 - textAnalysis - INFO - Cluster 9
 2025-05-22 20:34:48,835 - textAnalysis - INFO - casada,esposa,marido,mujer,soltera,soltero,viuda,viudo,casado
+2025-06-16 16:08:48,133 - textAnalysis - INFO - re.compile('.*marital.*')
+Top 15 keywords for each cluster:
+2025-06-16 16:08:48,133 - textAnalysis - INFO - Cluster 0
+2025-06-16 16:08:48,133 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,soltera,soltero,viuda,viudo
+2025-06-16 16:08:48,133 - textAnalysis - INFO - Cluster 1
+2025-06-16 16:08:48,133 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,soltera,viudo,viuda,soltero
+2025-06-16 16:08:48,133 - textAnalysis - INFO - Cluster 2
+2025-06-16 16:08:48,133 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,soltera,soltero,viudo,viuda
+2025-06-16 16:08:48,134 - textAnalysis - INFO - Cluster 3
+2025-06-16 16:08:48,134 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,soltera,soltero,viuda,viudo
+2025-06-16 16:08:48,134 - textAnalysis - INFO - Cluster 4
+2025-06-16 16:08:48,134 - textAnalysis - INFO - casada,casado,esposa,marido,mujer,viuda,soltero,viudo,soltera
+2025-06-16 16:08:48,134 - textAnalysis - INFO - Cluster 5
+2025-06-16 16:08:48,134 - textAnalysis - INFO - casada,casado,esposa,mujer,soltera,soltero,viuda,viudo,marido
+2025-06-16 16:08:48,134 - textAnalysis - INFO - Cluster 6
+2025-06-16 16:08:48,134 - textAnalysis - INFO - casada,casado,esposa,marido,soltera,soltero,viuda,viudo,mujer
+2025-06-16 16:08:48,134 - textAnalysis - INFO - Cluster 7
+2025-06-16 16:08:48,134 - textAnalysis - INFO - casado,esposa,marido,mujer,soltera,soltero,viudo,viuda,casada
+2025-06-16 16:08:48,134 - textAnalysis - INFO - Cluster 8
+2025-06-16 16:08:48,134 - textAnalysis - INFO - casada,casado,marido,mujer,soltera,soltero,viuda,viudo,esposa
+2025-06-16 16:08:48,134 - textAnalysis - INFO - Cluster 9
+2025-06-16 16:08:48,134 - textAnalysis - INFO - casada,esposa,marido,mujer,soltera,soltero,viuda,viudo,casado
