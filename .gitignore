@@ -10,3 +10,9 @@ logs/*
 
 # Submodules
 sondondo.wiki/
+
+#env variables
+.env
+
+# pytest cache Created by pytest automatically.
+.pytest_cache
