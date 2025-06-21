@@ -33,7 +33,7 @@ class ColumnManager:
         with open(mapping_path, "r", encoding="utf-8") as f:
             return json.load(f)
 
-    def harmonize_columns(self, csv_file, mapping_file):
+    def harmonize_columns(self, csv_file, mapping_file) -> pd.DataFrame:
         """
         Harmonize the columns of a CSV file using a mapping.
         """
