@@ -1,11 +1,14 @@
+from typing import Union
 import pandas as pd
 from pathlib import Path
+import os
 
 from utils.LoggerHandler import setup_logger
 
 from utils.ColumnManager import ColumnManager
 
 from actions.normalizers.DatesNormalizer import DateNormalizer
+from actions.standardizers.getCoordinates import PlaceResolver, GeonamesQuery, TGNQuery, HGISQuery, WikidataQuery
 
 def setup_test_logger(test_name):
     """
@@ -16,24 +19,22 @@ def setup_test_logger(test_name):
 
 logger = setup_test_logger("datacleaning")
 
-dummyPandasSerieswithDates = pd.Series([
-    "2023-01-01",
-    "2022-12-31",
-    "2021-06-15",
-    "invalid_date",
-    "2020-02-29"
-])
+def prepare_dataset(csv_file: Union[str, Path]):
 
-def test_date_normalizer():
-    """
-    Test the DateNormalizer class.
-    """
-    logger.info("Starting test_date_normalizer")
-    
-    normalizer = DateNormalizer(dummyPandasSerieswithDates)
-    normalized_dates = normalizer.normalize()
-    
-    logger.info(f"Normalized dates: {normalized_dates}")
+    logger.info(f"Preparing dataset from {csv_file}")
 
+    dataset_event = os.path.basename(csv_file).split('.')[0].lower()
+    if dataset_event not in ["matrimonios", "nacimientos", "defunciones"]:
+        logger.error(f"Unsupported dataset event: {dataset_event}")
+        raise ValueError(f"Unsupported dataset event: {dataset_event}")
+    column_manager = ColumnManager()
+    mapped_df = column_manager.harmonize_columns(csv_file, mapping_file=Path("data/mappings") / f"{dataset_event}Mapping.json")
+    df = column_manager.return_useful_columns(mapped_df)
+    logger.info(f"Dataset prepared with {len(df)} rows and {len(df.columns)} columns")
+    return df
 
-test_date_normalizer()
+if __name__ == "__main__":
+    # Example usage
+    csv_file = Path("data/raw/matrimonios.csv")
+    df = prepare_dataset(csv_file)
+    print(df.head())
