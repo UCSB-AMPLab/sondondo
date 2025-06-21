@@ -1,8 +1,11 @@
 certifi==2025.6.15
 charset-normalizer==3.4.2
+click==8.2.1
 gender-guesser==0.4.0
 idna==3.10
 iniconfig==2.1.0
+joblib==1.5.1
+nltk==3.9.1
 numpy==2.3.0
 packaging==25.0
 pandas==2.3.0
@@ -15,8 +18,13 @@ python-dotenv==1.1.0
 pytz==2025.2
 RapidFuzz==3.13.0
 rdflib==7.1.4
+regex==2024.11.6
 requests==2.32.4
+scikit-learn==1.7.0
+scipy==1.15.3
 six==1.17.0
 SPARQLWrapper==2.0.0
+threadpoolctl==3.6.0
+tqdm==4.67.1
 tzdata==2025.2
 urllib3==2.5.0
