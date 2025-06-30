@@ -8,7 +8,7 @@ from utils.LoggerHandler import setup_logger
 from utils.ColumnManager import ColumnManager
 
 from actions.normalizers.DatesNormalizer import DateNormalizer
-from actions.standardizers.getCoordinates import PlaceResolver, GeonamesQuery, TGNQuery, HGISQuery, WikidataQuery
+from georesolver import PlaceResolver
 
 def setup_test_logger(test_name):
     """

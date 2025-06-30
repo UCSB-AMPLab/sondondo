@@ -16,3 +16,5 @@ sondondo.wiki/
 
 # pytest cache Created by pytest automatically.
 .pytest_cache
+
+*.sqlite
