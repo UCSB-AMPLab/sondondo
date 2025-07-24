@@ -18,3 +18,6 @@ sondondo.wiki/
 .pytest_cache
 
 *.sqlite
+
+project_code/dataCleaning.html
+project_code/dataCleaning_files/
