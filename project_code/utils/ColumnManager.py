@@ -4,7 +4,7 @@ from typing import Union
 import pandas as pd
 import logging
 
-logging.basicConfig(level=logging.INFO, filename="logs/column_manager.log")
+logging.basicConfig(level=logging.INFO, filename=Path(__file__).parent.parent.parent / "logs/column_manager.log")
 logger = logging.getLogger(__name__)
 
 class ColumnManager:
@@ -26,16 +26,19 @@ class ColumnManager:
         
         return mapping
 
-    def load_mapping(self, mapping_path):  #return dictionary that used for mapping
+    def load_mapping(self, mapping_path: Union[str, Path]) -> dict:
         """
         Load a mapping from a JSON file.
         """
         with open(mapping_path, "r", encoding="utf-8") as f:
             return json.load(f)
 
-    def harmonize_columns(self, csv_file, mapping_file) -> pd.DataFrame:
+    def harmonize_columns(self, csv_file: Union[str, pd.DataFrame], mapping_file: Union[str, Path]) -> pd.DataFrame:
         """
         Harmonize the columns of a CSV file using a mapping.
+
+        :param csv_file: Path to the CSV file or a DataFrame.
+        :param mapping_file: Path to the JSON mapping file.
         """
         if not isinstance(csv_file, pd.DataFrame):
             df = pd.read_csv(csv_file, encoding="utf-8")
