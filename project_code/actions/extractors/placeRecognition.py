@@ -32,3 +32,19 @@ class PlaceExtractor:
         return series.apply(self.extract_places_from_text)
 
 
+class MapPlaces:
+    def __init__(self, dataframes: List[pd.DataFrame]):
+        self.dataframes = dataframes
+
+    def get_all_unique_places(self) -> np.ndarray:
+        all_places = pd.concat(self.dataframes, ignore_index=True)
+
+        all_unique_places = all_places.stack().unique() # type: ignore
+        all_unique_places = all_unique_places[~pd.isna(all_unique_places)]
+
+        # split places by '|' and flatten the list
+        all_unique_places = [place.strip() for sublist in all_unique_places 
+                    for place in str(sublist).split('|') if place.strip()]
+        all_unique_places = np.unique(all_unique_places)
+
+        return all_unique_places
