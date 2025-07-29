@@ -52,6 +52,7 @@ class AttributeNormalizer:
         pd.Series
             A new Series with harmonized social condition values. Unmatched values are replaced with pandas.NA.
         """
+        logger.info("Extracting social condition attributes")
         return self.harmonize_text(social_condition_series, self.mapping_dictionary['attribute_mappings']['social_condition'])
 
     def extract_legitimacy_status(self, legitimacy_series: pd.Series) -> pd.Series:
@@ -68,6 +69,7 @@ class AttributeNormalizer:
         pd.Series
             A new Series with harmonized legitimacy status values. Unmatched values are replaced with pandas.NA.
         """
+        logger.info("Extracting legitimacy status attributes")
         return self.harmonize_text(legitimacy_series, self.mapping_dictionary['attribute_mappings']['legitimacy_status'])
 
     def extract_marital_status(self, marital_status_series: pd.Series) -> pd.Series:
@@ -84,7 +86,19 @@ class AttributeNormalizer:
         pd.Series
             A new Series with harmonized marital status values. Unmatched values are replaced with pandas.NA.
         """
+        logger.info("Extracting marital status attributes")
         return self.harmonize_text(marital_status_series, self.mapping_dictionary['attribute_mappings']['marital_status'])
+    
+    def extract_all_attributes(self, series: pd.Series, prefix: str = "attr") -> pd.DataFrame:
+        """
+        Extracts all attributes (social condition, legitimacy status, marital status) from a Series.
+        """
+        return pd.DataFrame({
+            f"{prefix}_social_condition": self.extract_social_condition(series),
+            f"{prefix}_legitimacy_status": self.extract_legitimacy_status(series),
+            f"{prefix}_marital_status": self.extract_marital_status(series),
+        })
+
 
     def transform_value(self, value, map_dict: dict) -> Union[str, float]:
         """
@@ -151,7 +165,7 @@ class AttributeNormalizer:
             Series containing the text data to be harmonized
         map_dict : dict
             Dictionary where keys are source values to be transformed and values are 
-            the standardized target values. For example: {'hr': 'Human Resources'}
+            the standardized target values. 
             
         Returns
         -------
