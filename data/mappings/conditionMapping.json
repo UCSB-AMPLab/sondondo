@@ -1,10 +1,5 @@
 {
-  "data_path": "data/raw/bautismos.csv",
-  "columns_to_harmonize": [
-    "Condición"
-  ],
-  "attribute_mappings": {
-    "Condición": {
+  "attribute_mappings":  {
       "legitimacy_status": {
         "legítimo": "legitimo",
         "legitimo": "legitimo",
@@ -54,4 +49,3 @@
       }
     }
   }
-}

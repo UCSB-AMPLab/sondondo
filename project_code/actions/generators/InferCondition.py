@@ -1,79 +1,255 @@
 import os
 import json
+from pathlib import Path
+from typing import Optional, Union
+import numpy as np
 import pandas as pd
+import re
 
-from attributeHarmonizer import load_configuration, harmonize_dataframe
-from LogerHandler import setup_logger
+from utils.LoggerHandler import setup_logger
 
 # Set up logger using the custom logger function
-logger = setup_logger("InitialCondition")
+logger = setup_logger("InferCondition")
 
-def main(config_path: str) -> pd.DataFrame:
+class AttributeNormalizer:
     """
-    Main function that orchestrates the data harmonization process.
-    Loads the input file, runs harmonize_dataframe, then returns only the newly created columns.
+    A class for normalizing and harmonizing attribute values in pandas DataFrames.
+    
+    This class provides methods to standardize text values across different categories
+    (social condition, legitimacy status, marital status) using predefined mapping dictionaries.
+    It handles case-insensitive matching through exact matches, word-level matches, and substring matches.
     """
-    try:
-        logger.info(f"Starting data harmonization process with config: {config_path}")
-        
-        # Load configuration
-        data_path, columns_to_harmonize, attribute_mappings = load_configuration(config_path)
-        logger.info(f"Processing data file: {data_path}")
-        logger.info(f"Columns to harmonize: {columns_to_harmonize}")
-        
-        if not os.path.exists(data_path):
-            logger.error(f"Data file not found at {data_path}")
-            raise FileNotFoundError(f"Data file not found at {data_path}")
-            
-        # Load the data
-        file_extension = os.path.splitext(data_path)[1].lower()
-        if file_extension == '.csv':
-            logger.info(f"Loading CSV file: {data_path}")
-            df = pd.read_csv(data_path)
-        elif file_extension in ['.xls', '.xlsx']:
-            logger.info(f"Loading Excel file: {data_path}")
-            df = pd.read_excel(data_path)
-        else:
-            error_msg = f"Unsupported file type: {file_extension}. Only CSV and Excel files are supported."
-            logger.error(error_msg)
-            raise ValueError(error_msg)
-        
-        logger.info(f"Data loaded successfully with {len(df)} rows and {len(df.columns)} columns")
-            
-        # Harmonize the data
-        logger.info("Starting data harmonization...")
-        harmonized_df = harmonize_dataframe(df, columns_to_harmonize, attribute_mappings)
-        logger.info("Data harmonization completed successfully")
-        
-        # Identify which columns are newly created
-        original_cols = set(df.columns)
-        all_cols = list(harmonized_df.columns)
-        new_cols = [col for col in all_cols if col not in original_cols]
-        
-        # Keep only the newly created columns
-        result_df = harmonized_df[new_cols]
-        
-        # Save those new columns to an output file
-        output_path = os.path.splitext(data_path)[0] + "_harmonized" + file_extension
-        if file_extension == '.csv':
-            result_df.to_csv(output_path, index=False)
-        else:
-            result_df.to_excel(output_path, index=False)
-            
-        logger.info(f"Newly created columns saved to: {output_path}")
-        return result_df
-        
-    except Exception as e:
-        logger.error(f"Error in data harmonization process: {str(e)}")
-        return None
 
-if __name__ == "__main__":
-    # Defines the config file path and then calls main function
-    config_path = "project_code/helpers/config.json"
-    logger.info(f"Using configuration file: {config_path}")
+    def __init__(self, mapping_file: Union[str, Path]):
+        """
+        Initializes the AttributeNormalizer with a mapping file.
         
-    result = main(config_path)
-    if result is not None:
-        logger.info("Data harmonization completed successfully")
-    else:
-        logger.error("Data harmonization failed")
+        Parameters
+        ----------
+        mapping_file : Union[str, Path]
+            Path to the JSON file containing the mapping dictionary.
+        """
+        self.mapping_dictionary = self.load_mapping(mapping_file)
+
+    def load_mapping(self, mapping_path: Union[str, Path]) -> dict:
+        """
+        Load a mapping from a JSON file.
+        """
+        with open(mapping_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    def extract_social_condition(self, social_condition_series: pd.Series) -> pd.Series:
+        """
+        Extracts and harmonizes social condition values from a pandas Series.
+        
+        Parameters
+        ----------
+        social_condition_series : pd.Series
+            Series containing the social condition data to be harmonized
+            
+        Returns
+        -------
+        pd.Series
+            A new Series with harmonized social condition values. Unmatched values are replaced with pandas.NA.
+        """
+        return self.harmonize_text(social_condition_series, self.mapping_dictionary['attribute_mappings']['social_condition'])
+
+    def extract_legitimacy_status(self, legitimacy_series: pd.Series) -> pd.Series:
+        """
+        Extracts and harmonizes legitimacy status values from a pandas Series.
+        
+        Parameters
+        ----------
+        legitimacy_series : pd.Series
+            Series containing the legitimacy status data to be harmonized
+            
+        Returns
+        -------
+        pd.Series
+            A new Series with harmonized legitimacy status values. Unmatched values are replaced with pandas.NA.
+        """
+        return self.harmonize_text(legitimacy_series, self.mapping_dictionary['attribute_mappings']['legitimacy_status'])
+
+    def extract_marital_status(self, marital_status_series: pd.Series) -> pd.Series:
+        """
+        Extracts and harmonizes marital status values from a pandas Series.
+        
+        Parameters
+        ----------
+        marital_status_series : pd.Series
+            Series containing the marital status data to be harmonized
+            
+        Returns
+        -------
+        pd.Series
+            A new Series with harmonized marital status values. Unmatched values are replaced with pandas.NA.
+        """
+        return self.harmonize_text(marital_status_series, self.mapping_dictionary['attribute_mappings']['marital_status'])
+
+    def transform_value(self, value, map_dict: dict) -> Union[str, float]:
+        """
+        Transforms a single value using a mapping dictionary with multi-level matching.
+        
+        Applies case-insensitive matching in this order:
+        1. Checks if value is already a mapped target value
+        2. Tries exact word matches within the value
+        3. Falls back to substring matching
+        
+        Parameters
+        ----------
+        value : str
+            The value to transform
+        map_dict : dict
+            Dictionary mapping source values to target values
+            
+        Returns
+        -------
+        Union[str, float]
+            The mapped value if found, otherwise np.nan
+        """
+
+        lowercased_mapping = {k.lower(): v for k, v in map_dict.items()}
+        # Check to see if null value
+        if pd.isna(value) or value == '':
+            return np.nan
+        
+        # Check if the value is already a value in mapping_dictionary
+        if value in lowercased_mapping.values():
+            return value
+            
+        # Split the value into words for better matching
+        words = value.split()
+        
+        # Look for exact word matches first
+        for word in words:
+            if word in lowercased_mapping:
+                return lowercased_mapping[word]
+        
+        # If no exact word match, try substring matching
+        for key in lowercased_mapping:
+            if key in value:
+                return lowercased_mapping[key]
+                
+        # If no matches are found, log it and return na
+        logger.warning(f"Unmapped value in column '{value}'")
+        return np.nan
+
+    def harmonize_text(self, data_to_transform: pd.Series, map_dict: dict) -> pd.Series:
+        """
+        Harmonizes textual data by standardizing values according to a mapping dictionary.
+        
+        This function normalizes text values in a pandas Series by applying a multi-step
+        matching process against a provided mapping dictionary. The harmonization process:
+        1. Converts all text to lowercase for case-insensitive matching
+        2. Checks if the value is already a standard value in the mapping
+        3. Tries to match individual words within the value
+        4. Falls back to substring matching if word matching fails
+        
+        Parameters
+        ----------
+        data_to_transform : pd.Series
+            Series containing the text data to be harmonized
+        map_dict : dict
+            Dictionary where keys are source values to be transformed and values are 
+            the standardized target values. For example: {'hr': 'Human Resources'}
+            
+        Returns
+        -------
+        pd.Series
+            A new Series with harmonized values. Values that couldn't be matched
+            are replaced with pandas.NA
+        """
+        # Copies dataframe and lowercases column & mapping dictionary
+        transformed = data_to_transform.copy()
+        transformed = transformed.str.lower()
+        
+        # Apply the function to the Series
+        return transformed.apply(self.transform_value, map_dict=map_dict)
+    
+    def harmonize_dataframe(self, df: pd.DataFrame,
+                            columns_to_harmonize: list) -> pd.DataFrame:
+        """
+        Harmonizes multiple columns in a DataFrame based on the instance's mapping dictionary.
+        
+        This function processes a DataFrame by standardizing values in specified columns
+        according to the mapping dictionaries loaded during initialization. For each column 
+        to harmonize, it creates one or more new columns with standardized values while 
+        preserving the original data.
+        
+        Parameters
+        ----------
+        df : pd.DataFrame
+            The input DataFrame containing columns to be harmonized
+            
+        columns_to_harmonize : list
+            List of column names to process. Each column must exist in the DataFrame
+            and have a corresponding entry in the instance's mapping dictionary
+            
+        Returns
+        -------
+        pd.DataFrame
+            A new DataFrame that includes all original columns plus newly created
+            harmonized columns. For each column in columns_to_harmonize and each
+            aspect in the mapping dictionary, a new column is created with the naming
+            pattern: "{original_column}_{aspect_name}"
+        """
+        # Makes a copy to not change original dataframe
+        harmonized_df = df.copy()
+        
+        for column in columns_to_harmonize:
+            if column not in df.columns:
+                logger.warning(f"Column '{column}' not found; skipping.")
+                continue
+
+            mappings_for_col = self.mapping_dictionary.get(column, {})
+            # mappings_for_col is now a dict like {"role": {...}, "status": {...}}
+            for aspect_name, mapping_dict in mappings_for_col.items():
+                new_col = f"{column}_{aspect_name}"
+                harmonized_df[new_col] = self.harmonize_text(df[column], mapping_dict)
+                logger.debug(f"Created harmonized column: {new_col}")
+
+        return harmonized_df
+
+
+    def extract_unmapped_tokens(self, df: pd.DataFrame, original_column: str, new_col_name: Optional[str] = None) -> pd.DataFrame:
+        """
+        Identifies and extracts unmapped content by removing all known tokens from the original column.
+        
+        This method creates a new column containing only the text that wasn't matched by any 
+        of the mapping dictionaries for the specified column. It uses regex to remove all 
+        known mapped tokens, leaving behind potentially valuable unmapped content.
+        
+        Parameters
+        ----------
+        df : pd.DataFrame
+            The DataFrame containing the column to process
+        original_column : str
+            The name of the column from which to extract unmapped tokens
+        new_col_name : Optional[str], default None
+            Name for the new column. If None, defaults to "{original_column}_unmapped"
+            
+        Returns
+        -------
+        pd.DataFrame
+            The original DataFrame with an additional column containing unmapped tokens
+        """
+
+        if new_col_name is None:
+            new_col_name = f"{original_column}_unmapped"
+
+        # Gather all keys from all sub-mappings under the original column
+        mapping_dicts = self.mapping_dictionary.get(original_column, {})
+        all_keys = [re.escape(k) for d in mapping_dicts.values() for k in d.keys()]
+        pattern = re.compile(r"\b(" + "|".join(all_keys) + r")\b", flags=re.IGNORECASE)
+
+        def strip_mapped(value: str) -> str:
+            if not isinstance(value, str):
+                return ""
+            cleaned = re.sub(pattern, "", value)
+            return re.sub(r"\s+", " ", cleaned).strip()
+
+        df[new_col_name] = df[original_column].apply(strip_mapped)
+        return df
+
+
+
