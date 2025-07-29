@@ -6,3 +6,18 @@
 
 # Python cache
 __pycache__/
+logs/*
+
+# Submodules
+sondondo.wiki/
+
+#env variables
+.env
+
+# pytest cache Created by pytest automatically.
+.pytest_cache
+
+*.sqlite
+
+project_code/dataCleaning.html
+project_code/dataCleaning_files/
