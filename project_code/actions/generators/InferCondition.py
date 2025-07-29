@@ -1,10 +1,10 @@
-import os
 import json
 from pathlib import Path
 from typing import Optional, Union
 import numpy as np
 import pandas as pd
 import re
+from rapidfuzz import process
 
 from utils.LoggerHandler import setup_logger
 
@@ -122,27 +122,31 @@ class AttributeNormalizer:
             The mapped value if found, otherwise np.nan
         """
 
-        lowercased_mapping = {k.lower(): v for k, v in map_dict.items()}
-        # Check to see if null value
         if pd.isna(value) or value == '':
             return np.nan
         
+        lowercased_mapping = {k.lower(): v for k, v in map_dict.items()}
+        value = value.lower()
+
         # Check if the value is already a value in mapping_dictionary
         if value in lowercased_mapping.values():
             return value
             
-        # Split the value into words for better matching
+        # Word level matching
         words = value.split()
-        
-        # Look for exact word matches first
         for word in words:
             if word in lowercased_mapping:
                 return lowercased_mapping[word]
         
-        # If no exact word match, try substring matching
+        # Substring matching
         for key in lowercased_mapping:
             if key in value:
                 return lowercased_mapping[key]
+            
+        # Fuzzy matching
+        match, score, _ = process.extractOne(value, lowercased_mapping.keys())
+        if score > 80:
+            return lowercased_mapping[match]
                 
         # If no matches are found, log it and return na
         logger.warning(f"Unmapped value in column '{value}'")
