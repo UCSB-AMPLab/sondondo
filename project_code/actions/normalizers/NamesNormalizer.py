@@ -3,10 +3,10 @@ from typing import Union
 import unicodedata
 import numpy as np
 import pandas as pd
-from helpers.LogerHandler import setup_logger
+from utils.LoggerHandler import setup_logger
 
 
-class NamesManager:
+class NamesNormalizer:
     SIC_ILEGIBLE_PATTERN = re.compile(r"[\(\[\{]?\s*(sic|ilegible)\s*[\)\]\}]?", re.IGNORECASE)
     QUOTED_TEXT_PATTERN = re.compile(r'"([^"]+)"')
     COMMA_NAME_PATTERN = re.compile(r"^([^\n,]+),\s(.+)$")
@@ -15,7 +15,7 @@ class NamesManager:
     FILLER_TERMS_PATTERN = re.compile(r"\b(?:n/?a|na)\b", re.IGNORECASE)
 
     def __init__(self):
-        self.logger = setup_logger("NamesManager")
+        self.logger = setup_logger("NamesNormalizer")
 
     def clean_name(self, name: str) -> Union[str, None]:
         if not isinstance(name, str):
