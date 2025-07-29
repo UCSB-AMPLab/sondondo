@@ -1,7 +1,7 @@
 import spacy
 import pandas as pd
 import numpy as np
-from typing import List, Union
+from typing import List, Union, Optional
 import re
 from georesolver import PlaceResolver
 
@@ -66,3 +66,46 @@ class MapPlaces:
 
         return map_places
     
+
+class AuthoritativePlaceResolver:
+    def __init__(self, data: pd.DataFrame, places_map: Optional[str] = None):
+        """
+        data: a DataFrame with at least 'place' and 'manually_normalized_place' columns
+        places_map: path to the JSON file containing the customized place types
+        """
+        self.data = data
+        params = {
+            "verbose": True,
+            "flexible_threshold": True,
+            "flexible_threshold_value": 70,
+            "lang": 'es'
+        }
+        if places_map:
+            params["places_map_json"] = places_map
+        self.resolver = PlaceResolver(**params)
+
+    def resolve_places(self) -> pd.DataFrame:
+        """Resolve authoritative places and add mentioned_as list"""
+
+        mentions = self.data.groupby("manually_normalized_place")["place"] \
+            .apply(lambda x: sorted(set(x.dropna()))) \
+            .reset_index(name="mentioned_as")
+
+        authoritative_places = self.data[["manually_normalized_place", "country", "place_type"]].drop_duplicates()
+
+        resolved = self.resolver.resolve_batch(
+            authoritative_places.rename(columns={"manually_normalized_place": "place"}),
+            place_column="place",
+            country_column="country",
+            place_type_column="place_type",
+            use_default_filter=True,
+            show_progress=True,
+            return_df=True
+        )
+
+        resolved = resolved.rename(columns={"place": "manually_normalized_place"}) # type: ignore
+        resolved = pd.merge(resolved, mentions, on="manually_normalized_place", how="left")
+
+        resolved = resolved.dropna(subset=["manually_normalized_place"])
+
+        return resolved
