@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from typing import List, Union
 import re
+from georesolver import PlaceResolver
 
 class PlaceExtractor:
     def __init__(self):
@@ -48,3 +49,20 @@ class MapPlaces:
         all_unique_places = np.unique(all_unique_places)
 
         return all_unique_places
+    
+    def resolve_places(self) -> pd.DataFrame:
+        """Resolve places using the PlaceResolver"""
+        resolver = PlaceResolver(verbose=True, flexible_threshold=True, flexible_threshold_value=70, lang='es')
+        
+        all_unique_places = self.get_all_unique_places()
+
+        map_places = pd.DataFrame({'place': all_unique_places})
+        map_places['country'] = 'PE'
+        map_places['place_type'] = 'city'
+        results = resolver.resolve_batch(map_places, 'place', 'country', 'place_type', use_default_filter=True,
+                                                        show_progress=True)
+
+        map_places = pd.merge(map_places, results, how='left', on='place', suffixes=('', '_resolved'))
+
+        return map_places
+    
