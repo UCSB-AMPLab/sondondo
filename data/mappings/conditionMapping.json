@@ -1,0 +1,54 @@
+{
+  "attribute_mappings":  {
+      "legitimacy_status": {
+        "legítimo": "legitimo",
+        "legitimo": "legitimo",
+        "legitima": "legitimo",
+        "legítima": "legitimo",
+        "h.l": "legitimo",
+        "h.l.": "legitimo",
+        "ilegitimo": "ilegitimo",
+        "ilegítimo": "ilegitimo",
+        "espurio": "ilegitimo",
+        "espuria": "ilegitimo",
+        "natural": "ilegitimo",
+        "naturales": "ilegitimo",
+        "h.n": "ilegitimo",
+        "h.n.": "ilegitimo"
+      },
+      "marital_status": {
+        "soltero": "soltero",
+        "soltera": "soltero",
+        "casado": "casado",
+        "casada": "casado",
+        "viudo": "viudo",
+        "viuda": "viudo",
+        "divorciado": "divorciado",
+        "divorciada": "divorciado",
+        "esposo": "casado",
+        "esposa": "casado",
+        "marido": "casado",
+        "mujer": "casado"
+      },
+      "social_condition": {
+        "indio": "indio",
+        "india": "indio",
+        "indígena": "indio",
+        "indígeno": "indio",
+        "mestizo": "mestizo",
+        "mestisos": "mestizo",
+        "mestiza": "mestizo",
+        "naturales": "indio",
+        "español": "español",
+        "española": "español",
+        "libre": "libre",
+        "esclavo": "esclavo",
+        "tributario": "tributario",
+        "tributaria": "tributario",
+        "vecino": "vecino",
+        "vecina": "vecino",
+        "don": "don",
+        "doña": "don"
+      }
+    }
+  }
