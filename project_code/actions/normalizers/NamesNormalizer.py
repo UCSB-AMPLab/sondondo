@@ -17,9 +17,9 @@ class NamesNormalizer:
     def __init__(self):
         self.logger = setup_logger("NamesNormalizer")
 
-    def clean_name(self, name: str) -> Union[str, None]:
+    def clean_name(self, name: str) -> Union[str, float]:
         if not isinstance(name, str):
-            return None
+            return np.nan
 
         original_name = name
         name = unicodedata.normalize("NFKC", name)
@@ -37,7 +37,7 @@ class NamesNormalizer:
 
         self.logger.info(f"Original name: {original_name} → Cleaned: {name}")
 
-        return name if name else None
+        return name if name else np.nan
 
     def clean_series(self, series: pd.Series, label: str = "") -> pd.Series:
         """
