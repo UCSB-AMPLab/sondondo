@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from typing import List, Union, Optional
 import re
-from georesolver import PlaceResolver
+import georesolver
 
 class PlaceExtractor:
     def __init__(self):
@@ -34,8 +34,9 @@ class PlaceExtractor:
 
 
 class MapPlaces:
-    def __init__(self, dataframes: List[pd.DataFrame]):
+    def __init__(self, dataframes: List[pd.DataFrame], places_map: Optional[str] = None):
         self.dataframes = dataframes
+        self.places_map = places_map
 
     def get_all_unique_places(self) -> np.ndarray:
         all_places = pd.concat(self.dataframes, ignore_index=True)
@@ -52,7 +53,25 @@ class MapPlaces:
     
     def resolve_places(self) -> pd.DataFrame:
         """Resolve places using the PlaceResolver"""
-        resolver = PlaceResolver(verbose=True, flexible_threshold=True, flexible_threshold_value=70, lang='es')
+        
+        params = {
+            "verbose": True,
+            "flexible_threshold": True,
+            "flexible_threshold_value": 70,
+            "lang": 'es'
+        }
+        if self.places_map:
+            params["places_map_json"] = self.places_map
+
+        services = [
+            georesolver.WHGQuery(dataset="lugares13k_rel"), # Using `lugares13k_rel` dataset as first priority
+            georesolver.GeoNamesQuery(),
+            georesolver.TGNQuery(),
+            georesolver.WikidataQuery()
+        ]
+
+        params["services"] = services
+        resolver = georesolver.PlaceResolver(**params)
         
         all_unique_places = self.get_all_unique_places()
 
@@ -82,7 +101,17 @@ class AuthoritativePlaceResolver:
         }
         if places_map:
             params["places_map_json"] = places_map
-        self.resolver = PlaceResolver(**params)
+
+        services = [
+            georesolver.GeoNamesQuery(),
+            georesolver.TGNQuery(),
+            georesolver.WHGQuery(dataset="lugares13k_rel"),
+            georesolver.WikidataQuery()
+        ]
+
+        params["services"] = services
+
+        self.resolver = georesolver.PlaceResolver(**params)
 
     def resolve_places(self) -> pd.DataFrame:
         """Resolve authoritative places and add mentioned_as list"""
