@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: ../docs 
+
+website:
+  title: "Sondondo Project Notebooks"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - text: Notebooks
+        menu:
+          - href: 1_dataCleaning.ipynb
+            text: Data Cleaning
+          - href: 2_placeMapping.ipynb
+            text: Place Mapping
+
+format:
+  html:
+    theme: cosmo
+    toc: true

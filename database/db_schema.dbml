@@ -1,0 +1,77 @@
+// DBML (database markup language) is a simple, readable DSL language designed to define database structures
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table Persona {
+  id int [pk]
+  name varchar
+  lastname varchar
+  birth_date date
+  birth_place int [ref: > Place.id]
+  death_date date
+  death_place int [ref: > Place.id]
+  notes text
+}
+
+Table PersonaCondition {
+  id int [pk]
+  person_id int [ref: > Persona.id]
+  condition_vocab_id int [ref: > ConditionVocab.id]
+  event_id int [ref: > Event.id]
+}
+
+Table ConditionVocab {
+  id int [pk]
+  label varchar
+  type varchar  // legitimacy, social_condition, marriage_status
+}
+
+Table PersonaRoleInEvent {
+  id int [pk]
+  event_id int [ref: > Event.id]
+  person_id int [ref: > Persona.id]
+  role varchar  // groom, bride, witness, etc.
+}
+
+Table PersonaRelationship {
+  id int [pk]
+  person_subject_id int [ref: > Persona.id]
+  person_object_id int [ref: > Persona.id]
+  relationship_type varchar  // parent, spouse, godparent
+  event_id int [ref: > Event.id]
+}
+
+Table Event {
+  id int [pk]
+  event_type varchar  // baptism, marriage, burial
+  event_date date
+  event_place int [ref: > Place.id]
+  record_id int [ref: > Record.id]
+}
+
+Table Place {
+  id int [pk]
+  place_label varchar
+  language varchar
+  latitude float
+  longitude float
+  source varchar
+  uri varchar
+  country_code varchar
+  part_of varchar
+  part_of_uri varchar
+  mentioned_as int [ref: > OriginalTerms.id]
+}
+
+Table OriginalTerms {
+  id int [pk]
+  label_type varchar  // person, place, event
+  label_value varchar
+  label_language varchar
+}
+
+Table Record {
+  id int [pk]
+  record_type varchar  // baptism, marriage, burial
+  record_identifier varchar
+  record_file varchar
+}

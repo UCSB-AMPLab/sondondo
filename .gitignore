@@ -10,6 +10,7 @@ logs/*
 
 # Submodules
 sondondo.wiki/
+sondondo.researchNotes/
 
 #env variables
 .env
@@ -19,5 +20,4 @@ sondondo.wiki/
 
 *.sqlite
 
-project_code/dataCleaning.html
-project_code/dataCleaning_files/
+*.txt
