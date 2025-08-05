@@ -5,6 +5,8 @@
 -- Dumped from database version 17.4
 -- Dumped by pg_dump version 17.4
 
+-- Started on 2025-08-05 14:53:21 PDT
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -22,927 +24,441 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: event_roles; Type: TABLE; Schema: public; Owner: postgres
+-- TOC entry 219 (class 1259 OID 24715)
+-- Name: ConditionVocab; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.event_roles (
-    event_role_id integer NOT NULL,
-    event_id integer NOT NULL,
-    person_id integer NOT NULL,
-    role_type_id integer NOT NULL,
-    notes character varying
+CREATE TABLE public."ConditionVocab" (
+    id integer NOT NULL,
+    label character varying,
+    type character varying
 );
 
 
-ALTER TABLE public.event_roles OWNER TO postgres;
+ALTER TABLE public."ConditionVocab" OWNER TO postgres;
 
 --
--- Name: event_roles_event_role_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 222 (class 1259 OID 24736)
+-- Name: Event; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.event_roles_event_role_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.event_roles_event_role_id_seq OWNER TO postgres;
-
---
--- Name: event_roles_event_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.event_roles_event_role_id_seq OWNED BY public.event_roles.event_role_id;
-
-
---
--- Name: event_types; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.event_types (
-    event_type_id integer NOT NULL,
-    event_type_name character varying NOT NULL,
-    event_type_description character varying
-);
-
-
-ALTER TABLE public.event_types OWNER TO postgres;
-
---
--- Name: event_types_event_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.event_types_event_type_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.event_types_event_type_id_seq OWNER TO postgres;
-
---
--- Name: event_types_event_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.event_types_event_type_id_seq OWNED BY public.event_types.event_type_id;
-
-
---
--- Name: events; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.events (
-    event_id integer NOT NULL,
-    source_id integer NOT NULL,
-    event_type_id integer NOT NULL,
-    event_location_id integer,
+CREATE TABLE public."Event" (
+    id integer NOT NULL,
+    event_type character varying,
     event_date date,
-    recorded_event_date character varying,
-    priest_id integer,
-    event_description character varying
+    event_place integer,
+    record_id integer
 );
 
 
-ALTER TABLE public.events OWNER TO postgres;
+ALTER TABLE public."Event" OWNER TO postgres;
 
 --
--- Name: events_event_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 224 (class 1259 OID 24750)
+-- Name: OriginalTerms; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.events_event_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.events_event_id_seq OWNER TO postgres;
-
---
--- Name: events_event_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.events_event_id_seq OWNED BY public.events.event_id;
-
-
---
--- Name: location_recorded_names; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.location_recorded_names (
-    location_recorded_names_id integer NOT NULL,
-    recorded_name character varying NOT NULL,
-    location_id integer NOT NULL
+CREATE TABLE public."OriginalTerms" (
+    id integer NOT NULL,
+    label_type character varying,
+    label_value character varying,
+    label_language character varying
 );
 
 
-ALTER TABLE public.location_recorded_names OWNER TO postgres;
+ALTER TABLE public."OriginalTerms" OWNER TO postgres;
 
 --
--- Name: location_recorded_names_location_recorded_names_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 217 (class 1259 OID 24703)
+-- Name: Persona; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.location_recorded_names_location_recorded_names_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.location_recorded_names_location_recorded_names_id_seq OWNER TO postgres;
-
---
--- Name: location_recorded_names_location_recorded_names_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.location_recorded_names_location_recorded_names_id_seq OWNED BY public.location_recorded_names.location_recorded_names_id;
-
-
---
--- Name: locations; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.locations (
-    location_id integer NOT NULL,
-    tgn_id integer,
-    place_type_id integer NOT NULL,
-    place_type_name character varying
-);
-
-
-ALTER TABLE public.locations OWNER TO postgres;
-
---
--- Name: locations_location_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.locations_location_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.locations_location_id_seq OWNER TO postgres;
-
---
--- Name: locations_location_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.locations_location_id_seq OWNED BY public.locations.location_id;
-
-
---
--- Name: persons; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.persons (
-    person_id integer NOT NULL,
-    first_name character varying NOT NULL,
-    last_name character varying NOT NULL,
+CREATE TABLE public."Persona" (
+    id integer NOT NULL,
+    name character varying,
+    lastname character varying,
     birth_date date,
-    birth_date_typed character varying,
-    birth_place_id integer,
-    gender character varying,
-    CONSTRAINT gender_check CHECK (((gender)::text = ANY ((ARRAY['male'::character varying, 'female'::character varying, 'unknown'::character varying])::text[])))
+    birth_place integer,
+    death_date date,
+    death_place integer,
+    notes text
 );
 
 
-ALTER TABLE public.persons OWNER TO postgres;
+ALTER TABLE public."Persona" OWNER TO postgres;
 
 --
--- Name: persons_person_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 218 (class 1259 OID 24710)
+-- Name: PersonaCondition; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.persons_person_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.persons_person_id_seq OWNER TO postgres;
-
---
--- Name: persons_person_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.persons_person_id_seq OWNED BY public.persons.person_id;
-
-
---
--- Name: place_types; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.place_types (
-    place_type_id integer NOT NULL,
-    place_type_name character varying NOT NULL
+CREATE TABLE public."PersonaCondition" (
+    id integer NOT NULL,
+    person_id integer,
+    condition_vocab_id integer,
+    event_id integer
 );
 
 
-ALTER TABLE public.place_types OWNER TO postgres;
+ALTER TABLE public."PersonaCondition" OWNER TO postgres;
 
 --
--- Name: place_types_place_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 221 (class 1259 OID 24729)
+-- Name: PersonaRelationship; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.place_types_place_type_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.place_types_place_type_id_seq OWNER TO postgres;
-
---
--- Name: place_types_place_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.place_types_place_type_id_seq OWNED BY public.place_types.place_type_id;
-
-
---
--- Name: relationship_types; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.relationship_types (
-    relationship_type_id integer NOT NULL,
-    relationship_type_name character varying NOT NULL,
-    relationship_type_description character varying
+CREATE TABLE public."PersonaRelationship" (
+    id integer NOT NULL,
+    person_subject_id integer,
+    person_object_id integer,
+    relationship_type character varying,
+    event_id integer
 );
 
 
-ALTER TABLE public.relationship_types OWNER TO postgres;
+ALTER TABLE public."PersonaRelationship" OWNER TO postgres;
 
 --
--- Name: relationship_types_relationship_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 220 (class 1259 OID 24722)
+-- Name: PersonaRoleInEvent; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.relationship_types_relationship_type_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.relationship_types_relationship_type_id_seq OWNER TO postgres;
-
---
--- Name: relationship_types_relationship_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.relationship_types_relationship_type_id_seq OWNED BY public.relationship_types.relationship_type_id;
-
-
---
--- Name: relationships; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.relationships (
-    relationship_id integer NOT NULL,
-    person_id_1 integer NOT NULL,
-    person_id_2 integer NOT NULL,
-    relationship_type_id integer NOT NULL,
-    notes character varying,
-    CONSTRAINT no_self_relationship CHECK ((person_id_1 <> person_id_2))
+CREATE TABLE public."PersonaRoleInEvent" (
+    id integer NOT NULL,
+    event_id integer,
+    person_id integer,
+    role character varying
 );
 
 
-ALTER TABLE public.relationships OWNER TO postgres;
+ALTER TABLE public."PersonaRoleInEvent" OWNER TO postgres;
 
 --
--- Name: relationships_relationship_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 223 (class 1259 OID 24743)
+-- Name: Place; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.relationships_relationship_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.relationships_relationship_id_seq OWNER TO postgres;
-
---
--- Name: relationships_relationship_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.relationships_relationship_id_seq OWNED BY public.relationships.relationship_id;
-
-
---
--- Name: role_types; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.role_types (
-    role_type_id integer NOT NULL,
-    role_type_name character varying NOT NULL,
-    role_type_description character varying
+CREATE TABLE public."Place" (
+    id integer NOT NULL,
+    place_label character varying,
+    language character varying,
+    latitude double precision,
+    longitude double precision,
+    source character varying,
+    uri character varying,
+    country_code character varying,
+    part_of character varying,
+    part_of_uri character varying,
+    mentioned_as integer
 );
 
 
-ALTER TABLE public.role_types OWNER TO postgres;
+ALTER TABLE public."Place" OWNER TO postgres;
 
 --
--- Name: role_types_role_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 225 (class 1259 OID 24757)
+-- Name: Record; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.role_types_role_type_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.role_types_role_type_id_seq OWNER TO postgres;
-
---
--- Name: role_types_role_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.role_types_role_type_id_seq OWNED BY public.role_types.role_type_id;
-
-
---
--- Name: sources; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.sources (
-    source_id integer NOT NULL,
-    archival_reference text NOT NULL,
-    title character varying,
-    folio_start character varying(10),
-    folio_end character varying(10),
-    date_start date,
-    date_end date,
-    recorded_date_start character varying,
-    recorded_date_end character varying,
-    notes character varying
+CREATE TABLE public."Record" (
+    id integer NOT NULL,
+    record_type character varying,
+    record_identifier character varying,
+    record_file character varying
 );
 
 
-ALTER TABLE public.sources OWNER TO postgres;
+ALTER TABLE public."Record" OWNER TO postgres;
 
 --
--- Name: sources_source_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 3659 (class 0 OID 24715)
+-- Dependencies: 219
+-- Data for Name: ConditionVocab; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.sources_source_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+COPY public."ConditionVocab" (id, label, type) FROM stdin;
+\.
 
 
-ALTER SEQUENCE public.sources_source_id_seq OWNER TO postgres;
-
---
--- Name: sources_source_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.sources_source_id_seq OWNED BY public.sources.source_id;
-
-
---
--- Name: event_roles event_role_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.event_roles ALTER COLUMN event_role_id SET DEFAULT nextval('public.event_roles_event_role_id_seq'::regclass);
-
-
---
--- Name: event_types event_type_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.event_types ALTER COLUMN event_type_id SET DEFAULT nextval('public.event_types_event_type_id_seq'::regclass);
-
-
---
--- Name: events event_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.events ALTER COLUMN event_id SET DEFAULT nextval('public.events_event_id_seq'::regclass);
-
-
---
--- Name: location_recorded_names location_recorded_names_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.location_recorded_names ALTER COLUMN location_recorded_names_id SET DEFAULT nextval('public.location_recorded_names_location_recorded_names_id_seq'::regclass);
-
-
---
--- Name: locations location_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.locations ALTER COLUMN location_id SET DEFAULT nextval('public.locations_location_id_seq'::regclass);
-
-
---
--- Name: persons person_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.persons ALTER COLUMN person_id SET DEFAULT nextval('public.persons_person_id_seq'::regclass);
-
-
---
--- Name: place_types place_type_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.place_types ALTER COLUMN place_type_id SET DEFAULT nextval('public.place_types_place_type_id_seq'::regclass);
-
-
---
--- Name: relationship_types relationship_type_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.relationship_types ALTER COLUMN relationship_type_id SET DEFAULT nextval('public.relationship_types_relationship_type_id_seq'::regclass);
-
-
---
--- Name: relationships relationship_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.relationships ALTER COLUMN relationship_id SET DEFAULT nextval('public.relationships_relationship_id_seq'::regclass);
-
-
---
--- Name: role_types role_type_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.role_types ALTER COLUMN role_type_id SET DEFAULT nextval('public.role_types_role_type_id_seq'::regclass);
-
-
---
--- Name: sources source_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.sources ALTER COLUMN source_id SET DEFAULT nextval('public.sources_source_id_seq'::regclass);
-
-
---
--- Name: sources archival_reference_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.sources
-    ADD CONSTRAINT archival_reference_unique UNIQUE (archival_reference);
-
-
---
--- Name: event_roles event_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.event_roles
-    ADD CONSTRAINT event_roles_pkey PRIMARY KEY (event_role_id);
-
-
---
--- Name: event_types event_type_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.event_types
-    ADD CONSTRAINT event_type_name_unique UNIQUE (event_type_name);
-
-
---
--- Name: event_types event_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.event_types
-    ADD CONSTRAINT event_types_pkey PRIMARY KEY (event_type_id);
-
-
---
--- Name: events events_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.events
-    ADD CONSTRAINT events_pkey PRIMARY KEY (event_id);
-
-
---
--- Name: location_recorded_names location_recorded_names_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.location_recorded_names
-    ADD CONSTRAINT location_recorded_names_pkey PRIMARY KEY (location_recorded_names_id);
-
-
---
--- Name: location_recorded_names location_recorded_names_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.location_recorded_names
-    ADD CONSTRAINT location_recorded_names_unique UNIQUE (location_id, recorded_name);
-
-
---
--- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.locations
-    ADD CONSTRAINT locations_pkey PRIMARY KEY (location_id);
-
-
---
--- Name: persons persons_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.persons
-    ADD CONSTRAINT persons_pkey PRIMARY KEY (person_id);
-
-
---
--- Name: place_types place_type_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.place_types
-    ADD CONSTRAINT place_type_name_unique UNIQUE (place_type_name);
-
-
---
--- Name: place_types place_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.place_types
-    ADD CONSTRAINT place_types_pkey PRIMARY KEY (place_type_id);
-
-
---
--- Name: relationship_types relationship_type_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.relationship_types
-    ADD CONSTRAINT relationship_type_name_unique UNIQUE (relationship_type_name);
-
-
---
--- Name: relationship_types relationship_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.relationship_types
-    ADD CONSTRAINT relationship_types_pkey PRIMARY KEY (relationship_type_id);
-
-
---
--- Name: relationships relationships_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.relationships
-    ADD CONSTRAINT relationships_pkey PRIMARY KEY (relationship_id);
-
-
---
--- Name: role_types role_type_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.role_types
-    ADD CONSTRAINT role_type_name_unique UNIQUE (role_type_name);
-
-
---
--- Name: role_types role_types_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.role_types
-    ADD CONSTRAINT role_types_pkey PRIMARY KEY (role_type_id);
-
-
---
--- Name: sources sources_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.sources
-    ADD CONSTRAINT sources_pkey PRIMARY KEY (source_id);
-
-
---
--- Name: locations tgn_id_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.locations
-    ADD CONSTRAINT tgn_id_unique UNIQUE (tgn_id);
-
-
---
--- Name: event_roles unique_event_role_type; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.event_roles
-    ADD CONSTRAINT unique_event_role_type UNIQUE (event_id, role_type_id);
-
-
---
--- Name: relationships unique_relationship; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.relationships
-    ADD CONSTRAINT unique_relationship UNIQUE (person_id_1, person_id_2, relationship_type_id);
-
-
---
--- Name: idx_event_date; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX idx_event_date ON public.events USING btree (event_date);
-
-
---
--- Name: idx_person_name; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX idx_person_name ON public.persons USING btree (first_name, last_name);
-
-
---
--- Name: idx_source_reference; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX idx_source_reference ON public.sources USING btree (archival_reference);
-
-
---
--- Name: event_roles event_roles_event_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.event_roles
-    ADD CONSTRAINT event_roles_event_id_fkey FOREIGN KEY (event_id) REFERENCES public.events(event_id);
-
-
---
--- Name: event_roles event_roles_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.event_roles
-    ADD CONSTRAINT event_roles_person_id_fkey FOREIGN KEY (person_id) REFERENCES public.persons(person_id);
-
-
---
--- Name: event_roles event_roles_role_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
-
-ALTER TABLE ONLY public.event_roles
-    ADD CONSTRAINT event_roles_role_type_id_fkey FOREIGN KEY (role_type_id) REFERENCES public.role_types(role_type_id);
-
-
---
--- Name: events events_event_location_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.events
-    ADD CONSTRAINT events_event_location_id_fkey FOREIGN KEY (event_location_id) REFERENCES public.locations(location_id);
-
-
---
--- Name: events events_event_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3662 (class 0 OID 24736)
+-- Dependencies: 222
+-- Data for Name: Event; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.events
-    ADD CONSTRAINT events_event_type_id_fkey FOREIGN KEY (event_type_id) REFERENCES public.event_types(event_type_id);
+COPY public."Event" (id, event_type, event_date, event_place, record_id) FROM stdin;
+\.
 
 
 --
--- Name: events events_priest_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3664 (class 0 OID 24750)
+-- Dependencies: 224
+-- Data for Name: OriginalTerms; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.events
-    ADD CONSTRAINT events_priest_id_fkey FOREIGN KEY (priest_id) REFERENCES public.persons(person_id);
+COPY public."OriginalTerms" (id, label_type, label_value, label_language) FROM stdin;
+\.
 
 
 --
--- Name: events events_source_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3657 (class 0 OID 24703)
+-- Dependencies: 217
+-- Data for Name: Persona; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.events
-    ADD CONSTRAINT events_source_id_fkey FOREIGN KEY (source_id) REFERENCES public.sources(source_id);
+COPY public."Persona" (id, name, lastname, birth_date, birth_place, death_date, death_place, notes) FROM stdin;
+\.
 
 
 --
--- Name: location_recorded_names location_recorded_names_location_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3658 (class 0 OID 24710)
+-- Dependencies: 218
+-- Data for Name: PersonaCondition; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.location_recorded_names
-    ADD CONSTRAINT location_recorded_names_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.locations(location_id);
+COPY public."PersonaCondition" (id, person_id, condition_vocab_id, event_id) FROM stdin;
+\.
 
 
 --
--- Name: locations locations_place_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3661 (class 0 OID 24729)
+-- Dependencies: 221
+-- Data for Name: PersonaRelationship; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.locations
-    ADD CONSTRAINT locations_place_type_id_fkey FOREIGN KEY (place_type_id) REFERENCES public.place_types(place_type_id);
+COPY public."PersonaRelationship" (id, person_subject_id, person_object_id, relationship_type, event_id) FROM stdin;
+\.
 
 
 --
--- Name: persons persons_birth_place_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3660 (class 0 OID 24722)
+-- Dependencies: 220
+-- Data for Name: PersonaRoleInEvent; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.persons
-    ADD CONSTRAINT persons_birth_place_id_fkey FOREIGN KEY (birth_place_id) REFERENCES public.locations(location_id);
+COPY public."PersonaRoleInEvent" (id, event_id, person_id, role) FROM stdin;
+\.
 
 
 --
--- Name: relationships relationships_person_id_1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3663 (class 0 OID 24743)
+-- Dependencies: 223
+-- Data for Name: Place; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.relationships
-    ADD CONSTRAINT relationships_person_id_1_fkey FOREIGN KEY (person_id_1) REFERENCES public.persons(person_id);
+COPY public."Place" (id, place_label, language, latitude, longitude, source, uri, country_code, part_of, part_of_uri, mentioned_as) FROM stdin;
+\.
 
 
 --
--- Name: relationships relationships_person_id_2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3665 (class 0 OID 24757)
+-- Dependencies: 225
+-- Data for Name: Record; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.relationships
-    ADD CONSTRAINT relationships_person_id_2_fkey FOREIGN KEY (person_id_2) REFERENCES public.persons(person_id);
+COPY public."Record" (id, record_type, record_identifier, record_file) FROM stdin;
+\.
 
 
 --
--- Name: relationships relationships_relationship_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3486 (class 2606 OID 24721)
+-- Name: ConditionVocab ConditionVocab_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.relationships
-    ADD CONSTRAINT relationships_relationship_type_id_fkey FOREIGN KEY (relationship_type_id) REFERENCES public.relationship_types(relationship_type_id);
+ALTER TABLE ONLY public."ConditionVocab"
+    ADD CONSTRAINT "ConditionVocab_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: TABLE event_roles; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3492 (class 2606 OID 24742)
+-- Name: Event Event_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.event_roles TO sondondo;
+ALTER TABLE ONLY public."Event"
+    ADD CONSTRAINT "Event_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: SEQUENCE event_roles_event_role_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3496 (class 2606 OID 24756)
+-- Name: OriginalTerms OriginalTerms_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.event_roles_event_role_id_seq TO sondondo;
+ALTER TABLE ONLY public."OriginalTerms"
+    ADD CONSTRAINT "OriginalTerms_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: TABLE event_types; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3484 (class 2606 OID 24714)
+-- Name: PersonaCondition PersonaCondition_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.event_types TO sondondo;
+ALTER TABLE ONLY public."PersonaCondition"
+    ADD CONSTRAINT "PersonaCondition_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: SEQUENCE event_types_event_type_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3490 (class 2606 OID 24735)
+-- Name: PersonaRelationship PersonaRelationship_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.event_types_event_type_id_seq TO sondondo;
+ALTER TABLE ONLY public."PersonaRelationship"
+    ADD CONSTRAINT "PersonaRelationship_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: TABLE events; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3488 (class 2606 OID 24728)
+-- Name: PersonaRoleInEvent PersonaRoleInEvent_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.events TO sondondo;
+ALTER TABLE ONLY public."PersonaRoleInEvent"
+    ADD CONSTRAINT "PersonaRoleInEvent_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: SEQUENCE events_event_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3482 (class 2606 OID 24709)
+-- Name: Persona Persona_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.events_event_id_seq TO sondondo;
+ALTER TABLE ONLY public."Persona"
+    ADD CONSTRAINT "Persona_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: TABLE location_recorded_names; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3494 (class 2606 OID 24749)
+-- Name: Place Place_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.location_recorded_names TO sondondo;
+ALTER TABLE ONLY public."Place"
+    ADD CONSTRAINT "Place_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: SEQUENCE location_recorded_names_location_recorded_names_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3498 (class 2606 OID 24763)
+-- Name: Record Record_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.location_recorded_names_location_recorded_names_id_seq TO sondondo;
+ALTER TABLE ONLY public."Record"
+    ADD CONSTRAINT "Record_pkey" PRIMARY KEY (id);
 
 
 --
--- Name: TABLE locations; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3509 (class 2606 OID 24814)
+-- Name: Event Event_event_place_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.locations TO sondondo;
+ALTER TABLE ONLY public."Event"
+    ADD CONSTRAINT "Event_event_place_fkey" FOREIGN KEY (event_place) REFERENCES public."Place"(id);
 
 
 --
--- Name: SEQUENCE locations_location_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3510 (class 2606 OID 24819)
+-- Name: Event Event_record_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.locations_location_id_seq TO sondondo;
+ALTER TABLE ONLY public."Event"
+    ADD CONSTRAINT "Event_record_id_fkey" FOREIGN KEY (record_id) REFERENCES public."Record"(id);
 
 
 --
--- Name: TABLE persons; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3501 (class 2606 OID 24779)
+-- Name: PersonaCondition PersonaCondition_condition_vocab_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.persons TO sondondo;
+ALTER TABLE ONLY public."PersonaCondition"
+    ADD CONSTRAINT "PersonaCondition_condition_vocab_id_fkey" FOREIGN KEY (condition_vocab_id) REFERENCES public."ConditionVocab"(id);
 
 
 --
--- Name: SEQUENCE persons_person_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3502 (class 2606 OID 24784)
+-- Name: PersonaCondition PersonaCondition_event_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.persons_person_id_seq TO sondondo;
+ALTER TABLE ONLY public."PersonaCondition"
+    ADD CONSTRAINT "PersonaCondition_event_id_fkey" FOREIGN KEY (event_id) REFERENCES public."Event"(id);
 
 
 --
--- Name: TABLE place_types; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3503 (class 2606 OID 24774)
+-- Name: PersonaCondition PersonaCondition_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.place_types TO sondondo;
+ALTER TABLE ONLY public."PersonaCondition"
+    ADD CONSTRAINT "PersonaCondition_person_id_fkey" FOREIGN KEY (person_id) REFERENCES public."Persona"(id);
 
 
 --
--- Name: SEQUENCE place_types_place_type_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3506 (class 2606 OID 24809)
+-- Name: PersonaRelationship PersonaRelationship_event_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.place_types_place_type_id_seq TO sondondo;
+ALTER TABLE ONLY public."PersonaRelationship"
+    ADD CONSTRAINT "PersonaRelationship_event_id_fkey" FOREIGN KEY (event_id) REFERENCES public."Event"(id);
 
 
 --
--- Name: TABLE relationship_types; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3507 (class 2606 OID 24804)
+-- Name: PersonaRelationship PersonaRelationship_person_object_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.relationship_types TO sondondo;
+ALTER TABLE ONLY public."PersonaRelationship"
+    ADD CONSTRAINT "PersonaRelationship_person_object_id_fkey" FOREIGN KEY (person_object_id) REFERENCES public."Persona"(id);
 
 
 --
--- Name: SEQUENCE relationship_types_relationship_type_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3508 (class 2606 OID 24799)
+-- Name: PersonaRelationship PersonaRelationship_person_subject_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.relationship_types_relationship_type_id_seq TO sondondo;
+ALTER TABLE ONLY public."PersonaRelationship"
+    ADD CONSTRAINT "PersonaRelationship_person_subject_id_fkey" FOREIGN KEY (person_subject_id) REFERENCES public."Persona"(id);
 
 
 --
--- Name: TABLE relationships; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3504 (class 2606 OID 24789)
+-- Name: PersonaRoleInEvent PersonaRoleInEvent_event_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.relationships TO sondondo;
+ALTER TABLE ONLY public."PersonaRoleInEvent"
+    ADD CONSTRAINT "PersonaRoleInEvent_event_id_fkey" FOREIGN KEY (event_id) REFERENCES public."Event"(id);
 
 
 --
--- Name: SEQUENCE relationships_relationship_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3505 (class 2606 OID 24794)
+-- Name: PersonaRoleInEvent PersonaRoleInEvent_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.relationships_relationship_id_seq TO sondondo;
+ALTER TABLE ONLY public."PersonaRoleInEvent"
+    ADD CONSTRAINT "PersonaRoleInEvent_person_id_fkey" FOREIGN KEY (person_id) REFERENCES public."Persona"(id);
 
 
 --
--- Name: TABLE role_types; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3499 (class 2606 OID 24764)
+-- Name: Persona Persona_birth_place_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.role_types TO sondondo;
+ALTER TABLE ONLY public."Persona"
+    ADD CONSTRAINT "Persona_birth_place_fkey" FOREIGN KEY (birth_place) REFERENCES public."Place"(id);
 
 
 --
--- Name: SEQUENCE role_types_role_type_id_seq; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3500 (class 2606 OID 24769)
+-- Name: Persona Persona_death_place_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON SEQUENCE public.role_types_role_type_id_seq TO sondondo;
+ALTER TABLE ONLY public."Persona"
+    ADD CONSTRAINT "Persona_death_place_fkey" FOREIGN KEY (death_place) REFERENCES public."Place"(id);
 
 
 --
--- Name: TABLE sources; Type: ACL; Schema: public; Owner: postgres
+-- TOC entry 3511 (class 2606 OID 24824)
+-- Name: Place Place_mentioned_as_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.sources TO sondondo;
-
-
---
--- Name: SEQUENCE sources_source_id_seq; Type: ACL; Schema: public; Owner: postgres
---
+ALTER TABLE ONLY public."Place"
+    ADD CONSTRAINT "Place_mentioned_as_fkey" FOREIGN KEY (mentioned_as) REFERENCES public."OriginalTerms"(id);
 
-GRANT ALL ON SEQUENCE public.sources_source_id_seq TO sondondo;
 
+-- Completed on 2025-08-05 14:53:26 PDT
 
 --
 -- PostgreSQL database dump complete
