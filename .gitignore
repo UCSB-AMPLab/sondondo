@@ -10,6 +10,7 @@ logs/*
 
 # Submodules
 sondondo.wiki/
+sondondo.researchNotes/
 
 #env variables
 .env
