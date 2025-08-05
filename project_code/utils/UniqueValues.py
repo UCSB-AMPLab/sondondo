@@ -10,6 +10,29 @@ import numpy as np
 
 class UniqueValuesExtractor:
     """
+    UniqueValuesExtractor extracts unique values from all columns across multiple pandas DataFrames.
++
++    This class is useful for aggregating unique values from several DataFrames, regardless of column names.
++    It provides a method to return the unique values either as a NumPy array or as a pandas DataFrame.
++
++    Example usage:
++        >>> import pandas as pd
++        >>> from UniqueValues import UniqueValuesExtractor
++        >>> df1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
++        >>> df2 = pd.DataFrame({'A': [2, 5], 'B': [4, 6]})
++        >>> extractor = UniqueValuesExtractor([df1, df2])
++        >>> unique_values = extractor.get_unique_values()
++        >>> print(unique_values)
++        [1 2 3 4 5 6]
++        >>> unique_df = extractor.get_unique_values(return_dataframe=True)
++        >>> print(unique_df)
++           original_place
++        0              1
++        1              2
++        2              3
++        3              4
++        4              5
++        5              6
     
     """
 
@@ -23,10 +46,9 @@ class UniqueValuesExtractor:
 
     def get_unique_values(self, return_dataframe: bool = False) -> Union[np.ndarray, pd.DataFrame]:
         """
-        Get unique values from the specified column across all DataFrames.
+        Get unique values from all columns across all DataFrames.
 
-        :param column: The column name to extract unique values from
-        :return: Numpy array of unique values
+        :return: Numpy array of unique values if return_dataframe is False, otherwise a pandas DataFrame of unique values.
         """
         all_columns = pd.concat(self.dataframes, ignore_index=True)
 
