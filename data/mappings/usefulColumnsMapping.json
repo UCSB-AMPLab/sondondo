@@ -3,7 +3,7 @@
         "file",
         "identifier",
         "event_type",
-        "date",
+        "event_date",
         "baptized_name",
         "baptized_hometown",
         "baptized_birth_date",
@@ -21,17 +21,17 @@
         "godmother_name",
         "godmother_lastname",
         "godmother_social_condition",
-        "baptism_place",
-        "geographic_descriptor_1",
-        "geographic_descriptor_2",
-        "geographic_descriptor_3",
-        "geographic_descriptor_4"
+        "event_place",
+        "event_geographic_descriptor_1",
+        "event_geographic_descriptor_2",
+        "event_geographic_descriptor_3",
+        "event_geographic_descriptor_4"
     ],
     "matrimonio": [
         "file",
         "identifier",
         "event_type",
-        "date",
+        "event_date",
         "groom_name",
         "groom_lastname",
         "groom_social_condition",
@@ -77,21 +77,21 @@
         "witness_3_lastname",
         "witness_4_name",
         "witness_4_lastname",
-        "marriage_place",
-        "geographic_descriptor_1",
-        "geographic_descriptor_2",
-        "geographic_descriptor_3",
-        "geographic_descriptor_4",
-        "geographic_descriptor_5",
-        "geographic_descriptor_6"
+        "event_place",
+        "event_geographic_descriptor_1",
+        "event_geographic_descriptor_2",
+        "event_geographic_descriptor_3",
+        "event_geographic_descriptor_4",
+        "event_geographic_descriptor_5",
+        "event_geographic_descriptor_6"
     ],
     "entierro": [
         "file",
         "identifier",
         "event_type",
-        "date",
+        "event_date",
         "doctrine",
-        "place",
+        "event_place",
         "deceased_name",
         "deceased_lastname",
         "deceased_age",
@@ -106,10 +106,10 @@
         "husband_name",
         "wife_name",
         "burial_place",
-        "geographic_descriptor_1",
-        "geographic_descriptor_2",
-        "geographic_descriptor_3",
-        "geographic_descriptor_4"
+        "event_geographic_descriptor_1",
+        "event_geographic_descriptor_2",
+        "event_geographic_descriptor_3",
+        "event_geographic_descriptor_4"
     ]
 
 }

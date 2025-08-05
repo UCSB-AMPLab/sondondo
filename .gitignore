@@ -19,5 +19,4 @@ sondondo.wiki/
 
 *.sqlite
 
-project_code/dataCleaning.html
-project_code/dataCleaning_files/
+*.txt

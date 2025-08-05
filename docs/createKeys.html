@@ -131,11 +131,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-notebooks">    
         <li>
-    <a class="dropdown-item" href="./dataCleaning.html">
+    <a class="dropdown-item" href="./1_dataCleaning.html">
  <span class="dropdown-text">Data Cleaning</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./placeMapping.html">
+    <a class="dropdown-item" href="./2_placeMapping.html">
  <span class="dropdown-text">Place Mapping</span></a>
   </li>  
     </ul>
@@ -176,11 +176,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="e0b706ae" class="cell" data-execution_count="4">
+<div id="e0b706ae" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cc1e9d78" class="cell" data-execution_count="15">
+<div id="cc1e9d78" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cleaned data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>CLEANED_DATA_PATH <span class="op">=</span> Path(<span class="st">"../data/clean/"</span>)</span>
@@ -196,64 +196,111 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> col <span class="kw">in</span> df.columns:</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="0bcd5ced" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>['file',
- 'identifier',
- 'event_type',
- 'date',
- 'groom_name',
- 'groom_lastname',
- 'groom_social_condition',
- 'groom_marital_status',
- 'groom_age',
- 'groom_hometown',
- 'groom_resident_in',
- 'groom_legitimacy_status',
- 'groom_father_name',
- 'groom_father_lastname',
- 'groom_father_social_condition',
- 'groom_mother_name',
- 'groom_mother_lastname',
- 'groom_mother_social_condition',
- 'bride_name',
- 'bride_lastname',
- 'bride_social_condition',
- 'bride_marital_status',
- 'bride_age',
- 'bride_hometown',
- 'bride_resident_in',
- 'bride_legitimacy_status',
- 'bride_father_name',
- 'bride_father_lastname',
- 'bride_father_social_condition',
- 'bride_mother_name',
- 'bride_mother_lastname',
- 'bride_mother_social_condition',
- 'godparent_1_name',
- 'godparent_1_lastname',
- 'godparent_1_social_condition',
- 'godparent_2_name',
- 'godparent_2_lastname',
- 'godparent_2_social_condition',
- 'godparent_3_name',
- 'godparent_3_lastname',
- 'witness_1_name',
- 'witness_1_lastname',
- 'witness_2_name',
- 'witness_2_lastname',
- 'witness_3_name',
- 'witness_3_lastname',
- 'witness_4_name',
- 'witness_4_lastname',
- 'marriage_place',
- 'geographic_descriptor_1',
- 'geographic_descriptor_2',
- 'geographic_descriptor_3',
- 'geographic_descriptor_4',
- 'geographic_descriptor_5',
- 'geographic_descriptor_6']</code></pre>
+<div id="0bcd5ced" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>prefix_pattern <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"^[A-Za-z]*_[\d]?"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> df <span class="kw">in</span> [bautismos, entierros, matrimonios]:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> df.columns:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> prefix_pattern.match(col):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            prefix <span class="op">=</span> prefix_pattern.match(col).group(<span class="dv">0</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(prefix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>event_
+baptized_
+baptized_
+baptized_
+baptized_
+father_
+father_
+father_
+mother_
+mother_
+mother_
+parents_
+godfather_
+godfather_
+godfather_
+godmother_
+godmother_
+godmother_
+baptism_
+geographic_
+geographic_
+geographic_
+geographic_
+event_
+deceased_
+deceased_
+deceased_
+deceased_
+deceased_
+deceased_
+deceased_
+father_
+father_
+mother_
+mother_
+husband_
+wife_
+burial_
+geographic_
+geographic_
+geographic_
+geographic_
+event_
+groom_
+groom_
+groom_
+groom_
+groom_
+groom_
+groom_
+groom_
+groom_
+groom_
+groom_
+groom_
+groom_
+groom_
+bride_
+bride_
+bride_
+bride_
+bride_
+bride_
+bride_
+bride_
+bride_
+bride_
+bride_
+bride_
+bride_
+bride_
+godparent_1
+godparent_1
+godparent_1
+godparent_2
+godparent_2
+godparent_2
+godparent_3
+godparent_3
+witness_1
+witness_1
+witness_2
+witness_2
+witness_3
+witness_3
+witness_4
+witness_4
+marriage_
+geographic_
+geographic_
+geographic_
+geographic_
+geographic_
+geographic_</code></pre>
 </div>
 </div>
 

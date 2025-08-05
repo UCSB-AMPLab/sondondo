@@ -55,7 +55,7 @@ class MapPlaces:
         """Resolve places using the PlaceResolver"""
         
         params = {
-            "verbose": True,
+            "verbose": False,
             "flexible_threshold": True,
             "flexible_threshold_value": 70,
             "lang": 'es'
@@ -94,7 +94,7 @@ class AuthoritativePlaceResolver:
         """
         self.data = data
         params = {
-            "verbose": True,
+            "verbose": False,
             "flexible_threshold": True,
             "flexible_threshold_value": 70,
             "lang": 'es'

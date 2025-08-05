@@ -10,9 +10,9 @@ website:
         text: Home
       - text: Notebooks
         menu:
-          - href: dataCleaning.ipynb
+          - href: 1_dataCleaning.ipynb
             text: Data Cleaning
-          - href: placeMapping.ipynb
+          - href: 2_placeMapping.ipynb
             text: Place Mapping
 
 format:
