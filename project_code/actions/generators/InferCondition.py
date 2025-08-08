@@ -20,22 +20,30 @@ class AttributeNormalizer:
     It handles case-insensitive matching through exact matches, word-level matches, and substring matches.
     """
 
-    def __init__(self, mapping_file: Union[str, Path], fuzzy_threshold: int = 80):
+    def __init__(self, mapping_file: Union[str, Path, dict], fuzzy_threshold: int = 80):
         """
         Initializes the AttributeNormalizer with a mapping file.
         
         Parameters
         ----------
-        mapping_file : Union[str, Path]
+        mapping_file : Union[str, Path, dict]
             Path to the JSON file containing the mapping dictionary.
+            Alternatively, a dictionary can be passed directly.
         """
-        self.mapping_dictionary = self.load_mapping(mapping_file)
+        if isinstance(mapping_file, dict):
+            self.mapping_dictionary = mapping_file
+        else:
+            if not Path(mapping_file).exists():
+                raise FileNotFoundError(f"Mapping file '{mapping_file}' does not exist.")
+            self.mapping_dictionary = self.load_mapping(mapping_file)
+        
         self.fuzzy_threshold = fuzzy_threshold
 
     def load_mapping(self, mapping_path: Union[str, Path]) -> dict:
         """
         Load a mapping from a JSON file.
         """
+
         with open(mapping_path, "r", encoding="utf-8") as f:
             return json.load(f)
 

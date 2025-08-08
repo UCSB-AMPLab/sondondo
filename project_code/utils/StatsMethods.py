@@ -1,8 +1,10 @@
 import numpy as np
-from typing import List, Union, Optional
+from typing import List, Union, Optional, Dict
+
+Number = Union[int, float]
 
 
-def cv(frequencies: List[Union[int, float]], rounding: Optional[int] = None) -> Union[float, None]:
+def cv(frequencies: List[Number], rounding: Optional[int] = None) -> float:
     """
     Coefficient of Variation (CV) calculation.
     
@@ -14,14 +16,22 @@ def cv(frequencies: List[Union[int, float]], rounding: Optional[int] = None) -> 
     """
     if not frequencies:
         raise ValueError("Frequencies list cannot be empty")
+    if any(f < 0 for f in frequencies):
+        raise ValueError("Frequencies must be non-negative")
 
-    mean_frequency = sum(frequencies) / len(frequencies) if frequencies else 0
-    std_frequency = np.std(frequencies, ddof=1) 
-    cv = std_frequency / mean_frequency if mean_frequency > 0 else 0
-    return round(float(cv), rounding) if rounding is not None else float(cv)
+    arr = np.asarray(frequencies, dtype=float)
+    mean = arr.mean()
+
+    if mean == 0:
+        return 0.0
+    else:
+        std = arr.std(ddof=1) if arr.size > 1 else 0.0
+        val = float(std / mean)
+
+    return round(val, rounding) if rounding is not None else val
 
 
-def shannon_entropy(frequencies: List[Union[int, float]], rounding: Optional[int] = None) -> dict:
+def shannon_entropy(frequencies: List[Number], rounding: Optional[int] = None) -> Dict[str, float]:
     """
     Calculate Shannon Entropy for a list of frequencies.
     
@@ -29,44 +39,65 @@ def shannon_entropy(frequencies: List[Union[int, float]], rounding: Optional[int
         frequencies: List of term frequencies
 
     Returns:
-        Shannon Entropy as a float
+        Shannon Entropy as a dictionary with keys 'entropy', 'max_entropy', 'normalized_entropy', and 'redundancy'
     """
     if not frequencies:
         raise ValueError("Frequencies list cannot be empty")
+    if any(f < 0 for f in frequencies):
+        raise ValueError("Frequencies must be non-negative")
+
+    total = float(sum(frequencies))
+    k = len(frequencies)
+
+    if total == 0 or k == 0:
+        H = 0.0
+        H_max = 0.0
+        norm = 0.0
+    else:
+        p = [f / total for f in frequencies if f > 0]
+        H = -sum(pi * np.log2(pi) for pi in p) if p else 0.0
+        H_max = np.log2(k) if k > 1 else 0.0
+        norm = (H / H_max) if H_max > 0 else 0.0
+
+    red = 1.0 - norm
+
+    def r(x): return round(x, rounding) if rounding is not None else x
     
-    prob = [f / sum(frequencies) for f in frequencies]
-    entropy = -sum(p * np.log2(p) for p in prob if p > 0)
-    max_entropy = np.log2(len(prob)) if len(prob) > 1 else 0
-    normalized_entropy = entropy / max_entropy if max_entropy > 0 else 0
-    redundancy = 1 - normalized_entropy
     return {
-        'entropy': round(entropy, rounding) if rounding is not None else entropy,
-        'max_entropy': round(max_entropy, rounding) if rounding is not None else max_entropy,
-        'normalized_entropy': round(normalized_entropy, rounding) if rounding is not None else normalized_entropy,
-        'redundancy': round(redundancy, rounding) if rounding is not None else redundancy
+        'entropy': r(H),
+        'max_entropy': r(H_max),
+        'normalized_entropy': r(norm),
+        'redundancy': r(red)
     }
 
 
-def zipf_distribution(frequencies: List[Union[int, float]], rounding: Optional[int] = None) -> List[float]:
+def zipf_distribution(frequencies: List[Number], rounding: Optional[int] = None) -> List[float]:
     """
-    Calculate Zipf distribution for a list of frequencies.
-    
-    Args:
-        frequencies: List of term frequencies
-
-    Returns:
-        List of Zipfian probabilities
+    Theoretical Zipf probabilities for k terms: p_r ∝ 1/r. Does NOT use input values except length.
+    Useful as a reference curve to compare against empirical rank-frequency.
     """
     if not frequencies:
         raise ValueError("Frequencies list cannot be empty")
+    k = len(frequencies)
+    z = [1.0 / (i + 1) for i in range(k)]
+    s = sum(z)
+    dist = [zi / s for zi in z]
+    return [round(x, rounding) if rounding is not None else x for x in dist]
 
-    
-    sorted_frequencies = sorted(frequencies, reverse=True)
-    total_terms = len(sorted_frequencies)
-    zipf_probs = [1 / (i + 1) for i in range(total_terms)]
-    sum_zipf_probs = sum(zipf_probs)
-    
-    zipf_distribution = [round(prob / sum_zipf_probs, rounding) if rounding is not None else prob / sum_zipf_probs 
-                         for prob in zipf_probs]
 
-    return zipf_distribution
+def empirical_rank_freq(frequencies: List[Number], normalize: bool = True, rounding: Optional[int] = None) -> List[float]:
+    """
+    Empirical rank-frequency curve: sort freqs desc and (optionally) convert to probabilities.
+    """
+    if not frequencies:
+        raise ValueError("Frequencies list cannot be empty")
+    if any(f < 0 for f in frequencies):
+        raise ValueError("Frequencies must be non-negative")
+
+    sorted_freqs = sorted((float(f) for f in frequencies), reverse=True)
+    if normalize:
+        total = sum(sorted_freqs)
+        vals = [f / total if total > 0 else 0.0 for f in sorted_freqs]
+    else:
+        vals = sorted_freqs
+    return [round(x, rounding) if rounding is not None else x for x in vals]
