@@ -44,11 +44,11 @@ def test_age_inferrer():
         Path(__file__).parent.parent / "data" / "raw" / "bautismos.csv", 
         Path(__file__).parent.parent / "data" / "mappings" / "bautismosMapping.json"
         )
-    data_series = dataset["birth_date"]
+    data_series = dataset["baptized_birth_date"]
 
     try:
         logger.warning("ValueError: Dates will be cleaned in the next step")
-        dates = dataset["date"].copy()
+        dates = dataset["event_date"].copy()
         normalizer = DateNormalizer(dates)
         normalized = normalizer.normalize()
 
