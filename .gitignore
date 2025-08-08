@@ -20,4 +20,4 @@ sondondo.researchNotes/
 
 *.sqlite
 
-*.txt
+data/clean/*.txt
