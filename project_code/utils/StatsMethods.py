@@ -55,7 +55,7 @@ def shannon_entropy(frequencies: List[Number], rounding: Optional[int] = None) -
         norm = 0.0
     else:
         p = [f / total for f in frequencies if f > 0]
-        H = -sum(pi * np.log2(pi) for pi in p) if p else 0.0
+        H = -np.sum(np.array(p) * np.log2(p)) if p else 0.0
         H_max = np.log2(k) if k > 1 else 0.0
         norm = (H / H_max) if H_max > 0 else 0.0
 
