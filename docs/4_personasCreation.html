@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Relational Key Creation – Sondondo Project Notebooks</title>
+<title>Personas Creation – Sondondo Project Notebooks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,6 +142,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./3_termExtraction.html">
  <span class="dropdown-text">Textual Variation Analysis for ‘Conditions’ Columns</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./4_personasCreation.html">
+ <span class="dropdown-text">Personas Creation</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -170,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Relational Key Creation</h1>
+<h1 class="title">Personas Creation</h1>
 </div>
 
 
@@ -187,6 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>Our approach aligns closely with the input preparation model proposed by David W. Embley (<a href="https://doi.org/10.1007/978-3-030-88358-4_6">2021</a>). We structure our data around <em>personas</em>, defined as “each mention instance of a person in a document” (p.&nbsp;66), as a foundational step toward probabilistic record linkage (PRL). Each <em>persona</em> is created by ingesting available individual metadata (such as name, last name, birth date), associating the person with a sacramental event (baptism, marriage, or burial), and establishing direct relationships (to parents, spouse, godparents).</p>
 <div id="e0b706ae" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
