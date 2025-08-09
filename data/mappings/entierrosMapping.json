@@ -15,7 +15,7 @@
     "Tipo de entierro/Cruz Alta o Baja": "burial_type",
     "Nombre del difunto (a)": "deceased_name",
     "Apellido del difunto (a)": "deceased_lastname",
-    "Edad": "deceased_age",
+    "Edad": "deceased_birth_date",
     "Procedencia": "deceased_hometown",
     "Condición": "deceased_condition",
     "Estado": "deceased_marital_status",
