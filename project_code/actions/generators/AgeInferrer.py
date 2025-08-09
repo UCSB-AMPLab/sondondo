@@ -54,7 +54,7 @@ class AgeInferrer:
             unit = m.group(2)
             if "dia" in unit:
                 return timedelta(days=num)
-            elif "ds." in unit:
+            elif "ds" in unit:
                 return timedelta(days=num)
             elif "mes" in unit:
                 return timedelta(days=num * 30)
@@ -123,6 +123,8 @@ class AgeInferrer:
 
         datenormalizer = SimpleNormalizer()
         for idx, val in age_series.items():
+
+            result = None
             
             if isinstance(val, str) and self._is_iso_date(val):
                 result = val
@@ -151,7 +153,7 @@ class AgeInferrer:
                     self.logger.error(
                         f"[AgeInferrer] Error inferring birthdate at index {idx} with value '{val}': {e}"
                     )
-                    raise e
+                    
             else:
                 result = val
             
