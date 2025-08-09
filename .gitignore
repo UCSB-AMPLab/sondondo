@@ -1,6 +1,9 @@
 # Python virtual environment
 .venv/
 
+# vscode specific
+.vscode/
+
 # macOS
 .DS_Store
 

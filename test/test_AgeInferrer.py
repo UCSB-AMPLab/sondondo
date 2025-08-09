@@ -44,11 +44,11 @@ def test_age_inferrer():
         Path(__file__).parent.parent / "data" / "raw" / "bautismos.csv", 
         Path(__file__).parent.parent / "data" / "mappings" / "bautismosMapping.json"
         )
-    data_series = dataset["birth_date"]
+    data_series = dataset["baptized_birth_date"]
 
     try:
         logger.warning("ValueError: Dates will be cleaned in the next step")
-        dates = dataset["date"].copy()
+        dates = dataset["event_date"].copy()
         normalizer = DateNormalizer(dates)
         normalized = normalizer.normalize()
 
@@ -96,6 +96,10 @@ def inferrer():
     ("", None),
     ("edad desconocida", None),
     ("año y medio", None),  # Not supported yet
+    ('1 semana', timedelta(days=7)),
+    ('párvulo, 3 semanas', timedelta(days=21)),
+    ('parvulo', timedelta(days=30)),
+    ('Octogenaria', None)
 ])
 def test_parse_birth_age_to_timedelta(inferrer, age_text, expected):
     assert inferrer.parse_birth_age_to_timedelta(age_text) == expected

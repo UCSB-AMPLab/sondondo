@@ -26,7 +26,7 @@ This release marks the completion of the comprehensive data cleaning and standar
 ### 2. Data Quality Improvements
 - ✅ **Null Value Standardization**: Replaced inconsistent empty values (`''`, `'-'`, `'--'`, `'n/a'`, `'na'`, `'null'`, `'None'`) with proper `np.nan`
 - ✅ **Date Normalization**: Standardized all dates to `YYYY-MM-DD` format using `DateNormalizer`
-- ✅ **Age Inference**: Processed age-related fields and birth dates using `AgeInferrer`
+- ✅ **Age Inference**: Processed age-related fields and birthdates using `AgeInferrer`
 - ✅ **Names Standardization**: Normalized all name fields using `NamesNormalizer`
 
 ### 3. Advanced Data Processing
@@ -35,7 +35,7 @@ This release marks the completion of the comprehensive data cleaning and standar
 - ✅ **Relationship Data**: Preserved and cleaned family relationship information (parents, godparents, witnesses)
 
 ### 4. Quality Assurance
-- ✅ **Data Validation**: Identified and documented inconsistent date records (birth dates after event dates)
+- ✅ **Data Validation**: Identified and documented inconsistent date records (birthdates after event dates)
 - ✅ **Cleaning Audit**: Comprehensive audit system tracking missing values and data quality metrics
 - ✅ **Documentation**: Complete process documentation in Jupyter notebook format
 
@@ -73,7 +73,7 @@ project_code/
 ```
 
 ## 🚨 Known Issues
-- **Date Inconsistencies**: Some records contain birth dates after event dates, requiring manual verification against original sources
+- **Date Inconsistencies**: Some records contain birthdates after event dates, requiring manual verification against original sources
 - **Missing Data**: Certain fields have high missing value percentages, documented in audit reports
 
 ## 📈 Data Quality Metrics

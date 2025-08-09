@@ -129,7 +129,7 @@ This Jupyter notebook contains the full pipeline from raw data to cleaned, stand
 ### Key Processing Modules
 - **ColumnManager**: Handles column harmonization using mapping files
 - **DateNormalizer**: Standardizes date formats across datasets  
-- **AgeInferrer**: Processes age-related fields and birth dates
+- **AgeInferrer**: Processes age-related fields and birthdates
 - **NamesNormalizer**: Standardizes personal names
 - **PlaceExtractor**: Extracts geographic entities using NER
 

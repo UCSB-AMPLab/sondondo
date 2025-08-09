@@ -16,6 +16,8 @@ website:
             text: Place Mapping
           - href: 3_termExtraction.ipynb
             text: Textual Variation Analysis for 'Conditions' Columns
+          - href: 4_personasCreation.ipynb
+            text: Personas Creation
 
 format:
   html:
