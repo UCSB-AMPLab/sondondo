@@ -1,15 +1,20 @@
 project:
   type: website
-  output-dir: ../docs 
+  output-dir: ../docs
+  render:
+    - "*.qmd"
+    - "*.ipynb"
 
 website:
   title: "Sondondo Project Notebooks"
-  navbar:
-    left:
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
       - href: index.qmd
         text: Home
       - text: Notebooks
-        menu:
+        contents:
           - href: 1_dataCleaning.ipynb
             text: Data Cleaning
           - href: 2_placeMapping.ipynb
@@ -18,7 +23,10 @@ website:
             text: Textual Variation Analysis for 'Conditions' Columns
           - href: 4_personasCreation.ipynb
             text: Personas Creation
-
+      - text: Documentation
+        contents:
+          - href: docpages/schema_documentation.qmd
+            text: Database Schema Documentation
 format:
   html:
     theme: cosmo

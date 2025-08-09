@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Personas Creation – Sondondo Project Notebooks</title>
+<title>Database Schema Documentation – Sondondo Project Notebooks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,59 +20,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2be10d9e998f81ff6e49e26833438aa5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-2be10d9e998f81ff6e49e26833438aa5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -113,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1_dataCleaning.html">Notebooks</a></li><li class="breadcrumb-item"><a href="./4_personasCreation.html">Personas Creation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docpages/schema_documentation.html">Documentation</a></li><li class="breadcrumb-item"><a href="../docpages/schema_documentation.html">Database Schema Documentation</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -128,7 +94,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Sondondo Project Notebooks</a> 
+      <a href="../">Sondondo Project Notebooks</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -140,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -155,25 +121,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./1_dataCleaning.html" class="sidebar-item-text sidebar-link">
+  <a href="../1_dataCleaning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data Cleaning</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./2_placeMapping.html" class="sidebar-item-text sidebar-link">
+  <a href="../2_placeMapping.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Place Mapping</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./3_termExtraction.html" class="sidebar-item-text sidebar-link">
+  <a href="../3_termExtraction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Textual Variation Analysis for ‘Conditions’ Columns</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./4_personasCreation.html" class="sidebar-item-text sidebar-link active">
+  <a href="../4_personasCreation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Personas Creation</span></a>
   </div>
 </li>
@@ -190,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./docpages/schema_documentation.html" class="sidebar-item-text sidebar-link">
+  <a href="../docpages/schema_documentation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Database Schema Documentation</span></a>
   </div>
 </li>
@@ -206,20 +172,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#identifying-prefixes" id="toc-identifying-prefixes" class="nav-link active" data-scroll-target="#identifying-prefixes">Identifying Prefixes</a></li>
-  <li><a href="#er-model" id="toc-er-model" class="nav-link" data-scroll-target="#er-model">ER Model</a>
-  <ul class="collapse">
-  <li><a href="#ingestion-order" id="toc-ingestion-order" class="nav-link" data-scroll-target="#ingestion-order">Ingestion Order</a></li>
-  </ul></li>
+  <li><a href="#conditionvocab" id="toc-conditionvocab" class="nav-link active" data-scroll-target="#conditionvocab">ConditionVocab</a></li>
+  <li><a href="#event" id="toc-event" class="nav-link" data-scroll-target="#event">Event</a></li>
+  <li><a href="#originalterms" id="toc-originalterms" class="nav-link" data-scroll-target="#originalterms">OriginalTerms</a></li>
+  <li><a href="#persona" id="toc-persona" class="nav-link" data-scroll-target="#persona">Persona</a></li>
+  <li><a href="#personacondition" id="toc-personacondition" class="nav-link" data-scroll-target="#personacondition">PersonaCondition</a></li>
+  <li><a href="#personarelationship" id="toc-personarelationship" class="nav-link" data-scroll-target="#personarelationship">PersonaRelationship</a></li>
+  <li><a href="#personaroleinevent" id="toc-personaroleinevent" class="nav-link" data-scroll-target="#personaroleinevent">PersonaRoleInEvent</a></li>
+  <li><a href="#place" id="toc-place" class="nav-link" data-scroll-target="#place">Place</a></li>
+  <li><a href="#record" id="toc-record" class="nav-link" data-scroll-target="#record">Record</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1_dataCleaning.html">Notebooks</a></li><li class="breadcrumb-item"><a href="./4_personasCreation.html">Personas Creation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../docpages/schema_documentation.html">Documentation</a></li><li class="breadcrumb-item"><a href="../docpages/schema_documentation.html">Database Schema Documentation</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Personas Creation</h1>
+<h1 class="title">Database Schema Documentation</h1>
 </div>
 
 
@@ -236,93 +206,394 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Our approach aligns closely with the input preparation model proposed by David W. Embley (<a href="https://doi.org/10.1007/978-3-030-88358-4_6">2021</a>). We structure our data around <em>personas</em>, defined as “each mention instance of a person in a document” (p.&nbsp;66), as a foundational step toward probabilistic record linkage (PRL). Each <em>persona</em> is created by ingesting available individual metadata (such as name, last name, birth date), associating the person with a sacramental event (baptism, marriage, or burial), and establishing direct relationships (to parents, spouse, godparents).</p>
-<div id="e0b706ae" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="019460f5" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bautismos <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/bautismos_clean.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>entierros <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/entierros_clean.csv"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>matrimonios <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/matrimonios_clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="identifying-prefixes" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-prefixes">Identifying Prefixes</h2>
-<p>This step is a very simple exercise to ensure consistency and good naming conventions across the datasets. Also helps to identify the entities for the ER model, and associate prefixes to those entities.</p>
-<div id="0bcd5ced" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>prefix_pattern <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"(^[A-Za-z]*_[\d]?_?)([A-Za-z]*_?[\w\d]*)"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>prefixes <span class="op">=</span> <span class="bu">set</span>()</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> df <span class="kw">in</span> [bautismos, entierros, matrimonios]:</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> df.columns:</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> prefix_pattern.match(col):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            prefix <span class="op">=</span> prefix_pattern.match(col).group(<span class="dv">1</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            remove_pattern <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"\d"</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            prefix <span class="op">=</span> remove_pattern.sub(<span class="st">""</span>, prefix).strip(<span class="st">"_"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            prefixes.add(prefix)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>prefixes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>{'baptized',
- 'bride',
- 'burial',
- 'deceased',
- 'event',
- 'father',
- 'godfather',
- 'godmother',
- 'godparent',
- 'groom',
- 'husband',
- 'mother',
- 'parents',
- 'wife',
- 'witness'}</code></pre>
-</div>
-</div>
+<section id="conditionvocab" class="level2">
+<h2 class="anchored" data-anchor-id="conditionvocab">ConditionVocab</h2>
+<p>Standardized set of terms describing legitimacy status, marital status, or social condition.<br>
+Values are harmonized through controlled vocabularies and mappings to ensure consistency for probabilistic record linkage (PRL).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 39%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Expected Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>label</td>
+<td>Text</td>
+<td>Standardized label representing the condition (e.g., “legitimate”, “mestizo”)</td>
+</tr>
+<tr class="even">
+<td>type</td>
+<td>Text</td>
+<td>Category of the condition: <code>legitimacy</code>, <code>marriage_status</code>, or <code>social_condition</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
 </section>
-<section id="er-model" class="level2">
-<h2 class="anchored" data-anchor-id="er-model">ER Model</h2>
-<p>With those prefixes in mind, and after basic cleaning of data, we can create a more accurate version of the ER model (<a href="https://github.com/UCSB-AMPLab/sondondo/tree/ffc80515805dd7b00c9c127c3093cb65c7da8b23/database">See original version</a>). The model has now the following structure:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../database/db_diagram.png" class="img-fluid figure-img"></p>
-<figcaption>ER Model</figcaption>
-</figure>
-</div>
-<section id="ingestion-order" class="level3">
-<h3 class="anchored" data-anchor-id="ingestion-order">Ingestion Order</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode mathematica code-with-copy"><code class="sourceCode mathematica"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ConditionVocab</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Event</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>OriginalTerms</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>Persona</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>PersonaCondition</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>PersonaRelationship</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>PersonaRoleInEvent</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>Place</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="fu">Record</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="event" class="level2">
+<h2 class="anchored" data-anchor-id="event">Event</h2>
+<p>A sacramental event — baptism, marriage, or burial — as recorded in the dataset.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 36%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Expected Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>event_type</td>
+<td>Text</td>
+<td>Type of sacramental event (<code>baptism</code>, <code>marriage</code>, <code>burial</code>)</td>
+</tr>
+<tr class="even">
+<td>event_date</td>
+<td>Date</td>
+<td>Date of the event (recorded or approximate) in ISO 8601 format</td>
+</tr>
+<tr class="odd">
+<td>event_place</td>
+<td>Integer</td>
+<td>FK to the Place where the event occurred</td>
+</tr>
+<tr class="even">
+<td>record_id</td>
+<td>Integer</td>
+<td>FK to the Record that contains this event</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="originalterms" class="level2">
+<h2 class="anchored" data-anchor-id="originalterms">OriginalTerms</h2>
+<p>Original recorded form of a label before normalization.<br>
+These are stored exactly as they appear in the source, without edits, for traceability.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 34%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Expected Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>label_type</td>
+<td>Text</td>
+<td>Entity type the label refers to (<code>person</code>, <code>place</code>, <code>event</code>)</td>
+</tr>
+<tr class="even">
+<td>label_value</td>
+<td>Text</td>
+<td>Original unnormalized textual form</td>
+</tr>
+<tr class="odd">
+<td>label_language</td>
+<td>Text</td>
+<td>Language code in ISO 639 format</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="persona" class="level2">
+<h2 class="anchored" data-anchor-id="persona">Persona</h2>
+<p>A <em>persona</em> is “each mention instance of a person in a document” (Embley, 2021).<br>
+This table stores individual mentions before any PRL aggregation.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 35%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Expected Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>name</td>
+<td>Text</td>
+<td>Normalized first and middle name(s)</td>
+</tr>
+<tr class="even">
+<td>lastname</td>
+<td>Text</td>
+<td>Normalized or inferred surname(s)</td>
+</tr>
+<tr class="odd">
+<td>birth_date</td>
+<td>Date</td>
+<td>Recorded or inferred date of birth in ISO 8601 format</td>
+</tr>
+<tr class="even">
+<td>birth_place</td>
+<td>Integer</td>
+<td>FK to Place of birth</td>
+</tr>
+<tr class="odd">
+<td>death_date</td>
+<td>Date</td>
+<td>Recorded or inferred date of death in ISO 8601 format</td>
+</tr>
+<tr class="even">
+<td>death_place</td>
+<td>Integer</td>
+<td>FK to Place of death</td>
+</tr>
+<tr class="odd">
+<td>notes</td>
+<td>Text</td>
+<td>Free-text notes from transcription or data processing</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="personacondition" class="level2">
+<h2 class="anchored" data-anchor-id="personacondition">PersonaCondition</h2>
+<p>Links a persona to a standardized condition (e.g., “legitimate”, “mestizo”) as recorded in a specific event.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 31%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Expected Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>person_id</td>
+<td>Integer</td>
+<td>FK to the Persona holding the condition</td>
+</tr>
+<tr class="even">
+<td>condition_vocab_id</td>
+<td>Integer</td>
+<td>FK to the standardized term in ConditionVocab</td>
+</tr>
+<tr class="odd">
+<td>event_id</td>
+<td>Integer</td>
+<td>FK to the Event where the condition was recorded</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="personarelationship" class="level2">
+<h2 class="anchored" data-anchor-id="personarelationship">PersonaRelationship</h2>
+<p>Represents an oriented relationship between two personas.<br>
+Orientation is from <strong>subject</strong> (person holding the role) to <strong>object</strong> (person receiving the role).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 31%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Expected Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>person_subject_id</td>
+<td>Integer</td>
+<td>FK to the Persona who is the subject of the relationship (e.g., father, mother, godparent)</td>
+</tr>
+<tr class="even">
+<td>person_object_id</td>
+<td>Integer</td>
+<td>FK to the Persona who is the object of the relationship (e.g., child, godchild)</td>
+</tr>
+<tr class="odd">
+<td>relationship_type</td>
+<td>Text</td>
+<td>Relationship label oriented from subject to object (e.g., “is father of”)</td>
+</tr>
+<tr class="even">
+<td>event_id</td>
+<td>Integer</td>
+<td>FK to the Event that recorded this relationship</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="personaroleinevent" class="level2">
+<h2 class="anchored" data-anchor-id="personaroleinevent">PersonaRoleInEvent</h2>
+<p>Relational table linking a persona to their specific role in an event.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 37%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Expected Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>person_id</td>
+<td>Integer</td>
+<td>FK to the Persona involved in the event</td>
+</tr>
+<tr class="even">
+<td>event_id</td>
+<td>Integer</td>
+<td>FK to the Event in which the persona participated</td>
+</tr>
+<tr class="odd">
+<td>role</td>
+<td>Text</td>
+<td>Role label in the event context (e.g., “witness”, “baptized”)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="place" class="level2">
+<h2 class="anchored" data-anchor-id="place">Place</h2>
+<p>List of standardized places mentioned in the dataset, validated against controlled vocabularies and gazetteers.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 35%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Expected Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>place_label</td>
+<td>Text</td>
+<td>Standardized contemporary name of the place</td>
+</tr>
+<tr class="even">
+<td>language</td>
+<td>Text</td>
+<td>Language code in ISO 639 format</td>
+</tr>
+<tr class="odd">
+<td>latitude</td>
+<td>Double</td>
+<td>Latitude coordinate</td>
+</tr>
+<tr class="even">
+<td>longitude</td>
+<td>Double</td>
+<td>Longitude coordinate</td>
+</tr>
+<tr class="odd">
+<td>source</td>
+<td>Text</td>
+<td>Source vocabulary or gazetteer</td>
+</tr>
+<tr class="even">
+<td>uri</td>
+<td>Text</td>
+<td>URI to standardized place metadata</td>
+</tr>
+<tr class="odd">
+<td>country_code</td>
+<td>Text</td>
+<td>ISO 3166 code of the country</td>
+</tr>
+<tr class="even">
+<td>part_of</td>
+<td>Text</td>
+<td>Administrative unit containing this place</td>
+</tr>
+<tr class="odd">
+<td>part_of_uri</td>
+<td>Text</td>
+<td>URI to standardized metadata of the containing administrative unit</td>
+</tr>
+<tr class="even">
+<td>mentioned_as</td>
+<td>Integer</td>
+<td>FK to OriginalTerms entry matching the non-standardized name</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="record" class="level2">
+<h2 class="anchored" data-anchor-id="record">Record</h2>
+<p>Identifies the original record in the raw dataset.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 31%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Expected Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>record_type</td>
+<td>Text</td>
+<td>Type of record (<code>baptism</code>, <code>marriage</code>, <code>burial</code>)</td>
+</tr>
+<tr class="even">
+<td>record_identifier</td>
+<td>Text</td>
+<td>Identifier matching the source dataset</td>
+</tr>
+<tr class="odd">
+<td>record_file</td>
+<td>Text</td>
+<td>File name or path as recorded in the source dataset</td>
+</tr>
+</tbody>
+</table>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
