@@ -13,6 +13,8 @@ class NamesNormalizer:
     NON_ALPHA_PATTERN = re.compile(r"[^a-zñáéíóúü\s]")
     EXTRA_SPACES_PATTERN = re.compile(r"\s+")
     FILLER_TERMS_PATTERN = re.compile(r"\b(?:n/?a|na)\b", re.IGNORECASE)
+    ROTO_PATTERN = re.compile(r"\b(?:roto|rota)\b", re.IGNORECASE)
+    DON_PATTERN = re.compile(r"\b(?:don|doña)\s\b", re.IGNORECASE)
 
     def __init__(self):
         self.logger = setup_logger("NamesNormalizer")
@@ -33,6 +35,8 @@ class NamesNormalizer:
         name = self.EXTRA_SPACES_PATTERN.sub(" ", name).strip()
         name = self.NON_ALPHA_PATTERN.sub("", name)
         name = self.FILLER_TERMS_PATTERN.sub("", name)
+        name = self.ROTO_PATTERN.sub("", name)
+        name = self.DON_PATTERN.sub("", name)
         name = self.EXTRA_SPACES_PATTERN.sub(" ", name).strip()
 
         self.logger.info(f"Original name: {original_name} → Cleaned: {name}")
