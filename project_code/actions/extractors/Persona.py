@@ -3,6 +3,8 @@ import pandas as pd
 import re
 from typing import Union, List
 
+from actions.generators import GenderInferrer, InferCondition
+
 
 class PersonaExtractor:
     def __init__(self, dataframes: List[pd.DataFrame], destination_dir: str = "../data/interim"):
@@ -73,9 +75,16 @@ class PersonaExtractor:
                         if pd.notna(persona.get('name')) and pd.notna(persona.get('lastname')):
                             persona['persona_idno'] = f"persona-{persona_counter}"
                             persona_counter += 1
+    
                             personas.append(persona)
 
         personas_dataframe = pd.DataFrame.from_records(personas)
+
+        # bulk inferences
+        personas_dataframe['gender'] = GenderInferrer.GenderInferrer(personas_dataframe['name']).infer_from_names()
+        personas_dataframe[['social_condition', 'legitimacy_status', 'marital_status']] = InferCondition.AttributeNormalizer(mapping_file="../data/mappings/conditionMapping.json").extract_all_attributes(personas_dataframe['social_condition'])
+        personas_dataframe[['social_condition', 'legitimacy_status', 'marital_status']] = InferCondition.AttributeNormalizer(mapping_file="../data/mappings/conditionMapping.json").extract_all_attributes(personas_dataframe['legitimacy_status'])
+        personas_dataframe[['social_condition', 'legitimacy_status', 'marital_status']] = InferCondition.AttributeNormalizer(mapping_file="../data/mappings/conditionMapping.json").extract_all_attributes(personas_dataframe['marital_status'])
 
         # remove empty columns
         personas_dataframe = personas_dataframe.dropna(axis=1, how='all')
