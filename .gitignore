@@ -24,3 +24,6 @@ sondondo.researchNotes/
 *.sqlite
 
 data/clean/*.txt
+
+# temporary exclusions
+project_code/proposedAlgorithm.txt

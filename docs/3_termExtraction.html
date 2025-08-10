@@ -72,13 +72,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2be10d9e998f81ff6e49e26833438aa5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -107,60 +107,102 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Sondondo Project Notebooks</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-notebooks" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Notebooks</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-notebooks">    
-        <li>
-    <a class="dropdown-item" href="./1_dataCleaning.html">
- <span class="dropdown-text">Data Cleaning</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./2_placeMapping.html">
- <span class="dropdown-text">Place Mapping</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./3_termExtraction.html">
- <span class="dropdown-text">Textual Variation Analysis for ‘Conditions’ Columns</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./4_personasCreation.html">
- <span class="dropdown-text">Personas Creation</span></a>
-  </li>  
-    </ul>
-  </li>
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1_dataCleaning.html">Notebooks</a></li><li class="breadcrumb-item"><a href="./3_termExtraction.html">Textual Variation Analysis for ‘Conditions’ Columns</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Sondondo Project Notebooks</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true">
+ <span class="menu-text">Notebooks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_dataCleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Cleaning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_placeMapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Place Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_termExtraction.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Textual Variation Analysis for ‘Conditions’ Columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_personasCreation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Personas Creation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true">
+ <span class="menu-text">Documentation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./docpages/schema_documentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database Schema Documentation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -194,7 +236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1_dataCleaning.html">Notebooks</a></li><li class="breadcrumb-item"><a href="./3_termExtraction.html">Textual Variation Analysis for ‘Conditions’ Columns</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Textual Variation Analysis for ‘Conditions’ Columns</h1>
 </div>
@@ -422,17 +464,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>social_condition</td>
+<td>[1382, 332, 29, 14, 21, 8, 33, 10, 109, 6, 6, ...</td>
+<td>1183</td>
+<td>10883</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>legitimacy_status</td>
 <td>[996, 917, 1495, 1366, 521, 428, 383, 350, 118...</td>
 <td>314</td>
 <td>10265</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>[1382, 332, 29, 14, 18, 8, 33, 10, 71, 6, 6, 6...</td>
-<td>955</td>
-<td>9249</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -447,7 +489,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The data shows that the social condition category has the highest number of unique terms (955), despite having a lower total frequency than legitimacy status. This suggests that many of the terms under social condition appear only once or a few times, indicating high textual variation and inconsistency — likely due to diverse wording choices by different scribes over time, as well as inconsistencies introduced during transcription.</p>
+<p>The data shows that the social condition category has the highest number of unique terms (1183). This suggests that many of the terms under social condition appear only once or a few times, indicating high textual variation and inconsistency — likely due to diverse wording choices by different scribes over time, as well as inconsistencies introduced during transcription.</p>
 <p>In contrast, the marital status category is significantly more standardized, with only 34 unique terms used across 4,254 entries. This low variation points to a more consistent vocabulary and higher likelihood of successful harmonization.</p>
 <p>To further quantify this, we computed the average frequency per term, which helps identify how often terms are reused — a proxy for redundancy and consistency.</p>
 <div id="3dbe3713" class="cell" data-execution_count="7">
@@ -472,19 +514,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>social_condition</td>
+<td>[1382, 332, 29, 14, 21, 8, 33, 10, 109, 6, 6, ...</td>
+<td>1183</td>
+<td>10883</td>
+<td>9.20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>legitimacy_status</td>
 <td>[996, 917, 1495, 1366, 521, 428, 383, 350, 118...</td>
 <td>314</td>
 <td>10265</td>
 <td>32.69</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>[1382, 332, 29, 14, 18, 8, 33, 10, 71, 6, 6, 6...</td>
-<td>955</td>
-<td>9249</td>
-<td>9.68</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -502,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>As shown above:</p>
 <ul>
-<li><p>Social condition has the lowest average frequency per term (~9.7), confirming high fragmentation and the presence of long-tail entries that may be semantically similar but textually distinct.</p></li>
+<li><p>Social condition has the lowest average frequency per term (~9.20), confirming high fragmentation and the presence of long-tail entries that may be semantically similar but textually distinct.</p></li>
 <li><p>Marital status has the highest reuse rate (~125 per term), suggesting a more constrained vocabulary and consistent usage patterns.</p></li>
 <li><p>Legitimacy status sits in between, with moderate variation and moderate reuse.</p></li>
 </ul>
@@ -536,21 +578,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>social_condition</td>
+<td>[1382, 332, 29, 14, 21, 8, 33, 10, 109, 6, 6, ...</td>
+<td>1183</td>
+<td>10883</td>
+<td>9.20</td>
+<td>5.68</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>legitimacy_status</td>
 <td>[996, 917, 1495, 1366, 521, 428, 383, 350, 118...</td>
 <td>314</td>
 <td>10265</td>
 <td>32.69</td>
 <td>4.96</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>[1382, 332, 29, 14, 18, 8, 33, 10, 71, 6, 6, 6...</td>
-<td>955</td>
-<td>9249</td>
-<td>9.68</td>
-<td>5.66</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -595,19 +637,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>5.68</td>
+<td>7.29</td>
+<td>10.21</td>
+<td>0.71</td>
+<td>0.29</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>4.96</td>
 <td>4.43</td>
 <td>8.29</td>
 <td>0.53</td>
 <td>0.47</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>5.66</td>
-<td>6.97</td>
-<td>9.90</td>
-<td>0.70</td>
-<td>0.30</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -659,6 +701,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>5.68</td>
+<td>7.29</td>
+<td>10.21</td>
+<td>0.71</td>
+<td>0.29</td>
+<td>[0.13, 0.07, 0.04, 0.03, 0.03, 0.02, 0.02, 0.0...</td>
+<td>[0.13, 0.06, 0.05, 0.03, 0.03, 0.02, 0.02, 0.0...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>4.96</td>
 <td>4.43</td>
 <td>8.29</td>
@@ -666,16 +718,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>0.47</td>
 <td>[0.16, 0.08, 0.05, 0.04, 0.03, 0.03, 0.02, 0.0...</td>
 <td>[0.15, 0.13, 0.1, 0.09, 0.09, 0.09, 0.05, 0.04...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>5.66</td>
-<td>6.97</td>
-<td>9.90</td>
-<td>0.70</td>
-<td>0.30</td>
-<td>[0.13, 0.07, 0.04, 0.03, 0.03, 0.02, 0.02, 0.0...</td>
-<td>[0.15, 0.06, 0.05, 0.04, 0.03, 0.02, 0.02, 0.0...</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -878,9 +920,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>social_condition</td>
-<td>[1663, 901, 43, 107, 4435, 255, 655]</td>
+<td>[1663, 902, 43, 158, 5443, 331, 941]</td>
 <td>7</td>
-<td>8059</td>
+<td>9481</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -897,7 +939,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="how-much-information-is-lost" class="level3">
 <h3 class="anchored" data-anchor-id="how-much-information-is-lost">How much information is lost?</h3>
-<p>At first glance, the results show that the implementation successfully reduced dimensionality with minimal loss of information. Social condition—the most fragmented category—was reduced to just 7 unique terms, with only a 12.87% decrease in total frequency. Considering that the algorithm is designed to return <code>None</code> when no match is found, this reduction is both expected and encouraging, indicating that the normalization process retained most of the original data while greatly improving consistency.</p>
+<p>At first glance, the results show that the implementation successfully reduced dimensionality with minimal loss of information. Social condition—the most fragmented category—was reduced to just 7 unique terms, with only a 6.25% decrease in total frequency. Considering that the algorithm is designed to return <code>None</code> when no match is found, this reduction is both expected and encouraging, indicating that the normalization process retained most of the original data while greatly improving consistency.</p>
 <div id="4db3540f" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>clean_data <span class="op">=</span> stats_df[<span class="st">'total_frequency'</span>].astype(<span class="bu">float</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>clean_data_normalized <span class="op">=</span> stats_normalized_df[<span class="st">'total_frequency'</span>].astype(<span class="bu">float</span>)</span>
@@ -923,13 +965,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>legitimacy_status</td>
-<td>0.60</td>
+<td>social_condition</td>
+<td>6.25</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>12.87</td>
+<td>legitimacy_status</td>
+<td>7.64</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -946,7 +988,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="coefficient-of-variation-after-normalization" class="level2">
 <h2 class="anchored" data-anchor-id="coefficient-of-variation-after-normalization">Coefficient of Variation After Normalization</h2>
-<p>The coefficient of variation (CV) analysis confirms a substantial reduction in dispersion across categories after normalization. For legitimacy status, CV dropped from 4.96 to 1.06; for social condition, from 5.66 to 1.35; and for marital status, from 2.66 to 0.82. This indicates that the normalized categories are considerably more homogeneous, reducing variability while preserving most of the original data volume.</p>
+<p>The coefficient of variation (CV) analysis confirms a substantial reduction in dispersion across categories after normalization. For legitimacy status, CV dropped from 4.96 to 1.06; for social condition, from 5.68 to 1.39; and for marital status, from 2.66 to 0.82. This indicates that the normalized categories are considerably more homogeneous, reducing variability while preserving most of the original data volume.</p>
 <div id="bb5bd438" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>stats_normalized_df[<span class="st">'cv'</span>] <span class="op">=</span> stats_normalized_df.<span class="bu">apply</span>(<span class="kw">lambda</span> row: StatsMethods.cv(row[<span class="st">'frequencies'</span>], rounding<span class="op">=</span><span class="dv">2</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -978,10 +1020,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>social_condition</td>
-<td>[1663, 901, 43, 107, 4435, 255, 655]</td>
+<td>[1663, 902, 43, 158, 5443, 331, 941]</td>
 <td>7</td>
-<td>8059</td>
-<td>1.35</td>
+<td>9481</td>
+<td>1.39</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1020,15 +1062,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>legitimacy_status</td>
-<td>4.96</td>
+<td>social_condition</td>
+<td>5.68</td>
 <td>1.06</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>5.66</td>
-<td>1.35</td>
+<td>legitimacy_status</td>
+<td>4.96</td>
+<td>1.39</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1078,11 +1120,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>1.35</td>
-<td>1.87</td>
+<td>1.39</td>
+<td>1.86</td>
 <td>2.81</td>
-<td>0.67</td>
-<td>0.33</td>
+<td>0.66</td>
+<td>0.34</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1133,27 +1175,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>legitimacy_status</td>
-<td>4.43</td>
+<td>social_condition</td>
+<td>7.29</td>
 <td>0.54</td>
-<td>8.29</td>
+<td>10.21</td>
 <td>1.00</td>
-<td>0.53</td>
+<td>0.71</td>
 <td>0.54</td>
-<td>0.47</td>
+<td>0.29</td>
 <td>0.46</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>6.97</td>
-<td>1.87</td>
-<td>9.90</td>
+<td>legitimacy_status</td>
+<td>4.43</td>
+<td>1.86</td>
+<td>8.29</td>
 <td>2.81</td>
-<td>0.70</td>
-<td>0.67</td>
-<td>0.30</td>
-<td>0.33</td>
+<td>0.53</td>
+<td>0.66</td>
+<td>0.47</td>
+<td>0.34</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1267,13 +1309,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>1.35</td>
-<td>1.87</td>
+<td>1.39</td>
+<td>1.86</td>
 <td>2.81</td>
-<td>0.67</td>
-<td>0.33</td>
+<td>0.66</td>
+<td>0.34</td>
 <td>[0.39, 0.19, 0.13, 0.1, 0.08, 0.06, 0.06]</td>
-<td>[0.55, 0.21, 0.11, 0.08, 0.03, 0.01, 0.01]</td>
+<td>[0.57, 0.18, 0.1, 0.1, 0.03, 0.02, 0.0]</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1338,7 +1380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="b478d80c" class="cell" data-execution_count="29">
+<div id="b478d80c" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(categories), figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, category <span class="kw">in</span> <span class="bu">enumerate</span>(categories):</span>
@@ -1376,7 +1418,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="resulting-data" class="level2">
 <h2 class="anchored" data-anchor-id="resulting-data">Resulting Data</h2>
 <p>The data produced during this analysis is stored in the <code>data/interim</code> directory for documentation and reproducibility purposes.</p>
-<div id="f2f19740" class="cell" data-execution_count="28">
+<div id="f2f19740" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>stats_df.to_csv(<span class="st">"../data/interim/term_extraction_stats.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>stats_normalized_df.to_csv(<span class="st">"../data/interim/term_extraction_stats_normalized.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
