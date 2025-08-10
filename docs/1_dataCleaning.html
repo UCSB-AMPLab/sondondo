@@ -623,7 +623,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>Index(['file', 'identifier', 'event_type', 'event_date', 'baptized_name',
-       'baptized_hometown', 'baptized_birth_date',
+       'baptized_birth_place', 'baptized_birth_date',
        'baptized_legitimacy_status', 'father_name', 'father_lastname',
        'father_social_condition', 'mother_name', 'mother_lastname',
        'mother_social_condition', 'parents_social_condition', 'godfather_name',
@@ -644,12 +644,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>Index(['file', 'identifier', 'event_type', 'event_date', 'groom_name',
        'groom_lastname', 'groom_social_condition', 'groom_marital_status',
-       'groom_age', 'groom_hometown', 'groom_resident_in',
+       'groom_birth_date', 'groom_birth_place', 'groom_resident_in',
        'groom_legitimacy_status', 'groom_father_name', 'groom_father_lastname',
        'groom_father_social_condition', 'groom_mother_name',
        'groom_mother_lastname', 'groom_mother_social_condition', 'bride_name',
        'bride_lastname', 'bride_social_condition', 'bride_marital_status',
-       'bride_age', 'bride_hometown', 'bride_resident_in',
+       'bride_birth_date', 'bride_birth_place', 'bride_resident_in',
        'bride_legitimacy_status', 'bride_father_name', 'bride_father_lastname',
        'bride_father_social_condition', 'bride_mother_name',
        'bride_mother_lastname', 'bride_mother_social_condition',
@@ -675,11 +675,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>Index(['file', 'identifier', 'event_type', 'event_date', 'doctrine',
-       'event_place', 'deceased_name', 'deceased_lastname', 'deceased_age',
-       'deceased_hometown', 'deceased_condition', 'deceased_marital_status',
-       'deceased_legitimacy_status', 'father_name', 'father_lastname',
-       'mother_name', 'mother_lastname', 'husband_name', 'wife_name',
-       'burial_place', 'event_geographic_descriptor_1',
+       'event_place', 'deceased_name', 'deceased_lastname',
+       'deceased_birth_date', 'deceased_birth_place', 'deceased_condition',
+       'deceased_marital_status', 'deceased_legitimacy_status', 'father_name',
+       'father_lastname', 'mother_name', 'mother_lastname', 'husband_name',
+       'wife_name', 'burial_place', 'event_geographic_descriptor_1',
        'event_geographic_descriptor_2', 'event_geographic_descriptor_3',
        'event_geographic_descriptor_4'],
       dtype='object')</code></pre>
@@ -874,9 +874,9 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 <p>Unfortunately, these records were incorrectly recorded. To fix this, it is necessary to check with the original records.</p>
 </blockquote>
 <div id="0314f4d5" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'groom_age'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'groom_age'</span>])</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'bride_age'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'bride_age'</span>])</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'groom_age'</span>, <span class="st">'bride_age'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'groom_birth_date'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'groom_birth_date'</span>])</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'bride_birth_date'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'bride_birth_date'</span>])</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'groom_birth_date'</span>, <span class="st">'bride_birth_date'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div>
 
@@ -886,8 +886,8 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">event_date</th>
-<th data-quarto-table-cell-role="th">groom_age</th>
-<th data-quarto-table-cell-role="th">bride_age</th>
+<th data-quarto-table-cell-role="th">groom_birth_date</th>
+<th data-quarto-table-cell-role="th">bride_birth_date</th>
 </tr>
 </thead>
 <tbody>
@@ -965,8 +965,8 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 </div>
 </div>
 <div id="991f9686" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'deceased_age'</span>] <span class="op">=</span> AgeInferrer(ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(ENTIERROS_HARMONIZED[<span class="st">'deceased_age'</span>])</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'deceased_age'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'deceased_birth_date'</span>] <span class="op">=</span> AgeInferrer(ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(ENTIERROS_HARMONIZED[<span class="st">'deceased_birth_date'</span>])</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'deceased_birth_date'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 
@@ -976,7 +976,7 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">event_date</th>
-<th data-quarto-table-cell-role="th">deceased_age</th>
+<th data-quarto-table-cell-role="th">deceased_birth_date</th>
 </tr>
 </thead>
 <tbody>
@@ -1723,7 +1723,7 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 </div>
 <div id="845344dc" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>bautismos_place_columns <span class="op">=</span> [</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'baptized_hometown'</span>, <span class="st">'event_place'</span>, <span class="st">'event_geographic_descriptor_1'</span>,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'baptized_birth_place'</span>, <span class="st">'event_place'</span>, <span class="st">'event_geographic_descriptor_1'</span>,</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'event_geographic_descriptor_2'</span>, <span class="st">'event_geographic_descriptor_3'</span>,</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'event_geographic_descriptor_4'</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>]</span>
@@ -1743,7 +1743,7 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">baptized_hometown</th>
+<th data-quarto-table-cell-role="th">baptized_birth_place</th>
 <th data-quarto-table-cell-role="th">event_place</th>
 <th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
 <th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
@@ -1860,9 +1860,9 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 </div>
 <div id="ca8f9732" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>matrimonios_place_columns <span class="op">=</span> [</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'groom_hometown'</span>,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'groom_birth_place'</span>,</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">'groom_resident_in'</span>, </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>       <span class="st">'bride_hometown'</span>, <span class="st">'bride_resident_in'</span>, </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>       <span class="st">'bride_birth_place'</span>, <span class="st">'bride_resident_in'</span>, </span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>       <span class="st">'event_place'</span>, <span class="st">'event_geographic_descriptor_1'</span>, <span class="st">'event_geographic_descriptor_2'</span>,</span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>       <span class="st">'event_geographic_descriptor_3'</span>, <span class="st">'event_geographic_descriptor_4'</span>,</span>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>       <span class="st">'event_geographic_descriptor_5'</span>, <span class="st">'event_geographic_descriptor_6'</span></span>
@@ -1883,9 +1883,9 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">groom_hometown</th>
+<th data-quarto-table-cell-role="th">groom_birth_place</th>
 <th data-quarto-table-cell-role="th">groom_resident_in</th>
-<th data-quarto-table-cell-role="th">bride_hometown</th>
+<th data-quarto-table-cell-role="th">bride_birth_place</th>
 <th data-quarto-table-cell-role="th">bride_resident_in</th>
 <th data-quarto-table-cell-role="th">event_place</th>
 <th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
@@ -2060,7 +2060,7 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 </div>
 <div id="2fdcaf47" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>entierros_place_columns <span class="op">=</span> [</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'event_place'</span>, <span class="st">'deceased_hometown'</span>, <span class="st">'burial_place'</span>, <span class="st">'event_geographic_descriptor_1'</span>,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'event_place'</span>, <span class="st">'deceased_birth_place'</span>, <span class="st">'burial_place'</span>, <span class="st">'event_geographic_descriptor_1'</span>,</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'event_geographic_descriptor_2'</span>, <span class="st">'event_geographic_descriptor_3'</span>,</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'event_geographic_descriptor_4'</span></span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>]</span>
@@ -2081,7 +2081,7 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">event_place</th>
-<th data-quarto-table-cell-role="th">deceased_hometown</th>
+<th data-quarto-table-cell-role="th">deceased_birth_place</th>
 <th data-quarto-table-cell-role="th">burial_place</th>
 <th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
 <th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
@@ -2252,7 +2252,7 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 <th data-quarto-table-cell-role="th">event_type</th>
 <th data-quarto-table-cell-role="th">event_date</th>
 <th data-quarto-table-cell-role="th">baptized_name</th>
-<th data-quarto-table-cell-role="th">baptized_hometown</th>
+<th data-quarto-table-cell-role="th">baptized_birth_place</th>
 <th data-quarto-table-cell-role="th">baptized_birth_date</th>
 <th data-quarto-table-cell-role="th">baptized_legitimacy_status</th>
 <th data-quarto-table-cell-role="th">father_name</th>
@@ -2416,8 +2416,8 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 <th data-quarto-table-cell-role="th">groom_lastname</th>
 <th data-quarto-table-cell-role="th">groom_social_condition</th>
 <th data-quarto-table-cell-role="th">groom_marital_status</th>
-<th data-quarto-table-cell-role="th">groom_age</th>
-<th data-quarto-table-cell-role="th">groom_hometown</th>
+<th data-quarto-table-cell-role="th">groom_birth_date</th>
+<th data-quarto-table-cell-role="th">groom_birth_place</th>
 <th data-quarto-table-cell-role="th">...</th>
 <th data-quarto-table-cell-role="th">witness_3_lastname</th>
 <th data-quarto-table-cell-role="th">witness_4_name</th>
@@ -2577,8 +2577,8 @@ Name: event_date, Length: 2198, dtype: object</code></pre>
 <th data-quarto-table-cell-role="th">event_place</th>
 <th data-quarto-table-cell-role="th">deceased_name</th>
 <th data-quarto-table-cell-role="th">deceased_lastname</th>
-<th data-quarto-table-cell-role="th">deceased_age</th>
-<th data-quarto-table-cell-role="th">deceased_hometown</th>
+<th data-quarto-table-cell-role="th">deceased_birth_date</th>
+<th data-quarto-table-cell-role="th">deceased_birth_place</th>
 <th data-quarto-table-cell-role="th">...</th>
 <th data-quarto-table-cell-role="th">father_lastname</th>
 <th data-quarto-table-cell-role="th">mother_name</th>

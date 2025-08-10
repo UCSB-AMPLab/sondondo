@@ -1380,7 +1380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="b478d80c" class="cell" data-execution_count="29">
+<div id="b478d80c" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(categories), figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, category <span class="kw">in</span> <span class="bu">enumerate</span>(categories):</span>
@@ -1418,7 +1418,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="resulting-data" class="level2">
 <h2 class="anchored" data-anchor-id="resulting-data">Resulting Data</h2>
 <p>The data produced during this analysis is stored in the <code>data/interim</code> directory for documentation and reproducibility purposes.</p>
-<div id="f2f19740" class="cell" data-execution_count="28">
+<div id="f2f19740" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>stats_df.to_csv(<span class="st">"../data/interim/term_extraction_stats.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>stats_normalized_df.to_csv(<span class="st">"../data/interim/term_extraction_stats_normalized.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
