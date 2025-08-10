@@ -17,7 +17,7 @@
     "Apellido del difunto (a)": "deceased_lastname",
     "Edad": "deceased_birth_date",
     "Procedencia": "deceased_birth_place",
-    "Condición": "deceased_condition",
+    "Condición": "deceased_social_condition",
     "Estado": "deceased_marital_status",
     "Hijo legítimo/ natural": "deceased_legitimacy_status",
     "Nombre del padre": "father_name",

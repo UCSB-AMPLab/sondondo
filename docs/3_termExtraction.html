@@ -464,17 +464,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>social_condition</td>
+<td>[1382, 332, 29, 14, 21, 8, 33, 10, 109, 6, 6, ...</td>
+<td>1183</td>
+<td>10883</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>legitimacy_status</td>
 <td>[996, 917, 1495, 1366, 521, 428, 383, 350, 118...</td>
 <td>314</td>
 <td>10265</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>[1382, 332, 29, 14, 18, 8, 33, 10, 71, 6, 6, 6...</td>
-<td>955</td>
-<td>9249</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -489,7 +489,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The data shows that the social condition category has the highest number of unique terms (955), despite having a lower total frequency than legitimacy status. This suggests that many of the terms under social condition appear only once or a few times, indicating high textual variation and inconsistency — likely due to diverse wording choices by different scribes over time, as well as inconsistencies introduced during transcription.</p>
+<p>The data shows that the social condition category has the highest number of unique terms (1183). This suggests that many of the terms under social condition appear only once or a few times, indicating high textual variation and inconsistency — likely due to diverse wording choices by different scribes over time, as well as inconsistencies introduced during transcription.</p>
 <p>In contrast, the marital status category is significantly more standardized, with only 34 unique terms used across 4,254 entries. This low variation points to a more consistent vocabulary and higher likelihood of successful harmonization.</p>
 <p>To further quantify this, we computed the average frequency per term, which helps identify how often terms are reused — a proxy for redundancy and consistency.</p>
 <div id="3dbe3713" class="cell" data-execution_count="7">
@@ -514,19 +514,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>social_condition</td>
+<td>[1382, 332, 29, 14, 21, 8, 33, 10, 109, 6, 6, ...</td>
+<td>1183</td>
+<td>10883</td>
+<td>9.20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>legitimacy_status</td>
 <td>[996, 917, 1495, 1366, 521, 428, 383, 350, 118...</td>
 <td>314</td>
 <td>10265</td>
 <td>32.69</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>[1382, 332, 29, 14, 18, 8, 33, 10, 71, 6, 6, 6...</td>
-<td>955</td>
-<td>9249</td>
-<td>9.68</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -544,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>As shown above:</p>
 <ul>
-<li><p>Social condition has the lowest average frequency per term (~9.7), confirming high fragmentation and the presence of long-tail entries that may be semantically similar but textually distinct.</p></li>
+<li><p>Social condition has the lowest average frequency per term (~9.20), confirming high fragmentation and the presence of long-tail entries that may be semantically similar but textually distinct.</p></li>
 <li><p>Marital status has the highest reuse rate (~125 per term), suggesting a more constrained vocabulary and consistent usage patterns.</p></li>
 <li><p>Legitimacy status sits in between, with moderate variation and moderate reuse.</p></li>
 </ul>
@@ -578,21 +578,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>social_condition</td>
+<td>[1382, 332, 29, 14, 21, 8, 33, 10, 109, 6, 6, ...</td>
+<td>1183</td>
+<td>10883</td>
+<td>9.20</td>
+<td>5.68</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>legitimacy_status</td>
 <td>[996, 917, 1495, 1366, 521, 428, 383, 350, 118...</td>
 <td>314</td>
 <td>10265</td>
 <td>32.69</td>
 <td>4.96</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>[1382, 332, 29, 14, 18, 8, 33, 10, 71, 6, 6, 6...</td>
-<td>955</td>
-<td>9249</td>
-<td>9.68</td>
-<td>5.66</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -637,19 +637,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>5.68</td>
+<td>7.29</td>
+<td>10.21</td>
+<td>0.71</td>
+<td>0.29</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>4.96</td>
 <td>4.43</td>
 <td>8.29</td>
 <td>0.53</td>
 <td>0.47</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>5.66</td>
-<td>6.97</td>
-<td>9.90</td>
-<td>0.70</td>
-<td>0.30</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -701,6 +701,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
+<td>5.68</td>
+<td>7.29</td>
+<td>10.21</td>
+<td>0.71</td>
+<td>0.29</td>
+<td>[0.13, 0.07, 0.04, 0.03, 0.03, 0.02, 0.02, 0.0...</td>
+<td>[0.13, 0.06, 0.05, 0.03, 0.03, 0.02, 0.02, 0.0...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>4.96</td>
 <td>4.43</td>
 <td>8.29</td>
@@ -708,16 +718,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>0.47</td>
 <td>[0.16, 0.08, 0.05, 0.04, 0.03, 0.03, 0.02, 0.0...</td>
 <td>[0.15, 0.13, 0.1, 0.09, 0.09, 0.09, 0.05, 0.04...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>5.66</td>
-<td>6.97</td>
-<td>9.90</td>
-<td>0.70</td>
-<td>0.30</td>
-<td>[0.13, 0.07, 0.04, 0.03, 0.03, 0.02, 0.02, 0.0...</td>
-<td>[0.15, 0.06, 0.05, 0.04, 0.03, 0.02, 0.02, 0.0...</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -920,9 +920,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>social_condition</td>
-<td>[1663, 901, 43, 107, 4435, 255, 655]</td>
+<td>[1663, 902, 43, 158, 5443, 331, 941]</td>
 <td>7</td>
-<td>8059</td>
+<td>9481</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -939,7 +939,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="how-much-information-is-lost" class="level3">
 <h3 class="anchored" data-anchor-id="how-much-information-is-lost">How much information is lost?</h3>
-<p>At first glance, the results show that the implementation successfully reduced dimensionality with minimal loss of information. Social condition—the most fragmented category—was reduced to just 7 unique terms, with only a 12.87% decrease in total frequency. Considering that the algorithm is designed to return <code>None</code> when no match is found, this reduction is both expected and encouraging, indicating that the normalization process retained most of the original data while greatly improving consistency.</p>
+<p>At first glance, the results show that the implementation successfully reduced dimensionality with minimal loss of information. Social condition—the most fragmented category—was reduced to just 7 unique terms, with only a 6.25% decrease in total frequency. Considering that the algorithm is designed to return <code>None</code> when no match is found, this reduction is both expected and encouraging, indicating that the normalization process retained most of the original data while greatly improving consistency.</p>
 <div id="4db3540f" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>clean_data <span class="op">=</span> stats_df[<span class="st">'total_frequency'</span>].astype(<span class="bu">float</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>clean_data_normalized <span class="op">=</span> stats_normalized_df[<span class="st">'total_frequency'</span>].astype(<span class="bu">float</span>)</span>
@@ -965,13 +965,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>legitimacy_status</td>
-<td>0.60</td>
+<td>social_condition</td>
+<td>6.25</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>12.87</td>
+<td>legitimacy_status</td>
+<td>7.64</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -988,7 +988,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="coefficient-of-variation-after-normalization" class="level2">
 <h2 class="anchored" data-anchor-id="coefficient-of-variation-after-normalization">Coefficient of Variation After Normalization</h2>
-<p>The coefficient of variation (CV) analysis confirms a substantial reduction in dispersion across categories after normalization. For legitimacy status, CV dropped from 4.96 to 1.06; for social condition, from 5.66 to 1.35; and for marital status, from 2.66 to 0.82. This indicates that the normalized categories are considerably more homogeneous, reducing variability while preserving most of the original data volume.</p>
+<p>The coefficient of variation (CV) analysis confirms a substantial reduction in dispersion across categories after normalization. For legitimacy status, CV dropped from 4.96 to 1.06; for social condition, from 5.68 to 1.39; and for marital status, from 2.66 to 0.82. This indicates that the normalized categories are considerably more homogeneous, reducing variability while preserving most of the original data volume.</p>
 <div id="bb5bd438" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>stats_normalized_df[<span class="st">'cv'</span>] <span class="op">=</span> stats_normalized_df.<span class="bu">apply</span>(<span class="kw">lambda</span> row: StatsMethods.cv(row[<span class="st">'frequencies'</span>], rounding<span class="op">=</span><span class="dv">2</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1020,10 +1020,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>social_condition</td>
-<td>[1663, 901, 43, 107, 4435, 255, 655]</td>
+<td>[1663, 902, 43, 158, 5443, 331, 941]</td>
 <td>7</td>
-<td>8059</td>
-<td>1.35</td>
+<td>9481</td>
+<td>1.39</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1062,15 +1062,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>legitimacy_status</td>
-<td>4.96</td>
+<td>social_condition</td>
+<td>5.68</td>
 <td>1.06</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>5.66</td>
-<td>1.35</td>
+<td>legitimacy_status</td>
+<td>4.96</td>
+<td>1.39</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1120,11 +1120,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>1.35</td>
-<td>1.87</td>
+<td>1.39</td>
+<td>1.86</td>
 <td>2.81</td>
-<td>0.67</td>
-<td>0.33</td>
+<td>0.66</td>
+<td>0.34</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1175,27 +1175,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>legitimacy_status</td>
-<td>4.43</td>
+<td>social_condition</td>
+<td>7.29</td>
 <td>0.54</td>
-<td>8.29</td>
+<td>10.21</td>
 <td>1.00</td>
-<td>0.53</td>
+<td>0.71</td>
 <td>0.54</td>
-<td>0.47</td>
+<td>0.29</td>
 <td>0.46</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>social_condition</td>
-<td>6.97</td>
-<td>1.87</td>
-<td>9.90</td>
+<td>legitimacy_status</td>
+<td>4.43</td>
+<td>1.86</td>
+<td>8.29</td>
 <td>2.81</td>
-<td>0.70</td>
-<td>0.67</td>
-<td>0.30</td>
-<td>0.33</td>
+<td>0.53</td>
+<td>0.66</td>
+<td>0.47</td>
+<td>0.34</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
@@ -1309,13 +1309,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>1.35</td>
-<td>1.87</td>
+<td>1.39</td>
+<td>1.86</td>
 <td>2.81</td>
-<td>0.67</td>
-<td>0.33</td>
+<td>0.66</td>
+<td>0.34</td>
 <td>[0.39, 0.19, 0.13, 0.1, 0.08, 0.06, 0.06]</td>
-<td>[0.55, 0.21, 0.11, 0.08, 0.03, 0.01, 0.01]</td>
+<td>[0.57, 0.18, 0.1, 0.1, 0.03, 0.02, 0.0]</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
