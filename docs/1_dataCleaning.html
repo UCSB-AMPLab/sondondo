@@ -1,0 +1,3182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data Cleaning – Sondondo Project Notebooks</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-2be10d9e998f81ff6e49e26833438aa5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1_dataCleaning.html">Notebooks</a></li><li class="breadcrumb-item"><a href="./1_dataCleaning.html">Data Cleaning</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Sondondo Project Notebooks</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true">
+ <span class="menu-text">Notebooks</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_dataCleaning.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Data Cleaning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_placeMapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Place Mapping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_termExtraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Textual Variation Analysis for ‘Conditions’ Columns</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_personasCreation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Personas Creation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true">
+ <span class="menu-text">Documentation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./docpages/schema_documentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database Schema Documentation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#raw-datasets" id="toc-raw-datasets" class="nav-link active" data-scroll-target="#raw-datasets">Raw Datasets</a></li>
+  <li><a href="#column-harmonization" id="toc-column-harmonization" class="nav-link" data-scroll-target="#column-harmonization">Column Harmonization</a>
+  <ul class="collapse">
+  <li><a href="#reduce-dataframes-to-their-relevant-columns" id="toc-reduce-dataframes-to-their-relevant-columns" class="nav-link" data-scroll-target="#reduce-dataframes-to-their-relevant-columns">Reduce DataFrames to their relevant columns</a></li>
+  </ul></li>
+  <li><a href="#replace-empty-or-null-values-with-na" id="toc-replace-empty-or-null-values-with-na" class="nav-link" data-scroll-target="#replace-empty-or-null-values-with-na">Replace empty or null values with ‘na’</a></li>
+  <li><a href="#dates-normalization" id="toc-dates-normalization" class="nav-link" data-scroll-target="#dates-normalization">Dates Normalization</a></li>
+  <li><a href="#age-inferring" id="toc-age-inferring" class="nav-link" data-scroll-target="#age-inferring">Age Inferring</a></li>
+  <li><a href="#names-normalization" id="toc-names-normalization" class="nav-link" data-scroll-target="#names-normalization">Names Normalization</a>
+  <ul class="collapse">
+  <li><a href="#baptisms-special-case" id="toc-baptisms-special-case" class="nav-link" data-scroll-target="#baptisms-special-case">Baptisms special case</a></li>
+  <li><a href="#entierros-special-case" id="toc-entierros-special-case" class="nav-link" data-scroll-target="#entierros-special-case">Entierros special case</a></li>
+  </ul></li>
+  <li><a href="#place-recognition" id="toc-place-recognition" class="nav-link" data-scroll-target="#place-recognition">Place Recognition</a></li>
+  <li><a href="#cleaning-audit" id="toc-cleaning-audit" class="nav-link" data-scroll-target="#cleaning-audit">Cleaning Audit</a></li>
+  <li><a href="#save-cleaned-data" id="toc-save-cleaned-data" class="nav-link" data-scroll-target="#save-cleaned-data">Save Cleaned Data</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1_dataCleaning.html">Notebooks</a></li><li class="breadcrumb-item"><a href="./1_dataCleaning.html">Data Cleaning</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Data Cleaning</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This notebook handles the data cleaning process for the datasets, documenting the process at the same time.</p>
+<div id="9959a5d1" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="raw-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="raw-datasets">Raw Datasets</h2>
+<p>The raw datasets are stored in the <code>data/raw</code> directory. The datasets include:</p>
+<ul>
+<li><code>bautismos.csv</code>: Baptism records</li>
+<li><code>matrimonios.csv</code>: Marriage records</li>
+<li><code>entierros.csv</code>: Burial records</li>
+</ul>
+<div id="1f2fc54b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_RAW <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/bautismos.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_RAW <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/matrimonios.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ENTIERROS_RAW <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/entierros.csv"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_RAW.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Secuencia</th>
+<th data-quarto-table-cell-role="th">Unidad Documental Compuesta (a la que pertenece)</th>
+<th data-quarto-table-cell-role="th">Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)</th>
+<th data-quarto-table-cell-role="th">Título (incluir un título breve para cada documento)</th>
+<th data-quarto-table-cell-role="th">Folio inicial del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Folio final del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Imagen inicial (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Imagen final (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Tipo de evento</th>
+<th data-quarto-table-cell-role="th">Fecha aaaa-mm-dd</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Condición de la madrina</th>
+<th data-quarto-table-cell-role="th">Lugar de bautizo</th>
+<th data-quarto-table-cell-role="th">Notas adicionales del documento</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 1</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 2</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 3</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">Características físicas (Estado de conservación de los materiales físicos)</th>
+<th data-quarto-table-cell-role="th">Historia de revisión (de los materiales digitalizados)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.0</td>
+<td>APAucará LB L001</td>
+<td>B001</td>
+<td>Bautizo. Domingo. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-04</td>
+<td>...</td>
+<td>NaN</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2.0</td>
+<td>APAucará LB L001</td>
+<td>B002</td>
+<td>Bautizo. Dominga. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-06</td>
+<td>...</td>
+<td>NaN</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3.0</td>
+<td>APAucará LB L001</td>
+<td>B003</td>
+<td>Bautizo. Bartola. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-07</td>
+<td>...</td>
+<td>NaN</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4.0</td>
+<td>APAucará LB L001</td>
+<td>B004</td>
+<td>Bautizo. Francisca</td>
+<td>3v</td>
+<td>3v</td>
+<td>IMG_7000b</td>
+<td>IMG_7000b</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>...</td>
+<td>NaN</td>
+<td>Aucara, iglesia</td>
+<td>Abreviatura poco visible en el margen</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5.0</td>
+<td>APAucará LB L001</td>
+<td>B005</td>
+<td>Bautizo. Pedro</td>
+<td>3v</td>
+<td>3v</td>
+<td>IMG_7000b</td>
+<td>IMG_7000b</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>...</td>
+<td>NaN</td>
+<td>Aucara, iglesia</td>
+<td>Margen roto y manchado de tinta</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 36 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="column-harmonization" class="level2">
+<h2 class="anchored" data-anchor-id="column-harmonization">Column Harmonization</h2>
+<p>Rename the columns in the datasets to ensure consistency across different data sources.</p>
+<p>Values are mapped using the <code>json</code> files located in the <code>data/mappings</code> directory.</p>
+<div id="29ef8524" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils.ColumnManager <span class="im">import</span> ColumnManager</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="0e0ec6d5" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bautismoMapping <span class="op">=</span> Path(<span class="st">"../data/mappings/bautismosMapping.json"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>matrimonioMapping <span class="op">=</span> Path(<span class="st">"../data/mappings/matrimoniosMapping.json"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>entierroMapping <span class="op">=</span> Path(<span class="st">"../data/mappings/entierrosMapping.json"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>column_manager <span class="op">=</span> ColumnManager()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED <span class="op">=</span> column_manager.harmonize_columns(BAUTISMOS_RAW, bautismoMapping)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED <span class="op">=</span> column_manager.harmonize_columns(MATRIMONIOS_RAW, matrimonioMapping)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED <span class="op">=</span> column_manager.harmonize_columns(ENTIERROS_RAW, entierroMapping)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">file</th>
+<th data-quarto-table-cell-role="th">identifier</th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">start_folio</th>
+<th data-quarto-table-cell-role="th">end_folio</th>
+<th data-quarto-table-cell-role="th">start_image</th>
+<th data-quarto-table-cell-role="th">end_image</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">event_date</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">godmother_social_condition</th>
+<th data-quarto-table-cell-role="th">event_place</th>
+<th data-quarto-table-cell-role="th">event_additional_notes</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_3</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_4</th>
+<th data-quarto-table-cell-role="th">event_other</th>
+<th data-quarto-table-cell-role="th">record_physical_characteristics</th>
+<th data-quarto-table-cell-role="th">revision_history</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.0</td>
+<td>APAucará LB L001</td>
+<td>B001</td>
+<td>Bautizo. Domingo. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-04</td>
+<td>...</td>
+<td>NaN</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2.0</td>
+<td>APAucará LB L001</td>
+<td>B002</td>
+<td>Bautizo. Dominga. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-06</td>
+<td>...</td>
+<td>NaN</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3.0</td>
+<td>APAucará LB L001</td>
+<td>B003</td>
+<td>Bautizo. Bartola. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-07</td>
+<td>...</td>
+<td>NaN</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4.0</td>
+<td>APAucará LB L001</td>
+<td>B004</td>
+<td>Bautizo. Francisca</td>
+<td>3v</td>
+<td>3v</td>
+<td>IMG_7000b</td>
+<td>IMG_7000b</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>...</td>
+<td>NaN</td>
+<td>Aucara, iglesia</td>
+<td>Abreviatura poco visible en el margen</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5.0</td>
+<td>APAucará LB L001</td>
+<td>B005</td>
+<td>Bautizo. Pedro</td>
+<td>3v</td>
+<td>3v</td>
+<td>IMG_7000b</td>
+<td>IMG_7000b</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>...</td>
+<td>NaN</td>
+<td>Aucara, iglesia</td>
+<td>Margen roto y manchado de tinta</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 36 columns</p>
+</div>
+</div>
+</div>
+<section id="reduce-dataframes-to-their-relevant-columns" class="level3">
+<h3 class="anchored" data-anchor-id="reduce-dataframes-to-their-relevant-columns">Reduce DataFrames to their relevant columns</h3>
+<div id="b8809026" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>useful_columns <span class="op">=</span> json.load(<span class="bu">open</span>(<span class="st">"../data/mappings/usefulColumnsMapping.json"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="965be0bd" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bautismos useful columns</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED <span class="op">=</span> BAUTISMOS_HARMONIZED[useful_columns[<span class="st">'bautizo'</span>]]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># remove empty columns</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED.dropna(axis<span class="op">=</span><span class="dv">1</span>, how<span class="op">=</span><span class="st">'all'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>Index(['file', 'identifier', 'event_type', 'event_date', 'baptized_name',
+       'baptized_birth_place', 'baptized_birth_date',
+       'baptized_legitimacy_status', 'father_name', 'father_lastname',
+       'father_social_condition', 'mother_name', 'mother_lastname',
+       'mother_social_condition', 'parents_social_condition', 'godfather_name',
+       'godfather_lastname', 'godfather_social_condition', 'godmother_name',
+       'godmother_lastname', 'godmother_social_condition', 'event_place',
+       'event_geographic_descriptor_1', 'event_geographic_descriptor_2',
+       'event_geographic_descriptor_3', 'event_geographic_descriptor_4'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div id="933b4eeb" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED <span class="op">=</span> MATRIMONIOS_HARMONIZED[useful_columns[<span class="st">'matrimonio'</span>]]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remove empty columns</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED.dropna(axis<span class="op">=</span><span class="dv">1</span>, how<span class="op">=</span><span class="st">'all'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>Index(['file', 'identifier', 'event_type', 'event_date', 'groom_name',
+       'groom_lastname', 'groom_social_condition', 'groom_marital_status',
+       'groom_birth_date', 'groom_birth_place', 'groom_resident_in',
+       'groom_legitimacy_status', 'groom_father_name', 'groom_father_lastname',
+       'groom_father_social_condition', 'groom_mother_name',
+       'groom_mother_lastname', 'groom_mother_social_condition', 'bride_name',
+       'bride_lastname', 'bride_social_condition', 'bride_marital_status',
+       'bride_birth_date', 'bride_birth_place', 'bride_resident_in',
+       'bride_legitimacy_status', 'bride_father_name', 'bride_father_lastname',
+       'bride_father_social_condition', 'bride_mother_name',
+       'bride_mother_lastname', 'bride_mother_social_condition',
+       'godparent_1_name', 'godparent_1_lastname',
+       'godparent_1_social_condition', 'godparent_2_name',
+       'godparent_2_lastname', 'godparent_2_social_condition',
+       'godparent_3_name', 'godparent_3_lastname', 'witness_1_name',
+       'witness_1_lastname', 'witness_2_name', 'witness_2_lastname',
+       'witness_3_name', 'witness_3_lastname', 'witness_4_name',
+       'witness_4_lastname', 'event_place', 'event_geographic_descriptor_1',
+       'event_geographic_descriptor_2', 'event_geographic_descriptor_3',
+       'event_geographic_descriptor_4', 'event_geographic_descriptor_5',
+       'event_geographic_descriptor_6'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div id="e55f51ae" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED <span class="op">=</span> ENTIERROS_HARMONIZED[useful_columns[<span class="st">'entierro'</span>]]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remove empty columns</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED.dropna(axis<span class="op">=</span><span class="dv">1</span>, how<span class="op">=</span><span class="st">'all'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>Index(['file', 'identifier', 'event_type', 'event_date', 'doctrine',
+       'event_place', 'deceased_name', 'deceased_lastname',
+       'deceased_birth_date', 'deceased_birth_place',
+       'deceased_social_condition', 'deceased_marital_status',
+       'deceased_legitimacy_status', 'father_name', 'father_lastname',
+       'mother_name', 'mother_lastname', 'husband_name', 'wife_name',
+       'burial_place', 'event_geographic_descriptor_1',
+       'event_geographic_descriptor_2', 'event_geographic_descriptor_3',
+       'event_geographic_descriptor_4'],
+      dtype='object')</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="replace-empty-or-null-values-with-na" class="level2">
+<h2 class="anchored" data-anchor-id="replace-empty-or-null-values-with-na">Replace empty or null values with ‘na’</h2>
+<div id="4ae727f2" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">## replace cells with no textual information with numpy na</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> replace_empty_with_na(df):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Replace placeholder strings with np.nan in string columns only.</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    placeholders <span class="op">=</span> {<span class="st">''</span>, <span class="st">'-'</span>, <span class="st">'--'</span>, <span class="st">'n/a'</span>, <span class="st">'na'</span>, <span class="st">'null'</span>, <span class="st">'None'</span>}</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clean_cell(val):</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(val, <span class="bu">str</span>) <span class="kw">and</span> val.strip().lower() <span class="kw">in</span> placeholders:</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> np.nan</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> val</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df.<span class="bu">map</span>(clean_cell)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1b9d73e3" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED <span class="op">=</span> replace_empty_with_na(BAUTISMOS_HARMONIZED)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED <span class="op">=</span> replace_empty_with_na(MATRIMONIOS_HARMONIZED)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED <span class="op">=</span> replace_empty_with_na(ENTIERROS_HARMONIZED)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="dates-normalization" class="level2">
+<h2 class="anchored" data-anchor-id="dates-normalization">Dates Normalization</h2>
+<p>Ensure dates are in a consistent format across all datasets. The dates should be in the format <code>YYYY-MM-DD</code>.</p>
+<div id="00884211" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.normalizers.DatesNormalizer <span class="im">import</span> DateNormalizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="42b656ef" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>] <span class="op">=</span> DateNormalizer(BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>]).normalize()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>0       1790-10-04
+1       1790-10-06
+2       1790-10-07
+3       1790-10-20
+4       1790-10-20
+           ...    
+6336    1888-12-10
+6337    1888-12-11
+6338    1888-12-12
+6339    1888-12-15
+6340    1888-12-16
+Name: event_date, Length: 6341, dtype: object</code></pre>
+</div>
+</div>
+<div id="9fd9da42" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>] <span class="op">=</span> DateNormalizer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).normalize()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>0       1816-12-06
+1       1816-12-12
+2       1817-03-05
+3       1817-03-10
+4       1817-03-12
+           ...    
+1714    1907-10-27
+1715    1908-01-13
+1716    1908-01-15
+1717    1908-02-15
+1718    1908-03-17
+Name: event_date, Length: 1719, dtype: object</code></pre>
+</div>
+</div>
+<div id="257fca92" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>] <span class="op">=</span> DateNormalizer(ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]).normalize()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>0       1846-10-06
+1       1846-10-07
+2       1846-11-02
+3       1846-12-08
+4       1847-02-23
+           ...    
+2193    1920-10-12
+2194    1920-10-19
+2195    1920-10-19
+2196    1920-10-20
+2197    1920-10-21
+Name: event_date, Length: 2198, dtype: object</code></pre>
+</div>
+</div>
+</section>
+<section id="age-inferring" class="level2">
+<h2 class="anchored" data-anchor-id="age-inferring">Age Inferring</h2>
+<p>Infer the age of individuals based on their birthdates and the date of the event (baptism, marriage, burial).</p>
+<div id="fe2022e1" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.generators.AgeInferrer <span class="im">import</span> AgeInferrer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="37cbca72" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[<span class="st">'baptized_birth_date'</span>] <span class="op">=</span> AgeInferrer(BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(BAUTISMOS_HARMONIZED[<span class="st">'baptized_birth_date'</span>])</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'baptized_birth_date'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">event_date</th>
+<th data-quarto-table-cell-role="th">baptized_birth_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1790-10-04</td>
+<td>1790-08-04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1790-10-06</td>
+<td>1790-08-04</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1790-10-07</td>
+<td>1790-08-04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1790-10-20</td>
+<td>1790-10-15</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1790-10-20</td>
+<td>1790-10-19</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6336</td>
+<td>1888-12-10</td>
+<td>1888-12-09</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6337</td>
+<td>1888-12-11</td>
+<td>1888-12-07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6338</td>
+<td>1888-12-12</td>
+<td>1888-12-06</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6339</td>
+<td>1888-12-15</td>
+<td>1888-11-30</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6340</td>
+<td>1888-12-16</td>
+<td>1888-12-01</td>
+</tr>
+</tbody>
+</table>
+
+<p>6341 rows × 2 columns</p>
+</div>
+</div>
+</div>
+<div id="6e70b578" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inconsistent dates: event_date should be after baptized_birth_date</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>invalid_mask <span class="op">=</span> pd.to_datetime(BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>) <span class="op">&lt;</span> pd.to_datetime(BAUTISMOS_HARMONIZED[<span class="st">'baptized_birth_date'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> invalid_mask.<span class="bu">any</span>():</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Found invalid records:"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(BAUTISMOS_HARMONIZED[invalid_mask][[<span class="st">'event_date'</span>, <span class="st">'baptized_birth_date'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Found invalid records:
+      event_date baptized_birth_date
+135   1792-03-29          1792-04-08
+290   1794-01-01          1794-01-27
+671   1797-07-15          1797-07-24
+2814  1900-04-01          1900-04-09</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Unfortunately, these records were incorrectly recorded. To fix this, it is necessary to check with the original records.</p>
+</blockquote>
+<div id="0314f4d5" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'groom_birth_date'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'groom_birth_date'</span>])</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'bride_birth_date'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'bride_birth_date'</span>])</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'groom_birth_date'</span>, <span class="st">'bride_birth_date'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">event_date</th>
+<th data-quarto-table-cell-role="th">groom_birth_date</th>
+<th data-quarto-table-cell-role="th">bride_birth_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1816-12-06</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1816-12-12</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1817-03-05</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1817-03-10</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1817-03-12</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1714</td>
+<td>1907-10-27</td>
+<td>1882-11-01</td>
+<td>1880-11-01</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1715</td>
+<td>1908-01-13</td>
+<td>1880-01-19</td>
+<td>1879-01-19</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1716</td>
+<td>1908-01-15</td>
+<td>1886-01-19</td>
+<td>1888-01-19</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1717</td>
+<td>1908-02-15</td>
+<td>1883-02-20</td>
+<td>1886-02-19</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1718</td>
+<td>1908-03-17</td>
+<td>1880-03-23</td>
+<td>1879-03-24</td>
+</tr>
+</tbody>
+</table>
+
+<p>1719 rows × 3 columns</p>
+</div>
+</div>
+</div>
+<div id="991f9686" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'deceased_birth_date'</span>] <span class="op">=</span> AgeInferrer(ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(ENTIERROS_HARMONIZED[<span class="st">'deceased_birth_date'</span>])</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'deceased_birth_date'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">event_date</th>
+<th data-quarto-table-cell-role="th">deceased_birth_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1846-10-06</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1846-10-07</td>
+<td>1821-10-13</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1846-11-02</td>
+<td>1766-11-21</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1846-12-08</td>
+<td>1806-12-18</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1847-02-23</td>
+<td>1797-03-06</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2193</td>
+<td>1920-10-12</td>
+<td>1920-02-15</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2194</td>
+<td>1920-10-19</td>
+<td>1870-10-31</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2195</td>
+<td>1920-10-19</td>
+<td>1913-10-21</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2196</td>
+<td>1920-10-20</td>
+<td>1919-10-21</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2197</td>
+<td>1920-10-21</td>
+<td>1920-10-19</td>
+</tr>
+</tbody>
+</table>
+
+<p>2198 rows × 2 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="names-normalization" class="level2">
+<h2 class="anchored" data-anchor-id="names-normalization">Names Normalization</h2>
+<p>Standardize names across datasets to ensure consistency. This includes normalizing first names, last names, and any other relevant name fields.</p>
+<div id="48770e07" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.normalizers.NamesNormalizer <span class="im">import</span> NamesNormalizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="bf199189" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalize_names_columns(series):</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    namesManager <span class="op">=</span> NamesNormalizer()</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> namesManager.clean_series(series)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="fc832fa1" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>names_columns <span class="op">=</span> [</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'baptized_name'</span>, </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'father_name'</span>, <span class="st">'father_lastname'</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mother_name'</span>, <span class="st">'mother_lastname'</span>,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'godfather_name'</span>, <span class="st">'godfather_lastname'</span>, </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'godmother_name'</span>, <span class="st">'godmother_lastname'</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> names_columns:</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> BAUTISMOS_HARMONIZED.columns:</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        BAUTISMOS_HARMONIZED[col] <span class="op">=</span> normalize_names_columns(BAUTISMOS_HARMONIZED[col])</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[names_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">baptized_name</th>
+<th data-quarto-table-cell-role="th">father_name</th>
+<th data-quarto-table-cell-role="th">father_lastname</th>
+<th data-quarto-table-cell-role="th">mother_name</th>
+<th data-quarto-table-cell-role="th">mother_lastname</th>
+<th data-quarto-table-cell-role="th">godfather_name</th>
+<th data-quarto-table-cell-role="th">godfather_lastname</th>
+<th data-quarto-table-cell-role="th">godmother_name</th>
+<th data-quarto-table-cell-role="th">godmother_lastname</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>domingo</td>
+<td>lucas</td>
+<td>ayquipa</td>
+<td>sevastiana</td>
+<td>quispe</td>
+<td>vicente</td>
+<td>guamani</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>dominga</td>
+<td>juan</td>
+<td>lulia</td>
+<td>jospha</td>
+<td>gomes</td>
+<td>ignacio</td>
+<td>varientos</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>bartola</td>
+<td>jacinto</td>
+<td>quispe</td>
+<td>juliana</td>
+<td>chinchay</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>rotonda</td>
+<td>pocco</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>francisca</td>
+<td>juan</td>
+<td>cuebas</td>
+<td>clemenzia</td>
+<td>manco</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>ysabel</td>
+<td>guillen</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>pedro</td>
+<td>santos</td>
+<td>manxo</td>
+<td>baleriana</td>
+<td>arango</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>josefa</td>
+<td>santiago</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6336</td>
+<td>leocadio</td>
+<td>miguel</td>
+<td>pacheco</td>
+<td>rosa</td>
+<td>huarcaya</td>
+<td>josé julián</td>
+<td>bendezú</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6337</td>
+<td>mariano concepcion</td>
+<td>facundo</td>
+<td>vega</td>
+<td>silvestra</td>
+<td>urbano</td>
+<td>fernando</td>
+<td>mancco</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6338</td>
+<td>ambrosio</td>
+<td>ysidro</td>
+<td>ccasane</td>
+<td>rita</td>
+<td>palomino</td>
+<td>juan</td>
+<td>tito</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6339</td>
+<td>francisco</td>
+<td>mariano</td>
+<td>lopez</td>
+<td>leocadia</td>
+<td>medina</td>
+<td>feliciano</td>
+<td>dias</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6340</td>
+<td>laureana</td>
+<td>bernarda</td>
+<td>champa</td>
+<td>rufina</td>
+<td>lopez</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>manuela</td>
+<td>de la cruz</td>
+</tr>
+</tbody>
+</table>
+
+<p>6341 rows × 9 columns</p>
+</div>
+</div>
+</div>
+<section id="baptisms-special-case" class="level3">
+<h3 class="anchored" data-anchor-id="baptisms-special-case">Baptisms special case</h3>
+<p>Because baptized surname wasn’t recorded, we need to infer it from the father’s surname.</p>
+<div id="a54d866a" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[<span class="st">'baptized_lastname'</span>] <span class="op">=</span> BAUTISMOS_HARMONIZED[<span class="st">'father_lastname'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="0e1e3696" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>matrimonios_names_columns <span class="op">=</span> [</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'groom_name'</span>, <span class="st">'groom_lastname'</span>, </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">'groom_father_name'</span>, <span class="st">'groom_father_lastname'</span>, </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>       <span class="st">'groom_mother_name'</span>, <span class="st">'groom_mother_lastname'</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>       <span class="st">'bride_name'</span>, <span class="st">'bride_lastname'</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>       <span class="st">'bride_father_name'</span>, <span class="st">'bride_father_lastname'</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>       <span class="st">'bride_mother_name'</span>, <span class="st">'bride_mother_lastname'</span>, </span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>       <span class="st">'godparent_1_name'</span>, <span class="st">'godparent_1_lastname'</span>,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>       <span class="st">'godparent_2_name'</span>, <span class="st">'godparent_2_lastname'</span>, </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>       <span class="st">'godparent_3_name'</span>, <span class="st">'godparent_3_lastname'</span>, </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>       <span class="st">'witness_1_name'</span>, <span class="st">'witness_1_lastname'</span>, </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>       <span class="st">'witness_2_name'</span>, <span class="st">'witness_2_lastname'</span>,</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>       <span class="st">'witness_3_name'</span>, <span class="st">'witness_3_lastname'</span>, </span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>       <span class="st">'witness_4_name'</span>, <span class="st">'witness_4_lastname'</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> matrimonios_names_columns:</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> MATRIMONIOS_HARMONIZED.columns:</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>        MATRIMONIOS_HARMONIZED[col] <span class="op">=</span> normalize_names_columns(MATRIMONIOS_HARMONIZED[col])</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[matrimonios_names_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">groom_name</th>
+<th data-quarto-table-cell-role="th">groom_lastname</th>
+<th data-quarto-table-cell-role="th">groom_father_name</th>
+<th data-quarto-table-cell-role="th">groom_father_lastname</th>
+<th data-quarto-table-cell-role="th">groom_mother_name</th>
+<th data-quarto-table-cell-role="th">groom_mother_lastname</th>
+<th data-quarto-table-cell-role="th">bride_name</th>
+<th data-quarto-table-cell-role="th">bride_lastname</th>
+<th data-quarto-table-cell-role="th">bride_father_name</th>
+<th data-quarto-table-cell-role="th">bride_father_lastname</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">godparent_3_name</th>
+<th data-quarto-table-cell-role="th">godparent_3_lastname</th>
+<th data-quarto-table-cell-role="th">witness_1_name</th>
+<th data-quarto-table-cell-role="th">witness_1_lastname</th>
+<th data-quarto-table-cell-role="th">witness_2_name</th>
+<th data-quarto-table-cell-role="th">witness_2_lastname</th>
+<th data-quarto-table-cell-role="th">witness_3_name</th>
+<th data-quarto-table-cell-role="th">witness_3_lastname</th>
+<th data-quarto-table-cell-role="th">witness_4_name</th>
+<th data-quarto-table-cell-role="th">witness_4_lastname</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>josé manl manuel</td>
+<td>de la roca</td>
+<td>acencio</td>
+<td>roca</td>
+<td>leonor</td>
+<td>guerrero</td>
+<td>juana</td>
+<td>rodrigues</td>
+<td>pedro</td>
+<td>rodrigues</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>agustin</td>
+<td>castro</td>
+<td>mariano</td>
+<td>castro</td>
+<td>juan</td>
+<td>baldes</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>esteban</td>
+<td>castillo</td>
+<td>matheo</td>
+<td>castillo</td>
+<td>ma maria</td>
+<td>torres</td>
+<td>ambrocia</td>
+<td>tasqui</td>
+<td>pedro</td>
+<td>tasqui</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>pedro</td>
+<td>manco</td>
+<td>carlos</td>
+<td>canto</td>
+<td>pedro</td>
+<td>guamani</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>alexandro</td>
+<td>ramires</td>
+<td>leonor</td>
+<td>romani</td>
+<td>franca francisca</td>
+<td>paucar</td>
+<td>sipriana</td>
+<td>coillo</td>
+<td>cristobal</td>
+<td>coillo</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>marcelo</td>
+<td>llamuca</td>
+<td>julian</td>
+<td>urbano</td>
+<td>antonio</td>
+<td>urbano</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>jose</td>
+<td>cuchu</td>
+<td>acencio</td>
+<td>cuchu</td>
+<td>baleriana</td>
+<td>antay</td>
+<td>cacimira</td>
+<td>flores</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>pablo</td>
+<td>roque</td>
+<td>antonio</td>
+<td>urbano</td>
+<td>cristobal</td>
+<td>coillo</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>domingo</td>
+<td>tito</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>marcela</td>
+<td>guauya</td>
+<td>petrona</td>
+<td>guallpatuiru</td>
+<td>agustin</td>
+<td>guallpatuiru</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>marcelo</td>
+<td>llamuca</td>
+<td>antonio</td>
+<td>guamani</td>
+<td>mariano</td>
+<td>guallpatuiru</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1714</td>
+<td>patrocinio</td>
+<td>chinchay</td>
+<td>miguel</td>
+<td>chinchay</td>
+<td>andrea</td>
+<td>polanco</td>
+<td>lorenza</td>
+<td>quispe</td>
+<td>gervacio</td>
+<td>quispe</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>juan de dios</td>
+<td>barrientos</td>
+<td>manuel</td>
+<td>espinosa</td>
+<td>crisostomo</td>
+<td>pumarino</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1715</td>
+<td>gerónimo</td>
+<td>cucho</td>
+<td>ambrocio</td>
+<td>cucho</td>
+<td>gertrudis</td>
+<td>serrano</td>
+<td>teresa</td>
+<td>jimenes</td>
+<td>aniseto</td>
+<td>jimenes</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>victor</td>
+<td>saravia</td>
+<td>mateo</td>
+<td>aiquipa</td>
+<td>felix</td>
+<td>cucho</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1716</td>
+<td>josé</td>
+<td>coro</td>
+<td>felix</td>
+<td>coro</td>
+<td>natividad</td>
+<td>cucho</td>
+<td>emilia</td>
+<td>huamani</td>
+<td>patricio</td>
+<td>huamani</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>pablo</td>
+<td>de la cruz</td>
+<td>victor</td>
+<td>saravia</td>
+<td>marcelo</td>
+<td>ramos</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1717</td>
+<td>pedro</td>
+<td>gutierres</td>
+<td>ruperto</td>
+<td>gutierrez</td>
+<td>micaila</td>
+<td>oscco</td>
+<td>juliana</td>
+<td>huarcaya</td>
+<td>hilario</td>
+<td>huarcaya</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>rafael</td>
+<td>delgado</td>
+<td>josé</td>
+<td>vivanco</td>
+<td>agustin</td>
+<td>vicente</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1718</td>
+<td>benito</td>
+<td>sanchez</td>
+<td>tiburcio</td>
+<td>sanchez</td>
+<td>lorenza</td>
+<td>aymi</td>
+<td>teresa</td>
+<td>poma</td>
+<td>bernardo</td>
+<td>poma</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>santos</td>
+<td>espejo</td>
+<td>felix</td>
+<td>sanches</td>
+<td>mariano</td>
+<td>urbano</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>1719 rows × 26 columns</p>
+</div>
+</div>
+</div>
+<div id="fa843fd7" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>entierros_names_columns <span class="op">=</span> [</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"deceased_name"</span>, <span class="st">"deceased_lastname"</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"father_name"</span>, <span class="st">"father_lastname"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mother_name"</span>, <span class="st">"mother_lastname"</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"husband_name"</span>, <span class="st">"wife_name"</span>,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> entierros_names_columns:</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> ENTIERROS_HARMONIZED.columns:</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        ENTIERROS_HARMONIZED[col] <span class="op">=</span> normalize_names_columns(ENTIERROS_HARMONIZED[col])</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[entierros_names_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">deceased_name</th>
+<th data-quarto-table-cell-role="th">deceased_lastname</th>
+<th data-quarto-table-cell-role="th">father_name</th>
+<th data-quarto-table-cell-role="th">father_lastname</th>
+<th data-quarto-table-cell-role="th">mother_name</th>
+<th data-quarto-table-cell-role="th">mother_lastname</th>
+<th data-quarto-table-cell-role="th">husband_name</th>
+<th data-quarto-table-cell-role="th">wife_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>julian</td>
+<td>xavies</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>mercedes lupa</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>joce</td>
+<td>raime</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>francisca cucho</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>martina</td>
+<td>condori</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>luciano ccoyllo</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>dorotea</td>
+<td>ccoyllo</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>josé espinosa</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>maría</td>
+<td>romani</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>mariano huallpatuiro</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2193</td>
+<td>nieves</td>
+<td>huallpatuero</td>
+<td>patrocinio</td>
+<td>huallpatuero</td>
+<td>teresa</td>
+<td>urbano</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2194</td>
+<td>sinforiano</td>
+<td>huamani</td>
+<td>eustaquio</td>
+<td>huamani</td>
+<td>martina</td>
+<td>llamoca</td>
+<td>NaN</td>
+<td>gregoria ccoillo</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2195</td>
+<td>salomé</td>
+<td>condori</td>
+<td>sebastian</td>
+<td>condori</td>
+<td>anacla</td>
+<td>roque</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2196</td>
+<td>maría</td>
+<td>chinchay</td>
+<td>abdon</td>
+<td>chinchay</td>
+<td>floriza</td>
+<td>lopez</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2197</td>
+<td>fortunato</td>
+<td>florez</td>
+<td>cecilio</td>
+<td>florez</td>
+<td>guadalupe</td>
+<td>ramos</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>2198 rows × 8 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="entierros-special-case" class="level3">
+<h3 class="anchored" data-anchor-id="entierros-special-case">Entierros special case</h3>
+<p>Deceased wife or husband were recorded as full name. Therefore, we need to split the full name into first name and last name.</p>
+<div id="3f8867c8" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> name_splitter(name):</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isnull(name):</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.nan, np.nan</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    name_parts <span class="op">=</span> name.split()</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(name_parts) <span class="op">&gt;</span> <span class="dv">2</span>:</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">"de la"</span> <span class="kw">in</span> name:</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> name_parts[<span class="dv">0</span>], <span class="st">" "</span>.join(name_parts[<span class="dv">1</span>:])</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">" "</span>.join(name_parts[<span class="dv">0</span>:<span class="dv">2</span>]), <span class="st">" "</span>.join(name_parts[<span class="dv">2</span>:])</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> name_parts[<span class="dv">0</span>], name_parts[<span class="dv">1</span>] <span class="cf">if</span> <span class="bu">len</span>(name_parts) <span class="op">&gt;</span> <span class="dv">1</span> <span class="cf">else</span> np.nan</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="bbabbfc1" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[[<span class="st">'husband_name'</span>, <span class="st">'husband_lastname'</span>]] <span class="op">=</span> ENTIERROS_HARMONIZED[<span class="st">'husband_name'</span>].<span class="bu">apply</span>(name_splitter).<span class="bu">apply</span>(pd.Series)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[[<span class="st">'wife_name'</span>, <span class="st">'wife_lastname'</span>]] <span class="op">=</span> ENTIERROS_HARMONIZED[<span class="st">'wife_name'</span>].<span class="bu">apply</span>(name_splitter).<span class="bu">apply</span>(pd.Series)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="place-recognition" class="level2">
+<h2 class="anchored" data-anchor-id="place-recognition">Place Recognition</h2>
+<p>This process involves NER recognition to extract places entities from the text fields in the datasets.</p>
+<div id="c0687486" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.extractors <span class="im">import</span> placeRecognition</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>extractor <span class="op">=</span> placeRecognition.PlaceExtractor()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="845344dc" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>bautismos_place_columns <span class="op">=</span> [</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'baptized_birth_place'</span>, <span class="st">'event_place'</span>, <span class="st">'event_geographic_descriptor_1'</span>,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'event_geographic_descriptor_2'</span>, <span class="st">'event_geographic_descriptor_3'</span>,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'event_geographic_descriptor_4'</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_PLACES_RAW <span class="op">=</span> BAUTISMOS_HARMONIZED[bautismos_place_columns]</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> bautismos_place_columns:</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> BAUTISMOS_HARMONIZED.columns:</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>        BAUTISMOS_HARMONIZED[col] <span class="op">=</span> extractor.extract_places_per_row(BAUTISMOS_HARMONIZED[col])</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[bautismos_place_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">baptized_birth_place</th>
+<th data-quarto-table-cell-role="th">event_place</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_3</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6336</td>
+<td>NaN</td>
+<td>Aucará</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6337</td>
+<td>NaN</td>
+<td>Aucará</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6338</td>
+<td>NaN</td>
+<td>Aucará</td>
+<td>NaN</td>
+<td>Mayobamba</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6339</td>
+<td>NaN</td>
+<td>Aucará</td>
+<td>NaN</td>
+<td>Huaicahuacho</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6340</td>
+<td>NaN</td>
+<td>Aucará</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>6341 rows × 6 columns</p>
+</div>
+</div>
+</div>
+<div id="ca8f9732" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>matrimonios_place_columns <span class="op">=</span> [</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'groom_birth_place'</span>,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">'groom_resident_in'</span>, </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>       <span class="st">'bride_birth_place'</span>, <span class="st">'bride_resident_in'</span>, </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>       <span class="st">'event_place'</span>, <span class="st">'event_geographic_descriptor_1'</span>, <span class="st">'event_geographic_descriptor_2'</span>,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>       <span class="st">'event_geographic_descriptor_3'</span>, <span class="st">'event_geographic_descriptor_4'</span>,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>       <span class="st">'event_geographic_descriptor_5'</span>, <span class="st">'event_geographic_descriptor_6'</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_PLACES_RAW <span class="op">=</span> MATRIMONIOS_HARMONIZED[matrimonios_place_columns]</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> matrimonios_place_columns:</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> MATRIMONIOS_HARMONIZED.columns:</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>        MATRIMONIOS_HARMONIZED[col] <span class="op">=</span> extractor.extract_places_per_row(MATRIMONIOS_HARMONIZED[col])</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[matrimonios_place_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">groom_birth_place</th>
+<th data-quarto-table-cell-role="th">groom_resident_in</th>
+<th data-quarto-table-cell-role="th">bride_birth_place</th>
+<th data-quarto-table-cell-role="th">bride_resident_in</th>
+<th data-quarto-table-cell-role="th">event_place</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_3</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_4</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_5</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Ciudad de Huamanga</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>Huamanga</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>Colca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca|santa iglesia</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Pampamarca|santa iglesia</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1714</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1715</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1716</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1717</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1718</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>1719 rows × 11 columns</p>
+</div>
+</div>
+</div>
+<div id="2fdcaf47" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>entierros_place_columns <span class="op">=</span> [</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'event_place'</span>, <span class="st">'deceased_birth_place'</span>, <span class="st">'burial_place'</span>, <span class="st">'event_geographic_descriptor_1'</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'event_geographic_descriptor_2'</span>, <span class="st">'event_geographic_descriptor_3'</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'event_geographic_descriptor_4'</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>ENTIERROS_PLACES_RAW <span class="op">=</span> ENTIERROS_HARMONIZED[entierros_place_columns]</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> entierros_place_columns:</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> ENTIERROS_HARMONIZED.columns:</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>        ENTIERROS_HARMONIZED[col] <span class="op">=</span> extractor.extract_places_per_row(ENTIERROS_HARMONIZED[col])</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[entierros_place_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">event_place</th>
+<th data-quarto-table-cell-role="th">deceased_birth_place</th>
+<th data-quarto-table-cell-role="th">burial_place</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_3</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2193</td>
+<td>Aucara</td>
+<td>Santa Ana de Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Santa Ana de Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2194</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2195</td>
+<td>Aucara</td>
+<td>Santa Ana de Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Santa Ana de Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2196</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2197</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>2198 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<div id="d67452f6" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save raw places</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils <span class="im">import</span> UniqueValues</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>uniqueValues <span class="op">=</span> UniqueValues.UniqueValuesExtractor(</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    [BAUTISMOS_PLACES_RAW, MATRIMONIOS_PLACES_RAW, ENTIERROS_PLACES_RAW]</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>).get_unique_values(return_dataframe<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>uniqueValues.to_csv(<span class="st">"../data/raw/raw_places.csv"</span>, index<span class="op">=</span><span class="va">False</span>) <span class="co"># type: ignore # </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cleaning-audit" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-audit">Cleaning Audit</h2>
+<p>Basic audit to ensure that the data cleaning process has been successful.</p>
+</section>
+<section id="save-cleaned-data" class="level2">
+<h2 class="anchored" data-anchor-id="save-cleaned-data">Save Cleaned Data</h2>
+<div id="1b72bc08" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>clean_data_folder <span class="op">=</span> Path(<span class="st">"../data/clean/"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill NaN values for consistency</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED <span class="op">=</span> BAUTISMOS_HARMONIZED.fillna(value<span class="op">=</span>np.nan)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED <span class="op">=</span> MATRIMONIOS_HARMONIZED.fillna(value<span class="op">=</span>np.nan)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED <span class="op">=</span> ENTIERROS_HARMONIZED.fillna(value<span class="op">=</span>np.nan)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED.to_csv(clean_data_folder <span class="op">/</span> <span class="st">"bautismos_clean.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED.to_csv(clean_data_folder <span class="op">/</span> <span class="st">"matrimonios_clean.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED.to_csv(clean_data_folder <span class="op">/</span> <span class="st">"entierros_clean.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="15657668" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">file</th>
+<th data-quarto-table-cell-role="th">identifier</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">event_date</th>
+<th data-quarto-table-cell-role="th">baptized_name</th>
+<th data-quarto-table-cell-role="th">baptized_birth_place</th>
+<th data-quarto-table-cell-role="th">baptized_birth_date</th>
+<th data-quarto-table-cell-role="th">baptized_legitimacy_status</th>
+<th data-quarto-table-cell-role="th">father_name</th>
+<th data-quarto-table-cell-role="th">father_lastname</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">godfather_social_condition</th>
+<th data-quarto-table-cell-role="th">godmother_name</th>
+<th data-quarto-table-cell-role="th">godmother_lastname</th>
+<th data-quarto-table-cell-role="th">godmother_social_condition</th>
+<th data-quarto-table-cell-role="th">event_place</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_3</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_4</th>
+<th data-quarto-table-cell-role="th">baptized_lastname</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>APAucará LB L001</td>
+<td>B001</td>
+<td>Bautizo</td>
+<td>1790-10-04</td>
+<td>domingo</td>
+<td>NaN</td>
+<td>1790-08-04</td>
+<td>Hijo legitimo</td>
+<td>lucas</td>
+<td>ayquipa</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>ayquipa</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>APAucará LB L001</td>
+<td>B002</td>
+<td>Bautizo</td>
+<td>1790-10-06</td>
+<td>dominga</td>
+<td>NaN</td>
+<td>1790-08-04</td>
+<td>Hija legitima</td>
+<td>juan</td>
+<td>lulia</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>lulia</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>APAucará LB L001</td>
+<td>B003</td>
+<td>Bautizo</td>
+<td>1790-10-07</td>
+<td>bartola</td>
+<td>NaN</td>
+<td>1790-08-04</td>
+<td>Hija legitima</td>
+<td>jacinto</td>
+<td>quispe</td>
+<td>...</td>
+<td>NaN</td>
+<td>rotonda</td>
+<td>pocco</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>quispe</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>APAucará LB L001</td>
+<td>B004</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>francisca</td>
+<td>NaN</td>
+<td>1790-10-15</td>
+<td>Hija legitima</td>
+<td>juan</td>
+<td>cuebas</td>
+<td>...</td>
+<td>NaN</td>
+<td>ysabel</td>
+<td>guillen</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>cuebas</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>APAucará LB L001</td>
+<td>B005</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>pedro</td>
+<td>NaN</td>
+<td>1790-10-19</td>
+<td>Hijo legitimo</td>
+<td>santos</td>
+<td>manxo</td>
+<td>...</td>
+<td>NaN</td>
+<td>josefa</td>
+<td>santiago</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>manxo</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 27 columns</p>
+</div>
+</div>
+</div>
+<div id="a9791e1f" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">file</th>
+<th data-quarto-table-cell-role="th">identifier</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">event_date</th>
+<th data-quarto-table-cell-role="th">groom_name</th>
+<th data-quarto-table-cell-role="th">groom_lastname</th>
+<th data-quarto-table-cell-role="th">groom_social_condition</th>
+<th data-quarto-table-cell-role="th">groom_marital_status</th>
+<th data-quarto-table-cell-role="th">groom_birth_date</th>
+<th data-quarto-table-cell-role="th">groom_birth_place</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">witness_3_lastname</th>
+<th data-quarto-table-cell-role="th">witness_4_name</th>
+<th data-quarto-table-cell-role="th">witness_4_lastname</th>
+<th data-quarto-table-cell-role="th">event_place</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_3</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_4</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_5</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>APAucará LM L001</td>
+<td>M001</td>
+<td>Matrimonio</td>
+<td>1816-12-06</td>
+<td>josé manl manuel</td>
+<td>de la roca</td>
+<td>don, vecinos de este pueblo [Aucara]</td>
+<td>soltero</td>
+<td>NaN</td>
+<td>Ciudad de Huamanga</td>
+<td>...</td>
+<td>baldes</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>Huamanga</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>APAucará LM L001</td>
+<td>M002</td>
+<td>Matrimonio</td>
+<td>1816-12-12</td>
+<td>esteban</td>
+<td>castillo</td>
+<td>vecinos de esta doctrina [Aucara]</td>
+<td>soltero</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>guamani</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>Colca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>APAucará LM L001</td>
+<td>M003</td>
+<td>Matrimonio</td>
+<td>1817-03-05</td>
+<td>alexandro</td>
+<td>ramires</td>
+<td>vecinos de dicho pueblo [Aucara]</td>
+<td>soltero</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>...</td>
+<td>urbano</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>APAucará LM L001</td>
+<td>M004</td>
+<td>Matrimonio</td>
+<td>1817-03-10</td>
+<td>jose</td>
+<td>cuchu</td>
+<td>vecinos de dicho [Pampamarca]</td>
+<td>soltero</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>...</td>
+<td>coillo</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Pampamarca|santa iglesia</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>APAucará LM L001</td>
+<td>M005</td>
+<td>Matrimonio</td>
+<td>1817-03-12</td>
+<td>domingo</td>
+<td>tito</td>
+<td>vecinos de dicho [Pampamarca]</td>
+<td>soltero</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>guallpatuiru</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Pampamarca|santa iglesia</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 55 columns</p>
+</div>
+</div>
+</div>
+<div id="4477aa41" class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">file</th>
+<th data-quarto-table-cell-role="th">identifier</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">event_date</th>
+<th data-quarto-table-cell-role="th">doctrine</th>
+<th data-quarto-table-cell-role="th">event_place</th>
+<th data-quarto-table-cell-role="th">deceased_name</th>
+<th data-quarto-table-cell-role="th">deceased_lastname</th>
+<th data-quarto-table-cell-role="th">deceased_birth_date</th>
+<th data-quarto-table-cell-role="th">deceased_birth_place</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">mother_lastname</th>
+<th data-quarto-table-cell-role="th">husband_name</th>
+<th data-quarto-table-cell-role="th">wife_name</th>
+<th data-quarto-table-cell-role="th">burial_place</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_3</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_4</th>
+<th data-quarto-table-cell-role="th">husband_lastname</th>
+<th data-quarto-table-cell-role="th">wife_lastname</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>APAucará LD L001</td>
+<td>E001</td>
+<td>Entierro</td>
+<td>1846-10-06</td>
+<td>Parroquia de Aucará</td>
+<td>NaN</td>
+<td>julian</td>
+<td>xavies</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>mercedes</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>lupa</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>APAucará LD L001</td>
+<td>E002</td>
+<td>Entierro</td>
+<td>1846-10-07</td>
+<td>Parroquia de Aucará</td>
+<td>NaN</td>
+<td>joce</td>
+<td>raime</td>
+<td>1821-10-13</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>francisca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>cucho</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>APAucará LD L001</td>
+<td>E003</td>
+<td>Entierro</td>
+<td>1846-11-02</td>
+<td>Parroquia de Aucará</td>
+<td>NaN</td>
+<td>martina</td>
+<td>condori</td>
+<td>1766-11-21</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>luciano</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>ccoyllo</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>APAucará LD L001</td>
+<td>E004</td>
+<td>Entierro</td>
+<td>1846-12-08</td>
+<td>Parroquia de Aucará</td>
+<td>NaN</td>
+<td>dorotea</td>
+<td>ccoyllo</td>
+<td>1806-12-18</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>josé</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>espinosa</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>APAucará LD L001</td>
+<td>E005</td>
+<td>Entierro</td>
+<td>1847-02-23</td>
+<td>Parroquia de Aucará</td>
+<td>NaN</td>
+<td>maría</td>
+<td>romani</td>
+<td>1797-03-06</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>mariano</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Lucanas</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>huallpatuiro</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 26 columns</p>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

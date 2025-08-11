@@ -1,6 +1,9 @@
 # Python virtual environment
 .venv/
 
+# vscode specific
+.vscode/
+
 # macOS
 .DS_Store
 
@@ -10,6 +13,7 @@ logs/*
 
 # Submodules
 sondondo.wiki/
+sondondo.researchNotes/
 
 #env variables
 .env
@@ -19,5 +23,7 @@ sondondo.wiki/
 
 *.sqlite
 
-project_code/dataCleaning.html
-project_code/dataCleaning_files/
+data/clean/*.txt
+
+# temporary exclusions
+project_code/proposedAlgorithm.txt

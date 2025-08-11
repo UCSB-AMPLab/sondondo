@@ -1,0 +1,132 @@
+---
+title: "Database Schema Documentation"
+execute:
+    echo: true
+    message: false
+format:
+    html:
+        code-fold: false
+lightbox: true
+---
+
+## ConditionVocab
+
+Standardized set of terms describing legitimacy status, marital status, or social condition.  
+Values are harmonized through controlled vocabularies and mappings to ensure consistency for probabilistic record linkage (PRL).
+
+| Property | Expected Type | Description |
+|----------|---------------|-------------|
+| label    | Text          | Standardized label representing the condition (e.g., "legitimate", "mestizo") |
+| type     | Text          | Category of the condition: `legitimacy`, `marriage_status`, or `social_condition` |
+
+---
+
+## Event
+
+A sacramental event — baptism, marriage, or burial — as recorded in the dataset.
+
+| Property    | Expected Type | Description |
+|-------------|---------------|-------------|
+| event_type  | Text          | Type of sacramental event (`baptism`, `marriage`, `burial`) |
+| event_date  | Date          | Date of the event (recorded or approximate) in ISO 8601 format |
+| event_place | Integer       | FK to the Place where the event occurred |
+| record_id   | Integer       | FK to the Record that contains this event |
+
+---
+
+## OriginalTerms
+
+Original recorded form of a label before normalization.  
+These are stored exactly as they appear in the source, without edits, for traceability.
+
+| Property       | Expected Type | Description |
+|----------------|---------------|-------------|
+| label_type     | Text          | Entity type the label refers to (`person`, `place`, `event`) |
+| label_value    | Text          | Original unnormalized textual form |
+| label_language | Text          | Language code in ISO 639 format |
+
+---
+
+## Persona
+
+A _persona_ is “each mention instance of a person in a document” (Embley, 2021).  
+This table stores individual mentions before any PRL aggregation.
+
+| Property     | Expected Type | Description |
+|--------------|---------------|-------------|
+| name         | Text          | Normalized first and middle name(s) |
+| lastname     | Text          | Normalized or inferred surname(s) |
+| birth_date   | Date          | Recorded or inferred date of birth in ISO 8601 format |
+| birth_place  | Integer       | FK to Place of birth |
+| death_date   | Date          | Recorded or inferred date of death in ISO 8601 format |
+| death_place  | Integer       | FK to Place of death |
+| notes        | Text          | Free-text notes from transcription or data processing |
+
+---
+
+## PersonaCondition
+
+Links a persona to a standardized condition (e.g., "legitimate", "mestizo") as recorded in a specific event.
+
+| Property           | Expected Type | Description |
+|--------------------|---------------|-------------|
+| person_id          | Integer       | FK to the Persona holding the condition |
+| condition_vocab_id | Integer       | FK to the standardized term in ConditionVocab |
+| event_id           | Integer       | FK to the Event where the condition was recorded |
+
+---
+
+## PersonaRelationship
+
+Represents an oriented relationship between two personas.  
+Orientation is from **subject** (person holding the role) to **object** (person receiving the role).
+
+| Property           | Expected Type | Description |
+|--------------------|---------------|-------------|
+| person_subject_id  | Integer       | FK to the Persona who is the subject of the relationship (e.g., father, mother, godparent) |
+| person_object_id   | Integer       | FK to the Persona who is the object of the relationship (e.g., child, godchild) |
+| relationship_type  | Text          | Relationship label oriented from subject to object (e.g., "is father of") |
+| event_id           | Integer       | FK to the Event that recorded this relationship |
+
+---
+
+## PersonaRoleInEvent
+
+Relational table linking a persona to their specific role in an event.
+
+| Property   | Expected Type | Description |
+|------------|---------------|-------------|
+| person_id  | Integer       | FK to the Persona involved in the event |
+| event_id   | Integer       | FK to the Event in which the persona participated |
+| role       | Text          | Role label in the event context (e.g., "witness", "baptized") |
+
+---
+
+## Place
+
+List of standardized places mentioned in the dataset, validated against controlled vocabularies and gazetteers.
+
+| Property     | Expected Type | Description |
+|--------------|---------------|-------------|
+| place_label  | Text          | Standardized contemporary name of the place |
+| language     | Text          | Language code in ISO 639 format |
+| latitude     | Double        | Latitude coordinate |
+| longitude    | Double        | Longitude coordinate |
+| source       | Text          | Source vocabulary or gazetteer |
+| uri          | Text          | URI to standardized place metadata |
+| country_code | Text          | ISO 3166 code of the country |
+| part_of      | Text          | Administrative unit containing this place |
+| part_of_uri  | Text          | URI to standardized metadata of the containing administrative unit |
+| mentioned_as | Integer       | FK to OriginalTerms entry matching the non-standardized name |
+
+---
+
+## Record
+
+Identifies the original record in the raw dataset.
+
+| Property          | Expected Type | Description |
+|-------------------|---------------|-------------|
+| record_type       | Text          | Type of record (`baptism`, `marriage`, `burial`) |
+| record_identifier | Text          | Identifier matching the source dataset |
+| record_file       | Text          | File name or path as recorded in the source dataset |

@@ -1,5 +1,6 @@
 import pandas as pd
 from utils.LoggerHandler import setup_logger
+from actions.normalizers.DatesNormalizer import SimpleNormalizer
 from typing import Union
 from datetime import datetime, timedelta
 import re
@@ -21,7 +22,7 @@ class AgeInferrer:
             return timedelta(days=0)
 
         # Pattern 1: "3 meses y medio"
-        m = re.match(r"(\d+)\s*mes(?:es)?\s*y\s*medio", t)
+        m = re.search(r"(\d+)\s*mes(?:es)?\s*y\s*medio", t)
         if m:
             months = int(m.group(1))
             return timedelta(days=months * 30 + 15)
@@ -46,30 +47,48 @@ class AgeInferrer:
             days = int(m25.group(2))
             return timedelta(days=months * 30 + days)
 
-        # Pattern 3: "8 dias", "4 meses", "1 año"
-        m = re.match(r"(\d+)\s*(dias?|mes(?:es)?|anos?)", t)
+        # Pattern 3: "8 dias", "29 ds.", "4 meses", "1 año"
+        m = re.search(r"(\d+)\s*(dias?|ds(?:\s+dias?)?|mes(?:es)?|ano(?:s)?)", t)
         if m:
             num = int(m.group(1))
             unit = m.group(2)
             if "dia" in unit:
+                return timedelta(days=num)
+            elif "ds" in unit:
                 return timedelta(days=num)
             elif "mes" in unit:
                 return timedelta(days=num * 30)
             elif "ano" in unit:
                 return timedelta(days=num * 365)
 
+        # Pattern 4: "X semana(s)"
+        m = re.search(r"(\d+)\s*(semana(?:s)?)", t)
+        if m:
+            num = int(m.group(1))
+            return timedelta(days=num * 7)
+        
+        # Pattern 5: "p[aá]rvul[oa]"
+        m = re.search(r".*[Pp][aá]rvul[oa]", t)
+        if m:
+            return timedelta(days=30)
+
+        self.logger.warning(f"[AgeInferrer] Unrecognized age format: '{text}' -Normalized '{t}'")
         return None
 
     def infer_birthdate(self, idx: int, age_desc: str) -> Union[str, None]:
-        bapt = self.date_series.loc[idx]
-        if pd.isna(bapt):
+        event = self.date_series.loc[idx]
+        if pd.isna(event):
             return None
+
+        m = re.search(r"\d{4}-\d{2}-\d{2}", age_desc)
+        if m:
+            return datetime.strptime(m.group(0), "%Y-%m-%d").strftime("%Y-%m-%d")
 
         delta = self.parse_birth_age_to_timedelta(age_desc)
         if delta is None:
             return None
 
-        return (bapt - delta).strftime("%Y-%m-%d")
+        return (event - delta).strftime("%Y-%m-%d")
 
     def _is_iso_date(self, val: str) -> bool:
         try:
@@ -77,7 +96,7 @@ class AgeInferrer:
             return True
         except:
             return False
-        
+
     def _normalize_text(self, val: str) -> str:
         
         # Stripping accents and special characters
@@ -90,34 +109,55 @@ class AgeInferrer:
         # Remove extra spaces
         text = re.sub(r'\s+', ' ', text).strip()
 
+        # Handle special cases
+        oforzero = r"(\d)(o)"
+        replacement = r"\g<1>0"
+
+        if re.search(oforzero, text):
+            text = re.sub(oforzero, replacement, text)
+
         return text
 
     def infer_all(self, age_series: pd.Series) -> pd.Series:
         results = []
+
+        datenormalizer = SimpleNormalizer()
         for idx, val in age_series.items():
-            if isinstance(val, str) and any(
-                    k in val.lower() for k in ["dia", "mes", "año", "ano", "medio", "días", "día"]):
+
+            result = None
+            
+            if isinstance(val, str) and self._is_iso_date(val):
+                result = val
+                self.logger.debug(
+                    f"[AgeInferrer] Found ISO date at index {idx}: '{result}'"
+                )
+
+            elif isinstance(val, str) and val.strip():
+
                 try:
-                    result = self.infer_birthdate(idx, val) # type: ignore
+                    
+                    result = datenormalizer.normalize(val)
+
+                    if result is None:
+                        result = self.infer_birthdate(idx, val) # type: ignore
 
                     if result is not None:
                         self.logger.info(
-                            f"[AgeInferrer] Inferred birthdate at index {idx}: '{result}' from age='{val}' and baptism_date='{self.date_series.iloc[idx]}'" # type: ignore
+                            f"[AgeInferrer] Inferred birthdate at index {idx}: '{result}' from age='{val}' and event_date='{self.date_series.iloc[idx]}'" # type: ignore
                         )
                     else:
                         self.logger.warning(
-                            f"[AgeInferrer] Failed to infer birthdate at index {idx} from age='{val}' and baptism_date='{self.date_series.loc[idx]}'" # type: ignore
+                            f"[AgeInferrer] Failed to infer birthdate at index {idx} from age='{val}' and event_date='{self.date_series.loc[idx]}'" # type: ignore
                         )
                 except Exception as e:
                     self.logger.error(
                         f"[AgeInferrer] Error inferring birthdate at index {idx} with value '{val}': {e}"
                     )
-                    result = val
+                    
             else:
-                if isinstance(val, str) and self._is_iso_date(val):
-                    result = val
-                else:
-                    result = val
+                result = val
+            
             results.append(result)
+        
         return pd.Series(results, index=age_series.index, dtype="object")
 

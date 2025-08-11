@@ -99,14 +99,17 @@ class DateNormalizer:
             if len(parts) >= 2:
                 year, month = parts[0], parts[1]
                 value_clean = f"{int(year):04d}-{int(month):02d}-01"
-                return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
-                    f"Invalid date after completing missing day: {value_clean}")
-            
+                if self._is_valid_iso(value_clean):
+                    return value_clean
+                self.logger.error(f"Invalid date after completing missing day: {value_clean}")
+                return None
+
         if re.fullmatch(r"\d{2}/\d{4}", value):
             parts = value.split("/")
             value_clean = f"{int(parts[1]):04d}-{int(parts[0]):02d}-01"
-            return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
-                f"Invalid date after completing missing day: {value_clean}")
+            if self._is_valid_iso(value_clean):
+                return value_clean
+            self.logger.error(f"Invalid date after completing missing day: {value_clean}")
 
         return None
 
@@ -156,9 +159,11 @@ class DateNormalizer:
         epoch = datetime(1899, 12, 30)
         dt = epoch + timedelta(days=serial)
         value_clean = dt.strftime("%Y-%m-%d")
-        return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
-            f"Invalid date after converting Excel serial: {value_clean}"
-        )
+        if self._is_valid_iso(value_clean):
+            return value_clean
+
+        self.logger.error(f"Invalid date after converting Excel serial: {value_clean}")
+        return None
 
     def _is_false_date(self, value: str) -> bool:
         if not isinstance(value, str):
@@ -184,7 +189,8 @@ class DateNormalizer:
 
     def _strip_all_brackets_and_quotes(self, value: str) -> str:
         """
-        Remove all characters except digits, dashes, and x (lowercase only)
+        Remove all characters except digits, dashes, slashes, and lowercase 'x'.
++       Both dashes and slashes are preserved because date formats may use either as separators (e.g., 'YYYY-MM-DD' or 'MM/DD/YYYY').
         """
         if not isinstance(value, str):
             return value
@@ -208,24 +214,195 @@ class DateNormalizer:
             if len(parts) >= 2:
                 year, month = parts[0], parts[1]
                 value_clean = f"{int(year):04d}-{int(month):02d}-{avg_day:02d}"
-                return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+                if self._is_valid_iso(value_clean):
+                    return value_clean
+                self.logger.error(
                     f"Invalid date after resolving roto: {value_clean}")
 
         if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value_clean):
             parts = value_clean.split("-")
             value_clean = f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
-            return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
-                f"Invalid date after resolving roto: {value_clean}")
-        return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+            if self._is_valid_iso(value_clean):
+                return value_clean
+            else:
+                self.logger.error(
+                    f"Invalid date after resolving roto: {value_clean}")
+        
+        if self._is_valid_iso(value_clean):
+            return value_clean
+        self.logger.error(
             f"Invalid date after resolving roto: {value_clean}")
 
 
+class SimpleNormalizer:
+    """
+    This normalizer try to normalize date strings into a ISO 8601 format.
+    It doesn't include all methods from DateNormalizer
+    """
+
+    def __init__(self) -> None:
+        self.logger = setup_logger("DateNormalizer")
+
+    def normalize(self, value: str) -> Union[str, float, None]:
+        """
+        Normalize a single date string into ISO 8601 format.
+        """
+        return self._normalize_single_value(value)
 
 
+    def _normalize_single_value(self, value: str) -> Union[str, float, None]:
+        """
+        Normalize a single value into a specific format.
+        """
+        # Implement normalization logic here
+        if pd.isna(value):
+            return np.nan
 
+        if self._is_roto_or_ilegible(value):
+            return self._resolve_roto(value)
 
+        value = self._strip_all_brackets_and_quotes(value)
 
+        if self._is_valid_iso(value):
+            return value
+        
+        if self._day_is_missing(value):
+            return self._add_missing_day(value)
+        
+        if self._is_excel_serial(value):
+            return self._convert_excel_serial(value)
 
+        if self._is_false_date(value):
+            try:
+                return self._correct_false_date(value)
+            except Exception as e:
+                self.logger.error(f"Error correcting false date {value}: {e}")
+                return None
 
+        return None
 
+    def _is_valid_iso(self, value: str) -> bool:
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+            return True
+        except (ValueError, TypeError):
+            return False
 
+    def _is_excel_serial(self, value: str) -> bool:
+        try:
+            date2int = int(value)
+            return 1922 <= date2int <= 9999
+        except (ValueError, TypeError):
+            return False
+        
+    def _convert_excel_serial(self, value: str) -> Union[str, None]:
+        serial = int(value)
+        epoch = datetime(1899, 12, 30)
+        dt = epoch + timedelta(days=serial)
+        value_clean = dt.strftime("%Y-%m-%d")
+        if self._is_valid_iso(value_clean):
+            return value_clean
+
+        self.logger.error(f"Invalid date after converting Excel serial: {value_clean}")
+        return None
+
+    def _is_false_date(self, value: str) -> bool:
+        if not isinstance(value, str):
+            return False
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+            return False
+        except ValueError:
+            return True
+
+    def _correct_false_date(self, value: str) -> Union[str, None]:
+        parts = value.split("-")
+        year = int(parts[0])
+        month = int(parts[1])
+        day = int(parts[2])
+        firstday = 1
+        lastday = calendar.monthrange(year, month)[1]
+        day = firstday if day == 0 else lastday
+        value_clean = f"{year:04d}-{month:02d}-{day:02d}"
+        return value_clean if self._is_valid_iso(value_clean) else self.logger.error(
+            f"Invalid date after correcting false date: {value_clean}"
+        )
+
+    def _day_is_missing(self, value:str) -> bool:
+        if re.fullmatch(r"\d{4}-\d{2}-?", value) or re.fullmatch(r"\d{2}/\d{4}", value):
+            return True
+        return False
+
+    def _add_missing_day(self, value: str) -> Union[str, None]:
+        if re.fullmatch(r"\d{4}-\d{2}-?", value):
+            self.logger.info(f"Completing missing day for: {value}")
+            parts = value.split("-")
+            if len(parts) >= 2:
+                year, month = parts[0], parts[1]
+                value_clean = f"{int(year):04d}-{int(month):02d}-01"
+                if self._is_valid_iso(value_clean):
+                    return value_clean
+                self.logger.error(f"Invalid date after completing missing day: {value_clean}")
+                return None
+
+        if re.fullmatch(r"\d{2}/\d{4}", value):
+            parts = value.split("/")
+            value_clean = f"{int(parts[1]):04d}-{int(parts[0]):02d}-01"
+            if self._is_valid_iso(value_clean):
+                return value_clean
+            self.logger.error(f"Invalid date after completing missing day: {value_clean}")
+
+        return None
+
+    def _month_is_missing(self, value: str) -> bool:
+        if re.fullmatch(r"\d{4}--\d{2}", value):
+            return True
+        return False
+    
+    def _is_roto_or_ilegible(self, value: str) -> bool:
+        return isinstance(value, str) and any(keyword in value for keyword in ["roto", "ilegible"])
+
+    def _resolve_roto(self,value: str) -> Union[str, None]:
+        
+        value_clean = re.sub(r'[\[\]"\'?]', '', value)
+        m = re.search(r"roto:\s*(?:del\s*)?(\d{1,2})\s*(?:al|o)\s*(\d{1,2})", value_clean)
+        if m:
+            start_day = int(m.group(1))
+            end_day = int(m.group(2))
+            avg_day = (start_day + end_day) // 2
+            prefix = value.split('roto',1)[0].rstrip('-')
+            parts = prefix.split('-')
+            if len(parts) >= 2:
+                year, month = parts[0], parts[1]
+                value_clean = f"{int(year):04d}-{int(month):02d}-{avg_day:02d}"
+                if self._is_valid_iso(value_clean):
+                    return value_clean
+                self.logger.error(
+                    f"Invalid date after resolving roto: {value_clean}")
+
+        if re.fullmatch(r"\d{4}-\d{2}-(xx|\.{2,3}|\D+)", value_clean):
+            parts = value_clean.split("-")
+            value_clean = f"{int(parts[0]):04d}-{int(parts[1]):02d}-01"
+            if self._is_valid_iso(value_clean):
+                return value_clean
+            else:
+                self.logger.error(
+                    f"Invalid date after resolving roto: {value_clean}")
+        
+        if self._is_valid_iso(value_clean):
+            return value_clean
+        self.logger.error(
+            f"Invalid date after resolving roto: {value_clean}")
+    
+    def _strip_all_brackets_and_quotes(self, value: str) -> str:
+        """
+        Remove all characters except digits, dashes, slashes, and lowercase 'x'.
+        Both dashes and slashes are preserved because date formats may use either as separators (e.g., 'YYYY-MM-DD' or 'MM/DD/YYYY').
+        """
+        if not isinstance(value, str):
+            return value
+        value = re.sub(r'[^0-9\/\-]', '', value)
+        value = value.lower()
+        return value.strip()
+    
+    
