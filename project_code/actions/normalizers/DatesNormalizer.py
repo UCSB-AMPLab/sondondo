@@ -56,6 +56,9 @@ class DateNormalizer:
         if self._is_valid_iso(value):
             return value
         
+        if self._is_inverted(value):
+            return self._convert_inverted_date(value)
+
         if self._day_is_missing(value):
             return self._add_missing_day(value)
 
@@ -79,6 +82,21 @@ class DateNormalizer:
             return True
         except (ValueError, TypeError):
             return False
+
+    def _is_inverted(self, value: str) -> bool:
+        try:
+            datetime.strptime(value, "%d-%m-%Y")
+            return True
+        except (ValueError, TypeError):
+            return False
+        
+    def _convert_inverted_date(self, value: str) -> Union[str, None]:
+        try:
+            dt = datetime.strptime(value, "%d-%m-%Y")
+            return dt.strftime("%Y-%m-%d")
+        except ValueError:
+            self.logger.error(f"Invalid inverted date format: {value}")
+            return None
 
     def _is_excel_serial(self, value: str) -> bool:
         try:
@@ -266,6 +284,9 @@ class SimpleNormalizer:
         if self._is_valid_iso(value):
             return value
         
+        if self._is_inverted(value):
+            return self._convert_inverted_date(value)
+        
         if self._day_is_missing(value):
             return self._add_missing_day(value)
         
@@ -287,6 +308,21 @@ class SimpleNormalizer:
             return True
         except (ValueError, TypeError):
             return False
+        
+    def _is_inverted(self, value: str) -> bool:
+        try:
+            datetime.strptime(value, "%d-%m-%Y")
+            return True
+        except (ValueError, TypeError):
+            return False
+        
+    def _convert_inverted_date(self, value: str) -> Union[str, None]:
+        try:
+            dt = datetime.strptime(value, "%d-%m-%Y")
+            return dt.strftime("%Y-%m-%d")
+        except ValueError:
+            self.logger.error(f"Invalid inverted date format: {value}")
+            return None
 
     def _is_excel_serial(self, value: str) -> bool:
         try:
