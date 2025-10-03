@@ -209,11 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#identifying-prefixes" id="toc-identifying-prefixes" class="nav-link active" data-scroll-target="#identifying-prefixes">Identifying Prefixes</a></li>
-  <li><a href="#er-model" id="toc-er-model" class="nav-link" data-scroll-target="#er-model">ER Model</a>
-  <ul class="collapse">
-  <li><a href="#ingestion-order" id="toc-ingestion-order" class="nav-link" data-scroll-target="#ingestion-order">Ingestion Order</a></li>
-  </ul></li>
+  <li><a href="#personas-data-structure" id="toc-personas-data-structure" class="nav-link active" data-scroll-target="#personas-data-structure">Personas Data Structure</a></li>
   </ul>
 </nav>
     </div>
@@ -239,99 +235,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Our approach aligns closely with the input preparation model proposed by David W. Embley (<a href="https://doi.org/10.1007/978-3-030-88358-4_6">2021</a>). We structure our data around <em>personas</em>, defined as “each mention instance of a person in a document” (p.&nbsp;66), as a foundational step toward probabilistic record linkage (PRL). Each <em>persona</em> is created by ingesting available individual metadata (such as name, last name, birth date), associating the person with a sacramental event (baptism, marriage, or burial), and establishing direct relationships (to parents, spouse, godparents).</p>
+<p>Our approach aligns closely with the input preparation model proposed by David W. Embley (<a href="https://doi.org/10.1007/978-3-030-88358-4_6">2021</a>). We structure our data around <em>personas</em>, defined as “each mention instance of a person in a document” (p.&nbsp;66), as a foundational step toward probabilistic record linkage (PRL). Each <em>persona</em> is created by ingesting available individual metadata (such as name, last name, birth date), associating the person with a sacramental event (baptism, marriage, or burial). The relationship between personas is established by their participation at the event (e.g., as father, mother, godfather, witness).</p>
+<section id="personas-data-structure" class="level2">
+<h2 class="anchored" data-anchor-id="personas-data-structure">Personas Data Structure</h2>
+<p>The <code>personas</code> data structure is very straightforward:</p>
+<ul>
+<li>event_idno: unique semantically meaningful identifier for the event</li>
+<li>persona_idno: unique semantically meaningful identifier for the persona</li>
+<li>persona_type: role of the persona in the event (e.g., baptized, father, mother, witness)</li>
+<li>name: first name of the persona</li>
+<li>last_name: last name of the persona</li>
+<li>birth_date: birth date of the persona</li>
+<li>birth_place: birth place of the persona</li>
+<li>resident_in: persona residence at the time of the event</li>
+<li>gender: inferred gender of the persona</li>
+<li>social_condition: harmonized social condition of the persona</li>
+<li>legitimacy_status: harmonized legitimacy status of the persona</li>
+<li>marital_status: harmonized marital status of the persona</li>
+</ul>
+<p>Identification of individuals is done by parsing one or a list of dataframes with the clean data, and processing the data using the <code>Persona</code> class. Results are stored in <code>data/interim/personas_extracted.csv</code> for testing, and in <code>data/clean/personas.csv</code> for production.</p>
 <div id="e0b706ae" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.extractors <span class="im">import</span> Persona</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="019460f5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bautismos <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/bautismos_clean.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>entierros <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/entierros_clean.csv"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>matrimonios <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/matrimonios_clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="identifying-prefixes" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-prefixes">Identifying Prefixes</h2>
-<p>This step is a very simple exercise to ensure consistency and good naming conventions across the datasets. Also helps to identify the entities for the ER model, and associate prefixes to those entities.</p>
-<div id="0bcd5ced" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>prefix_pattern <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"(^[A-Za-z]*_[\d]?_?)([A-Za-z]*_?[\w\d]*)"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>prefixes <span class="op">=</span> <span class="bu">set</span>()</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> df <span class="kw">in</span> [bautismos, entierros, matrimonios]:</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> df.columns:</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> prefix_pattern.match(col):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            prefix <span class="op">=</span> prefix_pattern.match(col).group(<span class="dv">1</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            remove_pattern <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r"\d"</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            prefix <span class="op">=</span> remove_pattern.sub(<span class="st">""</span>, prefix).strip(<span class="st">"_"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            prefixes.add(prefix)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>prefixes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="96e68625" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>extractor <span class="op">=</span> Persona.PersonaExtractor([bautismos, matrimonios, entierros])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>personas <span class="op">=</span> extractor.extract_personas()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>personas.describe(include<span class="op">=</span><span class="st">'all'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>{'baptized',
- 'bride',
- 'burial',
- 'deceased',
- 'event',
- 'father',
- 'godfather',
- 'godmother',
- 'godparent',
- 'groom',
- 'husband',
- 'mother',
- 'parents',
- 'wife',
- 'witness'}</code></pre>
-</div>
-</div>
-</section>
-<section id="er-model" class="level2">
-<h2 class="anchored" data-anchor-id="er-model">ER Model</h2>
-<p>With those prefixes in mind, and after basic cleaning of data, we can create a more accurate version of the ER model (<a href="https://github.com/UCSB-AMPLab/sondondo/tree/ffc80515805dd7b00c9c127c3093cb65c7da8b23/database">See original version</a>). The model has now the following structure:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../database/db_diagram.png" class="img-fluid figure-img"></p>
-<figcaption>ER Model</figcaption>
-</figure>
-</div>
-<section id="ingestion-order" class="level3">
-<h3 class="anchored" data-anchor-id="ingestion-order">Ingestion Order</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode mathematica code-with-copy"><code class="sourceCode mathematica"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ConditionVocab</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>Event</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>OriginalTerms</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>Persona</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>PersonaCondition</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>PersonaRelationship</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>PersonaRoleInEvent</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>Place</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="sc">|</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    ▼</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="fu">Record</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="ce0a8992" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.extractors <span class="im">import</span> Persona</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="96e68625" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>extractor <span class="op">=</span> Persona.PersonaExtractor([bautismos, matrimonios, entierros])</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>personas <span class="op">=</span> extractor.extract_personas()</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>personas.describe(include<span class="op">=</span><span class="st">'all'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -340,6 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">event_idno</th>
+<th data-quarto-table-cell-role="th">original_identifier</th>
 <th data-quarto-table-cell-role="th">persona_type</th>
 <th data-quarto-table-cell-role="th">name</th>
 <th data-quarto-table-cell-role="th">birth_place</th>
@@ -358,6 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td data-quarto-table-cell-role="th">count</td>
 <td>39585</td>
 <td>39585</td>
+<td>39585</td>
 <td>39517</td>
 <td>2329</td>
 <td>8594</td>
@@ -372,6 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">unique</td>
 <td>10179</td>
+<td>5587</td>
 <td>16</td>
 <td>4103</td>
 <td>85</td>
@@ -387,6 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">top</td>
 <td>matrimonio-465</td>
+<td>M178</td>
 <td>mother</td>
 <td>maria</td>
 <td>Pampamarca</td>
@@ -402,6 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">freq</td>
 <td>7</td>
+<td>24</td>
 <td>7613</td>
 <td>1056</td>
 <td>1902</td>
@@ -420,12 +362,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="88f66de1" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>personas.to_csv(<span class="st">"../data/interim/personas_extracted.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="88f66de1" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>personas.to_csv(<span class="st">"../data/clean/personas.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

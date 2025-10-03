@@ -1,6 +1,6 @@
 import pandas as pd
 from utils.LoggerHandler import setup_logger
-from actions.normalizers.DatesNormalizer import SimpleNormalizer
+from actions.normalizers import DatesNormalizer
 from typing import Union
 from datetime import datetime, timedelta
 import re
@@ -121,7 +121,7 @@ class AgeInferrer:
     def infer_all(self, age_series: pd.Series) -> pd.Series:
         results = []
 
-        datenormalizer = SimpleNormalizer()
+        datenormalizer = DatesNormalizer.SimpleNormalizer()
         for idx, val in age_series.items():
 
             result = None

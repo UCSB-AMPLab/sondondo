@@ -58,6 +58,7 @@ class PersonaExtractor:
                                 if prefix not in personas_data:
                                     personas_data[prefix] = {
                                         'event_idno': event_idno,
+                                        'original_identifier': row['identifier'],
                                         'persona_type': prefix
                                     }
 
@@ -68,7 +69,8 @@ class PersonaExtractor:
                     if event_type and event_type.lower() == 'matrimonio':
                         personas_data = self._extract_embedded_parents(
                             personas_data,
-                            event_idno
+                            event_idno,
+                            row['identifier']
                         )
 
 
@@ -136,7 +138,7 @@ class PersonaExtractor:
         # Logic to extract event type from the DataFrame
         return df['event_type'].iloc[0] if 'event_type' in df.columns else None
 
-    def _extract_embedded_parents(self, personas_data, event_idno):
+    def _extract_embedded_parents(self, personas_data, event_idno, original_identifier):
 
         for persona_type in ['groom', 'bride']:
             if persona_type in personas_data:
@@ -157,6 +159,7 @@ class PersonaExtractor:
                     father_key = f"father_of_{persona_type}"
                     personas_data[father_key] = {
                         'event_idno': event_idno,
+                        'original_identifier': original_identifier,
                         'persona_type': father_key,
                         **father_data
                     }
@@ -165,6 +168,7 @@ class PersonaExtractor:
                     mother_key = f"mother_of_{persona_type}"
                     personas_data[mother_key] = {
                         'event_idno': event_idno,
+                        'original_identifier': original_identifier,
                         'persona_type': mother_key,
                         **mother_data
                     }
