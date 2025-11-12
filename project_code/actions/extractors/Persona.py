@@ -43,6 +43,7 @@ class PersonaExtractor:
                     event_idno = f"{event_type.lower()}-{int(index) + 1}"
                     
                     personas_data = {}
+                    original_id = None
 
                     for column_name in row.index:
                         match = re.search(person_element_pattern, column_name)
@@ -56,9 +57,12 @@ class PersonaExtractor:
 
                             if prefix in persona_entities_prefixes:
                                 if prefix not in personas_data:
+                                    file_record = row['file']
+                                    identifier = row['identifier']
+                                    original_id = f"{file_record}_{identifier}".replace(" ", "-")
                                     personas_data[prefix] = {
                                         'event_idno': event_idno,
-                                        'original_identifier': row['identifier'],
+                                        'original_identifier': original_id,
                                         'persona_type': prefix
                                     }
 
@@ -67,10 +71,14 @@ class PersonaExtractor:
 
 
                     if event_type and event_type.lower() == 'matrimonio':
+                        if not original_id:
+                            file_record = row['file']
+                            identifier = row['identifier']
+                            original_id = f"{file_record}_{identifier}".replace(" ", "-")
                         personas_data = self._extract_embedded_parents(
                             personas_data,
                             event_idno,
-                            row['identifier']
+                            original_id
                         )
 
 
