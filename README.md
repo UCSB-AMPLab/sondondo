@@ -32,9 +32,24 @@ The processed data files are available in the `data/clean` folder:
 - ✅ Age inference and data validation
 - ✅ Comprehensive quality audit and error reporting
 
+## Personas Dataset
+
+The `data/clean/personas.csv` dataset represents a consolidated view of all individuals mentioned across baptism, marriage, and burial records:
+
+- **personas.csv**: Unified individual records extracted from all three record types
+- Each row represents a unique person-record combination with role context
+- Includes standardized names, relationships, dates, and geographic information
+- Prepared for probabilistic record linkage and entity resolution
+
+**Key Features:**
+- Unified schema across all record types (baptisms, marriages, burials)
+- Role-based extraction (child, parent, godparent, spouse, deceased, etc.)
+- Preserved source record metadata for traceability
+- Standardized name and place fields ready for matching algorithms
+
 ## Project Status
 
-**Current Phase:** ✅ **Data Cleaning & Standardization Complete** (v0.1.0)
+**Current Phase:** ✅ **Personas Dataset Creation Complete** (v0.2.0)
 
 ### Completed Milestones
 
@@ -46,10 +61,17 @@ The processed data files are available in the `data/clean` folder:
 - **Output**: Clean, standardized datasets ready for record linkage (`data/clean/`)
 
 **Datasets Processed:**
-- **Baptisms**: 6,341 cleaned records
+- **Baptisms**: 6,340 cleaned records
 - **Marriages**: 1,719 cleaned records  
-- **Burials**: 2,198 cleaned records
-- **Total**: 10,258 historical records ready for analysis
+- **Burials**: 2,121 cleaned records
+- **Total**: 10,180 historical records ready for analysis
+
+#### Phase 2: Personas Dataset Creation ✅
+- **Individual Extraction**: Systematically extracted all individuals from cleaned records
+- **Role Contextualization**: Preserved individual roles (baptized, parent, godparent, spouse, deceased, etc.)
+- **Schema Unification**: Harmonized fields across different record types
+- **Metadata Preservation**: Maintained source record references and dates
+- **Output**: Consolidated personas dataset ready for probabilistic matching
 
 ### Next Phases
 
@@ -60,10 +82,10 @@ The processed data files are available in the `data/clean` folder:
 ✅ Database Cleaning & Standardization
               │
               ▼
-🔄 Relational Key Creation (In Progress)
+✅ Personas Dataset Creation
               │
               ▼
-🔮 Probabilistic Record Linkage
+🔄 Probabilistic Record Linkage (In Progress)
               │
               ▼
 🔮 Network Analysis & Validation
@@ -99,14 +121,14 @@ The GeoResolver library is being actively used in this project for processing ge
 sondondo/
 ├── data/
 │   ├── raw/           # Original transcribed datasets
-│   ├── clean/         # ✅ Processed, standardized datasets
+│   ├── clean/         # ✅ Processed, standardized datasets & personas
 │   ├── interim/       # Intermediate processing files
 │   └── mappings/      # Column and value mapping configurations
 ├── project_code/
 │   ├── dataCleaning.ipynb    # ✅ Complete data cleaning pipeline
+│   ├── personasCreation.ipynb # ✅ Personas extraction pipeline
 │   ├── utils/               # Core utility classes
 │   └── actions/            # Data processing modules
-├── database/         # Database schema and design
 ├── reports/          # Data quality and processing reports
 └── test/            # Unit tests for processing modules
 ```
@@ -118,13 +140,19 @@ sondondo/
 - pandas, numpy, pathlib
 - georesolver (for geographic processing)
 
-### Running the Data Cleaning Pipeline
-The complete data cleaning process is documented and executable in:
+### Running the Data Processing Pipeline
+
+**Step 1: Data Cleaning**
 ```
 project_code/dataCleaning.ipynb
 ```
+Complete pipeline from raw data to cleaned, standardized datasets.
 
-This Jupyter notebook contains the full pipeline from raw data to cleaned, standardized datasets.
+**Step 2: Personas Extraction**
+```
+project_code/personasCreation.ipynb
+```
+Extracts and consolidates all individuals from cleaned records into a unified personas dataset.
 
 ### Key Processing Modules
 - **ColumnManager**: Handles column harmonization using mapping files
@@ -136,7 +164,7 @@ This Jupyter notebook contains the full pipeline from raw data to cleaned, stand
 ## Documentation
 
 - **Release Notes**: See `RELEASE_NOTES.md` for detailed milestone documentation
-- **Process Documentation**: Complete pipeline documentation in `dataCleaning.ipynb`
+- **Process Documentation**: Complete pipeline documentation in processing notebooks
 - **Data Mappings**: Column and value mappings available in `data/mappings/`
 - **Quality Reports**: Data audit and validation reports in `reports/`
 
