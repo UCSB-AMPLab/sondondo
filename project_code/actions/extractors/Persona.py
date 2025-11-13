@@ -52,22 +52,28 @@ class PersonaExtractor:
                             prefix = match.group(1)
                             attribute = match.group(2)
 
-                            remove_pattern = re.compile(r"\d")
-                            prefix = remove_pattern.sub("", prefix).strip("_")
+                            number_match = re.search(r'_(\d)_?', prefix)
+                            persona_number = number_match.group(1) if number_match else None
 
-                            if prefix in persona_entities_prefixes:
-                                if prefix not in personas_data:
+                            remove_pattern = re.compile(r"\d")
+                            prefix_clean = remove_pattern.sub("", prefix).strip("_")
+
+                            if prefix_clean in persona_entities_prefixes:
+
+                                unique_key = f"{prefix_clean}_{persona_number}" if persona_number else prefix_clean
+
+                                if unique_key not in personas_data:
                                     file_record = row['file']
                                     identifier = row['identifier']
                                     original_id = f"{file_record}_{identifier}".replace(" ", "-")
-                                    personas_data[prefix] = {
+                                    personas_data[unique_key] = {
                                         'event_idno': event_idno,
                                         'original_identifier': original_id,
-                                        'persona_type': prefix
+                                        'persona_type': prefix_clean
                                     }
 
                                 attribute_clean = attribute.strip("_")
-                                personas_data[prefix][attribute_clean] = row[column_name]
+                                personas_data[unique_key][attribute_clean] = row[column_name]
 
 
                     if event_type and event_type.lower() == 'matrimonio':
