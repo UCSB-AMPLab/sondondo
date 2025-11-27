@@ -17,13 +17,11 @@ class PersonaExtractor:
 
         persona_entities_prefixes = [
             'baptized',
-            'bride',
             'deceased',
             'father',
             'godfather',
             'godmother',
             'godparent',
-            'groom',
             'husband',
             'mother',
             'wife',
@@ -154,7 +152,7 @@ class PersonaExtractor:
 
     def _extract_embedded_parents(self, personas_data, event_idno, original_identifier):
 
-        for persona_type in ['groom', 'bride']:
+        for persona_type in ['husband', 'wife']:
             if persona_type in personas_data:
                 persona = personas_data[persona_type]
 
