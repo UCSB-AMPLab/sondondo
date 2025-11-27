@@ -76,11 +76,16 @@ class DateNormalizer:
 
         return None
 
-    def _is_valid_iso(self, value: str) -> bool:
+    def _is_valid_iso(self, value) -> bool:
+        if not isinstance(value, str):
+            return False
+        value = value.strip()
+        if value == "":
+            return False
         try:
             datetime.strptime(value, "%Y-%m-%d")
             return True
-        except (ValueError, TypeError):
+        except:
             return False
 
     def _is_inverted(self, value: str) -> bool:
@@ -302,12 +307,18 @@ class SimpleNormalizer:
 
         return None
 
-    def _is_valid_iso(self, value: str) -> bool:
+    def _is_valid_iso(self, value) -> bool:
+        if not isinstance(value, str):
+            return False
+        value = value.strip()
+        if value == "":
+            return False
         try:
             datetime.strptime(value, "%Y-%m-%d")
             return True
-        except (ValueError, TypeError):
+        except:
             return False
+
         
     def _is_inverted(self, value: str) -> bool:
         try:
@@ -365,8 +376,11 @@ class SimpleNormalizer:
         )
 
     def _day_is_missing(self, value:str) -> bool:
-        if re.fullmatch(r"\d{4}-\d{2}-?", value) or re.fullmatch(r"\d{2}/\d{4}", value):
-            return True
+        try:
+            if re.fullmatch(r"\d{4}-\d{2}-?", value) or re.fullmatch(r"\d{2}/\d{4}", value):
+                return True
+        except TypeError:
+            return False
         return False
 
     def _add_missing_day(self, value: str) -> Union[str, None]:
@@ -391,8 +405,11 @@ class SimpleNormalizer:
         return None
 
     def _month_is_missing(self, value: str) -> bool:
-        if re.fullmatch(r"\d{4}--\d{2}", value):
-            return True
+        try:
+            if re.fullmatch(r"\d{4}--\d{2}", value):
+                return True
+        except TypeError:
+            return False
         return False
     
     def _is_roto_or_ilegible(self, value: str) -> bool:
