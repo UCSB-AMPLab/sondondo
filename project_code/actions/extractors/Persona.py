@@ -17,13 +17,11 @@ class PersonaExtractor:
 
         persona_entities_prefixes = [
             'baptized',
-            'bride',
             'deceased',
             'father',
             'godfather',
             'godmother',
             'godparent',
-            'groom',
             'husband',
             'mother',
             'wife',
@@ -76,6 +74,12 @@ class PersonaExtractor:
                                 personas_data[unique_key][attribute_clean] = row[column_name]
 
 
+                    if event_type and event_type.lower() == 'entierro':
+                        for unique_key, persona in personas_data.items():
+                            if persona.get('persona_type') == 'deceased':
+                                persona['death_place'] = row.get('event_place', np.nan)
+                                persona['death_date'] = row.get('event_date', np.nan)
+
                     if event_type and event_type.lower() == 'matrimonio':
                         if not original_id:
                             file_record = row['file']
@@ -86,7 +90,6 @@ class PersonaExtractor:
                             event_idno,
                             original_id
                         )
-
 
                     for persona in personas_data.values():
                         if pd.notna(persona.get('name')) or pd.notna(persona.get('lastname')):
@@ -154,7 +157,7 @@ class PersonaExtractor:
 
     def _extract_embedded_parents(self, personas_data, event_idno, original_identifier):
 
-        for persona_type in ['groom', 'bride']:
+        for persona_type in ['husband', 'wife']:
             if persona_type in personas_data:
                 persona = personas_data[persona_type]
 

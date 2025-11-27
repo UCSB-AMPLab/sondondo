@@ -76,11 +76,16 @@ class DateNormalizer:
 
         return None
 
-    def _is_valid_iso(self, value: str) -> bool:
+    def _is_valid_iso(self, value) -> bool:
+        if not isinstance(value, str):
+            return False
+        value = value.strip()
+        if value == "":
+            return False
         try:
             datetime.strptime(value, "%Y-%m-%d")
             return True
-        except (ValueError, TypeError):
+        except:
             return False
 
     def _is_inverted(self, value: str) -> bool:
@@ -265,6 +270,9 @@ class SimpleNormalizer:
         """
         Normalize a single date string into ISO 8601 format.
         """
+        if isinstance(value, str) and re.search(r'\d+\s*(a\s*\d+\s*)?(anos?|años?|mes(?:es)?|dias?|días?|semanas?)', value.lower()):
+            return None
+            
         return self._normalize_single_value(value)
 
 
@@ -302,12 +310,18 @@ class SimpleNormalizer:
 
         return None
 
-    def _is_valid_iso(self, value: str) -> bool:
+    def _is_valid_iso(self, value) -> bool:
+        if not isinstance(value, str):
+            return False
+        value = value.strip()
+        if value == "":
+            return False
         try:
             datetime.strptime(value, "%Y-%m-%d")
             return True
-        except (ValueError, TypeError):
+        except:
             return False
+
         
     def _is_inverted(self, value: str) -> bool:
         try:
@@ -365,8 +379,11 @@ class SimpleNormalizer:
         )
 
     def _day_is_missing(self, value:str) -> bool:
-        if re.fullmatch(r"\d{4}-\d{2}-?", value) or re.fullmatch(r"\d{2}/\d{4}", value):
-            return True
+        try:
+            if re.fullmatch(r"\d{4}-\d{2}-?", value) or re.fullmatch(r"\d{2}/\d{4}", value):
+                return True
+        except TypeError:
+            return False
         return False
 
     def _add_missing_day(self, value: str) -> Union[str, None]:
@@ -391,8 +408,11 @@ class SimpleNormalizer:
         return None
 
     def _month_is_missing(self, value: str) -> bool:
-        if re.fullmatch(r"\d{4}--\d{2}", value):
-            return True
+        try:
+            if re.fullmatch(r"\d{4}--\d{2}", value):
+                return True
+        except TypeError:
+            return False
         return False
     
     def _is_roto_or_ilegible(self, value: str) -> bool:
