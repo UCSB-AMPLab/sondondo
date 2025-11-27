@@ -74,6 +74,12 @@ class PersonaExtractor:
                                 personas_data[unique_key][attribute_clean] = row[column_name]
 
 
+                    if event_type and event_type.lower() == 'entierro':
+                        for unique_key, persona in personas_data.items():
+                            if persona.get('persona_type') == 'deceased':
+                                persona['death_place'] = row.get('event_place', np.nan)
+                                persona['death_date'] = row.get('event_date', np.nan)
+
                     if event_type and event_type.lower() == 'matrimonio':
                         if not original_id:
                             file_record = row['file']
@@ -84,7 +90,6 @@ class PersonaExtractor:
                             event_idno,
                             original_id
                         )
-
 
                     for persona in personas_data.values():
                         if pd.notna(persona.get('name')) or pd.notna(persona.get('lastname')):
