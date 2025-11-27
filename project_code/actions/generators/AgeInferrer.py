@@ -20,6 +20,22 @@ class AgeInferrer:
 
         if t == "del dia":
             return timedelta(days=0)
+        
+        # Pattern 1: "80 a 90 años"
+        range_match = re.search(r"(\d+)\s+a\s+(\d+)\s*(anos?|mes(?:es)?|dias?)?", t)
+        if range_match:
+            lower = int(range_match.group(1))
+            upper = int(range_match.group(2))
+            unit = range_match.group(3) if range_match.group(3) else "anos"
+
+            avg = (lower + upper) // 2
+
+            if "dia" in unit:
+                return timedelta(days=avg)
+            elif "mes" in unit:
+                return timedelta(days=avg * 30)
+            elif "ano" in unit:
+                return timedelta(days=avg * 365)
 
         # Pattern 1: "3 meses y medio"
         m = re.search(r"(\d+)\s*mes(?:es)?\s*y\s*medio", t)
