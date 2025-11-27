@@ -270,6 +270,9 @@ class SimpleNormalizer:
         """
         Normalize a single date string into ISO 8601 format.
         """
+        if isinstance(value, str) and re.search(r'\d+\s*(a\s*\d+\s*)?(anos?|años?|mes(?:es)?|dias?|días?|semanas?)', value.lower()):
+            return None
+            
         return self._normalize_single_value(value)
 
 
