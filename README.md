@@ -10,9 +10,9 @@ Data was gathered from parish records of baptisms, marriages, and burials from t
 
 The raw data files are stored in the `data/raw` folder, containing:
 
-- `bautismos.csv`: Baptism records. 6,341 entries. 36 columns.
+- `bautismos.csv`: Baptism records. 6,340 entries. 36 columns.
 - `matrimonios.csv`: Marriage records. 1,719 entries. 66 columns.
-- `entierros.csv`: Burial records. 2,198 entries. 37 columns.
+- `entierros.csv`: Burial records. 2,121 entries. 37 columns.
 
 These CSV files were exported directly from the original Google Sheets used for transcription.
 
