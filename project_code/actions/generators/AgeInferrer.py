@@ -18,10 +18,11 @@ class AgeInferrer:
 
         t = self._normalize_text(text)
 
+        # Pattern 1: "del dia"
         if t == "del dia":
             return timedelta(days=0)
         
-        # Pattern 1: "80 a 90 años"
+        # Pattern 2: "80 a 90 años"
         range_match = re.search(r"(\d+)\s+a\s+(\d+)\s*(anos?|mes(?:es)?|dias?)?", t)
         if range_match:
             lower = int(range_match.group(1))
@@ -37,13 +38,13 @@ class AgeInferrer:
             elif "ano" in unit:
                 return timedelta(days=avg * 365)
 
-        # Pattern 1: "3 meses y medio"
+        # Pattern 3: "3 meses y medio"
         m = re.search(r"(\d+)\s*mes(?:es)?\s*y\s*medio", t)
         if m:
             months = int(m.group(1))
             return timedelta(days=months * 30 + 15)
 
-        # Pattern 2: Combined years/months/days e.g. "1 año 2 meses 10 dias"
+        # Pattern 4: Combined years/months/days e.g. "1 año 2 meses 10 dias"
         m2 = re.fullmatch(
             r"(?:(\d+)\s*anos?)?\s*(?:y\s*)?"
             r"(?:(\d+)\s*mes(?:es)?)?\s*(?:y\s*)?"
@@ -56,14 +57,14 @@ class AgeInferrer:
             days = int(m2.group(3)) if m2.group(3) else 0
             return timedelta(days=years * 365 + months * 30 + days)
 
-        # Pattern 2.5: "X meses y Y días"
+        # Pattern 5: "X meses y Y días"
         m25 = re.fullmatch(r"(\d+)\s*mes(?:es)?\s*y\s*(\d+)\s*dias?", t)
         if m25:
             months = int(m25.group(1))
             days = int(m25.group(2))
             return timedelta(days=months * 30 + days)
 
-        # Pattern 3: "8 dias", "29 ds.", "4 meses", "1 año"
+        # Pattern 6: "8 dias", "29 ds.", "4 meses", "1 año"
         m = re.search(r"(\d+)\s*(dias?|ds(?:\s+dias?)?|mes(?:es)?|ano(?:s)?)", t)
         if m:
             num = int(m.group(1))
@@ -77,13 +78,13 @@ class AgeInferrer:
             elif "ano" in unit:
                 return timedelta(days=num * 365)
 
-        # Pattern 4: "X semana(s)"
+        # Pattern 7: "X semana(s)"
         m = re.search(r"(\d+)\s*(semana(?:s)?)", t)
         if m:
             num = int(m.group(1))
             return timedelta(days=num * 7)
         
-        # Pattern 5: "p[aá]rvul[oa]"
+        # Pattern 8: "p[aá]rvul[oa]"
         m = re.search(r".*[Pp][aá]rvul[oa]", t)
         if m:
             return timedelta(days=30)
