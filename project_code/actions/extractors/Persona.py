@@ -1,15 +1,18 @@
 import numpy as np
 import pandas as pd
 import re
-from typing import Union, List
+from typing import Union, List, Optional
 
 from actions.generators import GenderInferrer, InferCondition
 
 
 class PersonaExtractor:
-    def __init__(self, dataframes: List[pd.DataFrame], destination_dir: str = "../data/interim"):
+    def __init__(self, dataframes: List[pd.DataFrame], destination_dir: str = "../data/interim", places_standardized_names: str = "../data/clean/unique_places.csv") -> None:
         self.dataframes = dataframes
         self.destination_dir = destination_dir
+        self.places_standardized_names = places_standardized_names
+
+        self._build_place_lookup(self.places_standardized_names)
 
     def extract_personas(self, person_element_pattern: Union[str, re.Pattern] = r"(^[A-Za-z]*_[\d]?_?)([A-Za-z]*_?[\w\d]*)"):
 
@@ -72,7 +75,6 @@ class PersonaExtractor:
 
                                 attribute_clean = attribute.strip("_")
                                 personas_data[unique_key][attribute_clean] = row[column_name]
-
 
                     if event_type and event_type.lower() == 'entierro':
                         for unique_key, persona in personas_data.items():
@@ -145,11 +147,41 @@ class PersonaExtractor:
 
         personas_dataframe = personas_dataframe.drop(columns=['social_condition_harmonized', 'legitimacy_status_harmonized', 'marital_status_harmonized'], errors='ignore')
 
+        # standardize place names if mapping file is provided
+        if self._place_lookup:
+            for place_attr in ['birth_place', 'resident_in', 'death_place']:
+                if place_attr in personas_dataframe.columns:
+                    personas_dataframe[place_attr] = personas_dataframe[place_attr].apply(self._standardize_place_names)
+
         # remove empty columns
         personas_dataframe = personas_dataframe.dropna(axis=1, how='all')
 
         return personas_dataframe
 
+
+    def _build_place_lookup(self, csv_file_path: str):
+        """Builds a lookup dictionary to avoid repeated file reads."""
+
+        self._place_lookup = {}
+
+        if csv_file_path:
+            unique_places = pd.read_csv(csv_file_path)
+
+            for _, row in unique_places.iterrows():
+                standardized = row['standardize_label']
+                if pd.notna(standardized):
+                    mentioned_as = eval(row['mentioned_as']) if pd.notna(row['mentioned_as']) else []
+
+                    for variant in mentioned_as:
+                        self._place_lookup[variant.lower().strip()] = standardized.lower().strip()
+
+
+    def _standardize_place_names(self, place_name):
+        if isinstance(place_name, str):
+            place_clean = place_name.lower().strip()
+            return self._place_lookup.get(place_clean, np.nan)
+        return np.nan
+            
 
     def _get_event_type(self, df):
         # Logic to extract event type from the DataFrame

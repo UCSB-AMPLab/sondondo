@@ -4,6 +4,8 @@ project:
   render:
     - "*.qmd"
     - "*.ipynb"
+    - "!0_dataAssessment.ipynb"
+    - "!5_postprocessing.ipynb"
 
 website:
   title: "Sondondo Project Notebooks"
