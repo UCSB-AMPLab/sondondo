@@ -1,54 +1,75 @@
 place_id,manually_normalized_place,standardize_label,language,latitude,longitude,source,id,uri,country_code,part_of,part_of_uri,confidence,threshold,match_type,mentioned_as
 1,Acobamba,Acobamba,es,-12.07757,-74.87127,GeoNames,8663907.0,http://sws.geonames.org/8663907/,PE,,,100.0,90.0,exact,['Acobamba']
 4,Andamarca,Andamarca,es,-15.63833,-70.58848,GeoNames,3947725.0,http://sws.geonames.org/3947725/,PE,,,100.0,90.0,exact,['Andamarca']
-7,Aucará,Aucará,es,-14.25,-74.08333,GeoNames,3947087.0,http://sws.geonames.org/3947087/,PE,,,100.0,90.0,exact,"['Aucara', 'Aucara Barrio de Mayo', 'Aucará', 'Barrio de Mayo', 'Cementerio General', 'Cementerio General de Aucará', 'Cementerio de Aucará', 'Cementerio general  Aucará', 'Cementerio general de Aucara', 'Español de Aucará', 'Iglesia de  Aucará', 'Iglesia de Aucará', 'Parroquia de Aucara', 'Parroquia de Aucará', 'Puna de Aucara', 'Punas de Aucará', 'Templo de Aucará']"
-11,Huaycahuaycho,Huaycahuaycho,es,-14.15,-74.01667,GeoNames,3939003.0,http://sws.geonames.org/3939003/,PE,,,100.0,90.0,exact,"['Aucara Huaycahuacho', 'Huaicahuacho']"
-12,Ayacucho,Ayacucho,es,-13.1638,-74.22345,GeoNames,3947019.0,http://sws.geonames.org/3947019/,PE,,,100.0,90.0,exact,"['Ayacucho', 'Ayacuchoi', 'Ciuda de Ayacucho', 'Ciudad de Ayacucho', 'Ciudad de Huamanga', 'Huamanga']"
-13,Cabana,Cabana,es,-8.4,-78.03333,GeoNames,3699185.0,http://sws.geonames.org/3699185/,PE,,,100.0,90.0,exact,"['Aucara Cabana', 'Cabana']"
-14,Canaria,Canaria,es,-13.81667,-73.86667,GeoNames,3945879.0,http://sws.geonames.org/3945879/,PE,,,100.0,90.0,exact,['Canaria']
-15,Cangallo,Cangallo,es,-13.62861,-74.14389,GeoNames,3945793.0,http://sws.geonames.org/3945793/,PE,,,100.0,90.0,exact,"['Cangallo', 'provincia Cangallo']"
-16,Caralla,Caralla,es,-15.29535,-71.56692,GeoNames,3955233.0,http://sws.geonames.org/3955233/,PE,,,100.0,90.0,exact,['Caralla']
-17,Carapo,Carapo,es,-13.75,-74.23333,GeoNames,3945552.0,http://sws.geonames.org/3945552/,PE,,,100.0,90.0,exact,['Carapo']
-18,Carmen Alto,Carmen Alto,es,-14.70031,-70.5173,GeoNames,13318788.0,http://sws.geonames.org/13318788/,PE,,,100.0,90.0,exact,['Carmen Alto']
-20,Castilla Puquio,Castilla Puquio,es,-15.90016,-70.59152,GeoNames,3945238.0,http://sws.geonames.org/3945238/,PE,,,100.0,90.0,exact,['Castilla']
-21,Cayara,Cayara,es,-15.31836,-73.55003,GeoNames,3945148.0,http://sws.geonames.org/3945148/,PE,,,100.0,90.0,exact,['Cayara']
-22,Chacralla,Chacralla,es,-14.20736,-73.99278,GeoNames,3944632.0,http://sws.geonames.org/3944632/,PE,,,100.0,90.0,exact,"['Ccaralla', 'Cementerio general  Chacralla', 'Chacralla', 'Chacralla Pampamarca', 'Viceparroquia de Chacralla']"
-24,Pampamarca,Pampamarca,es,-14.14639,-71.45944,GeoNames,3933218.0,http://sws.geonames.org/3933218/,PE,,,100.0,90.0,exact,"['Cementerio de Pampamarca', 'Cementerio general  Pampamarca', 'Cementerio general de Pampamarca', 'Español de Pampamarca', 'Iglesia Parroquial de Pampamarca', 'Iglesia de Pampamarca', 'India de Pampamarca', 'Pampamarca', 'Pampamarca Barrio de Mayo', 'Pampamarca Barrios de Tallcce', 'Pampamarca Caserio de Tallcce', 'Pampamarca Santa Ana', 'Viceparroquia de Pampamarca']"
-26,Chacalla,Chacalla,es,-13.96889,-72.20556,GeoNames,6392254.0,http://sws.geonames.org/6392254/,PE,,,100.0,90.0,exact,['Chacalla']
-27,Chalhuanca,Chalhuanca,es,-14.30056,-73.23083,GeoNames,3944545.0,http://sws.geonames.org/3944545/,PE,,,100.0,90.0,exact,"['Chalhuanca', 'Challhuanca']"
-28,Chilcas,Chilcas,es,-12.37284,-74.84687,GeoNames,8664084.0,http://sws.geonames.org/8664084/,PE,,,100.0,90.0,exact,['Chilcas']
-29,Chumpe,Chumpe,es,-12.29611,-75.69778,GeoNames,6304004.0,http://sws.geonames.org/6304004/,PE,,,100.0,90.0,exact,['Chumpe']
-30,San Nicolás,Puerto San Nicolás,es,-15.26124,-75.22536,GeoNames,3929384.0,http://sws.geonames.org/3929384/,PE,,,100.0,90.0,exact,['Colca']
-31,Córdova,Puesto Cabo Córdova,es,-4.19148,-80.45773,GeoNames,3693175.0,http://sws.geonames.org/3693175/,PE,,,100.0,90.0,exact,['Cordoba']
-33,Huacaña,Huacaña,es,-15.51861,-72.01884,GeoNames,3940068.0,http://sws.geonames.org/3940068/,PE,,,100.0,90.0,exact,['Huacaña']
-34,Huallatalloc,Huallatalloc,es,-13.51667,-70.95,GeoNames,3939794.0,http://sws.geonames.org/3939794/,PE,,,100.0,90.0,exact,['Hualla']
-35,Huanca Santos,Huanca Santos,es,-13.92,-74.33411,GeoNames,3939474.0,http://sws.geonames.org/3939474/,PE,,,100.0,90.0,exact,"['Huanca', 'Sancos']"
-36,Huanta,Huanta,es,-12.93333,-74.25,GeoNames,3939386.0,http://sws.geonames.org/3939386/,PE,,,100.0,90.0,exact,['Huanta']
-37,Santa Ana de Huaycahuacho,Santa Ana de Huaycahuacho,es,-14.95,-73.21667,GeoNames,3929281.0,http://sws.geonames.org/3929281/,PE,,,100.0,90.0,exact,['Huaycahuacho']
-38,Huaytará,Huaytará,es,-13.60445,-75.35308,GeoNames,3938825.0,http://sws.geonames.org/3938825/,PE,,,100.0,90.0,exact,['Huaytara']
-39,Ica,Ica,es,-14.07538,-75.73422,GeoNames,3938527.0,http://sws.geonames.org/3938527/,PE,,,100.0,70.0,exact,['Ica']
-40,Ishua,Ishua,es,-14.24986,-73.95556,GeoNames,3938160.0,http://sws.geonames.org/3938160/,PE,,,100.0,90.0,exact,"['Iglesia de Yshua', 'India de Hishua', 'Ishua', 'Yshua']"
-41,Jauja,Jauja,es,-11.77584,-75.49656,GeoNames,3937733.0,http://sws.geonames.org/3937733/,PE,,,100.0,90.0,exact,['Jauja']
-42,Julcamarca,Julca,es,-9.28868,-77.99051,GeoNames,6380634.0,http://sws.geonames.org/6380634/,PE,,,100.0,90.0,exact,['Julcamarca']
-43,Laramate,Laramate,es,-13.02842,-74.3797,GeoNames,3936871.0,http://sws.geonames.org/3936871/,PE,,,100.0,90.0,exact,['Laramate']
-44,Larcay,Larcay,es,-12.73805,-74.53673,GeoNames,8661432.0,http://sws.geonames.org/8661432/,PE,,,100.0,90.0,exact,['Larcay']
-45,Lima,Lima,es,-12.04318,-77.02824,GeoNames,3936456.0,http://sws.geonames.org/3936456/,PE,,,100.0,70.0,exact,['Lima']
-47,Cajamarca,Cajamarca,es,-7.16378,-78.50027,GeoNames,3699088.0,http://sws.geonames.org/3699088/,PE,,,100.0,90.0,exact,['Mar']
-48,Mayobamba,Mayobamba,es,-14.37583,-73.89194,GeoNames,3935121.0,http://sws.geonames.org/3935121/,PE,,,100.0,90.0,exact,['Mayobamba']
-50,Moyobamba,Moyobamba,es,-6.03441,-76.97423,GeoNames,3694564.0,http://sws.geonames.org/3694564/,PE,,,100.0,90.0,exact,['Moyobamba']
-51,Provincia de Nazca,Provincia de Nazca,es,-14.83098,-74.93895,GeoNames,3934356.0,http://sws.geonames.org/3934356/,PE,,,100.0,90.0,exact,"['Nasca', 'Nazca']"
-52,Ocaña,Ocaña,es,-13.04506,-74.3784,GeoNames,3934206.0,http://sws.geonames.org/3934206/,PE,,,100.0,90.0,exact,['Ocaña']
-53,Pampa Grande,Pampa Grande,es,-6.75169,-79.48101,GeoNames,3693998.0,http://sws.geonames.org/3693998/,PE,,,100.0,90.0,exact,['Pampa']
-54,Puno,Puno,es,-15.84003,-70.02198,GeoNames,3931276.0,http://sws.geonames.org/3931276/,PE,,,100.0,70.0,exact,['Puna']
-55,Puquio,Puquio,es,-14.7,-74.13333,GeoNames,3931223.0,http://sws.geonames.org/3931223/,PE,,,100.0,90.0,exact,['Puquio']
-56,Querobamba,Querobamba,es,-13.86667,-73.83333,GeoNames,3930947.0,http://sws.geonames.org/3930947/,PE,,,100.0,90.0,exact,['Querobamba']
-57,Sacsamarca,Sacsamarca,es,-13.15085,-74.27869,GeoNames,3930088.0,http://sws.geonames.org/3930088/,PE,,,100.0,90.0,exact,['Sacsamarca']
-58,San Jeronimo De Tunan,San Jeronimo De Tunan,es,-11.95591,-75.28411,GeoNames,3929611.0,http://sws.geonames.org/3929611/,PE,,,100.0,90.0,exact,['San Jeronimo']
-59,San Juan,San Juan,es,-3.77611,-73.28139,GeoNames,3692462.0,http://sws.geonames.org/3692462/,PE,,,100.0,90.0,exact,['San Juan de Lucanas']
-60,Santa Ana,Santa Ana,es,-12.86667,-72.71667,GeoNames,3929295.0,http://sws.geonames.org/3929295/,PE,,,100.0,90.0,exact,"['Santa Ana', 'Santa Ana de Aucara']"
-61,Sondondo,Sondondo,es,-14.29795,-73.93928,GeoNames,3928450.0,http://sws.geonames.org/3928450/,PE,,,100.0,90.0,exact,['Sondondo']
-62,Soras Pata,Soras Pata,es,-14.23741,-70.65011,GeoNames,13238703.0,http://sws.geonames.org/13238703/,PE,,,100.0,90.0,exact,['Soras']
-63,Umasi,Umasi,es,-14.89142,-70.68701,GeoNames,13238711.0,http://sws.geonames.org/13238711/,PE,,,100.0,90.0,exact,"['Umaci', 'Umasi']"
-64,Urubamba,Urubamba,es,-13.30472,-72.11583,GeoNames,3926438.0,http://sws.geonames.org/3926438/,PE,,,100.0,90.0,exact,['Urabamba']
-65,Vilcashuamán,Vilcashuamán,es,-13.65361,-73.95306,GeoNames,3926141.0,http://sws.geonames.org/3926141/,PE,,,100.0,90.0,exact,['Vilcas']
-66,Villa San Juan,Villa San Juan,es,-6.37252,-79.80292,GeoNames,3820188.0,http://sws.geonames.org/3820188/,PE,,,100.0,90.0,exact,['Villa de San Juan']
+6,Apongo,Apongo,es,-14.01327,-73.93247,GeoNames,3947431.0,http://sws.geonames.org/3947431/,PE,,,100.0,90.0,exact,['Apongo']
+8,Aucará,Aucará,es,-14.25,-74.08333,GeoNames,3947087.0,http://sws.geonames.org/3947087/,PE,,,100.0,90.0,exact,"['Aucara', 'Aucara Barrio de Mayo', 'Aucará', 'Barrio de Mayo', 'Cementerio General', 'Cementerio General de Aucará', 'Cementerio de Aucará', 'Cementerio general  Aucará', 'Cementerio general de Aucara', 'Español de Aucará', 'Iglesia de  Aucará', 'Iglesia de Aucará', 'Parroquia de Aucara', 'Parroquia de Aucará', 'Puna de Aucara', 'Punas de Aucará', 'Templo de Aucará']"
+12,Huaycahuaycho,Huaycahuaycho,es,-14.15,-74.01667,GeoNames,3939003.0,http://sws.geonames.org/3939003/,PE,,,100.0,90.0,exact,"['Aucara Huaycahuacho', 'Huaicahuacho']"
+13,Ayacucho,Ayacucho,es,-13.1638,-74.22345,GeoNames,3947019.0,http://sws.geonames.org/3947019/,PE,,,100.0,90.0,exact,"['Ayacucho', 'Ayacuchoi', 'Ciuda de Ayacucho', 'Ciudad de Ayacucho', 'Ciudad de Huamanga', 'Huamanga']"
+14,Cabana,Cabana,es,-8.4,-78.03333,GeoNames,3699185.0,http://sws.geonames.org/3699185/,PE,,,100.0,90.0,exact,"['Aucara Cabana', 'Cabana']"
+15,Cachihuancaray,Cachihuancaray,es,-13.78435,-73.59036,GeoNames,6374977.0,http://sws.geonames.org/6374977/,PE,,,100.0,90.0,exact,['Cachihuancaray']
+16,Canaria,Canaria,es,-13.81667,-73.86667,GeoNames,3945879.0,http://sws.geonames.org/3945879/,PE,,,100.0,90.0,exact,['Canaria']
+17,Cangallo,Cangallo,es,-13.62861,-74.14389,GeoNames,3945793.0,http://sws.geonames.org/3945793/,PE,,,100.0,90.0,exact,"['Cangallo', 'provincia Cangallo']"
+18,Caralla,Caralla,es,-15.29535,-71.56692,GeoNames,3955233.0,http://sws.geonames.org/3955233/,PE,,,100.0,90.0,exact,['Caralla']
+19,Carapo,Carapo,es,-13.75,-74.23333,GeoNames,3945552.0,http://sws.geonames.org/3945552/,PE,,,100.0,90.0,exact,['Carapo']
+20,Carhuanca,Carhuanca,es,-13.74241,-73.78752,GeoNames,3945462.0,http://sws.geonames.org/3945462/,PE,,,100.0,90.0,exact,['Carhuanca']
+21,Carmen Alto,Carmen Alto,es,-14.70031,-70.5173,GeoNames,13318788.0,http://sws.geonames.org/13318788/,PE,,,100.0,90.0,exact,['Carmen Alto']
+23,Castilla Puquio,Castilla Puquio,es,-15.90016,-70.59152,GeoNames,3945238.0,http://sws.geonames.org/3945238/,PE,,,100.0,90.0,exact,['Castilla']
+24,Cayara,Cayara,es,-15.31836,-73.55003,GeoNames,3945148.0,http://sws.geonames.org/3945148/,PE,,,100.0,90.0,exact,['Cayara']
+25,Chacralla,Chacralla,es,-14.20736,-73.99278,GeoNames,3944632.0,http://sws.geonames.org/3944632/,PE,,,100.0,90.0,exact,"['Ccaralla', 'Cementerio general  Chacralla', 'Chacralla', 'Chacralla Pampamarca', 'Viceparroquia de Chacralla']"
+27,Pampamarca,Pampamarca,es,-14.14639,-71.45944,GeoNames,3933218.0,http://sws.geonames.org/3933218/,PE,,,100.0,90.0,exact,"['Cementerio de Pampamarca', 'Cementerio general  Pampamarca', 'Cementerio general de Pampamarca', 'Español de Pampamarca', 'Iglesia Parroquial de Pampamarca', 'Iglesia de Pampamarca', 'India de Pampamarca', 'Pampamarca', 'Pampamarca Barrio de Mayo', 'Pampamarca Barrios de Tallcce', 'Pampamarca Caserio de Tallcce', 'Pampamarca Santa Ana', 'Viceparroquia de Pampamarca']"
+29,Chacalla,Chacalla,es,-13.96889,-72.20556,GeoNames,6392254.0,http://sws.geonames.org/6392254/,PE,,,100.0,90.0,exact,['Chacalla']
+30,Chalhuanca,Chalhuanca,es,-14.30056,-73.23083,GeoNames,3944545.0,http://sws.geonames.org/3944545/,PE,,,100.0,90.0,exact,"['Chalhuanca', 'Challhuanca']"
+31,Champa,Champa,es,-9.83333,-78.0,GeoNames,3698480.0,http://sws.geonames.org/3698480/,PE,,,100.0,90.0,exact,['Champa']
+32,Chaupicancha,Chaupicancha,es,-13.45512,-75.70745,GeoNames,3944192.0,http://sws.geonames.org/3944192/,PE,,,100.0,90.0,exact,['Chaupicancha']
+33,Chilcas,Chilcas,es,-12.37284,-74.84687,GeoNames,8664084.0,http://sws.geonames.org/8664084/,PE,,,100.0,90.0,exact,['Chilcas']
+34,Chipao,Chipao,es,-14.25,-73.95,GeoNames,3943712.0,http://sws.geonames.org/3943712/,PE,,,100.0,90.0,exact,"['Chipao', 'Chipau']"
+35,Chumpe,Chumpe,es,-12.29611,-75.69778,GeoNames,6304004.0,http://sws.geonames.org/6304004/,PE,,,100.0,90.0,exact,['Chumpe']
+36,Chuschi,Chuschi,es,-13.58556,-74.35056,GeoNames,3943084.0,http://sws.geonames.org/3943084/,PE,,,100.0,90.0,exact,['Chuschi']
+37,Cochas,Cochas,es,-11.97182,-75.80673,GeoNames,3942874.0,http://sws.geonames.org/3942874/,PE,,,100.0,90.0,exact,['Cochas']
+38,San Nicolás,Puerto San Nicolás,es,-15.26124,-75.22536,GeoNames,3929384.0,http://sws.geonames.org/3929384/,PE,,,100.0,90.0,exact,['Colca']
+39,Collay,Collay,es,-8.26472,-77.28472,GeoNames,3697955.0,http://sws.geonames.org/3697955/,PE,,,100.0,90.0,exact,['Collay']
+40,Coracora,Coracora,es,-15.03333,-73.78333,GeoNames,3942259.0,http://sws.geonames.org/3942259/,PE,,,100.0,90.0,exact,['Coracora']
+41,Córdova,Puesto Cabo Córdova,es,-4.19148,-80.45773,GeoNames,3693175.0,http://sws.geonames.org/3693175/,PE,,,100.0,90.0,exact,['Cordoba']
+43,Huacaña,Huacaña,es,-15.51861,-72.01884,GeoNames,3940068.0,http://sws.geonames.org/3940068/,PE,,,100.0,90.0,exact,['Huacaña']
+44,Huallatalloc,Huallatalloc,es,-13.51667,-70.95,GeoNames,3939794.0,http://sws.geonames.org/3939794/,PE,,,100.0,90.0,exact,['Hualla']
+45,Huambo,Huambo,es,-15.73045,-72.1081,GeoNames,3939675.0,http://sws.geonames.org/3939675/,PE,,,100.0,90.0,exact,['Huambo']
+47,Huanca Santos,Huanca Santos,es,-13.92,-74.33411,GeoNames,3939474.0,http://sws.geonames.org/3939474/,PE,,,100.0,90.0,exact,"['Huanca', 'Sancos']"
+48,Huancapi,Huancapi,es,-13.68333,-74.06667,GeoNames,3939516.0,http://sws.geonames.org/3939516/,PE,,,100.0,90.0,exact,['Huancapi']
+49,Huancaraylla,Huancaraylla,es,-13.68333,-74.15,GeoNames,3939487.0,http://sws.geonames.org/3939487/,PE,,,100.0,90.0,exact,['Huancaraylla']
+50,Huanta,Huanta,es,-12.93333,-74.25,GeoNames,3939386.0,http://sws.geonames.org/3939386/,PE,,,100.0,90.0,exact,['Huanta']
+51,Santa Ana de Huaycahuacho,Santa Ana de Huaycahuacho,es,-14.95,-73.21667,GeoNames,3929281.0,http://sws.geonames.org/3929281/,PE,,,100.0,90.0,exact,['Huaycahuacho']
+52,Huaytará,Huaytará,es,-13.60445,-75.35308,GeoNames,3938825.0,http://sws.geonames.org/3938825/,PE,,,100.0,90.0,exact,['Huaytara']
+53,Ica,Ica,es,-14.07538,-75.73422,GeoNames,3938527.0,http://sws.geonames.org/3938527/,PE,,,100.0,70.0,exact,['Ica']
+54,Ishua,Ishua,es,-14.24986,-73.95556,GeoNames,3938160.0,http://sws.geonames.org/3938160/,PE,,,100.0,90.0,exact,"['Iglesia de Yshua', 'India de Hishua', 'Ishua', 'Yshua']"
+55,Illapata,Illapata,es,-14.12556,-73.94056,GeoNames,3958739.0,http://sws.geonames.org/3958739/,PE,,,100.0,90.0,exact,['Illapata']
+56,Jauja,Jauja,es,-11.77584,-75.49656,GeoNames,3937733.0,http://sws.geonames.org/3937733/,PE,,,100.0,90.0,exact,['Jauja']
+58,Laramate,Laramate,es,-13.02842,-74.3797,GeoNames,3936871.0,http://sws.geonames.org/3936871/,PE,,,100.0,90.0,exact,['Laramate']
+59,Larcay,Larcay,es,-12.73805,-74.53673,GeoNames,8661432.0,http://sws.geonames.org/8661432/,PE,,,100.0,90.0,exact,['Larcay']
+60,Lima,Lima,es,-12.04318,-77.02824,GeoNames,3936456.0,http://sws.geonames.org/3936456/,PE,,,100.0,70.0,exact,['Lima']
+61,Llusita,Llusita,es,-13.69774,-74.11743,GeoNames,3936093.0,http://sws.geonames.org/3936093/,PE,,,100.0,90.0,exact,['Llusita']
+63,Cajamarca,Cajamarca,es,-7.16378,-78.50027,GeoNames,3699088.0,http://sws.geonames.org/3699088/,PE,,,100.0,90.0,exact,['Mar']
+64,Marca,Marca,es,-16.5,-69.15,GeoNames,3935350.0,http://sws.geonames.org/3935350/,PE,,,100.0,90.0,exact,['Marca']
+65,Mayobamba,Mayobamba,es,-14.37583,-73.89194,GeoNames,3935121.0,http://sws.geonames.org/3935121/,PE,,,100.0,90.0,exact,"['Mayo', 'Mayobamba']"
+67,Moyobamba,Moyobamba,es,-6.03441,-76.97423,GeoNames,3694564.0,http://sws.geonames.org/3694564/,PE,,,100.0,90.0,exact,['Moyobamba']
+68,Provincia de Nazca,Provincia de Nazca,es,-14.83098,-74.93895,GeoNames,3934356.0,http://sws.geonames.org/3934356/,PE,,,100.0,90.0,exact,"['Nasca', 'Nazca']"
+69,Ocaña,Ocaña,es,-13.04506,-74.3784,GeoNames,3934206.0,http://sws.geonames.org/3934206/,PE,,,100.0,90.0,exact,['Ocaña']
+70,Palco,Palco,es,-14.41195,-74.65103,GeoNames,3933486.0,http://sws.geonames.org/3933486/,PE,,,100.0,90.0,exact,"['Paico', 'Palco', 'Pallcco']"
+71,Paire,Paire,es,-14.15806,-73.97583,GeoNames,3959072.0,http://sws.geonames.org/3959072/,PE,,,100.0,90.0,exact,['Paire']
+72,Pampa Grande,Pampa Grande,es,-6.75169,-79.48101,GeoNames,3693998.0,http://sws.geonames.org/3693998/,PE,,,100.0,90.0,exact,['Pampa']
+73,Pausa,Pausa,es,-15.27972,-73.34583,GeoNames,3932625.0,http://sws.geonames.org/3932625/,PE,,,100.0,90.0,exact,['Pausa']
+74,Pincocalla,Pincocalla,es,-14.11972,-73.91556,GeoNames,3932227.0,http://sws.geonames.org/3932227/,PE,,,100.0,90.0,exact,['Pincocalla']
+75,Puno,Puno,es,-15.84003,-70.02198,GeoNames,3931276.0,http://sws.geonames.org/3931276/,PE,,,100.0,70.0,exact,['Puna']
+76,Puquio,Puquio,es,-14.7,-74.13333,GeoNames,3931223.0,http://sws.geonames.org/3931223/,PE,,,100.0,90.0,exact,['Puquio']
+77,Queca,Queca,es,-14.26806,-73.94236,GeoNames,3931090.0,http://sws.geonames.org/3931090/,PE,,,100.0,90.0,exact,['Queca']
+78,Querco,Querco,es,-13.98039,-74.9765,GeoNames,3930956.0,http://sws.geonames.org/3930956/,PE,,,100.0,90.0,exact,['Querco']
+79,Querobamba,Querobamba,es,-13.86667,-73.83333,GeoNames,3930947.0,http://sws.geonames.org/3930947/,PE,,,100.0,90.0,exact,['Querobamba']
+80,Sacsamarca,Sacsamarca,es,-13.15085,-74.27869,GeoNames,3930088.0,http://sws.geonames.org/3930088/,PE,,,100.0,90.0,exact,['Sacsamarca']
+81,San Jeronimo De Tunan,San Jeronimo De Tunan,es,-11.95591,-75.28411,GeoNames,3929611.0,http://sws.geonames.org/3929611/,PE,,,100.0,90.0,exact,['San Jeronimo']
+82,San Juan,San Juan,es,-3.77611,-73.28139,GeoNames,3692462.0,http://sws.geonames.org/3692462/,PE,,,100.0,90.0,exact,['San Juan de Lucanas']
+83,Santa Ana,Santa Ana,es,-12.86667,-72.71667,GeoNames,3929295.0,http://sws.geonames.org/3929295/,PE,,,100.0,90.0,exact,"['Santa Ana', 'Santa Ana de Aucara']"
+84,Sondondo,Sondondo,es,-14.29795,-73.93928,GeoNames,3928450.0,http://sws.geonames.org/3928450/,PE,,,100.0,90.0,exact,['Sondondo']
+85,Soras Pata,Soras Pata,es,-14.23741,-70.65011,GeoNames,13238703.0,http://sws.geonames.org/13238703/,PE,,,100.0,90.0,exact,['Soras']
+87,Umasi,Umasi,es,-14.89142,-70.68701,GeoNames,13238711.0,http://sws.geonames.org/13238711/,PE,,,100.0,90.0,exact,"['Umaci', 'Umasi']"
+88,Urubamba,Urubamba,es,-13.30472,-72.11583,GeoNames,3926438.0,http://sws.geonames.org/3926438/,PE,,,100.0,90.0,exact,['Urabamba']
+89,Vilcashuamán,Vilcashuamán,es,-13.65361,-73.95306,GeoNames,3926141.0,http://sws.geonames.org/3926141/,PE,,,100.0,90.0,exact,['Vilcas']
+90,Villa San Juan,Villa San Juan,es,-6.37252,-79.80292,GeoNames,3820188.0,http://sws.geonames.org/3820188/,PE,,,100.0,90.0,exact,['Villa de San Juan']

@@ -1,9 +1,13 @@
 place,country,place_type,standardize_label,language,latitude,longitude,source,id,uri,country_code,part_of,part_of_uri,confidence,threshold,match_type
+Accanta,PE,city,,,,,,,,,,,,,
+Accenana,PE,city,,,,,,,,,,,,,
+"Accenana, caserio",PE,city,,,,,,,,,,,,,
 Acobamba,PE,city,Acobamba,es,-12.07757,-74.87127,GeoNames,8663907.0,http://sws.geonames.org/8663907/,PE,,,100.0,90.0,exact
 Alcamenca,PE,city,,,,,,,,,,,,,
 Amaicca,PE,city,,,,,,,,,,,,,
 Andamarca,PE,city,Andamarca,es,-15.63833,-70.58848,GeoNames,3947725.0,http://sws.geonames.org/3947725/,PE,,,100.0,90.0,exact
 Antay,PE,city,,,,,,,,,,,,,
+Apongo,PE,city,Apongo,es,-14.01327,-73.93247,GeoNames,3947431.0,http://sws.geonames.org/3947431/,PE,,,100.0,90.0,exact
 Aralla,PE,city,,,,,,,,,,,,,
 Aucara,PE,city,Aucará,es,-14.25,-74.08333,GeoNames,3947087.0,http://sws.geonames.org/3947087/,PE,,,90.9090909090909,90.0,fuzzy
 Aucara Barrio de Mayo,PE,city,,,,,,,,,,,,,
@@ -11,25 +15,41 @@ Aucara Cabana,PE,city,,,,,,,,,,,,,
 Aucara Caserio de Visvicha,PE,city,,,,,,,,,,,,,
 Aucara Estancia de Chapa,PE,city,,,,,,,,,,,,,
 Aucara Huaycahuacho,PE,city,Huaycahuaycho,es,-14.15,-74.01667,GeoNames,3939003.0,http://sws.geonames.org/3939003/,PE,,,100.0,90.0,exact
+"Aucara, Otoca",PE,city,,,,,,,,,,,,,
+"Aucara, panteon general",PE,city,,,,,,,,,,,,,
+"Aucara, panteón general",PE,city,,,,,,,,,,,,,
 Aucará,PE,city,Aucará,es,-14.25,-74.08333,GeoNames,3947087.0,http://sws.geonames.org/3947087/,PE,,,100.0,90.0,exact
 Ayacucho,PE,city,Ayacucho,es,-13.1638,-74.22345,GeoNames,3947019.0,http://sws.geonames.org/3947019/,PE,,,100.0,90.0,exact
 Ayacuchoi,PE,city,,,,,,,,,,,,,
 Barrio de Mayo,PE,city,,,,,,,,,,,,,
+C,PE,city,Carlos Fitzcarrald,es,-12.66957,-69.34786,GeoNames,11515855.0,http://sws.geonames.org/11515855/,PE,,,100.0,70.0,exact
 Cabana,PE,city,Cabana,es,-8.4,-78.03333,GeoNames,3699185.0,http://sws.geonames.org/3699185/,PE,,,100.0,90.0,exact
+Cachihuancaray,PE,city,Cachihuancaray,es,-13.78435,-73.59036,GeoNames,6374977.0,http://sws.geonames.org/6374977/,PE,,,100.0,90.0,exact
+Cacralla (sic),PE,city,,,,,,,,,,,,,
 Canaria,PE,city,Canaria,es,-13.81667,-73.86667,GeoNames,3945879.0,http://sws.geonames.org/3945879/,PE,,,100.0,90.0,exact
 Cangallo,PE,city,Cangallo,es,-13.62861,-74.14389,GeoNames,3945793.0,http://sws.geonames.org/3945793/,PE,,,100.0,90.0,exact
+Carahuanca,PE,city,,,,,,,,,,,,,
 Caralla,PE,city,Caralla,es,-15.29535,-71.56692,GeoNames,3955233.0,http://sws.geonames.org/3955233/,PE,,,100.0,90.0,exact
+Caranpa,PE,city,,,,,,,,,,,,,
+Carapo,PE,city,Carapo,es,-13.75,-74.23333,GeoNames,3945552.0,http://sws.geonames.org/3945552/,PE,,,100.0,90.0,exact
+Carhuanca,PE,city,Carhuanca,es,-13.74241,-73.78752,GeoNames,3945462.0,http://sws.geonames.org/3945462/,PE,,,100.0,90.0,exact
 Carmen Alto,PE,city,Carmen Alto,es,-14.70031,-70.5173,GeoNames,13318788.0,http://sws.geonames.org/13318788/,PE,,,100.0,90.0,exact
+Caserios de Saicasa,PE,city,,,,,,,,,,,,,
 Castilla,PE,city,Castilla Puquio,es,-15.90016,-70.59152,GeoNames,3945238.0,http://sws.geonames.org/3945238/,PE,,,100.0,90.0,exact
+Cavana,PE,city,,,,,,,,,,,,,
 Cayara,PE,city,Cayara,es,-15.31836,-73.55003,GeoNames,3945148.0,http://sws.geonames.org/3945148/,PE,,,100.0,90.0,exact
+Ccanto,PE,city,,,,,,,,,,,,,
+Ccaralla,PE,city,,,,,,,,,,,,,
 Ccecca,PE,city,,,,,,,,,,,,,
 Cecca,PE,city,,,,,,,,,,,,,
+Cecca Aucara,PE,city,,,,,,,,,,,,,
 Cementerio General,PE,city,,,,,,,,,,,,,
 Cementerio General de Aucará,PE,city,,,,,,,,,,,,,
 Cementerio de Aucará,PE,city,,,,,,,,,,,,,
 Cementerio de Pampamarca,PE,city,,,,,,,,,,,,,
 Cementerio de Visvicha,PE,city,,,,,,,,,,,,,
 Cementerio de las Punas de Visvicha,PE,city,,,,,,,,,,,,,
+Cementerio general,PE,city,,,,,,,,,,,,,
 Cementerio general  Aucará,PE,city,,,,,,,,,,,,,
 Cementerio general  Chacralla,PE,city,,,,,,,,,,,,,
 Cementerio general  Pampamarca,PE,city,,,,,,,,,,,,,
@@ -37,87 +57,231 @@ Cementerio general de Aucara,PE,city,,,,,,,,,,,,,
 Cementerio general de Pampamarca,PE,city,,,,,,,,,,,,,
 Cementerio general de la Vice,PE,city,,,,,,,,,,,,,
 Chacalla,PE,city,Chacalla,es,-13.96889,-72.20556,GeoNames,6392254.0,http://sws.geonames.org/6392254/,PE,,,100.0,90.0,exact
+Chacaralla,PE,city,,,,,,,,,,,,,
+Chacpa,PE,city,,,,,,,,,,,,,
 Chacralla,PE,city,Chacralla,es,-14.20736,-73.99278,GeoNames,3944632.0,http://sws.geonames.org/3944632/,PE,,,100.0,90.0,exact
+Chacralla (de los padres),PE,city,,,,,,,,,,,,,
 Chacralla Pampamarca,PE,city,,,,,,,,,,,,,
+"Chacralla, cementerio general",PE,city,,,,,,,,,,,,,
+"Chacralla, iglesia vice-parroquial",PE,city,,,,,,,,,,,,,
+"Chacralla, iglesia viceparroquial",PE,city,,,,,,,,,,,,,
+"Chacralla, panteón",PE,city,,,,,,,,,,,,,
+"Chacralla, panteón general",PE,city,,,,,,,,,,,,,
+"Chacralla, pantéon",PE,city,,,,,,,,,,,,,
+"Chacralla, pueblo",PE,city,,,,,,,,,,,,,
+"Chacralla, pueblo, anexo",PE,city,,,,,,,,,,,,,
+"Chacralla, viceparroquia, pueblo",PE,city,,,,,,,,,,,,,
 Chalhuanca,PE,city,Chalhuanca,es,-14.30056,-73.23083,GeoNames,3944545.0,http://sws.geonames.org/3944545/,PE,,,100.0,90.0,exact
 Challhuanca,PE,city,Chalhuanca,es,-14.30056,-73.23083,GeoNames,3944545.0,http://sws.geonames.org/3944545/,PE,,,100.0,90.0,exact
+Champa,PE,city,Champa,es,-9.83333,-78.0,GeoNames,3698480.0,http://sws.geonames.org/3698480/,PE,,,100.0,90.0,exact
+Chapa,PE,city,Chapa,es,-15.58228,-69.85573,GeoNames,3944363.0,http://sws.geonames.org/3944363/,PE,,,100.0,90.0,exact
+"Chapa, caserio",PE,city,,,,,,,,,,,,,
+Chara,PE,city,,,,,,,,,,,,,
+Chaupicancha,PE,city,Chaupicancha,es,-13.45512,-75.70745,GeoNames,3944192.0,http://sws.geonames.org/3944192/,PE,,,100.0,90.0,exact
+Chiccayse,PE,city,,,,,,,,,,,,,
+Chihuire,PE,city,,,,,,,,,,,,,
 Chilcas,PE,city,Chilcas,es,-12.37284,-74.84687,GeoNames,8664084.0,http://sws.geonames.org/8664084/,PE,,,100.0,90.0,exact
+Chillanccay,PE,city,,,,,,,,,,,,,
+Chipao,PE,city,Chipao,es,-14.25,-73.95,GeoNames,3943712.0,http://sws.geonames.org/3943712/,PE,,,100.0,90.0,exact
 Chipau,PE,city,,,,,,,,,,,,,
+Chocorbos,PE,city,,,,,,,,,,,,,
 Chumpe,PE,city,Chumpe,es,-12.29611,-75.69778,GeoNames,6304004.0,http://sws.geonames.org/6304004/,PE,,,100.0,90.0,exact
 Churbe,PE,city,,,,,,,,,,,,,
+Chuschi,PE,city,Chuschi,es,-13.58556,-74.35056,GeoNames,3943084.0,http://sws.geonames.org/3943084/,PE,,,100.0,90.0,exact
 Ciuda de Ayacucho,PE,city,,,,,,,,,,,,,
 Ciudad de Ayacucho,PE,city,Ciudad Libertad de las Américas,es,-13.17884,-74.21498,GeoNames,13323572.0,http://sws.geonames.org/13323572/,PE,,,100.0,90.0,exact
 Ciudad de Huamanga,PE,city,Ciudad Libertad de las Américas,es,-13.17884,-74.21498,GeoNames,13323572.0,http://sws.geonames.org/13323572/,PE,,,100.0,90.0,exact
-Colca,PE,city,La Colca de San Nicolas,es,-6.92831,-79.61352,GeoNames,3692357.0,http://sws.geonames.org/3692357/,PE,,,100.0,90.0,exact
+Cochas,PE,city,Cochas,es,-11.97182,-75.80673,GeoNames,3942874.0,http://sws.geonames.org/3942874/,PE,,,100.0,90.0,exact
+Colca,PE,city,San Nicolás,es,-6.92831,-79.61352,GeoNames,3692357.0,http://sws.geonames.org/3692357/,PE,,,100.0,90.0,exact
+Collay,PE,city,Collay,es,-8.26472,-77.28472,GeoNames,3697955.0,http://sws.geonames.org/3697955/,PE,,,100.0,90.0,exact
+Coracora,PE,city,Coracora,es,-15.03333,-73.78333,GeoNames,3942259.0,http://sws.geonames.org/3942259/,PE,,,100.0,90.0,exact
 Cordoba,PE,city,Córdova,es,-14.03972,-75.1843,GeoNames,3942222.0,http://sws.geonames.org/3942222/,PE,,,100.0,90.0,exact
 Cordova,PE,city,,,,,,,,,,,,,
+Doctrina de Aucara,PE,city,,,,,,,,,,,,,
+Doctrina de Soras,PE,city,,,,,,,,,,,,,
 Español de Aucará,PE,city,,,,,,,,,,,,,
+Español de Chacralla,PE,city,,,,,,,,,,,,,
 Español de Pampamarca,PE,city,,,,,,,,,,,,,
 Espilco,PE,city,,,,,,,,,,,,,
+Gavino,PE,city,,,,,,,,,,,,,
 General,PE,city,,,,,,,,,,,,,
+Guayanay,PE,city,,,,,,,,,,,,,
+Hishua,PE,city,,,,,,,,,,,,,
 Huacaña,PE,city,Huacaña,es,-15.51861,-72.01884,GeoNames,3940068.0,http://sws.geonames.org/3940068/,PE,,,100.0,90.0,exact
+Huachuas,PE,city,,,,,,,,,,,,,
 Huaicahuacho,PE,city,Huaycahuaycho,es,-14.15,-74.01667,GeoNames,3939003.0,http://sws.geonames.org/3939003/,PE,,,100.0,90.0,exact
 Hualla,PE,city,Huallatalloc,es,-13.51667,-70.95,GeoNames,3939794.0,http://sws.geonames.org/3939794/,PE,,,100.0,90.0,exact
 Huamanga,PE,city,Ayacucho,es,-13.1638,-74.22345,GeoNames,3947019.0,http://sws.geonames.org/3947019/,PE,,,92.3076923076923,90.0,fuzzy
+Huambalpa,PE,city,,,,,,,,,,,,,
+Huambo,PE,city,Huambo,es,-15.73045,-72.1081,GeoNames,3939675.0,http://sws.geonames.org/3939675/,PE,,,100.0,90.0,exact
+Huanacopampa,PE,city,Huanacopampa,es,-14.15,-72.28333,GeoNames,3939622.0,http://sws.geonames.org/3939622/,PE,,,100.0,90.0,exact
 Huanca,PE,city,Huanca Santos,es,-13.92,-74.33411,GeoNames,3939474.0,http://sws.geonames.org/3939474/,PE,,,100.0,90.0,exact
+Huancapi,PE,city,Huancapi,es,-13.68333,-74.06667,GeoNames,3939516.0,http://sws.geonames.org/3939516/,PE,,,100.0,90.0,exact
+Huancaraylla,PE,city,Huancaraylla,es,-13.68333,-74.15,GeoNames,3939487.0,http://sws.geonames.org/3939487/,PE,,,100.0,90.0,exact
+Huancasancos,PE,city,,,,,,,,,,,,,
 Huanta,PE,city,Huanta,es,-12.93333,-74.25,GeoNames,3939386.0,http://sws.geonames.org/3939386/,PE,,,100.0,90.0,exact
 Huaycahuacho,PE,city,Santa Ana de Huaycahuacho,es,-14.95,-73.21667,GeoNames,3929281.0,http://sws.geonames.org/3929281/,PE,,,100.0,90.0,exact
 Huaytara,PE,city,Huaytará,es,-13.60445,-75.35308,GeoNames,3938825.0,http://sws.geonames.org/3938825/,PE,,,93.33333333333333,90.0,fuzzy
+Huaytará,PE,city,Huaytará,es,-13.60445,-75.35308,GeoNames,3938825.0,http://sws.geonames.org/3938825/,PE,,,100.0,90.0,exact
+Humalla,PE,city,,,,,,,,,,,,,
+Humari,PE,city,,,,,,,,,,,,,
+Hurcaza (sic),PE,city,,,,,,,,,,,,,
 Ica,PE,city,Ica,es,-14.07538,-75.73422,GeoNames,3938527.0,http://sws.geonames.org/3938527/,PE,,,100.0,70.0,exact
 Iglesia Parroquial de Pampamarca,PE,city,,,,,,,,,,,,,
 Iglesia de  Aucará,PE,city,,,,,,,,,,,,,
 Iglesia de Aucará,PE,city,,,,,,,,,,,,,
+Iglesia de Ishua,PE,city,,,,,,,,,,,,,
 Iglesia de Pampamarca,PE,city,,,,,,,,,,,,,
 Iglesia de Yshua,PE,city,,,,,,,,,,,,,
+Iglesia viceparroquial de Chacralla,PE,city,,,,,,,,,,,,,
+Illapata,PE,city,Illapata,es,-14.12556,-73.94056,GeoNames,3958739.0,http://sws.geonames.org/3958739/,PE,,,100.0,90.0,exact
 India,PE,city,India Muerta,es,-17.52913,-71.16753,GeoNames,3938319.0,http://sws.geonames.org/3938319/,PE,,,100.0,90.0,exact
 India de Hishua,PE,city,,,,,,,,,,,,,
 India de Pampamarca,PE,city,,,,,,,,,,,,,
+Indio de Chacralla,PE,city,,,,,,,,,,,,,
+Indio de Hishua,PE,city,,,,,,,,,,,,,
+Indio de Pampamarca,PE,city,,,,,,,,,,,,,
+Ishua,PE,city,Ishua,es,-14.24986,-73.95556,GeoNames,3938160.0,http://sws.geonames.org/3938160/,PE,,,100.0,90.0,exact
+"Ishua, iglesia viceparroquial",PE,city,,,,,,,,,,,,,
+"Ishua, pueblo, anexo",PE,city,,,,,,,,,,,,,
+Isua,PE,city,,,,,,,,,,,,,
+Jaralla,PE,city,,,,,,,,,,,,,
 Jauja,PE,city,Jauja,es,-11.77584,-75.49656,GeoNames,3937733.0,http://sws.geonames.org/3937733/,PE,,,100.0,90.0,exact
 Julcamarca,PE,city,Julca,es,-9.28868,-77.99051,GeoNames,6380634.0,http://sws.geonames.org/6380634/,PE,,,100.0,90.0,exact
 Laramate,PE,city,Laramate,es,-13.02842,-74.3797,GeoNames,3936871.0,http://sws.geonames.org/3936871/,PE,,,100.0,90.0,exact
 Larcay,PE,city,Larcay,es,-12.73805,-74.53673,GeoNames,8661432.0,http://sws.geonames.org/8661432/,PE,,,100.0,90.0,exact
 Lima,PE,city,Lima,es,-12.04318,-77.02824,GeoNames,3936456.0,http://sws.geonames.org/3936456/,PE,,,100.0,70.0,exact
+Llusita,PE,city,Llusita,es,-13.69774,-74.11743,GeoNames,3936093.0,http://sws.geonames.org/3936093/,PE,,,100.0,90.0,exact
 Lucanas,PE,city,,,,,,,,,,,,,
+Mar,PE,city,Cajamarca,es,-7.16378,-78.50027,GeoNames,3699088.0,http://sws.geonames.org/3699088/,PE,,,100.0,70.0,exact
+Marca,PE,city,Marca,es,-16.5,-69.15,GeoNames,3935350.0,http://sws.geonames.org/3935350/,PE,,,100.0,90.0,exact
+Mayo,PE,city,Dos de Mayo,es,-11.138,-73.04713,GeoNames,6309506.0,http://sws.geonames.org/6309506/,PE,,,100.0,70.0,exact
+Mayo Pampamarca,PE,city,,,,,,,,,,,,,
+"Mayo, caserio",PE,city,,,,,,,,,,,,,
+"Mayo, punto",PE,city,,,,,,,,,,,,,
 Mayobamba,PE,city,Mayobamba,es,-14.37583,-73.89194,GeoNames,3935121.0,http://sws.geonames.org/3935121/,PE,,,100.0,90.0,exact
 Morcolla,PE,city,,,,,,,,,,,,,
 Moyobamba,PE,city,Moyobamba,es,-6.03441,-76.97423,GeoNames,3694564.0,http://sws.geonames.org/3694564/,PE,,,100.0,90.0,exact
+Nasario,PE,city,,,,,,,,,,,,,
 Nasca,PE,city,Provincia de Nazca,es,-14.83098,-74.93895,GeoNames,3934356.0,http://sws.geonames.org/3934356/,PE,,,100.0,90.0,exact
 Nazca,PE,city,Provincia de Nazca,es,-14.83098,-74.93895,GeoNames,3934356.0,http://sws.geonames.org/3934356/,PE,,,100.0,90.0,exact
 Ocaña,PE,city,Ocaña,es,-13.04506,-74.3784,GeoNames,3934206.0,http://sws.geonames.org/3934206/,PE,,,100.0,90.0,exact
+Orccosa,PE,city,,,,,,,,,,,,,
+Otoca,PE,city,,,,,,,,,,,,,
+Oyolo,PE,city,,,,,,,,,,,,,
+Pago de Chapa,PE,city,,,,,,,,,,,,,
+Paico,PE,city,Paico,es,-14.03831,-73.6421,GeoNames,3933584.0,http://sws.geonames.org/3933584/,PE,,,100.0,90.0,exact
+Paire,PE,city,Paire,es,-14.15806,-73.97583,GeoNames,3959072.0,http://sws.geonames.org/3959072/,PE,,,100.0,90.0,exact
+"Paire, cementerio general",PE,city,,,,,,,,,,,,,
+"Paire, iglesia",PE,city,,,,,,,,,,,,,
+"Paire, panteón",PE,city,,,,,,,,,,,,,
+"Paire, panteón general",PE,city,,,,,,,,,,,,,
+"Paire, viceparroquia",PE,city,,,,,,,,,,,,,
+"Paire, viceparroquia, pueblo",PE,city,,,,,,,,,,,,,
+Palco,PE,city,Palco,es,-14.41195,-74.65103,GeoNames,3933486.0,http://sws.geonames.org/3933486/,PE,,,100.0,90.0,exact
 Pallcco,PE,city,,,,,,,,,,,,,
+Pallco,PE,city,,,,,,,,,,,,,
 Pampa,PE,city,Pampa Grande,es,-6.75169,-79.48101,GeoNames,3693998.0,http://sws.geonames.org/3693998/,PE,,,100.0,90.0,exact
 Pampamarca,PE,city,Pampamarca,es,-14.14639,-71.45944,GeoNames,3933218.0,http://sws.geonames.org/3933218/,PE,,,100.0,90.0,exact
 Pampamarca Barrio de Mayo,PE,city,,,,,,,,,,,,,
 Pampamarca Barrios de Tallcce,PE,city,,,,,,,,,,,,,
+Pampamarca Caserio de Chapa,PE,city,,,,,,,,,,,,,
+Pampamarca Caserio de Mayo,PE,city,,,,,,,,,,,,,
 Pampamarca Caserio de Tallcce,PE,city,,,,,,,,,,,,,
 Pampamarca Santa Ana,PE,city,,,,,,,,,,,,,
+"Pampamarca, anexo",PE,city,,,,,,,,,,,,,
+"Pampamarca, panteón general",PE,city,,,,,,,,,,,,,
+Panteon de Visvicha,PE,city,,,,,,,,,,,,,
+Panteón de Chacralla,PE,city,,,,,,,,,,,,,
 Parroquia de Aucara,PE,city,,,,,,,,,,,,,
 Parroquia de Aucará,PE,city,,,,,,,,,,,,,
+Pausa,PE,city,Pausa,es,-15.27972,-73.34583,GeoNames,3932625.0,http://sws.geonames.org/3932625/,PE,,,100.0,90.0,exact
+Payco,PE,city,Paico,es,-14.03831,-73.6421,GeoNames,3933584.0,http://sws.geonames.org/3933584/,PE,,,100.0,90.0,exact
+Pincocalla,PE,city,Pincocalla,es,-14.11972,-73.91556,GeoNames,3932227.0,http://sws.geonames.org/3932227/,PE,,,100.0,90.0,exact
+Pincucalla,PE,city,,,,,,,,,,,,,
+Poma,PE,city,Poma Patacollo,es,-16.44801,-69.19417,GeoNames,13318763.0,http://sws.geonames.org/13318763/,PE,,,100.0,70.0,exact
+Pueblo de Aucará,PE,city,,,,,,,,,,,,,
+Pullo,PE,city,,,,,,,,,,,,,
 Puna,PE,city,Puno,es,-15.84003,-70.02198,GeoNames,3931276.0,http://sws.geonames.org/3931276/,PE,,,100.0,70.0,exact
 Puna de Aucara,PE,city,,,,,,,,,,,,,
+Puna de Visvicha,PE,city,,,,,,,,,,,,,
+Punas de Aucara,PE,city,,,,,,,,,,,,,
 Punas de Aucará,PE,city,,,,,,,,,,,,,
+Punas de Palco,PE,city,,,,,,,,,,,,,
+Punas de Visvicha,PE,city,,,,,,,,,,,,,
 Puquio,PE,city,Puquio,es,-14.7,-74.13333,GeoNames,3931223.0,http://sws.geonames.org/3931223/,PE,,,100.0,90.0,exact
+Puta,PE,city,,,,,,,,,,,,,
+Queca,PE,city,Queca,es,-14.26806,-73.94236,GeoNames,3931090.0,http://sws.geonames.org/3931090/,PE,,,100.0,90.0,exact
+Querco,PE,city,Querco,es,-13.98039,-74.9765,GeoNames,3930956.0,http://sws.geonames.org/3930956/,PE,,,100.0,90.0,exact
 Querobamba,PE,city,Querobamba,es,-13.86667,-73.83333,GeoNames,3930947.0,http://sws.geonames.org/3930947/,PE,,,100.0,90.0,exact
+Quicco,PE,city,,,,,,,,,,,,,
+S Ana,PE,city,,,,,,,,,,,,,
 Sacsamarca,PE,city,Sacsamarca,es,-13.15085,-74.27869,GeoNames,3930088.0,http://sws.geonames.org/3930088/,PE,,,100.0,90.0,exact
 Saicasa,PE,city,,,,,,,,,,,,,
 San Jeronimo,PE,city,San Jeronimo De Tunan,es,-11.95591,-75.28411,GeoNames,3929611.0,http://sws.geonames.org/3929611/,PE,,,100.0,90.0,exact
 San Juan de Lucanas,PE,city,San Juan,es,-15.32059,-74.33395,GeoNames,3929521.0,http://sws.geonames.org/3929521/,PE,,,100.0,90.0,exact
+San Pedro,PE,city,San Pedro de Lloc,es,-7.4289,-79.50416,GeoNames,3692310.0,http://sws.geonames.org/3692310/,PE,,,100.0,90.0,exact
+Sancos,PE,city,Huanca Santos,es,-13.92,-74.33411,GeoNames,3939474.0,http://sws.geonames.org/3939474/,PE,,,100.0,90.0,exact
 Santa Ana,PE,city,Santa Ana,es,-12.86667,-72.71667,GeoNames,3929295.0,http://sws.geonames.org/3929295/,PE,,,100.0,90.0,exact
 Santa Ana de Aucara,PE,city,Santa Ana,es,-14.19904,-74.08815,GeoNames,3929293.0,http://sws.geonames.org/3929293/,PE,,,100.0,90.0,exact
 Sondondo,PE,city,Sondondo,es,-14.29795,-73.93928,GeoNames,3928450.0,http://sws.geonames.org/3928450/,PE,,,100.0,90.0,exact
 Soras,PE,city,Soras Pata,es,-14.23741,-70.65011,GeoNames,13238703.0,http://sws.geonames.org/13238703/,PE,,,100.0,90.0,exact
 Taccya,PE,city,,,,,,,,,,,,,
+Tallcce,PE,city,,,,,,,,,,,,,
+Tallcco,PE,city,,,,,,,,,,,,,
+Tallce,PE,city,,,,,,,,,,,,,
+Taulli,PE,city,Taulli,es,-9.48183,-77.04693,GeoNames,13254983.0,http://sws.geonames.org/13254983/,PE,,,100.0,90.0,exact
 Templo de Aucará,PE,city,,,,,,,,,,,,,
 Umaci,PE,city,,,,,,,,,,,,,
 Umalla,PE,city,,,,,,,,,,,,,
+Umasi,PE,city,Umasi,es,-14.89142,-70.68701,GeoNames,13238711.0,http://sws.geonames.org/13238711/,PE,,,100.0,90.0,exact
+"Umasi, capilla",PE,city,,,,,,,,,,,,,
+"Umasi, caserio",PE,city,,,,,,,,,,,,,
+"Umasi, cementerio general",PE,city,,,,,,,,,,,,,
+"Umasi, panteón",PE,city,,,,,,,,,,,,,
+"Umasi, panteón general",PE,city,,,,,,,,,,,,,
 Urabamba,PE,city,,,,,,,,,,,,,
 Urccohuase,PE,city,,,,,,,,,,,,,
+Vecino de Aucará,PE,city,,,,,,,,,,,,,
+Vecino de Chacralla,PE,city,,,,,,,,,,,,,
+Vecino de Pampamarca,PE,city,,,,,,,,,,,,,
 Viceparroquia de Chacralla,PE,city,,,,,,,,,,,,,
 Viceparroquia de Pampamarca,PE,city,,,,,,,,,,,,,
+Viceparroquia de esta doctrina,PE,city,,,,,,,,,,,,,
 Vilcas,PE,city,Vilcashuamán,es,-13.65361,-73.95306,GeoNames,3926141.0,http://sws.geonames.org/3926141/,PE,,,100.0,90.0,exact
 Villa de San Juan,PE,city,Villa San Juan,es,-6.37252,-79.80292,GeoNames,3820188.0,http://sws.geonames.org/3820188/,PE,,,90.32258064516128,90.0,fuzzy
+Visvicha,PE,city,,,,,,,,,,,,,
+"Visvicha, panteon",PE,city,,,,,,,,,,,,,
+"Visvicha, panteón",PE,city,,,,,,,,,,,,,
+Vmase,PE,city,,,,,,,,,,,,,
+Yallca,PE,city,,,,,,,,,,,,,
+Yanaccollpa,PE,city,Yanaccollpa,es,-13.62639,-73.63083,GeoNames,3925848.0,http://sws.geonames.org/3925848/,PE,,,100.0,90.0,exact
 Yshua,PE,city,,,,,,,,,,,,,
+Ysua,PE,city,,,,,,,,,,,,,
+del caserio de Accanta,PE,city,,,,,,,,,,,,,
+del caserio de Chihuire,PE,city,,,,,,,,,,,,,
+en el panteon,PE,city,,,,,,,,,,,,,
+español,PE,city,,,,,,,,,,,,,
 iglesia,PE,city,Santa Iglesia,es,-13.9,-74.18333,GeoNames,3929204.0,http://sws.geonames.org/3929204/,PE,,,100.0,90.0,exact
+ilegible,PE,city,,,,,,,,,,,,,
+indio,PE,city,Indio Piro,es,-8.83333,-73.63333,GeoNames,3696222.0,http://sws.geonames.org/3696222/,PE,,,100.0,90.0,exact
+inexistente,PE,city,,,,,,,,,,,,,
+pampamarca,PE,city,Pampamarca,es,-14.14639,-71.45944,GeoNames,3933218.0,http://sws.geonames.org/3933218/,PE,,,100.0,90.0,exact
 pantati,PE,city,,,,,,,,,,,,,
+panteón de la misma,PE,city,,,,,,,,,,,,,
+parroquia de,PE,city,,,,,,,,,,,,,
+provincia Cangallo,PE,city,Cangallo,es,-13.62861,-74.14389,GeoNames,3945793.0,http://sws.geonames.org/3945793/,PE,,,100.0,90.0,exact
+provincia de La Mar,PE,city,,,,,,,,,,,,,
+puna,PE,city,Puno,es,-15.84003,-70.02198,GeoNames,3931276.0,http://sws.geonames.org/3931276/,PE,,,100.0,70.0,exact
+punas,PE,city,Puno,es,-15.84003,-70.02198,GeoNames,3931276.0,http://sws.geonames.org/3931276/,PE,,,100.0,90.0,exact
+punas de Palco,PE,city,,,,,,,,,,,,,
+roto,PE,city,Ceibo Roto,es,-4.8955,-79.65892,GeoNames,6660891.0,http://sws.geonames.org/6660891/,PE,,,100.0,70.0,exact
+"roto, cementerio general",PE,city,,,,,,,,,,,,,
+"roto, panteon",PE,city,,,,,,,,,,,,,
+roto: viceparroquia,PE,city,,,,,,,,,,,,,
 santa,PE,city,Santa Anita - Los Ficus,es,-12.05048,-76.97335,GeoNames,12157007.0,http://sws.geonames.org/12157007/,PE,,,100.0,90.0,exact
 santa iglesia,PE,city,Santa Iglesia,es,-13.9,-74.18333,GeoNames,3929204.0,http://sws.geonames.org/3929204/,PE,,,100.0,90.0,exact
+santa iglesia viceparroquia,PE,city,,,,,,,,,,,,,
+santa iglesia viceparroquial,PE,city,,,,,,,,,,,,,
+santa madre,PE,city,Santa María,es,-11.89444,-69.00589,GeoNames,11511537.0,http://sws.geonames.org/11511537/,PE,,,90.0,90.0,fuzzy
+viceparroquial,PE,city,,,,,,,,,,,,,
