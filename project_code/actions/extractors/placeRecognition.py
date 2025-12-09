@@ -15,7 +15,17 @@ class PlaceExtractor:
         if pd.isna(text) or not isinstance(text, str) or not text.strip():
             return np.nan
 
-        text = re.sub(r'[\[\]\.]', '', text)
+        # Clean up various punctuation and formatting issues
+        # Remove triple quotes, regular quotes, brackets, periods
+        text = re.sub(r'"""', '', text)  # Remove triple quotes first
+        text = re.sub(r'["\[\]\.]', '', text)  # Remove quotes, brackets, periods
+        text = re.sub(r'[¿?!¡]', '', text)  # Remove question/exclamation marks (both Spanish and English)
+        text = re.sub(r'…|\.\.\.', '', text)  # Remove ellipsis (Unicode and ASCII versions)
+        text = text.strip()
+        
+        # If after cleaning we have nothing, return NaN
+        if not text:
+            return np.nan
 
         try:
             doc = self.nlp(text)
@@ -23,7 +33,7 @@ class PlaceExtractor:
             for ent in doc.ents:
                 if ent.label_ in ["LOC"]:  # LOC = location
                     places.append(ent.text.strip())
-            return '|'.join(places) if places else np.nan
+            return '|'.join(places) if places else text.strip()
         except Exception as e:
             print(f"Error processing text '{text}': {e}")
             return np.nan

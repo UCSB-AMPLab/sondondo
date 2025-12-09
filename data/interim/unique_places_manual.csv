@@ -4,6 +4,7 @@ Alcamenca,Alcamenca,PE,pueblo
 Amaicca,Amaicca,PE,pueblo
 Andamarca,Andamarca,PE,city
 Antay,Antay,PE,pueblo
+Apongo,Apongo,PE,city
 Aralla,Aralla,PE,pueblo
 Aucara,Aucará,PE,city
 Aucara Barrio de Mayo,Aucará,PE,city
@@ -16,10 +17,12 @@ Ayacucho,Ayacucho,PE,city
 Ayacuchoi,Ayacucho,PE,city
 Barrio de Mayo,Aucará,PE,city
 Cabana,Cabana,PE,city
+Cachihuancaray,Cachihuancaray,PE,city
 Canaria,Canaria,PE,city
 Cangallo,Cangallo,PE,city
 Caralla,Caralla,PE,city
 Carapo,Carapo,PE,city
+Carhuanca,Carhuanca,PE,city
 Carmen Alto,Carmen Alto,PE,city
 Caserios de Saicasa,Saicasa,PE,pueblo
 Castilla,Castilla Puquio,PE,city
@@ -44,14 +47,21 @@ Chacralla,Chacralla,PE,city
 Chacralla Pampamarca,Chacralla,PE,city
 Chalhuanca,Chalhuanca,PE,city
 Challhuanca,Chalhuanca,PE,city
+Champa,Champa,PE,city
+Chaupicancha,Chaupicancha,PE,city
 Chilcas,Chilcas,PE,city
-Chipau,,PE,city
+Chipau,Chipao,PE,city
+Chipao,Chipao,PE,city
 Chumpe,Chumpe,PE,city
 Churbe,,PE,city
+Chuschi,Chuschi,PE,city
 Ciuda de Ayacucho,Ayacucho,PE,city
 Ciudad de Ayacucho,Ayacucho,PE,city
 Ciudad de Huamanga,Ayacucho,PE,city
+Cochas,Cochas,PE,city
 Colca,San Nicolás,PE,city
+Collay,Collay,PE,city
+Coracora,Coracora,PE,city
 Cordoba,Córdova,PE,city
 Cordova,Cordova,PE,city
 Español de Aucará,Aucará,PE,city
@@ -62,7 +72,11 @@ Huacaña,Huacaña,PE,city
 Huaicahuacho,Huaycahuaycho,PE,city
 Hualla,Huallatalloc,PE,city
 Huamanga,Ayacucho,PE,city
+Huambo,Huambo,PE,city
+Huanacopampa,Huancopampa,PE,city
 Huanca,Huanca Santos,PE,city
+Huancapi,Huancapi,PE,city
+Huancaraylla,Huancaraylla,PE,city
 Huanta,Huanta,PE,city
 Huaycahuacho,Santa Ana de Huaycahuacho,PE,city
 Huaytara,Huaytará,PE,city
@@ -72,24 +86,31 @@ Iglesia de  Aucará,Aucará,PE,city
 Iglesia de Aucará,Aucará,PE,city
 Iglesia de Pampamarca,Pampamarca,PE,city
 Iglesia de Yshua,Ishua,PE,city
+Illapata,Illapata,PE,city
 India,,PE,city
 India de Hishua,Ishua,PE,city
 India de Pampamarca,Pampamarca,PE,city
 Ishua,Ishua,PE,city
 Jauja,Jauja,PE,city
-Julcamarca,Julcamarca,PE,city
+Julcamarca,Julcamarca,PE,pueblo
 Laramate,Laramate,PE,city
 Larcay,Larcay,PE,city
 Lima,Lima,PE,city
+Llusita,Llusita,PE,city
 Lucanas,Lucanas,PE,city
 Mar,Cajamarca,PE,city
+Marca,Marca,PE,city
+Mayo,Mayobamba,PE,city
 Mayobamba,Mayobamba,PE,city
 Morcolla,Morcolla,PE,city
 Moyobamba,Moyobamba,PE,city
 Nasca,Provincia de Nazca,PE,city
 Nazca,Provincia de Nazca,PE,city
 Ocaña,Ocaña,PE,city
-Pallcco,,PE,city
+Paico,Palco,PE,city
+Paire,Paire,PE,city
+Palco,Palco,PE,city
+Pallcco,Palco,PE,city
 Pampa,Pampa Grande,PE,city
 Pampamarca,Pampamarca,PE,city
 Pampamarca Barrio de Mayo,Pampamarca,PE,city
@@ -98,10 +119,14 @@ Pampamarca Caserio de Tallcce,Pampamarca,PE,city
 Pampamarca Santa Ana,Pampamarca,PE,city
 Parroquia de Aucara,Aucará,PE,city
 Parroquia de Aucará,Aucará,PE,city
+Pausa,Pausa,PE,city
+Pincocalla,Pincocalla,PE,city
 Puna,Puno,PE,city
 Puna de Aucara,Aucará,PE,city
 Punas de Aucará,Aucará,PE,city
 Puquio,Puquio,PE,city
+Queca,Queca,PE,city
+Querco,Querco,PE,city
 Querobamba,Querobamba,PE,city
 Sacsamarca,Sacsamarca,PE,city
 Saicasa,,PE,city
@@ -113,6 +138,7 @@ Santa Ana de Aucara,Santa Ana,PE,city
 Sondondo,Sondondo,PE,city
 Soras,Soras Pata,PE,city
 Taccya,,PE,city
+Taullin,Taullin,PE,city
 Templo de Aucará,Aucará,PE,city
 Umaci,Umasi,PE,city
 Umalla,,PE,city
@@ -125,6 +151,7 @@ Vilcas,Vilcashuamán,PE,city
 Villa de San Juan,Villa San Juan,PE,city
 Visvicha,,PE,city
 Yshua,Ishua,PE,city
+Yanaccollpa,,PE,city
 iglesia santa,,PE,city
 pantati,,PE,city
 parroquia de,,PE,city

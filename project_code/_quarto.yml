@@ -4,8 +4,7 @@ project:
   render:
     - "*.qmd"
     - "*.ipynb"
-    - "!0_dataAssessment.ipynb"
-    - "!5_postprocessing.ipynb"
+    - "!x_*.ipynb"
 
 website:
   title: "Sondondo Project Notebooks"
@@ -25,6 +24,8 @@ website:
             text: Textual Variation Analysis for 'Conditions' Columns
           - href: 4_personasCreation.ipynb
             text: Personas Creation
+          - href: 5_visualizations.ipynb
+            text: Visualizations
       - text: Documentation
         contents:
           - href: docpages/schema_documentation.qmd
