@@ -180,6 +180,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Personas Creation</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./5_visualizations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualizations</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -210,6 +216,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#personas-data-structure" id="toc-personas-data-structure" class="nav-link active" data-scroll-target="#personas-data-structure">Personas Data Structure</a></li>
+  <li><a href="#data-extraction" id="toc-data-extraction" class="nav-link" data-scroll-target="#data-extraction">Data Extraction</a>
+  <ul class="collapse">
+  <li><a href="#initial-exploration" id="toc-initial-exploration" class="nav-link" data-scroll-target="#initial-exploration">Initial Exploration</a></li>
+  </ul></li>
+  <li><a href="#quality-assessment" id="toc-quality-assessment" class="nav-link" data-scroll-target="#quality-assessment">Quality Assessment</a>
+  <ul class="collapse">
+  <li><a href="#name-completeness" id="toc-name-completeness" class="nav-link" data-scroll-target="#name-completeness">Name Completeness</a></li>
+  <li><a href="#parental-linkage-completeness" id="toc-parental-linkage-completeness" class="nav-link" data-scroll-target="#parental-linkage-completeness">Parental Linkage Completeness</a></li>
+  <li><a href="#temporal-completeness" id="toc-temporal-completeness" class="nav-link" data-scroll-target="#temporal-completeness">Temporal Completeness</a></li>
+  <li><a href="#spatial-completeness" id="toc-spatial-completeness" class="nav-link" data-scroll-target="#spatial-completeness">Spatial Completeness</a></li>
+  <li><a href="#attribute-completeness" id="toc-attribute-completeness" class="nav-link" data-scroll-target="#attribute-completeness">Attribute Completeness</a></li>
+  <li><a href="#aggregate-completeness-metrics" id="toc-aggregate-completeness-metrics" class="nav-link" data-scroll-target="#aggregate-completeness-metrics">Aggregate Completeness Metrics</a></li>
+  </ul></li>
+  <li><a href="#summary-and-implications" id="toc-summary-and-implications" class="nav-link" data-scroll-target="#summary-and-implications">Summary and Implications</a></li>
   </ul>
 </nav>
     </div>
@@ -254,6 +274,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>marital_status: harmonized marital status of the persona</li>
 </ul>
 <p>Identification of individuals is done by parsing one or a list of dataframes with the clean data, and processing the data using the <code>Persona</code> class. Results are stored in <code>data/interim/personas_extracted.csv</code> for testing, and in <code>data/clean/personas.csv</code> for production.</p>
+</section>
+<section id="data-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="data-extraction">Data Extraction</h2>
+<p>We begin by loading the cleaned sacramental records and extracting persona instances using the <code>PersonaExtractor</code> class. This process creates individual persona records for each person mentioned in the historical documents, preserving their role in each event.</p>
 <div id="e0b706ae" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.extractors <span class="im">import</span> Persona</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -288,40 +312,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">social_condition</th>
 <th data-quarto-table-cell-role="th">marital_status</th>
 <th data-quarto-table-cell-role="th">resident_in</th>
+<th data-quarto-table-cell-role="th">death_place</th>
+<th data-quarto-table-cell-role="th">death_date</th>
 <th data-quarto-table-cell-role="th">gender</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">count</td>
-<td>47071</td>
-<td>47071</td>
-<td>47071</td>
+<td>47072</td>
+<td>47072</td>
+<td>47072</td>
 <td>46999</td>
-<td>2330</td>
-<td>8595</td>
-<td>11865</td>
-<td>46480</td>
-<td>47071</td>
+<td>5378</td>
+<td>8596</td>
+<td>11866</td>
+<td>46762</td>
+<td>47072</td>
 <td>9643</td>
 <td>4275</td>
-<td>399</td>
-<td>47071</td>
+<td>925</td>
+<td>1513</td>
+<td>2114</td>
+<td>47072</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">unique</td>
 <td>10180</td>
 <td>10179</td>
-<td>16</td>
+<td>14</td>
 <td>4286</td>
-<td>85</td>
-<td>7000</td>
+<td>53</td>
+<td>7001</td>
 <td>2</td>
-<td>2615</td>
-<td>47071</td>
+<td>2616</td>
+<td>47072</td>
 <td>7</td>
 <td>3</td>
-<td>18</td>
+<td>19</td>
+<td>7</td>
+<td>1813</td>
 <td>6</td>
 </tr>
 <tr class="odd">
@@ -330,14 +360,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>APAucará-LM-L001_M490</td>
 <td>mother</td>
 <td>mariano</td>
-<td>Pampamarca</td>
+<td>pampamarca</td>
 <td>1901-09-04</td>
 <td>legitimo</td>
 <td>quispe</td>
 <td>persona-1</td>
 <td>indio</td>
 <td>soltero</td>
-<td>Pampamarca</td>
+<td>pampamarca</td>
+<td>aucará</td>
+<td>1871-11-04</td>
 <td>male</td>
 </tr>
 <tr class="even">
@@ -346,14 +378,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>12</td>
 <td>7614</td>
 <td>1556</td>
-<td>1902</td>
+<td>1919</td>
 <td>8</td>
 <td>9104</td>
-<td>2705</td>
+<td>2712</td>
 <td>1</td>
 <td>5654</td>
 <td>2779</td>
 <td>292</td>
+<td>1016</td>
+<td>7</td>
 <td>20150</td>
 </tr>
 </tbody>
@@ -362,9 +396,541 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<section id="initial-exploration" class="level3">
+<h3 class="anchored" data-anchor-id="initial-exploration">Initial Exploration</h3>
+<p>Before conducting detailed quality assessment, we examine the basic structure and distribution of persona types in the extracted dataset.</p>
 <div id="88f66de1" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>personas.to_csv(<span class="st">"../data/clean/personas.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div id="00b68c9e" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>personas.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 47072 entries, 0 to 47071
+Data columns (total 15 columns):
+ #   Column               Non-Null Count  Dtype 
+---  ------               --------------  ----- 
+ 0   event_idno           47072 non-null  object
+ 1   original_identifier  47072 non-null  object
+ 2   persona_type         47072 non-null  object
+ 3   name                 46999 non-null  object
+ 4   birth_place          5378 non-null   object
+ 5   birth_date           8596 non-null   object
+ 6   legitimacy_status    11866 non-null  object
+ 7   lastname             46762 non-null  object
+ 8   persona_idno         47072 non-null  object
+ 9   social_condition     9643 non-null   object
+ 10  marital_status       4275 non-null   object
+ 11  resident_in          925 non-null    object
+ 12  death_place          1513 non-null   object
+ 13  death_date           2114 non-null   object
+ 14  gender               47072 non-null  object
+dtypes: object(15)
+memory usage: 5.4+ MB</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="quality-assessment" class="level2">
+<h2 class="anchored" data-anchor-id="quality-assessment">Quality Assessment</h2>
+<p>To evaluate the suitability of the extracted personas for probabilistic record linkage, we assess data completeness across multiple dimensions: names, parental linkages, temporal information, spatial attributes, and social/legal status markers.</p>
+<p>Names are critical identifiers for record linkage. We assess the completeness of both first names and surnames across all persona types.</p>
+<section id="name-completeness" class="level3">
+<h3 class="anchored" data-anchor-id="name-completeness">Name Completeness</h3>
+<div id="b2f2b0fa" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>name_completeness <span class="op">=</span> personas.loc[(personas[<span class="st">'name'</span>].isna()) <span class="op">|</span> (personas[<span class="st">'lastname'</span>].isna())]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>name_completeness.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Index: 383 entries, 62 to 46928
+Data columns (total 15 columns):
+ #   Column               Non-Null Count  Dtype 
+---  ------               --------------  ----- 
+ 0   event_idno           383 non-null    object
+ 1   original_identifier  383 non-null    object
+ 2   persona_type         383 non-null    object
+ 3   name                 310 non-null    object
+ 4   birth_place          35 non-null     object
+ 5   birth_date           52 non-null     object
+ 6   legitimacy_status    41 non-null     object
+ 7   lastname             73 non-null     object
+ 8   persona_idno         383 non-null    object
+ 9   social_condition     55 non-null     object
+ 10  marital_status       20 non-null     object
+ 11  resident_in          0 non-null      object
+ 12  death_place          26 non-null     object
+ 13  death_date           53 non-null     object
+ 14  gender               383 non-null    object
+dtypes: object(15)
+memory usage: 47.9+ KB</code></pre>
+</div>
+</div>
+<div id="e641938b" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>name_completeness[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>persona_type
+mother               83
+deceased             53
+father_of_husband    45
+father_of_wife       45
+father               44
+godmother            27
+godfather            25
+godparent            13
+wife                 13
+witness              10
+husband               9
+mother_of_wife        7
+mother_of_husband     5
+baptized              4
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="886bdc32" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Percentage of missing names</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>total_personas <span class="op">=</span> <span class="bu">len</span>(personas)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>missing_names <span class="op">=</span> <span class="bu">len</span>(name_completeness)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>percentage_missing_names <span class="op">=</span> (missing_names <span class="op">/</span> total_personas) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing names: </span><span class="sc">{</span>percentage_missing_names<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing names: 0.81%</code></pre>
+</div>
+</div>
+<div id="e784a515" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>missing_firstnames <span class="op">=</span> personas.loc[personas[<span class="st">'name'</span>].isna()]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>percentage_missing_firstnames <span class="op">=</span> (<span class="bu">len</span>(missing_firstnames) <span class="op">/</span> total_personas) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing firstnames: </span><span class="sc">{</span>percentage_missing_firstnames<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing firstnames: 0.16%</code></pre>
+</div>
+</div>
+<div id="d5d15827" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>missing_surnames <span class="op">=</span> personas.loc[personas[<span class="st">'lastname'</span>].isna()]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>percentage_missing_surnames <span class="op">=</span> (<span class="bu">len</span>(missing_surnames) <span class="op">/</span> total_personas) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing lastnames: </span><span class="sc">{</span>percentage_missing_surnames<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing lastnames: 0.66%</code></pre>
+</div>
+</div>
+</section>
+<section id="parental-linkage-completeness" class="level3">
+<h3 class="anchored" data-anchor-id="parental-linkage-completeness">Parental Linkage Completeness</h3>
+<p>For personas identified as children (baptized, deceased children, etc.), we assess whether their parents are properly linked in the dataset. The expectation differs by legitimacy status: legitimate children should have both parents recorded, while illegitimate children require at least one parent.</p>
+<div id="88227ba5" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>legitimate_sons <span class="op">=</span> personas.loc[personas[<span class="st">'legitimacy_status'</span>] <span class="op">==</span> <span class="st">'legitimo'</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ilegitimate_sons <span class="op">=</span> personas.loc[personas[<span class="st">'legitimacy_status'</span>] <span class="op">==</span> <span class="st">'ilegitimo'</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>sons_types <span class="op">=</span> legitimate_sons[<span class="st">'persona_type'</span>].unique().tolist()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># filter ilegitimate sons by sons types to avoid including other ilegitimate personas</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>ilegitimate_sons <span class="op">=</span> ilegitimate_sons.loc[ilegitimate_sons[<span class="st">'persona_type'</span>].isin(sons_types)]</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Legitimate Sons Persona Types and Counts:"</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(legitimate_sons[<span class="st">'persona_type'</span>].value_counts())</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Ilegitimate Sons Persona Types and Counts:"</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ilegitimate_sons[<span class="st">'persona_type'</span>].value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Legitimate Sons Persona Types and Counts:
+persona_type
+baptized    5483
+wife        1267
+husband     1248
+deceased    1106
+Name: count, dtype: int64
+
+Ilegitimate Sons Persona Types and Counts:
+persona_type
+baptized    810
+deceased    201
+wife        170
+husband     165
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="f1dfcd14" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_parents_completeness(sons_df, personas_df, legitimacy<span class="op">=</span><span class="st">'leg'</span>):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get unique event_idno from sons</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    event_ids <span class="op">=</span> sons_df[<span class="st">'event_idno'</span>].unique()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter personas to only relevant events</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    relevant_personas <span class="op">=</span> personas_df[personas_df[<span class="st">'event_idno'</span>].isin(event_ids)]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check for father and mother presence by event</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    events_with_father <span class="op">=</span> <span class="bu">set</span>(relevant_personas[relevant_personas[<span class="st">'persona_type'</span>].<span class="bu">str</span>.contains(<span class="st">'father'</span>, na<span class="op">=</span><span class="va">False</span>)][<span class="st">'event_idno'</span>])</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    events_with_mother <span class="op">=</span> <span class="bu">set</span>(relevant_personas[relevant_personas[<span class="st">'persona_type'</span>].<span class="bu">str</span>.contains(<span class="st">'mother'</span>, na<span class="op">=</span><span class="va">False</span>)][<span class="st">'event_idno'</span>])</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> legitimacy <span class="op">==</span> <span class="st">'leg'</span>:</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># For legitimate sons, both parents should be present</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Incomplete if missing father OR missing mother</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>        events_missing_father <span class="op">=</span> <span class="bu">set</span>(event_ids) <span class="op">-</span> events_with_father</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        events_missing_mother <span class="op">=</span> <span class="bu">set</span>(event_ids) <span class="op">-</span> events_with_mother</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>        incomplete_events <span class="op">=</span> events_missing_father <span class="op">|</span> events_missing_mother</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> legitimacy <span class="op">==</span> <span class="st">'ileg'</span>:</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># For illegitimate sons, at least one parent should be present</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Incomplete if missing BOTH father AND mother</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        incomplete_events <span class="op">=</span> <span class="bu">set</span>(event_ids) <span class="op">-</span> events_with_father <span class="op">-</span> events_with_mother</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Legitimacy must be 'leg' or 'ileg'"</span>)</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get sons with incomplete parents</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    incomplete_sons <span class="op">=</span> sons_df[sons_df[<span class="st">'event_idno'</span>].isin(incomplete_events)]</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> incomplete_sons</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>incomplete_legit_parents <span class="op">=</span> check_parents_completeness(legitimate_sons, personas)</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>incomplete_ilegit_parents <span class="op">=</span> check_parents_completeness(ilegitimate_sons, personas, legitimacy<span class="op">=</span><span class="st">'ileg'</span>)</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of legitimate sons with incomplete parents: </span><span class="sc">{</span><span class="bu">len</span>(incomplete_legit_parents)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of ilegitimate sons with incomplete parents: </span><span class="sc">{</span><span class="bu">len</span>(incomplete_ilegit_parents)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of legitimate sons with incomplete parents: 42
+Number of ilegitimate sons with incomplete parents: 9</code></pre>
+</div>
+</div>
+<p>The results show excellent parental linkage quality:</p>
+<ul>
+<li><strong>Legitimate personas</strong> (9,110 total): Only 0.46% (42 cases) have incomplete parental records</li>
+<li><strong>Illegitimate personas</strong> (1,310 total): Only 0.68% (9 cases) lack at least one parent</li>
+</ul>
+<p>This high completeness rate indicates that the extraction process successfully preserved family relationships recorded in the sacramental registers.</p>
+</section>
+<section id="temporal-completeness" class="level3">
+<h3 class="anchored" data-anchor-id="temporal-completeness">Temporal Completeness</h3>
+<p>We assess the availability of birth and death dates, which are essential for temporal reasoning in record linkage.</p>
+<div id="dc1e4491" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>nobirthdate <span class="op">=</span> personas.loc[personas[<span class="st">'birth_date'</span>].isna()]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>personas_size <span class="op">=</span> <span class="bu">len</span>(personas)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>nobirthdate_size <span class="op">=</span> <span class="bu">len</span>(nobirthdate)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>percentage_nobirthdate <span class="op">=</span> (nobirthdate_size <span class="op">/</span> personas_size) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing birth dates: </span><span class="sc">{</span>percentage_nobirthdate<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>nobirthdate[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing birth dates: 81.74%</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>persona_type
+mother               7614
+father               7369
+witness              4249
+godparent            3260
+godmother            3251
+godfather            3012
+wife                 1470
+mother_of_wife       1459
+husband              1441
+mother_of_husband    1439
+father_of_wife       1438
+father_of_husband    1410
+baptized              978
+deceased               86
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="2b581232" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nodeathdate <span class="op">=</span> personas.loc[personas[<span class="st">'death_date'</span>].isna()]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>nodeathdate_size <span class="op">=</span> <span class="bu">len</span>(nodeathdate)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>percentage_nodeathdate <span class="op">=</span> (nodeathdate_size <span class="op">/</span> personas_size) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing death dates: </span><span class="sc">{</span>percentage_nodeathdate<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>nodeathdate[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing death dates: 95.51%</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>persona_type
+mother               7614
+father               7369
+baptized             6340
+witness              4249
+godparent            3260
+godmother            3251
+godfather            3012
+wife                 2060
+husband              2051
+mother_of_wife       1459
+mother_of_husband    1439
+father_of_wife       1438
+father_of_husband    1410
+deceased                6
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="spatial-completeness" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-completeness">Spatial Completeness</h3>
+<p>Birth and death places provide geographic context for mobility analysis and help disambiguate between individuals with similar names.</p>
+<div id="5b502e43" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>nonbirthplace <span class="op">=</span> personas.loc[personas[<span class="st">'birth_place'</span>].isna()]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>nonbirthplace_size <span class="op">=</span> <span class="bu">len</span>(nonbirthplace)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>percentage_nonbirthplace <span class="op">=</span> (nonbirthplace_size <span class="op">/</span> personas_size) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing birth places: </span><span class="sc">{</span>percentage_nonbirthplace<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>nonbirthplace[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing birth places: 88.57%</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>persona_type
+mother               7614
+father               7369
+baptized             4532
+witness              4249
+godparent            3260
+godmother            3251
+godfather            3012
+mother_of_wife       1459
+mother_of_husband    1439
+father_of_wife       1438
+father_of_husband    1410
+wife                 1154
+husband              1114
+deceased              393
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="13dbc696" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>nodeathplace <span class="op">=</span> personas.loc[personas[<span class="st">'death_place'</span>].isna()]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>nodeathplace_size <span class="op">=</span> <span class="bu">len</span>(nodeathplace)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>percentage_nodeathplace <span class="op">=</span> (nodeathplace_size <span class="op">/</span> personas_size) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing death places: </span><span class="sc">{</span>percentage_nodeathplace<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>nodeathplace[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing death places: 96.79%</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>persona_type
+mother               7614
+father               7369
+baptized             6340
+witness              4249
+godparent            3260
+godmother            3251
+godfather            3012
+wife                 2060
+husband              2051
+mother_of_wife       1459
+mother_of_husband    1439
+father_of_wife       1438
+father_of_husband    1410
+deceased              607
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="fefe7c38" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># personas with both birth and death places present</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>birth_and_death_places <span class="op">=</span> personas.loc[personas[<span class="st">'birth_place'</span>].notna() <span class="op">&amp;</span> personas[<span class="st">'death_place'</span>].notna()]</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>birth_and_death_places_size <span class="op">=</span> <span class="bu">len</span>(birth_and_death_places)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>percentage_birth_and_death_places <span class="op">=</span> (birth_and_death_places_size <span class="op">/</span> personas_size) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with both birth and death places present: </span><span class="sc">{</span>percentage_birth_and_death_places<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>birth_and_death_places[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with both birth and death places present: 2.59%</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>persona_type
+deceased    1219
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="attribute-completeness" class="level3">
+<h3 class="anchored" data-anchor-id="attribute-completeness">Attribute Completeness</h3>
+<p>We examine the completeness of harmonized social and legal status attributes (legitimacy, marital status, social condition), which provide contextual information that can strengthen or weaken linkage hypotheses.</p>
+<div id="032ac0f9" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>legitimacy_missing <span class="op">=</span> personas.loc[personas[<span class="st">'legitimacy_status'</span>].isna()]</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>legitimacy_missing_size <span class="op">=</span> <span class="bu">len</span>(legitimacy_missing)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>percentage_legitimacy_missing <span class="op">=</span> (legitimacy_missing_size <span class="op">/</span> personas_size) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing legitimacy status: </span><span class="sc">{</span>percentage_legitimacy_missing<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>legitimacy_missing[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing legitimacy status: 74.79%</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>persona_type
+mother               7608
+father               7365
+witness              4249
+godparent            3258
+godmother            3248
+godfather            3008
+mother_of_wife       1113
+father_of_wife       1093
+mother_of_husband    1085
+father_of_husband    1058
+deceased              813
+husband               638
+wife                  623
+baptized               47
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="056b1940" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>marital_status_missing <span class="op">=</span> personas.loc[personas[<span class="st">'marital_status'</span>].isna()]</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>marital_status_missing_size <span class="op">=</span> <span class="bu">len</span>(marital_status_missing)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>percentage_marital_status_missing <span class="op">=</span> (marital_status_missing_size <span class="op">/</span> personas_size) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing marital status: </span><span class="sc">{</span>percentage_marital_status_missing<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>marital_status_missing[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing marital status: 90.92%</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>persona_type
+mother               7550
+father               7362
+baptized             6340
+witness              4249
+godmother            3250
+godparent            3241
+godfather            3011
+mother_of_wife       1459
+mother_of_husband    1438
+father_of_wife       1438
+father_of_husband    1410
+deceased              917
+wife                  586
+husband               546
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="cf0c481e" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>social_condition_missing <span class="op">=</span> personas.loc[personas[<span class="st">'social_condition'</span>].isna()]</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>social_condition_missing_size <span class="op">=</span> <span class="bu">len</span>(social_condition_missing)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>percentage_social_condition_missing <span class="op">=</span> (social_condition_missing_size <span class="op">/</span> personas_size) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing social condition: </span><span class="sc">{</span>percentage_social_condition_missing<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>social_condition_missing[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of personas with missing social condition: 79.51%</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>persona_type
+mother               6715
+father               6564
+baptized             4338
+witness              4249
+godparent            2967
+godfather            2922
+godmother            2901
+wife                 1196
+husband              1145
+mother_of_wife        955
+father_of_wife        938
+mother_of_husband     938
+father_of_husband     917
+deceased              684
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="aggregate-completeness-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="aggregate-completeness-metrics">Aggregate Completeness Metrics</h3>
+<p>Beyond individual field completeness, we calculate overall completeness scores to understand the general quality of persona records. We compute both a simple completeness score (proportion of non-null fields) and a weighted score that prioritizes critical fields for record linkage.</p>
+<section id="simple-completeness-score" class="level4">
+<h4 class="anchored" data-anchor-id="simple-completeness-score">Simple Completeness Score</h4>
+<p>The simple score treats all fields equally, providing a general measure of data richness.</p>
+<div id="ec0eacb6" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>personas[<span class="st">'completeness_score'</span>] <span class="op">=</span> personas.notna().<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">/</span> <span class="bu">len</span>(personas.columns)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>personas.groupby(<span class="st">'persona_type'</span>)[<span class="st">'completeness_score'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>persona_type
+deceased             0.821415
+husband              0.656038
+wife                 0.651748
+baptized             0.629243
+mother_of_husband    0.506092
+mother_of_wife       0.505186
+father_of_husband    0.504492
+father_of_wife       0.503755
+mother               0.474424
+father               0.473651
+godmother            0.473372
+godparent            0.472822
+godfather            0.468216
+witness              0.466510
+Name: completeness_score, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+<section id="weighted-completeness-score" class="level4">
+<h4 class="anchored" data-anchor-id="weighted-completeness-score">Weighted Completeness Score</h4>
+<p>The weighted score assigns higher importance to fields crucial for record linkage (names, dates) and lower weights to supplementary attributes (social condition, residence). This reflects the differential utility of fields in matching algorithms.</p>
+<div id="a33d08fc" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> {</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'name'</span>: <span class="fl">0.15</span>,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'lastname'</span>: <span class="fl">0.15</span>,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'birth_date'</span>: <span class="fl">0.125</span>,</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'death_date'</span>: <span class="fl">0.125</span>,</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'birth_place'</span>: <span class="fl">0.10</span>,</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'death_place'</span>: <span class="fl">0.10</span>,</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'legitimacy_status'</span>: <span class="fl">0.05</span>,</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'marital_status'</span>: <span class="fl">0.05</span>,</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'social_condition'</span>: <span class="fl">0.05</span>,</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'gender'</span>: <span class="fl">0.05</span>,</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'resident_in'</span>: <span class="fl">0.05</span></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> weighted_completeness(row, weights):</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col, w <span class="kw">in</span> weights.items():</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pd.notna(row[col]):</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>            score <span class="op">+=</span> w</span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> score</span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>personas[<span class="st">'weighted_completeness'</span>] <span class="op">=</span> personas.<span class="bu">apply</span>(weighted_completeness, axis<span class="op">=</span><span class="dv">1</span>, weights<span class="op">=</span>weights)</span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>personas.groupby(<span class="st">'persona_type'</span>)[<span class="st">'weighted_completeness'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>persona_type
+deceased             0.836722
+baptized             0.549558
+husband              0.536738
+wife                 0.531650
+mother_of_husband    0.379222
+mother_of_wife       0.378410
+father_of_husband    0.375177
+father_of_wife       0.374687
+mother               0.354728
+father               0.354641
+godparent            0.354218
+godmother            0.354199
+godfather            0.350332
+witness              0.349647
+Name: weighted_completeness, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+<section id="comparison-of-completeness-metrics" class="level4">
+<h4 class="anchored" data-anchor-id="comparison-of-completeness-metrics">Comparison of Completeness Metrics</h4>
+<p>Visualizing the relationship between simple and weighted completeness reveals how different persona types vary in their possession of high-priority fields.</p>
+<div id="18ad6c77" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot correlation between completeness_score and weighted_completeness</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>personas, x<span class="op">=</span><span class="st">'completeness_score'</span>, y<span class="op">=</span><span class="st">'weighted_completeness'</span>, hue<span class="op">=</span><span class="st">'persona_type'</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Correlation between Completeness Score and Weighted Completeness'</span>)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Completeness Score'</span>)</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Weighted Completeness'</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">'Persona Type'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>), loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="4_personasCreation_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="summary-and-implications" class="level2">
+<h2 class="anchored" data-anchor-id="summary-and-implications">Summary and Implications</h2>
+<p>The quality assessment reveals that the persona extraction process successfully preserved historical information with high fidelity:</p>
+<ul>
+<li><strong>Name completeness</strong> is excellent for most persona types, with missing names concentrated in expected categories (e.g., godparents, witnesses)</li>
+<li><strong>Parental linkages</strong> are nearly complete (&gt;99%) for both legitimate and illegitimate children, enabling family reconstruction</li>
+<li><strong>Temporal and spatial data</strong> show variable completeness depending on persona type, reflecting the original documentary practices</li>
+<li><strong>Weighted completeness scores</strong> indicate that core linkage fields (names, dates) are well-populated across persona types</li>
+</ul>
+<p>These results suggest that the dataset is well-suited for probabilistic record linkage, with sufficient information density to support robust matching algorithms while retaining the historical nuances present in the original sacramental registers.</p>
 
 
 </section>
