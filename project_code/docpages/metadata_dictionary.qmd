@@ -2,11 +2,11 @@
 title: "Metadata Dictionary"
 execute:
     echo: true
-    message: false
 format:
     html:
-        code-fold: false
-lightbox: true
+        code-fold: true
+        code-tools: true
+        code-summary: "Show code"
 ---
 
 ```{r}
@@ -18,10 +18,14 @@ library(tidyverse)
 
 ### Baptisms
 
+::: {.callout-note collapse="true"}
+## Dataset Structure
+
 ```{r}
 baptisms <- readr::read_csv("../../data/clean/bautismos_clean.csv", show_col_types = FALSE)
 baptisms %>% glimpse()
 ```
+:::
 
 The `baptisms` table contains cleaned and standardized records of baptism events extracted from parish registers. Each row represents a unique baptism event with associated attributes such as date, location, and involved individuals.
 
@@ -57,10 +61,14 @@ The `baptisms` table contains cleaned and standardized records of baptism events
 
 ### Marriages
 
+::: {.callout-note collapse="true"}
+## Dataset Structure
+
 ```{r}
 marriages <- readr::read_csv("../../data/clean/matrimonios_clean.csv", show_col_types = FALSE)
 marriages %>% glimpse()
 ```
+:::
 
 The `marriages` table contains cleaned and standardized records of marriage events extracted from parish registers. Each row represents a unique marriage event with associated attributes for both spouses, their families, witnesses, and godparents.
 
@@ -124,10 +132,14 @@ The `marriages` table contains cleaned and standardized records of marriage even
 
 ### Burials
 
+::: {.callout-note collapse="true"}
+## Dataset Structure
+
 ```{r}
 burials <- readr::read_csv("../../data/clean/entierros_clean.csv", show_col_types = FALSE)
 burials %>% glimpse()
 ```
+:::
 
 The `burials` table contains cleaned and standardized records of burial events extracted from parish registers. Each row represents a unique burial event with associated attributes such as date, location, and information about the deceased individual and their surviving family members.
 
@@ -162,10 +174,14 @@ The `burials` table contains cleaned and standardized records of burial events e
 
 ## Places
 
+::: {.callout-note collapse="true"}
+## Dataset Structure
+
 ```{r}
 places <- readr::read_csv("../../data/clean/unique_places.csv", show_col_types = FALSE)
 places %>% glimpse()
 ```
+:::
 
 The `places` table contains unique geographic locations mentioned in the parish records, along with their standardized names and geographic coordinates.
 
@@ -192,10 +208,14 @@ The `places` table contains unique geographic locations mentioned in the parish 
 
 ## Personas
 
+::: {.callout-note collapse="true"}
+## Dataset Structure
+
 ```{r}
 personas <- readr::read_csv("../../data/clean/personas.csv", show_col_types = FALSE)
 personas %>% glimpse()
 ```
+:::
 
 Personas represent individual mentions of people in the historical records before any aggregation through probabilistic record linkage (PRL). Each row corresponds to a unique mention with associated attributes such as name, birth and death details, and places.
 
