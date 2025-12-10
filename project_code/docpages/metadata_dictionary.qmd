@@ -14,7 +14,13 @@ format:
 library(tidyverse)
 ```
 
+This metadata dictionary provides comprehensive documentation for all datasets in the `data/clean/` folder. Each section includes the dataset structure, a description of the table's purpose, and detailed field-level documentation with expected data types and descriptions.
+
+The datasets represent historical parish records from Sondondo, Peru, covering vital events (baptisms, marriages, and burials) as well as derived entities (places and personas). All records have been cleaned, normalized, and harmonized to facilitate analysis and integration.
+
 ## Events
+
+Event tables document vital religious ceremonies recorded in parish registers: baptisms, marriages, and burials. These records form the primary source material for the project, capturing not only the principal individuals involved but also family relationships, social conditions, and geographic information. Each event type has its own structure reflecting the specific information recorded for that ceremony.
 
 ### Baptisms
 
@@ -26,8 +32,6 @@ baptisms <- readr::read_csv("../../data/clean/bautismos_clean.csv", show_col_typ
 baptisms %>% glimpse()
 ```
 :::
-
-The `baptisms` table contains cleaned and standardized records of baptism events extracted from parish registers. Each row represents a unique baptism event with associated attributes such as date, location, and involved individuals.
 
 | Property     | Expected Type | Description |
 |--------------|---------------|-------------|
@@ -174,6 +178,8 @@ The `burials` table contains cleaned and standardized records of burial events e
 
 ## Places
 
+The places table represents a controlled vocabulary of geographic locations extracted from all event records and normalized through a combination of manual curation and automated gazetteer matching. Each place has been geocoded and linked to external authorities (GeoNames, Getty Thesaurus of Geographic Names) when possible, enabling spatial analysis and visualization of the historical records.
+
 ::: {.callout-note collapse="true"}
 ## Dataset Structure
 
@@ -204,9 +210,9 @@ The `places` table contains unique geographic locations mentioned in the parish 
 | match_type | Text      | Type of match made during standardization (e.g., `exact`, `fuzzy`) |
 | mentioned_as | Text   | Original text mention of the place in the records |
 
----
-
 ## Personas
+
+Personas represent individual person mentions extracted from all event records and restructured into a person-centric format. Unlike the event tables which are organized around ceremonies, this table focuses on individuals and their attributes as documented across multiple events. Each row is a unique person mention with inferred demographic information, though multiple mentions may refer to the same historical individual. Future work will link these mentions through probabilistic record linkage to reconstruct life histories.
 
 ::: {.callout-note collapse="true"}
 ## Dataset Structure
