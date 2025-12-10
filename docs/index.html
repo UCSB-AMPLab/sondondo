@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -190,6 +224,16 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
   </ul></li>
   <li><a href="#current-status" id="toc-current-status" class="nav-link" data-scroll-target="#current-status">Current Status</a></li>
+  <li><a href="#datasets" id="toc-datasets" class="nav-link" data-scroll-target="#datasets">Datasets</a>
+  <ul class="collapse">
+  <li><a href="#raw-data" id="toc-raw-data" class="nav-link" data-scroll-target="#raw-data">Raw Data</a></li>
+  <li><a href="#cleaned-data" id="toc-cleaned-data" class="nav-link" data-scroll-target="#cleaned-data">Cleaned Data</a></li>
+  <li><a href="#personas-dataset" id="toc-personas-dataset" class="nav-link" data-scroll-target="#personas-dataset">Personas Dataset</a></li>
+  </ul></li>
+  <li><a href="#technical-contributions" id="toc-technical-contributions" class="nav-link" data-scroll-target="#technical-contributions">Technical Contributions</a>
+  <ul class="collapse">
+  <li><a href="#georesolver-library" id="toc-georesolver-library" class="nav-link" data-scroll-target="#georesolver-library">GeoResolver Library</a></li>
+  </ul></li>
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
   </ul></li>
   </ul>
@@ -257,8 +301,57 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="current-status" class="level2">
 <h2 class="anchored" data-anchor-id="current-status">Current Status</h2>
-<p><strong>Phase:</strong> ✅ Data Cleaning &amp; Personas Creation Complete</p>
-<p>The project has successfully completed initial data collection, comprehensive cleaning and standardization, and the creation of a unified personas dataset. Current work focuses on implementing probabilistic record linkage algorithms to identify unique individuals across the corpus.</p>
+<p><strong>Phase:</strong> ✅ <strong>Documentation &amp; Visualization</strong> (v0.3.0)</p>
+<p>The project has successfully completed: - ✅ <strong>Phase 1</strong>: Data Cleaning &amp; Standardization - ✅ <strong>Phase 2</strong>: Personas Dataset Creation<br>
+- ✅ <strong>Phase 3</strong>: Documentation &amp; Visualization</p>
+<p>Current work focuses on implementing probabilistic record linkage algorithms to identify unique individuals across the corpus.</p>
+</section>
+<section id="datasets" class="level2">
+<h2 class="anchored" data-anchor-id="datasets">Datasets</h2>
+<section id="raw-data" class="level3">
+<h3 class="anchored" data-anchor-id="raw-data">Raw Data</h3>
+<p>The original transcribed data is stored in <code>data/raw/</code>:</p>
+<ul>
+<li><strong>bautismos.csv</strong>: Baptism records (6,340 entries, 36 columns)</li>
+<li><strong>matrimonios.csv</strong>: Marriage records (1,719 entries, 66 columns)</li>
+<li><strong>entierros.csv</strong>: Burial records (2,121 entries, 37 columns)</li>
+</ul>
+<p>Data was collected through manual transcription from digitized parish registers, using structured Google Sheets templates followed by manual quality review.</p>
+</section>
+<section id="cleaned-data" class="level3">
+<h3 class="anchored" data-anchor-id="cleaned-data">Cleaned Data</h3>
+<p>Processed datasets in <code>data/clean/</code>:</p>
+<ul>
+<li><strong>bautismos_clean.csv</strong>: Cleaned baptism records with standardized columns and normalized data</li>
+<li><strong>matrimonios_clean.csv</strong>: Cleaned marriage records with harmonized fields</li>
+<li><strong>entierros_clean.csv</strong>: Cleaned burial records with processed names and places</li>
+<li><strong>unique_places.csv</strong>: Geographic locations extracted and standardized through gazetteers</li>
+</ul>
+<p><strong>Processing achievements:</strong> - Column harmonization across all datasets - Date normalization to ISO 8601 format (YYYY-MM-DD) - Name standardization using custom algorithms - Geographic entity extraction using Named Entity Recognition (NER) - Age inference and data validation - Comprehensive quality audit and error reporting</p>
+</section>
+<section id="personas-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="personas-dataset">Personas Dataset</h3>
+<p><strong>personas.csv</strong> consolidates all individuals mentioned across event records:</p>
+<ul>
+<li>Unified schema across all record types (baptisms, marriages, burials)</li>
+<li>Role-based extraction (baptized, parent, godparent, spouse, deceased, witness, etc.)</li>
+<li>Preserved source record metadata for traceability</li>
+<li>Standardized name and place fields ready for probabilistic matching</li>
+<li>Each row represents a unique person-event mention with demographic attributes</li>
+</ul>
+<p>This dataset serves as the foundation for probabilistic record linkage to reconstruct individual life histories.</p>
+</section>
+</section>
+<section id="technical-contributions" class="level2">
+<h2 class="anchored" data-anchor-id="technical-contributions">Technical Contributions</h2>
+<section id="georesolver-library" class="level3">
+<h3 class="anchored" data-anchor-id="georesolver-library">GeoResolver Library</h3>
+<p>As part of this research, we developed and published <strong><a href="https://pypi.org/project/georesolver/">GeoResolver</a></strong>, a Python library for geographic entity resolution and coordinate lookup. This library emerged from our work on place name standardization within the parish records.</p>
+<p><strong>Key features:</strong> - Geographic entity recognition and normalization - Coordinate lookup and validation - Place name standardization for historical data - Caching mechanisms for improved performance</p>
+<p><strong>Installation:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install georesolver</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The GeoResolver library is actively used in this project for processing geographic descriptors and place names found in the historical records.</p>
+</section>
 </section>
 <section id="data-sources" class="level2">
 <h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
