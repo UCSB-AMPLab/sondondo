@@ -3,6 +3,51 @@ title: "Welcome"
 format: html
 ---
 
-# Sondondo Data Project
+# Sondondo Parish Records Project
 
-This is a collection of notebooks and documentation for the Sondondo historical data processing project.
+## Project Overview
+
+This project employs probabilistic record linkage methods to identify unique individuals within parish records from the Sondondo Valley, Peru, spanning from 1760 to 1921. The collection encompasses **10,180 historical records** across three vital event types: baptisms (6,340 records), marriages (1,719 records), and burials (2,121 records).
+
+Historical parish records provide valuable insights into demographic, social, and familial patterns, but they often lack explicit unique identifiers, making it challenging to track individuals across multiple life events. By leveraging contextual data—such as names, familial relationships, geographic locations, and event dates—this project aims to reconstruct individual life histories and reveal the social networks of this historical community.
+
+### Research Objectives
+
+- **Entity Resolution**: Apply probabilistic record linkage to identify unique individuals across multiple event records
+- **Data Standardization**: Clean, normalize, and harmonize inconsistent historical data from manuscript sources
+- **Network Analysis**: Uncover familial and social connections within the community through relationship mapping
+- **Methodological Contribution**: Develop replicable workflows for processing historical datasets with similar challenges
+
+## Documentation Structure
+
+This documentation site presents the complete data processing pipeline through a series of interconnected notebooks and reference materials:
+
+### Notebooks
+
+The **Notebooks** section contains detailed computational workflows documenting each phase of data processing:
+
+1. **Data Cleaning**: Comprehensive data cleaning including column harmonization, date normalization, name standardization, and quality validation
+2. **Place Mapping**: Geographic entity extraction using Named Entity Recognition (NER) and standardization through external gazetteers
+3. **Textual Variation Analysis**: Statistical analysis of social condition terminology and controlled vocabulary development
+4. **Personas Creation**: Extraction and consolidation of individual person mentions from event records into a unified person-centric dataset
+5. **Visualizations**: Exploratory data analysis and visual summaries of the processed datasets
+
+### Documentation
+
+The **Documentation** section provides reference materials for understanding and working with the datasets:
+
+- **Metadata Dictionary**: Complete field-level documentation for all cleaned datasets, including data types, descriptions, and controlled vocabularies
+
+## Current Status
+
+**Phase:** ✅ Data Cleaning & Personas Creation Complete
+
+The project has successfully completed initial data collection, comprehensive cleaning and standardization, and the creation of a unified personas dataset. Current work focuses on implementing probabilistic record linkage algorithms to identify unique individuals across the corpus.
+
+## Data Sources
+
+Data was collected through manual transcription from digitized parish registers of the Sondondo Valley, Peru. All transcriptions were performed directly from document images using structured templates in Google Sheets, followed by manual review for quality assurance.
+
+---
+
+*For technical details, source code, and raw data access, visit the [project repository](https://github.com/UCSB-AMPLab/sondondo).*
