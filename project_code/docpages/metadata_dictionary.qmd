@@ -1,5 +1,5 @@
 ---
-title: "Database Schema Documentation"
+title: "Metadata Dictionary"
 execute:
     echo: true
     message: false
@@ -9,124 +9,211 @@ format:
 lightbox: true
 ---
 
-## ConditionVocab
+```{r}
+#| output: false
+library(tidyverse)
+```
 
-Standardized set of terms describing legitimacy status, marital status, or social condition.  
-Values are harmonized through controlled vocabularies and mappings to ensure consistency for probabilistic record linkage (PRL).
+## Events
 
-| Property | Expected Type | Description |
-|----------|---------------|-------------|
-| label    | Text          | Standardized label representing the condition (e.g., "legitimate", "mestizo") |
-| type     | Text          | Category of the condition: `legitimacy`, `marriage_status`, or `social_condition` |
+### Baptisms
 
----
+```{r}
+baptisms <- readr::read_csv("../../data/clean/bautismos_clean.csv", show_col_types = FALSE)
+baptisms %>% glimpse()
+```
 
-## Event
-
-A sacramental event — baptism, marriage, or burial — as recorded in the dataset.
-
-| Property    | Expected Type | Description |
-|-------------|---------------|-------------|
-| event_type  | Text          | Type of sacramental event (`baptism`, `marriage`, `burial`) |
-| event_date  | Date          | Date of the event (recorded or approximate) in ISO 8601 format |
-| event_place | Integer       | FK to the Place where the event occurred |
-| record_id   | Integer       | FK to the Record that contains this event |
-
----
-
-## OriginalTerms
-
-Original recorded form of a label before normalization.  
-These are stored exactly as they appear in the source, without edits, for traceability.
-
-| Property       | Expected Type | Description |
-|----------------|---------------|-------------|
-| label_type     | Text          | Entity type the label refers to (`person`, `place`, `event`) |
-| label_value    | Text          | Original unnormalized textual form |
-| label_language | Text          | Language code in ISO 639 format |
-
----
-
-## Persona
-
-A _persona_ is “each mention instance of a person in a document” (Embley, 2021).  
-This table stores individual mentions before any PRL aggregation.
+The `baptisms` table contains cleaned and standardized records of baptism events extracted from parish registers. Each row represents a unique baptism event with associated attributes such as date, location, and involved individuals.
 
 | Property     | Expected Type | Description |
 |--------------|---------------|-------------|
-| name         | Text          | Normalized first and middle name(s) |
-| lastname     | Text          | Normalized or inferred surname(s) |
-| birth_date   | Date          | Recorded or inferred date of birth in ISO 8601 format |
-| birth_place  | Integer       | FK to Place of birth |
-| death_date   | Date          | Recorded or inferred date of death in ISO 8601 format |
-| death_place  | Integer       | FK to Place of death |
-| notes        | Text          | Free-text notes from transcription or data processing |
+| file      | Text          | Source file name from which the record was extracted |
+| identifier | Text          | Secuential identifier for the baptism event |
+| event_type | Text          | Type of event (`Bautizo`) |
+| event_date | Date          | Date of the baptism event in ISO 8601 format |
+| baptized_name | Text       | Normalized first and middle name(s) of the baptized individual |
+| baptized_lastname | Text   | Normalized or inferred surname(s) of the baptized individual |
+| baptized_birth_place | Text   | Place of birth of the baptized individual |
+| baptized_birth_date | Date    | Date of birth of the baptized individual in ISO 8601 format |
+| baptized_legitimacy_status | Text | Legitimacy status at birth (`legitimo`, `ilegitimo`) |
+| father_name | Text         | Normalized name of the father |
+| father_lastname | Text     | Normalized or inferred surname(s) of the father |
+| father_social_condition | Text  | Social, ethnical, or political marker of the father (`mestizo`, `indio`, `tributario`, `vecino`) |
+| mother_name | Text         | Normalized name of the mother |
+| mother_lastname | Text     | Normalized or inferred surname(s) of the mother |
+| mother_social_condition | Text  | Social, ethnical, or political marker of the mother (`mestizo`, `indio`, `tributario`, `vecino`) |
+| parents_social_condition | Text | Combined social condition of both parents |
+| godfather_name | Text     | Normalized name of the godfather |
+| godfather_lastname | Text | Normalized or inferred surname(s) of the godfather |
+| godfather_social_condition | Text | Social, ethnical, or political marker of the godfather (`mestizo`, `indio`, `tributario`, `vecino`) |
+| godmother_name | Text     | Normalized name of the godmother |
+| godmother_lastname | Text | Normalized or inferred surname(s) of the godmother |
+| godmother_social_condition | Text | Social, ethnical, or political marker of the godmother (`mestizo`, `indio`, `tributario`, `vecino`) |
+| event_place | Text        | Place where the baptism event took place |
+| event_geographic_descriptor_1 | Text | Place or location mentioned in the record |
+| event_geographic_descriptor_2 | Text | Additional place or location mentioned in the record |
+| event_geographic_descriptor_3 | Text | Additional place or location mentioned in the record |
+| event_geographic_descriptor_4 | Text | Additional place or location mentioned in the record |
+
+### Marriages
+
+```{r}
+marriages <- readr::read_csv("../../data/clean/matrimonios_clean.csv", show_col_types = FALSE)
+marriages %>% glimpse()
+```
+
+The `marriages` table contains cleaned and standardized records of marriage events extracted from parish registers. Each row represents a unique marriage event with associated attributes for both spouses, their families, witnesses, and godparents.
+
+| Property     | Expected Type | Description |
+|--------------|---------------|-------------|
+| file      | Text          | Source file name from which the record was extracted |
+| identifier | Text          | Sequential identifier for the marriage event |
+| event_type | Text          | Type of event (`Matrimonio`) |
+| event_date | Date          | Date of the marriage event in ISO 8601 format |
+| husband_name | Text       | Normalized first and middle name(s) of the husband |
+| husband_lastname | Text   | Normalized or inferred surname(s) of the husband |
+| husband_social_condition | Text  | Social, ethnical, or political marker of the husband (`mestizo`, `indio`, `tributario`, `vecino`, `don`) |
+| husband_marital_status | Text | Marital status of the husband at the time of marriage (`soltero`, `viudo`) |
+| husband_birth_date | Date    | Date of birth of the husband in ISO 8601 format |
+| husband_birth_place | Text   | Place of birth of the husband |
+| husband_resident_in | Text   | Recorded place of residence of the husband at the time of the event |
+| husband_legitimacy_status | Text | Legitimacy status of the husband at birth (`legítimo`, `ilegitimo`, `natural`) |
+| husband_father_name | Text  | Normalized name of the husband's father |
+| husband_father_lastname | Text | Normalized or inferred surname(s) of the husband's father |
+| husband_father_social_condition | Text | Social, ethnical, or political marker of the husband's father (`mestizo`, `indio`, `tributario`, `vecino`, `don`) |
+| husband_mother_name | Text  | Normalized name of the husband's mother |
+| husband_mother_lastname | Text | Normalized or inferred surname(s) of the husband's mother |
+| husband_mother_social_condition | Text | Social, ethnical, or political marker of the husband's mother (`mestizo`, `indio`, `tributario`, `vecino`, `doña`) |
+| wife_name | Text         | Normalized first and middle name(s) of the wife |
+| wife_lastname | Text     | Normalized or inferred surname(s) of the wife |
+| wife_social_condition | Text  | Social, ethnical, or political marker of the wife (`mestizo`, `indio`, `tributario`, `vecino`, `doña`) |
+| wife_marital_status | Text | Marital status of the wife at the time of marriage (`soltera`, `viuda`) |
+| wife_birth_date | Date    | Date of birth of the wife in ISO 8601 format |
+| wife_birth_place | Text   | Place of birth of the wife |
+| wife_resident_in | Text   | Recorded place of residence of the wife at the time of the event |
+| wife_legitimacy_status | Text | Legitimacy status of the wife at birth (`legítima`, `ilegitima`, `natural`) |
+| wife_father_name | Text    | Normalized name of the wife's father |
+| wife_father_lastname | Text | Normalized or inferred surname(s) of the wife's father |
+| wife_father_social_condition | Text | Social, ethnical, or political marker of the wife's father (`mestizo`, `indio`, `tributario`, `vecino`, `don`) |
+| wife_mother_name | Text    | Normalized name of the wife's mother |
+| wife_mother_lastname | Text | Normalized or inferred surname(s) of the wife's mother |
+| wife_mother_social_condition | Text | Social, ethnical, or political marker of the wife's mother (`mestizo`, `indio`, `tributario`, `vecino`, `doña`) |
+| godparent_1_name | Text   | Normalized name of the first godparent |
+| godparent_1_lastname | Text | Normalized or inferred surname(s) of the first godparent |
+| godparent_1_social_condition | Text | Social, ethnical, or political marker of the first godparent (`mestizo`, `indio`, `tributario`, `vecino`, `don`, `doña`) |
+| godparent_2_name | Text   | Normalized name of the second godparent |
+| godparent_2_lastname | Text | Normalized or inferred surname(s) of the second godparent |
+| godparent_2_social_condition | Text | Social, ethnical, or political marker of the second godparent (`mestizo`, `indio`, `tributario`, `vecino`, `don`, `doña`) |
+| godparent_3_name | Text   | Normalized name of the third godparent (when applicable) |
+| godparent_3_lastname | Text | Normalized or inferred surname(s) of the third godparent (when applicable) |
+| witness_1_name | Text     | Normalized name of the first witness |
+| witness_1_lastname | Text | Normalized or inferred surname(s) of the first witness |
+| witness_2_name | Text     | Normalized name of the second witness |
+| witness_2_lastname | Text | Normalized or inferred surname(s) of the second witness |
+| witness_3_name | Text     | Normalized name of the third witness (when applicable) |
+| witness_3_lastname | Text | Normalized or inferred surname(s) of the third witness (when applicable) |
+| witness_4_name | Text     | Normalized name of the fourth witness (when applicable) |
+| witness_4_lastname | Text | Normalized or inferred surname(s) of the fourth witness (when applicable) |
+| event_place | Text        | Place where the marriage event took place |
+| event_geographic_descriptor_1 | Text | Place or location mentioned in the record |
+| event_geographic_descriptor_2 | Text | Additional place or location mentioned in the record |
+| event_geographic_descriptor_3 | Text | Additional place or location mentioned in the record |
+| event_geographic_descriptor_4 | Text | Additional place or location mentioned in the record |
+| event_geographic_descriptor_5 | Text | Additional place or location mentioned in the record |
+| event_geographic_descriptor_6 | Text | Additional place or location mentioned in the record |
+
+### Burials
+
+```{r}
+burials <- readr::read_csv("../../data/clean/entierros_clean.csv", show_col_types = FALSE)
+burials %>% glimpse()
+```
+
+The `burials` table contains cleaned and standardized records of burial events extracted from parish registers. Each row represents a unique burial event with associated attributes such as date, location, and information about the deceased individual and their surviving family members.
+
+| Property     | Expected Type | Description |
+|--------------|---------------|-------------|
+| file      | Text          | Source file name from which the record was extracted |
+| identifier | Text          | Sequential identifier for the burial event |
+| event_type | Text          | Type of event (`Entierro`) |
+| event_date | Date          | Date of the burial event in ISO 8601 format |
+| doctrine   | Text          | Name of the parish or doctrine where the burial was registered |
+| event_place | Text        | Place where the burial event took place |
+| deceased_name | Text       | Normalized first and middle name(s) of the deceased individual |
+| deceased_lastname | Text   | Normalized or inferred surname(s) of the deceased individual |
+| deceased_birth_date | Date    | Date of birth of the deceased individual in ISO 8601 format |
+| deceased_birth_place | Text   | Place of birth of the deceased individual |
+| deceased_social_condition | Text  | Social, ethnical, or political marker of the deceased (`mestizo`, `indio`, `tributario`, `vecino`, `don`, `doña`) |
+| deceased_marital_status | Text | Marital status of the deceased at the time of death (`soltero/soltera`, `casado/casada`, `viudo/viuda`, `marido que fue`, `mujer que fue`) |
+| deceased_legitimacy_status | Text | Legitimacy status of the deceased at birth (`legítimo`, `ilegitimo`, `natural`) |
+| father_name | Text         | Normalized name of the deceased's father |
+| father_lastname | Text     | Normalized or inferred surname(s) of the deceased's father |
+| mother_name | Text         | Normalized name of the deceased's mother |
+| mother_lastname | Text     | Normalized or inferred surname(s) of the deceased's mother |
+| husband_name | Text        | Normalized name of the deceased's husband (when deceased was married) |
+| wife_name | Text           | Normalized name of the deceased's wife (when deceased was married) |
+| burial_place | Text        | Specific location where the deceased was buried |
+| event_geographic_descriptor_1 | Text | Place or location mentioned in the record |
+| event_geographic_descriptor_2 | Text | Additional place or location mentioned in the record |
+| event_geographic_descriptor_3 | Text | Additional place or location mentioned in the record |
+| event_geographic_descriptor_4 | Text | Additional place or location mentioned in the record |
+| husband_lastname | Text    | Normalized or inferred surname(s) of the deceased's husband |
+| wife_lastname | Text       | Normalized or inferred surname(s) of the deceased's wife |
+
+## Places
+
+```{r}
+places <- readr::read_csv("../../data/clean/unique_places.csv", show_col_types = FALSE)
+places %>% glimpse()
+```
+
+The `places` table contains unique geographic locations mentioned in the parish records, along with their standardized names and geographic coordinates.
+
+| Property     | Expected Type | Description |
+|--------------|---------------|-------------|
+| place_id | Numeric        | Unique identifier for the place |
+| manually_normalized_name | Text | | Standardized name assigned during data cleaning |
+| standardized_name | Text          | Name standardized using external gazetteers |
+| language   | Text          | Language of the place name (e.g., `es`, `en`) |
+| latitude   | Numeric       | Latitude coordinate of the place |
+| longitude  | Numeric       | Longitude coordinate of the place |
+| source_gazetteer | Text       | Source gazetteer used for standardization (e.g., `geonames`, `tgn`) |
+| id  | Text          | Identifier of the place in the source gazetteer |
+| uri | Text          | URI linking to the place in the source gazetteer |
+| country_code | Text       | ISO country code of the place |
+| part_of | Text         | Higher-level administrative division the place belongs to |
+| part_of_uri | Text     | URI of the higher-level administrative division |
+| confidence | Numeric    | Confidence score of the place standardization (0-100) |
+| treshold | Numeric     | Treshold used for the place standardization |
+| match_type | Text      | Type of match made during standardization (e.g., `exact`, `fuzzy`) |
+| mentioned_as | Text   | Original text mention of the place in the records |
 
 ---
 
-## PersonaCondition
+## Personas
 
-Links a persona to a standardized condition (e.g., "legitimate", "mestizo") as recorded in a specific event.
+```{r}
+personas <- readr::read_csv("../../data/clean/personas.csv", show_col_types = FALSE)
+personas %>% glimpse()
+```
 
-| Property           | Expected Type | Description |
-|--------------------|---------------|-------------|
-| person_id          | Integer       | FK to the Persona holding the condition |
-| condition_vocab_id | Integer       | FK to the standardized term in ConditionVocab |
-| event_id           | Integer       | FK to the Event where the condition was recorded |
-
----
-
-## PersonaRelationship
-
-Represents an oriented relationship between two personas.  
-Orientation is from **subject** (person holding the role) to **object** (person receiving the role).
-
-| Property           | Expected Type | Description |
-|--------------------|---------------|-------------|
-| person_subject_id  | Integer       | FK to the Persona who is the subject of the relationship (e.g., father, mother, godparent) |
-| person_object_id   | Integer       | FK to the Persona who is the object of the relationship (e.g., child, godchild) |
-| relationship_type  | Text          | Relationship label oriented from subject to object (e.g., "is father of") |
-| event_id           | Integer       | FK to the Event that recorded this relationship |
-
----
-
-## PersonaRoleInEvent
-
-Relational table linking a persona to their specific role in an event.
+Personas represent individual mentions of people in the historical records before any aggregation through probabilistic record linkage (PRL). Each row corresponds to a unique mention with associated attributes such as name, birth and death details, and places.
 
 | Property   | Expected Type | Description |
 |------------|---------------|-------------|
-| person_id  | Integer       | FK to the Persona involved in the event |
-| event_id   | Integer       | FK to the Event in which the persona participated |
-| role       | Text          | Role label in the event context (e.g., "witness", "baptized") |
-
+| event_idno | Text          | Unique identifier for the event mention |
+| original_identifier | Text          | Original identifier from the source document |
+| name       | Text          | Normalized first and middle name(s) |
+| lastname   | Text          | Normalized or inferred surname(s) |
+| persona_type | Text          | Type of persona (e.g., `baptized`, `parent`, `godparent`) |
+| birth_date | Date          | Recorded or inferred date of birth in ISO 8601 format |
+| birth_place | Text       | Place of birth |
+| death_date | Date          | Recorded or inferred date of death in ISO 8601 format |
+| death_place | Text       | Place of death |
+| gender     | Text          |  Inferred gender (`male`, `female`, `unknown`) |
+| resident_in | Text        | Recorded place of residence at the time of the event |
+| legitimacy_status | Text    | Legitimacy status at birth (`legitimo`, `ilegitimo`) |
+| marital_status | Text      | Marital status at the time of the event (`soltero`, `casado`) |
+| social_condition | Text     | Social, ethnical, or political marker (`mestizo`, `indio`, `tributario`, `vecino`) |
 ---
 
-## Place
-
-List of standardized places mentioned in the dataset, validated against controlled vocabularies and gazetteers.
-
-| Property     | Expected Type | Description |
-|--------------|---------------|-------------|
-| place_label  | Text          | Standardized contemporary name of the place |
-| language     | Text          | Language code in ISO 639 format |
-| latitude     | Double        | Latitude coordinate |
-| longitude    | Double        | Longitude coordinate |
-| source       | Text          | Source vocabulary or gazetteer |
-| uri          | Text          | URI to standardized place metadata |
-| country_code | Text          | ISO 3166 code of the country |
-| part_of      | Text          | Administrative unit containing this place |
-| part_of_uri  | Text          | URI to standardized metadata of the containing administrative unit |
-| mentioned_as | Integer       | FK to OriginalTerms entry matching the non-standardized name |
-
----
-
-## Record
-
-Identifies the original record in the raw dataset.
-
-| Property          | Expected Type | Description |
-|-------------------|---------------|-------------|
-| record_type       | Text          | Type of record (`baptism`, `marriage`, `burial`) |
-| record_identifier | Text          | Identifier matching the source dataset |
-| record_file       | Text          | File name or path as recorded in the source dataset |
