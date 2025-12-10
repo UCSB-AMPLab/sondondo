@@ -8,6 +8,15 @@ project:
 
 website:
   title: "Sondondo Project Notebooks"
+  page-footer:
+    left: |
+      **Sondondo Parish Records Project** v0.3.0  
+      [UCSB Archives, Memory & Preservation Lab](https://ampl.clair.ucsb.edu/project/sondondo)
+    center: |
+      Licensed under [MIT License](https://github.com/UCSB-AMPLab/sondondo/blob/main/LICENSE)
+    right: |
+      Built with [Quarto](https://quarto.org/)  
+      [<i class="bi bi-github"></i> Source](https://github.com/UCSB-AMPLab/sondondo)
   sidebar:
     style: "docked"
     search: true
