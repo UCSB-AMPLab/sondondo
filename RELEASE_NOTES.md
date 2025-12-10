@@ -1,5 +1,65 @@
 # Release Notes
 
+## v0.3.0: Documentation & Visualization
+
+**Release Date:** December 9, 2025  
+**Focus:** Comprehensive Documentation and Visual Analysis
+
+### Added
+- **Metadata Dictionary** (`project_code/docpages/metadata_dictionary.qmd`)
+  - Complete field-level documentation for all datasets (baptisms, marriages, burials, places, personas)
+  - Data type specifications and controlled vocabularies
+  - Collapsible dataset structure previews using Quarto callouts
+  - Contextual introductions for each data category (Events, Places, Personas)
+
+- **Project Introduction** (`project_code/index.qmd`)
+  - Comprehensive project overview with research objectives
+  - Clear documentation structure guide for navigating notebooks and references
+  - Dataset statistics and current project status
+
+- **Visualization Notebook** (`project_code/5_visualizations.ipynb`)
+  - Visual exploratory data analysis
+  - Code visibility maintained for transparency
+
+- **Persona Extractor Enhancements** (`project_code/actions/extractors/Persona.py`)
+  - Added `death_place` and `death_date` fields to persona data extraction
+  - Improved place name standardization in persona creation
+
+### Changed
+- **Entity Naming Convention** (`project_code/actions/extractors/Persona.py`)
+  - Refactored persona entity prefixes: replaced 'bride' and 'groom' with 'husband' and 'wife' for consistency
+- Enhanced narrative structure across analysis notebooks for improved readability
+- Improved Quarto documentation site with code-tools and collapsible sections
+- Updated `.gitignore` and `_quarto.yml` for better project organization
+- Refined surname inference logic in baptism data cleaning
+
+### Improved
+- **Age Inference** (`project_code/actions/generators/AgeInferrer.py`)
+  - Added handling for age ranges in years (e.g., "20-25 years")
+  - Corrected pattern numbering in comments for clarity
+
+- **Date Normalization** (`project_code/actions/normalizers/DatesNormalizer.py`)
+  - Enhanced ISO validation to handle non-string inputs and empty values
+  - Added check for non-date strings in SimpleNormalizer to return None safely
+
+- **Place Extraction** (`project_code/actions/extractors/placeRecognition.py`)
+  - Enhanced place extraction logic with better handling of edge cases
+  - Added analysis for missing death places
+
+- Quality assessment and completeness checks in personas creation notebook
+- JSON formatting in configuration files (`places_types.json`)
+- Database schema documentation aligned with metadata dictionary
+
+### Removed
+- Renamed `schema_documentation.qmd` to `metadata_dictionary.qmd` for clarity and consistency
+
+### Documentation
+- Added `code-fold: true` and `code-tools: true` to Quarto config for better UX
+- Organized documentation sidebar with clear separation between Notebooks and Documentation sections
+- Standardized dataset descriptions with collapsible outputs
+
+---
+
 ## v0.2.0: Personas Dataset Creation
 
 **Release Date:** November 12, 2025  

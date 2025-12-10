@@ -40,9 +40,74 @@ The **Documentation** section provides reference materials for understanding and
 
 ## Current Status
 
-**Phase:** ✅ Data Cleaning & Personas Creation Complete
+**Phase:** ✅ **Documentation & Visualization** (v0.3.0)
 
-The project has successfully completed initial data collection, comprehensive cleaning and standardization, and the creation of a unified personas dataset. Current work focuses on implementing probabilistic record linkage algorithms to identify unique individuals across the corpus.
+The project has successfully completed:
+- ✅ **Phase 1**: Data Cleaning & Standardization
+- ✅ **Phase 2**: Personas Dataset Creation  
+- ✅ **Phase 3**: Documentation & Visualization
+
+Current work focuses on implementing probabilistic record linkage algorithms to identify unique individuals across the corpus.
+
+## Datasets
+
+### Raw Data
+
+The original transcribed data is stored in `data/raw/`:
+
+- **bautismos.csv**: Baptism records (6,340 entries, 36 columns)
+- **matrimonios.csv**: Marriage records (1,719 entries, 66 columns)
+- **entierros.csv**: Burial records (2,121 entries, 37 columns)
+
+Data was collected through manual transcription from digitized parish registers, using structured Google Sheets templates followed by manual quality review.
+
+### Cleaned Data
+
+Processed datasets in `data/clean/`:
+
+- **bautismos_clean.csv**: Cleaned baptism records with standardized columns and normalized data
+- **matrimonios_clean.csv**: Cleaned marriage records with harmonized fields
+- **entierros_clean.csv**: Cleaned burial records with processed names and places
+- **unique_places.csv**: Geographic locations extracted and standardized through gazetteers
+
+**Processing achievements:**
+- Column harmonization across all datasets
+- Date normalization to ISO 8601 format (YYYY-MM-DD)
+- Name standardization using custom algorithms
+- Geographic entity extraction using Named Entity Recognition (NER)
+- Age inference and data validation
+- Comprehensive quality audit and error reporting
+
+### Personas Dataset
+
+**personas.csv** consolidates all individuals mentioned across event records:
+
+- Unified schema across all record types (baptisms, marriages, burials)
+- Role-based extraction (baptized, parent, godparent, spouse, deceased, witness, etc.)
+- Preserved source record metadata for traceability
+- Standardized name and place fields ready for probabilistic matching
+- Each row represents a unique person-event mention with demographic attributes
+
+This dataset serves as the foundation for probabilistic record linkage to reconstruct individual life histories.
+
+## Technical Contributions
+
+### GeoResolver Library
+
+As part of this research, we developed and published **[GeoResolver](https://pypi.org/project/georesolver/)**, a Python library for geographic entity resolution and coordinate lookup. This library emerged from our work on place name standardization within the parish records.
+
+**Key features:**
+- Geographic entity recognition and normalization
+- Coordinate lookup and validation
+- Place name standardization for historical data
+- Caching mechanisms for improved performance
+
+**Installation:**
+```bash
+pip install georesolver
+```
+
+The GeoResolver library is actively used in this project for processing geographic descriptors and place names found in the historical records.
 
 ## Data Sources
 
