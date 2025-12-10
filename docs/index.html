@@ -178,7 +178,20 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#sondondo-data-project" id="toc-sondondo-data-project" class="nav-link active" data-scroll-target="#sondondo-data-project">Sondondo Data Project</a></li>
+  <li><a href="#sondondo-parish-records-project" id="toc-sondondo-parish-records-project" class="nav-link active" data-scroll-target="#sondondo-parish-records-project">Sondondo Parish Records Project</a>
+  <ul class="collapse">
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link" data-scroll-target="#project-overview">Project Overview</a>
+  <ul class="collapse">
+  <li><a href="#research-objectives" id="toc-research-objectives" class="nav-link" data-scroll-target="#research-objectives">Research Objectives</a></li>
+  </ul></li>
+  <li><a href="#documentation-structure" id="toc-documentation-structure" class="nav-link" data-scroll-target="#documentation-structure">Documentation Structure</a>
+  <ul class="collapse">
+  <li><a href="#notebooks" id="toc-notebooks" class="nav-link" data-scroll-target="#notebooks">Notebooks</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
+  </ul></li>
+  <li><a href="#current-status" id="toc-current-status" class="nav-link" data-scroll-target="#current-status">Current Status</a></li>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -204,11 +217,57 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="sondondo-data-project" class="level1">
-<h1>Sondondo Data Project</h1>
-<p>This is a collection of notebooks and documentation for the Sondondo historical data processing project.</p>
+<section id="sondondo-parish-records-project" class="level1">
+<h1>Sondondo Parish Records Project</h1>
+<section id="project-overview" class="level2">
+<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
+<p>This project employs probabilistic record linkage methods to identify unique individuals within parish records from the Sondondo Valley, Peru, spanning from 1760 to 1921. The collection encompasses <strong>10,180 historical records</strong> across three vital event types: baptisms (6,340 records), marriages (1,719 records), and burials (2,121 records).</p>
+<p>Historical parish records provide valuable insights into demographic, social, and familial patterns, but they often lack explicit unique identifiers, making it challenging to track individuals across multiple life events. By leveraging contextual data—such as names, familial relationships, geographic locations, and event dates—this project aims to reconstruct individual life histories and reveal the social networks of this historical community.</p>
+<section id="research-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="research-objectives">Research Objectives</h3>
+<ul>
+<li><strong>Entity Resolution</strong>: Apply probabilistic record linkage to identify unique individuals across multiple event records</li>
+<li><strong>Data Standardization</strong>: Clean, normalize, and harmonize inconsistent historical data from manuscript sources</li>
+<li><strong>Network Analysis</strong>: Uncover familial and social connections within the community through relationship mapping</li>
+<li><strong>Methodological Contribution</strong>: Develop replicable workflows for processing historical datasets with similar challenges</li>
+</ul>
+</section>
+</section>
+<section id="documentation-structure" class="level2">
+<h2 class="anchored" data-anchor-id="documentation-structure">Documentation Structure</h2>
+<p>This documentation site presents the complete data processing pipeline through a series of interconnected notebooks and reference materials:</p>
+<section id="notebooks" class="level3">
+<h3 class="anchored" data-anchor-id="notebooks">Notebooks</h3>
+<p>The <strong>Notebooks</strong> section contains detailed computational workflows documenting each phase of data processing:</p>
+<ol type="1">
+<li><strong>Data Cleaning</strong>: Comprehensive data cleaning including column harmonization, date normalization, name standardization, and quality validation</li>
+<li><strong>Place Mapping</strong>: Geographic entity extraction using Named Entity Recognition (NER) and standardization through external gazetteers</li>
+<li><strong>Textual Variation Analysis</strong>: Statistical analysis of social condition terminology and controlled vocabulary development</li>
+<li><strong>Personas Creation</strong>: Extraction and consolidation of individual person mentions from event records into a unified person-centric dataset</li>
+<li><strong>Visualizations</strong>: Exploratory data analysis and visual summaries of the processed datasets</li>
+</ol>
+</section>
+<section id="documentation" class="level3">
+<h3 class="anchored" data-anchor-id="documentation">Documentation</h3>
+<p>The <strong>Documentation</strong> section provides reference materials for understanding and working with the datasets:</p>
+<ul>
+<li><strong>Metadata Dictionary</strong>: Complete field-level documentation for all cleaned datasets, including data types, descriptions, and controlled vocabularies</li>
+</ul>
+</section>
+</section>
+<section id="current-status" class="level2">
+<h2 class="anchored" data-anchor-id="current-status">Current Status</h2>
+<p><strong>Phase:</strong> ✅ Data Cleaning &amp; Personas Creation Complete</p>
+<p>The project has successfully completed initial data collection, comprehensive cleaning and standardization, and the creation of a unified personas dataset. Current work focuses on implementing probabilistic record linkage algorithms to identify unique individuals across the corpus.</p>
+</section>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
+<p>Data was collected through manual transcription from digitized parish registers of the Sondondo Valley, Peru. All transcriptions were performed directly from document images using structured templates in Google Sheets, followed by manual review for quality assurance.</p>
+<hr>
+<p><em>For technical details, source code, and raw data access, visit the <a href="https://github.com/UCSB-AMPLab/sondondo">project repository</a>.</em></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
