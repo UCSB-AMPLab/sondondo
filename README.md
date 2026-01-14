@@ -185,6 +185,6 @@ Extracts and consolidates all individuals from cleaned records into a unified pe
 
 This project is part of ongoing research at UCSB AMPLab. For questions or collaboration opportunities, please refer to the project documentation and release notes.
 
-## Related Publications
+## Acknowledgments
 
-The methodological framework and GeoResolver library developed in this project are intended to be replicable for other historical datasets where entity recognition and record linkage present similar challenges.
+Data registered by Edwin Gonzales, James Quillca, and Grecia Roque (2023).
