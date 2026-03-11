@@ -28,3 +28,5 @@ data/clean/*.txt
 # temporary exclusions
 project_code/proposedAlgorithm.txt
 x_*
+
+.gitignore
