@@ -69,6 +69,5 @@ keywords:
   - historical datasets
 doi: https://doi.org/10.5281/zenodo.18967751
 license: CC-BY-NC-SA-4.0
-commit: 859637b9b3610034b056f31a8c5e2591b943ab4c
 version: '1.0.0'
-date-released: '2026-03-12'
+date-released: '2026-03-11'
