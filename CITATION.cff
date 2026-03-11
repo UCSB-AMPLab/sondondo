@@ -15,18 +15,18 @@ authors:
     family-names: Melo Flórez
     email: jmeloflorez@ucsb.edu
     affiliation: 'University of California, Santa Barbara'
-    orcid: https://orcid.org/0000-0002-2020-1163
+    orcid: 'https://orcid.org/0000-0002-2020-1163'
   - given-names: Gabriela
     family-names: Ramos
     affiliation: University of Cambridge
-    orcid: https://orcid.org/0000-0001-7333-9505
+    orcid: 'https://orcid.org/0000-0001-7333-9505'
   - family-names: de la Puente Luna
     given-names: José Carlos
-    orcid: https://orcid.org/0000-0003-3507-8994
+    orcid: 'https://orcid.org/0000-0003-3507-8994'
     affiliation: Texas State University
   - given-names: Juan
     family-names: Cobo Betancourt
-    orcid: https://orcid.org/0000-0003-4776-0261
+    orcid: 'https://orcid.org/0000-0003-4776-0261'
     affiliation: 'University of California, Santa Barbara'
   - given-names: Benjamin
     family-names: Ancho
@@ -37,12 +37,15 @@ authors:
   - given-names: Saketh
     family-names: Ayinaparthi
     affiliation: 'University of California, Santa Barbara'
-  - orcid: https://orcid.org/0009-0009-3825-9206
+  - orcid: 'https://orcid.org/0009-0009-3825-9206'
     given-names: Grecia
     family-names: Roque
   - given-names: Edwin
     family-names: Gonzales Rojas
     affiliation: Instituto Francés de Estudios Andinos
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.18969893
 repository-code: 'https://github.com/UCSB-AMPLab/sondondo'
 url: 'https://ampl.clair.ucsb.edu/sondondo/'
 abstract: >-
@@ -67,9 +70,8 @@ keywords:
   - colonial peru
   - andean history
   - historical datasets
-doi: 10.5281/zenodo.18967751
 license:
   - MIT
   - CC-BY-NC-SA-4.0
-version: '1.0.0'
+version: 1.0.0
 date-released: '2026-03-11'
