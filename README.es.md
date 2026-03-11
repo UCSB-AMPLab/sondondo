@@ -1,5 +1,5 @@
 # La gente de Aucará (1760–1921)  
-### Un conjunto de datos de individuos reconstruído a partir de los registros parroquiales del valle de Sondondo, Perú
+### Un conjunto de datos de individuos reconstruidos a partir de los registros parroquiales del valle de Sondondo, Perú
 
 ## Resumen
 
