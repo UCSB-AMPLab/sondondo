@@ -320,7 +320,7 @@ Estos scripts implementan procedimientos para:
 
 # Citar como
 
-Melo Flórez, J. A., Ramos, G., de la Puente Luna, J. C., Cobo Betancourt, J., Ancho, B., Xue, D., Ayinaparthi, S., Roque, G., & Gonzales Rojas, E. (2026). The People of Aucará (1760–1921): A Dataset of Individuals Reconstructed from Parish Records of the Sondondo Valley, Peru (Version 1.0.0) [Conjunto de datos]. https://doi.org/10.5281/zenodo.18967751
+Melo Flórez, J. A., Ramos, G., de la Puente Luna, J. C., Cobo Betancourt, J., Ancho, B., Xue, D., Ayinaparthi, S., Roque, G., & Gonzales Rojas, E. (2026). The People of Aucará (1760–1921): A Dataset of Individuals Reconstructed from Parish Records of the Sondondo Valley, Peru (Version 1.0.0) [Conjunto de datos]. https://doi.org/10.5281/zenodo.18969893
 
 ---
 
