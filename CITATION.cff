@@ -1,0 +1,73 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  The People of Aucará (1760–1921): A Dataset of Individuals
+  Reconstructed from Parish Records of the Sondondo Valley,
+  Peru
+message: >-
+  If you use this dataset, please cite it using the metadata
+  from this file.
+type: dataset
+authors:
+  - given-names: Jairo Antonio
+    family-names: Melo Flórez
+    email: jmeloflorez@ucsb.edu
+    affiliation: 'University of California, Santa Barbara'
+    orcid: https://orcid.org/0000-0002-2020-1163
+  - given-names: Gabriela
+    family-names: Ramos
+    affiliation: University of Cambridge
+    orcid: https://orcid.org/0000-0001-7333-9505
+  - family-names: de la Puente Luna
+    given-names: José Carlos
+    orcid: https://orcid.org/0000-0003-3507-8994
+    affiliation: Texas State University
+  - given-names: Juan
+    family-names: Cobo Betancourt
+    orcid: https://orcid.org/0000-0003-4776-0261
+    affiliation: 'University of California, Santa Barbara'
+  - given-names: Benjamin
+    family-names: Ancho
+    affiliation: 'University of California, Santa Barbara'
+  - given-names: Dongchi
+    family-names: Xue
+    affiliation: 'University of California, Santa Barbara'
+  - given-names: Saketh 
+    family-names: Ayinaparthi
+    affiliation: 'University of California, Santa Barbara'
+  - orcid: https://orcid.org/0009-0009-3825-9206
+    given-names: Grecia
+    family-names: Roque
+  - given-names: Edwin
+    family-names: Gonzales Rojas
+    affiliation: Instituto Francés de Estudios Andinos
+repository-code: 'https://github.com/UCSB-AMPLab/sondondo'
+url: 'https://ampl.clair.ucsb.edu/sondondo/'
+abstract: >-
+  This dataset contains structured records of individuals
+  reconstructed from baptism, marriage, and burial registers
+  of the parish of Aucará in the Sondondo Valley (Ayacucho,
+  Peru), covering the years 1760–1921. The dataset includes
+  normalized transcriptions of sacramental records,
+  harmonized place references, and derived person-level
+  entities designed to support prosopographical and
+  demographic research on colonial and early republican
+  Andean societies. Source tables, intermediate processing
+  stages, and the code used for data normalization and
+  entity extraction are included to document the
+  transformation of archival records into a reusable
+  research dataset.
+keywords:
+  - parish records
+  - prosopography
+  - family reconstruction
+  - historical demography
+  - colonial peru
+  - andean history
+  - historical datasets
+license: CC-BY-NC-SA-4.0
+commit: 859637b9b3610034b056f31a8c5e2591b943ab4c
+version: '1.0.0'
+date-released: '2026-03-12'
