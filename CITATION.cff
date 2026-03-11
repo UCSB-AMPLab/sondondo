@@ -68,6 +68,8 @@ keywords:
   - andean history
   - historical datasets
 doi: 10.5281/zenodo.18967751
-license: CC-BY-NC-SA-4.0
+license:
+  - MIT
+  - CC-BY-NC-SA-4.0
 version: '1.0.0'
 date-released: '2026-03-11'

@@ -326,4 +326,7 @@ Melo Flórez, J. A., Ramos, G., de la Puente Luna, J. C., Cobo Betancourt, J., A
 
 # Licencia
 
-Este conjunto de datos se distribuye bajo la [**Licencia Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)**](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+Este repositorio utiliza una doble licencia:
+
+- **Datos** (directorio `data/`): [Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/) — véase `LICENSE-DATA`.
+- **Código** (directorio `project_code/`): [Licencia MIT](https://opensource.org/licenses/MIT) — véase `LICENSE`.

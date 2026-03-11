@@ -325,4 +325,7 @@ Melo Flórez, J. A., Ramos, G., de la Puente Luna, J. C., Cobo Betancourt, J., A
 
 # License
 
-This dataset is distributed under the [**Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International License (CC BY-NC-SA 4.0)**](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+This repository uses a dual license:
+
+- **Data** (`data/` directory): [Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/) — see `LICENSE-DATA`.
+- **Code** (`project_code/` directory): [MIT License](https://opensource.org/licenses/MIT) — see `LICENSE`.
