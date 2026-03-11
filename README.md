@@ -281,7 +281,7 @@ Geographic descriptors recorded in the parish registers were normalized and matc
 Individuals mentioned in the records were extracted and associated with specific roles (e.g., baptized child, parent, witness).
 
 ### 5. Dataset Generation
-Cleaned records and extracted entities were combined to produce structured tables suitable for **probabilistic record linkage and prosopographical analysis**.
+Cleaned records and extracted entities were combined to produce structured tables suitable for probabilistic record linkage and prosopographical analysis.
 
 All transformations are documented in the Jupyter notebooks and Python modules contained in the `project_code/` directory.
 
@@ -299,7 +299,7 @@ Digitized images of the original registers are currently stored in a private rep
 
 # Code and Software
 
-Data processing was implemented in **Python (version 3.8 or later)** using the following primary libraries:
+Data processing was implemented in *Python (version 3.8 or later)* using the following primary libraries:
 
 - pandas  
 - numpy  
@@ -307,7 +307,7 @@ Data processing was implemented in **Python (version 3.8 or later)** using the f
 - spacy  
 - georesolver  
 
-The repository includes **Jupyter notebooks and Python modules** that document the workflow used to transform raw transcriptions into the cleaned dataset.
+The repository includes Jupyter notebooks and Python modules that document the workflow used to transform raw transcriptions into the cleaned dataset.
 
 These scripts implement procedures for:
 
@@ -325,4 +325,4 @@ Melo Flórez, J. A., Ramos, G., de la Puente Luna, J. C., Cobo Betancourt, J., A
 
 # License
 
-This dataset is distributed under the **Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International License (CC BY-NC-SA 4.0)**.
+This dataset is distributed under the [**Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International License (CC BY-NC-SA 4.0)**](https://creativecommons.org/licenses/by-nc-sa/4.0/).
