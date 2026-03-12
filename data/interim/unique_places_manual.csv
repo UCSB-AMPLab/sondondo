@@ -62,8 +62,8 @@ Cochas,Cochas,PE,city
 Colca,San Nicolás,PE,city
 Collay,Collay,PE,city
 Coracora,Coracora,PE,city
-Cordoba,Córdova,PE,city
-Cordova,Córdova,PE,city
+Cordoba,Cordova,PE,village
+Cordova,Cordova,PE,village
 Español de Aucará,Aucará,PE,city
 Español de Pampamarca,Pampamarca,PE,city
 Espilco,,PE,city
@@ -97,8 +97,8 @@ Laramate,Laramate,PE,city
 Larcay,Larcay,PE,city
 Lima,Lima,PE,city
 Llusita,Llusita,PE,city
-Lucanas,Lucanas,PE,city
-Mar,Cajamarca,PE,city
+Lucanas,Lucanas,PE,administrative division
+Mar,Chilcas,PE,city
 Marca,Marca,PE,city
 Mayo,Mayobamba,PE,city
 Mayobamba,Mayobamba,PE,city
@@ -131,7 +131,7 @@ Querobamba,Querobamba,PE,city
 Sacsamarca,Sacsamarca,PE,city
 Saicasa,,PE,city
 San Jeronimo,San Jeronimo De Tunan,PE,city
-San Juan de Lucanas,San Juan,PE,municipality
+San Juan de Lucanas,Lucanas,PE,administrative division
 Sancos,Huanca Santos,PE,city
 Santa Ana,Santa Ana,PE,city
 Santa Ana de Aucara,Santa Ana,PE,city
@@ -148,7 +148,7 @@ Urccohuase,,PE,city
 Viceparroquia de Chacralla,Chacralla,PE,city
 Viceparroquia de Pampamarca,Pampamarca,PE,city
 Vilcas,Vilcashuamán,PE,city
-Villa de San Juan,San Juan,PE,municipality
+Villa de San Juan,Lucanas,PE,administrative division
 Visvicha,,PE,city
 Yshua,Ishua,PE,city
 Yanaccollpa,,PE,city
