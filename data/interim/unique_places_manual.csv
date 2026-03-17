@@ -8,7 +8,7 @@ Apongo,Apongo,PE,city
 Aralla,Aralla,PE,pueblo
 Aucara,Aucará,PE,city
 Aucara Barrio de Mayo,Aucará,PE,city
-Aucara Cabana,Cabana,PE,pueblo
+Aucara Cabana,Cabana,PE,administrative division
 Aucara Caserio de Visvicha,Visvicha,PE,pueblo
 Aucara Estancia de Chapa,Chapa,PE,pueblo
 Aucara Huaycahuacho,Huaycahuaycho,PE,city
@@ -16,7 +16,7 @@ Aucará,Aucará,PE,city
 Ayacucho,Ayacucho,PE,city
 Ayacuchoi,Ayacucho,PE,city
 Barrio de Mayo,Aucará,PE,city
-Cabana,Cabana,PE,city
+Cabana,Cabana,PE,administrative division
 Cachihuancaray,Cachihuancaray,PE,city
 Canaria,Canaria,PE,city
 Cangallo,Cangallo,PE,city
@@ -69,7 +69,7 @@ Español de Pampamarca,Pampamarca,PE,city
 Espilco,,PE,city
 General,,PE,city
 Huacaña,Huacaña,PE,city
-Huaicahuacho,Huaycahuaycho,PE,city
+Huaicahuacho,Santa Ana de Huaycahuacho,PE,city
 Hualla,Huallatalloc,PE,city
 Huamanga,Ayacucho,PE,city
 Huambo,Huambo,PE,city
