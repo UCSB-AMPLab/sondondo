@@ -8,7 +8,7 @@ Apongo,Apongo,PE,city
 Aralla,Aralla,PE,pueblo
 Aucara,Aucará,PE,city
 Aucara Barrio de Mayo,Aucará,PE,city
-Aucara Cabana,Cabana,PE,pueblo
+Aucara Cabana,Cabana,PE,administrative division
 Aucara Caserio de Visvicha,Visvicha,PE,pueblo
 Aucara Estancia de Chapa,Chapa,PE,pueblo
 Aucara Huaycahuacho,Huaycahuaycho,PE,city
@@ -16,7 +16,7 @@ Aucará,Aucará,PE,city
 Ayacucho,Ayacucho,PE,city
 Ayacuchoi,Ayacucho,PE,city
 Barrio de Mayo,Aucará,PE,city
-Cabana,Cabana,PE,city
+Cabana,Cabana,PE,administrative division
 Cachihuancaray,Cachihuancaray,PE,city
 Canaria,Canaria,PE,city
 Cangallo,Cangallo,PE,city
@@ -62,14 +62,14 @@ Cochas,Cochas,PE,city
 Colca,San Nicolás,PE,city
 Collay,Collay,PE,city
 Coracora,Coracora,PE,city
-Cordoba,Córdova,PE,city
-Cordova,Cordova,PE,city
+Cordoba,Cordova,PE,village
+Cordova,Cordova,PE,village
 Español de Aucará,Aucará,PE,city
 Español de Pampamarca,Pampamarca,PE,city
 Espilco,,PE,city
 General,,PE,city
 Huacaña,Huacaña,PE,city
-Huaicahuacho,Huaycahuaycho,PE,city
+Huaicahuacho,Santa Ana de Huaycahuacho,PE,city
 Hualla,Huallatalloc,PE,city
 Huamanga,Ayacucho,PE,city
 Huambo,Huambo,PE,city
@@ -97,8 +97,8 @@ Laramate,Laramate,PE,city
 Larcay,Larcay,PE,city
 Lima,Lima,PE,city
 Llusita,Llusita,PE,city
-Lucanas,Lucanas,PE,city
-Mar,Cajamarca,PE,city
+Lucanas,Lucanas,PE,administrative division
+Mar,Chilcas,PE,city
 Marca,Marca,PE,city
 Mayo,Mayobamba,PE,city
 Mayobamba,Mayobamba,PE,city
@@ -111,7 +111,7 @@ Paico,Palco,PE,city
 Paire,Paire,PE,city
 Palco,Palco,PE,city
 Pallcco,Palco,PE,city
-Pampa,Pampa Grande,PE,city
+Pampa,Pampamarca,PE,city
 Pampamarca,Pampamarca,PE,city
 Pampamarca Barrio de Mayo,Pampamarca,PE,city
 Pampamarca Barrios de Tallcce,Pampamarca,PE,city
@@ -131,7 +131,7 @@ Querobamba,Querobamba,PE,city
 Sacsamarca,Sacsamarca,PE,city
 Saicasa,,PE,city
 San Jeronimo,San Jeronimo De Tunan,PE,city
-San Juan de Lucanas,San Juan,PE,city
+San Juan de Lucanas,Lucanas,PE,administrative division
 Sancos,Huanca Santos,PE,city
 Santa Ana,Santa Ana,PE,city
 Santa Ana de Aucara,Santa Ana,PE,city
@@ -148,7 +148,7 @@ Urccohuase,,PE,city
 Viceparroquia de Chacralla,Chacralla,PE,city
 Viceparroquia de Pampamarca,Pampamarca,PE,city
 Vilcas,Vilcashuamán,PE,city
-Villa de San Juan,Villa San Juan,PE,city
+Villa de San Juan,Lucanas,PE,administrative division
 Visvicha,,PE,city
 Yshua,Ishua,PE,city
 Yanaccollpa,,PE,city
