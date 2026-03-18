@@ -7,7 +7,7 @@ from actions.generators import GenderInferrer, InferCondition
 
 
 class PersonaExtractor:
-    def __init__(self, dataframes: List[pd.DataFrame], destination_dir: str = "../data/interim", places_standardized_names: str = "../data/clean/unique_places.csv") -> None:
+    def __init__(self, dataframes: List[pd.DataFrame], destination_dir: str = "../data/interim", places_standardized_names: str = "../data/clean/places.csv") -> None:
         self.dataframes = dataframes
         self.destination_dir = destination_dir
         self.places_standardized_names = places_standardized_names
@@ -81,6 +81,7 @@ class PersonaExtractor:
                             if persona.get('persona_type') == 'deceased':
                                 persona['death_place'] = row.get('event_place', np.nan)
                                 persona['death_date'] = row.get('event_date', np.nan)
+                                persona['death_date_precision'] = row.get('event_date_precision', np.nan)
 
                     if event_type and event_type.lower() == 'matrimonio':
                         if not original_id:
