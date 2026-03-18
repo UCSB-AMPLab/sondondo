@@ -135,16 +135,19 @@ class AgeInferrer:
 
         return text
 
-    def infer_all(self, age_series: pd.Series) -> pd.Series:
+    def infer_all(self, age_series: pd.Series) -> tuple[pd.Series, pd.Series]:
         results = []
+        precisions = []
 
         datenormalizer = DatesNormalizer.SimpleNormalizer()
         for idx, val in age_series.items():
 
             result = None
+            precision = None
             
             if isinstance(val, str) and self._is_iso_date(val):
                 result = val
+                precision = "exact"
                 self.logger.debug(
                     f"[AgeInferrer] Found ISO date at index {idx}: '{result}'"
                 )
@@ -157,6 +160,10 @@ class AgeInferrer:
 
                     if result is None:
                         result = self.infer_birthdate(idx, val) # type: ignore
+                        if result is not None:
+                            precision = "inferred_from_age"
+                    else:
+                        precision = "exact"
 
                     if result is not None:
                         self.logger.info(
@@ -175,6 +182,10 @@ class AgeInferrer:
                 result = val
             
             results.append(result)
+            precisions.append(precision)
         
-        return pd.Series(results, index=age_series.index, dtype="object")
+        return (
+            pd.Series(results, index=age_series.index, dtype="object"),
+            pd.Series(precisions, index=age_series.index, dtype="object"),
+        )
 
