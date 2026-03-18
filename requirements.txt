@@ -19,6 +19,7 @@ click==8.2.1
 cloudpathlib==0.21.1
 comm==0.2.3
 confection==0.1.5
+contextily==1.7.0
 contourpy==1.3.3
 cycler==0.12.1
 cymem==2.0.11
@@ -32,6 +33,8 @@ fastjsonschema==2.21.1
 fonttools==4.59.0
 fqdn==1.5.1
 gender-guesser==0.4.0
+geopandas==1.1.3
+geopy==2.4.1
 georesolver==0.2.2
 h11==0.16.0
 httpcore==1.0.9
@@ -66,6 +69,7 @@ lark==1.2.2
 marisa-trie==1.2.1
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
+mercantile==1.2.1
 matplotlib==3.10.5
 matplotlib-inline==0.1.7
 mdit-py-plugins==0.4.2
@@ -96,6 +100,8 @@ ptyprocess==0.7.0
 pure_eval==0.2.3
 pycountry==24.6.1
 pycparser==2.22
+pyogrio==0.12.1
+pyproj==3.7.2
 pydantic==2.11.7
 pydantic_core==2.33.2
 Pygments==2.19.2
@@ -108,6 +114,7 @@ pytz==2025.2
 PyYAML==6.0.2
 pyzmq==24.0.1
 RapidFuzz==3.13.0
+rasterio==1.4.4
 ratelimit==2.2.1
 rdflib==7.1.4
 referencing==0.36.2
@@ -121,6 +128,7 @@ rich==14.1.0
 rpds-py==0.26.0
 scipy==1.16.1
 seaborn==0.13.2
+shapely==2.1.2
 Send2Trash==1.8.3
 shellingham==1.5.4
 six==1.17.0
@@ -155,3 +163,4 @@ webcolors==24.11.1
 webencodings==0.5.1
 websocket-client==1.8.0
 wrapt==1.17.2
+xyzservices==2025.11.0
