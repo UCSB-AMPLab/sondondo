@@ -50,18 +50,20 @@ def test_age_inferrer():
         logger.warning("ValueError: Dates will be cleaned in the next step")
         dates = dataset["event_date"].copy()
         normalizer = DateNormalizer(dates)
-        normalized = normalizer.normalize()
+        normalized, normalized_precision = normalizer.normalize()
 
         logger.info(f"Normalized dates: {normalized.iloc[2830:2835]}")
 
         inferrer = AgeInferrer(normalized)
-        birth_dates_cleaned = inferrer.infer_all(data_series)
+        birth_dates_cleaned, birth_dates_precision = inferrer.infer_all(data_series)
 
         validation_df = pd.DataFrame({
             "original_dates": dates,
             "normalized_dates": normalized,
+            "normalized_precision": normalized_precision,
             "original_birth_dates": data_series,
-            "inferred_birth_dates": birth_dates_cleaned
+            "inferred_birth_dates": birth_dates_cleaned,
+            "inferred_birth_dates_precision": birth_dates_precision,
         })
         logger.info(f"Validation DataFrame: {validation_df.sample(10)}")
 
