@@ -24,10 +24,12 @@ class DateNormalizer:
         self.logger = setup_logger("DateNormalizer")
         self.logger.info(f"Initialized DateNormalizer with {len(date_series)} entries.")
 
-    def normalize(self) -> pd.Series:
+    def normalize(self) -> tuple[pd.Series, pd.Series]:
+        precision_series = pd.Series([None] * len(self.original_series), dtype=object)
+
         for idx, value in self.original_series.items():
             try:
-                norm_value = self._normalize_single_value(value, idx)
+                norm_value, precision = self._normalize_single_value(value, idx)
 
                 if norm_value is None:
                     self.logger.warning(f"Failed to normalize '{value}' at index {idx}.")
@@ -36,45 +38,47 @@ class DateNormalizer:
                     self.logger.info(f"Harmonized '{value}' to '{norm_value}' at index {idx}.")
 
                 self.normalized_series[idx] = norm_value
+                precision_series[idx] = precision
 
             except Exception as e:
                 self.logger.error(f"Error normalizing '{value}' at index {idx}: {e}")
                 self.normalized_series[idx] = None
+                precision_series[idx] = None
 
-        return self.normalized_series
+        return self.normalized_series, precision_series
 
-    def _normalize_single_value(self, value: str, idx) -> Union[str, float, None]:
+    def _normalize_single_value(self, value: str, idx) -> tuple[Union[str, float, None], Union[str, float, None]]:
 
         if pd.isna(value):
-            return np.nan
+            return np.nan, np.nan
 
         if self._is_roto_or_ilegible(value):
-            return self._resolve_roto(value)
+            return self._resolve_roto(value), "estimated"
 
         value = self._strip_all_brackets_and_quotes(value)
 
         if self._is_valid_iso(value):
-            return value
+            return value, "exact"
         
         if self._is_inverted(value):
-            return self._convert_inverted_date(value)
+            return self._convert_inverted_date(value), "exact"
 
         if self._day_is_missing(value):
-            return self._add_missing_day(value)
+            return self._add_missing_day(value), "month"
 
         if self._month_is_missing(value):
-            return self._add_missing_month(value, self.original_series, idx)
+            return self._add_missing_month(value, self.original_series, idx), "month_inferred"
 
         if self._year_is_missing(value):
-            return self._add_missing_year(value, self.original_series, idx)
+            return self._add_missing_year(value, self.original_series, idx), "year_inferred"
 
         if self._is_excel_serial(value):
-            return self._convert_excel_serial(value)
+            return self._convert_excel_serial(value), "exact"
 
         if self._is_false_date(value):
-            return self._correct_false_date(value)
+            return self._correct_false_date(value), "day_adjusted"
 
-        return None
+        return None, None
 
     def _is_valid_iso(self, value) -> bool:
         if not isinstance(value, str):

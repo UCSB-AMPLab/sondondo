@@ -28,3 +28,15 @@ data/clean/*.txt
 # temporary exclusions
 project_code/proposedAlgorithm.txt
 x_*
+
+# largefiles
+*.zip
+
+# Software specific files
+*.qgz
+
+project_code/6_analysis.ipynb
+project_code/5_visualizations.ipynb
+
+figures/
+data/stats/
