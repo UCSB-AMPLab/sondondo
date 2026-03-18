@@ -278,7 +278,7 @@ Dataset Structure
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 6,340
-Columns: 27
+Columns: 29
 $ file                          &lt;chr&gt; "APAucará LB L001", "APAucará LB L001", …
 $ identifier                    &lt;chr&gt; "B001", "B002", "B003", "B004", "B005", …
 $ event_type                    &lt;chr&gt; "Bautizo", "Bautizo", "Bautizo", "Bautiz…
@@ -305,6 +305,8 @@ $ event_geographic_descriptor_1 &lt;chr&gt; "Aucara", "Aucara", "Aucara", "Aucar
 $ event_geographic_descriptor_2 &lt;chr&gt; "Pampamarca", "Pampamarca", "Pampamarca"…
 $ event_geographic_descriptor_3 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 $ event_geographic_descriptor_4 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ event_date_precision          &lt;chr&gt; "exact", "exact", "exact", "exact", "exa…
+$ baptized_birth_date_precision &lt;chr&gt; "exact", "exact", "exact", "exact", "exa…
 $ baptized_lastname             &lt;chr&gt; "ayquipa", "lulia", "quispe", "cuebas", …</code></pre>
 </div>
 </div>
@@ -346,24 +348,34 @@ $ baptized_lastname             &lt;chr&gt; "ayquipa", "lulia", "quispe", "cueba
 <td>Date of the baptism event in ISO 8601 format</td>
 </tr>
 <tr class="odd">
+<td>event_date_precision</td>
+<td>Text</td>
+<td>Certainty level of <code>event_date</code>. Values: <code>exact</code> (original or format-corrected), <code>month</code> (day filled with <code>01</code>), <code>month_inferred</code> (month borrowed from a neighbouring record), <code>year_inferred</code> (year borrowed from a neighbouring record), <code>day_adjusted</code> (nonexistent date corrected to nearest valid day), <code>estimated</code> (torn record, day averaged from a range)</td>
+</tr>
+<tr class="even">
 <td>baptized_name</td>
 <td>Text</td>
 <td>Normalized first and middle name(s) of the baptized individual</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>baptized_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the baptized individual</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>baptized_birth_place</td>
 <td>Text</td>
 <td>Place of birth of the baptized individual</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>baptized_birth_date</td>
 <td>Date</td>
 <td>Date of birth of the baptized individual in ISO 8601 format</td>
+</tr>
+<tr class="even">
+<td>baptized_birth_date_precision</td>
+<td>Text</td>
+<td>Certainty level of <code>baptized_birth_date</code>. Includes all values from <code>event_date_precision</code>, plus <code>inferred_from_age</code> (birth date back-calculated by subtracting a recorded age expression from the event date)</td>
 </tr>
 <tr class="odd">
 <td>baptized_legitimacy_status</td>
@@ -485,7 +497,7 @@ Dataset Structure
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1,719
-Columns: 55
+Columns: 58
 $ file                            &lt;chr&gt; "APAucará LM L001", "APAucará LM L001"…
 $ identifier                      &lt;chr&gt; "M001", "M002", "M003", "M004", "M005"…
 $ event_type                      &lt;chr&gt; "Matrimonio", "Matrimonio", "Matrimoni…
@@ -540,7 +552,10 @@ $ event_geographic_descriptor_2   &lt;chr&gt; "Huamanga", "Colca", "Pampamarca",
 $ event_geographic_descriptor_3   &lt;chr&gt; "Coracora", NA, NA, NA, NA, NA, NA, NA…
 $ event_geographic_descriptor_4   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
 $ event_geographic_descriptor_5   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ event_geographic_descriptor_6   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
+$ event_geographic_descriptor_6   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ event_date_precision            &lt;chr&gt; "exact", "exact", "exact", "exact", "e…
+$ husband_birth_date_precision    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ wife_birth_date_precision       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
 </div>
 </div>
 </div>
@@ -582,29 +597,39 @@ $ event_geographic_descriptor_6   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA
 <td>Date of the marriage event in ISO 8601 format</td>
 </tr>
 <tr class="odd">
+<td>event_date_precision</td>
+<td>Text</td>
+<td>Certainty level of <code>event_date</code>. Values: <code>exact</code>, <code>month</code>, <code>month_inferred</code>, <code>year_inferred</code>, <code>day_adjusted</code>, <code>estimated</code> (see Baptisms for definitions)</td>
+</tr>
+<tr class="even">
 <td>husband_name</td>
 <td>Text</td>
 <td>Normalized first and middle name(s) of the husband</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>husband_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the husband</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>husband_social_condition</td>
 <td>Text</td>
 <td>Social, ethnical, or political marker of the husband (<code>mestizo</code>, <code>indio</code>, <code>tributario</code>, <code>vecino</code>, <code>don</code>)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>husband_marital_status</td>
 <td>Text</td>
 <td>Marital status of the husband at the time of marriage (<code>soltero</code>, <code>viudo</code>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>husband_birth_date</td>
 <td>Date</td>
 <td>Date of birth of the husband in ISO 8601 format</td>
+</tr>
+<tr class="odd">
+<td>husband_birth_date_precision</td>
+<td>Text</td>
+<td>Certainty level of <code>husband_birth_date</code>. Includes all values from <code>event_date_precision</code>, plus <code>inferred_from_age</code></td>
 </tr>
 <tr class="even">
 <td>husband_birth_place</td>
@@ -677,161 +702,166 @@ $ event_geographic_descriptor_6   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA
 <td>Date of birth of the wife in ISO 8601 format</td>
 </tr>
 <tr class="even">
+<td>wife_birth_date_precision</td>
+<td>Text</td>
+<td>Certainty level of <code>wife_birth_date</code>. Includes all values from <code>event_date_precision</code>, plus <code>inferred_from_age</code></td>
+</tr>
+<tr class="odd">
 <td>wife_birth_place</td>
 <td>Text</td>
 <td>Place of birth of the wife</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>wife_resident_in</td>
 <td>Text</td>
 <td>Recorded place of residence of the wife at the time of the event</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>wife_legitimacy_status</td>
 <td>Text</td>
 <td>Legitimacy status of the wife at birth (<code>legítima</code>, <code>ilegitima</code>, <code>natural</code>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>wife_father_name</td>
 <td>Text</td>
 <td>Normalized name of the wife’s father</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>wife_father_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the wife’s father</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>wife_father_social_condition</td>
 <td>Text</td>
 <td>Social, ethnical, or political marker of the wife’s father (<code>mestizo</code>, <code>indio</code>, <code>tributario</code>, <code>vecino</code>, <code>don</code>)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>wife_mother_name</td>
 <td>Text</td>
 <td>Normalized name of the wife’s mother</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>wife_mother_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the wife’s mother</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>wife_mother_social_condition</td>
 <td>Text</td>
 <td>Social, ethnical, or political marker of the wife’s mother (<code>mestizo</code>, <code>indio</code>, <code>tributario</code>, <code>vecino</code>, <code>doña</code>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>godparent_1_name</td>
 <td>Text</td>
 <td>Normalized name of the first godparent</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>godparent_1_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the first godparent</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>godparent_1_social_condition</td>
 <td>Text</td>
 <td>Social, ethnical, or political marker of the first godparent (<code>mestizo</code>, <code>indio</code>, <code>tributario</code>, <code>vecino</code>, <code>don</code>, <code>doña</code>)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>godparent_2_name</td>
 <td>Text</td>
 <td>Normalized name of the second godparent</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>godparent_2_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the second godparent</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>godparent_2_social_condition</td>
 <td>Text</td>
 <td>Social, ethnical, or political marker of the second godparent (<code>mestizo</code>, <code>indio</code>, <code>tributario</code>, <code>vecino</code>, <code>don</code>, <code>doña</code>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>godparent_3_name</td>
 <td>Text</td>
 <td>Normalized name of the third godparent (when applicable)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>godparent_3_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the third godparent (when applicable)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>witness_1_name</td>
 <td>Text</td>
 <td>Normalized name of the first witness</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>witness_1_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the first witness</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>witness_2_name</td>
 <td>Text</td>
 <td>Normalized name of the second witness</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>witness_2_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the second witness</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>witness_3_name</td>
 <td>Text</td>
 <td>Normalized name of the third witness (when applicable)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>witness_3_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the third witness (when applicable)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>witness_4_name</td>
 <td>Text</td>
 <td>Normalized name of the fourth witness (when applicable)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>witness_4_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the fourth witness (when applicable)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>event_place</td>
 <td>Text</td>
 <td>Place where the marriage event took place</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>event_geographic_descriptor_1</td>
 <td>Text</td>
 <td>Place or location mentioned in the record</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>event_geographic_descriptor_2</td>
 <td>Text</td>
 <td>Additional place or location mentioned in the record</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>event_geographic_descriptor_3</td>
 <td>Text</td>
 <td>Additional place or location mentioned in the record</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>event_geographic_descriptor_4</td>
 <td>Text</td>
 <td>Additional place or location mentioned in the record</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>event_geographic_descriptor_5</td>
 <td>Text</td>
 <td>Additional place or location mentioned in the record</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>event_geographic_descriptor_6</td>
 <td>Text</td>
 <td>Additional place or location mentioned in the record</td>
@@ -861,7 +891,7 @@ Dataset Structure
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 2,192
-Columns: 26
+Columns: 28
 $ file                          &lt;chr&gt; "APAucará LD L001", "APAucará LD L001", …
 $ identifier                    &lt;chr&gt; "E001", "E002", "E003", "E004", "E005", …
 $ event_type                    &lt;chr&gt; "Entierro", "Entierro", "Entierro", "Ent…
@@ -886,6 +916,8 @@ $ event_geographic_descriptor_1 &lt;chr&gt; "Aucará", "Aucará", "Aucará", "Au
 $ event_geographic_descriptor_2 &lt;chr&gt; "Lucanas", "Lucanas", "Lucanas", "Lucana…
 $ event_geographic_descriptor_3 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
 $ event_geographic_descriptor_4 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ event_date_precision          &lt;chr&gt; "exact", "exact", "exact", "exact", "exa…
+$ deceased_birth_date_precision &lt;chr&gt; NA, "inferred_from_age", "inferred_from_…
 $ husband_lastname              &lt;chr&gt; NA, NA, "ccoyllo", "espinosa", "huallpat…
 $ wife_lastname                 &lt;chr&gt; "lupa", "cucho", NA, NA, NA, NA, "javier…</code></pre>
 </div>
@@ -929,29 +961,39 @@ $ wife_lastname                 &lt;chr&gt; "lupa", "cucho", NA, NA, NA, NA, "ja
 <td>Date of the burial event in ISO 8601 format</td>
 </tr>
 <tr class="odd">
+<td>event_date_precision</td>
+<td>Text</td>
+<td>Certainty level of <code>event_date</code>. Values: <code>exact</code>, <code>month</code>, <code>month_inferred</code>, <code>year_inferred</code>, <code>day_adjusted</code>, <code>estimated</code> (see Baptisms for definitions)</td>
+</tr>
+<tr class="even">
 <td>doctrine</td>
 <td>Text</td>
 <td>Name of the parish or doctrine where the burial was registered</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>event_place</td>
 <td>Text</td>
 <td>Place where the burial event took place</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>deceased_name</td>
 <td>Text</td>
 <td>Normalized first and middle name(s) of the deceased individual</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>deceased_lastname</td>
 <td>Text</td>
 <td>Normalized or inferred surname(s) of the deceased individual</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>deceased_birth_date</td>
 <td>Date</td>
 <td>Date of birth of the deceased individual in ISO 8601 format</td>
+</tr>
+<tr class="odd">
+<td>deceased_birth_date_precision</td>
+<td>Text</td>
+<td>Certainty level of <code>deceased_birth_date</code>. Includes all values from <code>event_date_precision</code>, plus <code>inferred_from_age</code></td>
 </tr>
 <tr class="even">
 <td>deceased_birth_place</td>
@@ -1060,20 +1102,20 @@ Dataset Structure
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>places <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/unique_places.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>places <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/places.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>places <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 74
+<pre><code>Rows: 70
 Columns: 16
-$ place_id                  &lt;dbl&gt; 1, 4, 6, 8, 12, 13, 14, 15, 16, 17, 18, 19, …
+$ place_id                  &lt;dbl&gt; 1, 4, 6, 8, 9, 12, 13, 14, 15, 16, 17, 18, 1…
 $ manually_normalized_place &lt;chr&gt; "Acobamba", "Andamarca", "Apongo", "Aucará",…
 $ standardize_label         &lt;chr&gt; "Acobamba", "Andamarca", "Apongo", "Aucará",…
 $ language                  &lt;chr&gt; "es", "es", "es", "es", "es", "es", "es", "e…
 $ latitude                  &lt;dbl&gt; -12.07757, -15.63833, -14.01327, -14.25000, …
 $ longitude                 &lt;dbl&gt; -74.87127, -70.58848, -73.93247, -74.08333, …
 $ source                    &lt;chr&gt; "GeoNames", "GeoNames", "GeoNames", "GeoName…
-$ id                        &lt;dbl&gt; 8663907, 3947725, 3947431, 3947087, 3939003,…
+$ id                        &lt;dbl&gt; 8663907, 3947725, 3947431, 3947087, 8349755,…
 $ uri                       &lt;chr&gt; "http://sws.geonames.org/8663907/", "http://…
 $ country_code              &lt;chr&gt; "PE", "PE", "PE", "PE", "PE", "PE", "PE", "P…
 $ part_of                   &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
@@ -1208,22 +1250,24 @@ Dataset Structure
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 47,072
-Columns: 15
-$ event_idno          &lt;chr&gt; "bautizo-1", "bautizo-1", "bautizo-1", "bautizo-1"…
-$ original_identifier &lt;chr&gt; "APAucará-LB-L001_B001", "APAucará-LB-L001_B001", …
-$ persona_type        &lt;chr&gt; "baptized", "father", "mother", "godfather", "bapt…
-$ name                &lt;chr&gt; "domingo", "lucas", "sevastiana", "vicente", "domi…
-$ birth_place         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ birth_date          &lt;date&gt; 1790-08-04, NA, NA, NA, 1790-08-04, NA, NA, NA, 1…
-$ legitimacy_status   &lt;chr&gt; "legitimo", NA, NA, NA, "legitimo", NA, NA, NA, "l…
-$ lastname            &lt;chr&gt; "ayquipa", "ayquipa", "quispe", "guamani", "lulia"…
-$ persona_idno        &lt;chr&gt; "persona-1", "persona-2", "persona-3", "persona-4"…
-$ social_condition    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ marital_status      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ resident_in         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ death_place         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ death_date          &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-$ gender              &lt;chr&gt; "male", "male", "female", "male", "female", "male"…</code></pre>
+Columns: 17
+$ event_idno           &lt;chr&gt; "bautizo-1", "bautizo-1", "bautizo-1", "bautizo-1…
+$ original_identifier  &lt;chr&gt; "APAucará-LB-L001_B001", "APAucará-LB-L001_B001",…
+$ persona_type         &lt;chr&gt; "baptized", "father", "mother", "godfather", "bap…
+$ name                 &lt;chr&gt; "domingo", "lucas", "sevastiana", "vicente", "dom…
+$ birth_place          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ birth_date           &lt;date&gt; 1790-08-04, NA, NA, NA, 1790-08-04, NA, NA, NA, …
+$ legitimacy_status    &lt;chr&gt; "legitimo", NA, NA, NA, "legitimo", NA, NA, NA, "…
+$ birth_date_precision &lt;chr&gt; "exact", NA, NA, NA, "exact", NA, NA, NA, "exact"…
+$ lastname             &lt;chr&gt; "ayquipa", "ayquipa", "quispe", "guamani", "lulia…
+$ persona_idno         &lt;chr&gt; "persona-1", "persona-2", "persona-3", "persona-4…
+$ social_condition     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ marital_status       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ resident_in          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ death_place          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ death_date           &lt;date&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ death_date_precision &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ gender               &lt;chr&gt; "male", "male", "female", "male", "female", "male…</code></pre>
 </div>
 </div>
 </div>
@@ -1275,14 +1319,24 @@ $ gender              &lt;chr&gt; "male", "male", "female", "male", "female", "m
 <td>Recorded or inferred date of birth in ISO 8601 format</td>
 </tr>
 <tr class="odd">
+<td>birth_date_precision</td>
+<td>Text</td>
+<td>Certainty level of <code>birth_date</code>. Includes all values from <code>event_date_precision</code>, plus <code>inferred_from_age</code></td>
+</tr>
+<tr class="even">
 <td>birth_place</td>
 <td>Text</td>
 <td>Place of birth</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>death_date</td>
 <td>Date</td>
 <td>Recorded or inferred date of death in ISO 8601 format</td>
+</tr>
+<tr class="even">
+<td>death_date_precision</td>
+<td>Text</td>
+<td>Certainty level of <code>death_date</code>. Values: <code>exact</code>, <code>month</code>, <code>month_inferred</code>, <code>year_inferred</code>, <code>day_adjusted</code>, <code>estimated</code> (see Baptisms for definitions)</td>
 </tr>
 <tr class="odd">
 <td>death_place</td>
@@ -1833,209 +1887,218 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>| identifier | Text          | Secuential identifier for the baptism event |</span>
 <span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>| event_type | Text          | Type of event (<span class="in">`Bautizo`</span>) |</span>
 <span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>| event_date | Date          | Date of the baptism event in ISO 8601 format |</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>| baptized_name | Text       | Normalized first and middle name(s) of the baptized individual |</span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>| baptized_lastname | Text   | Normalized or inferred surname(s) of the baptized individual |</span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>| baptized_birth_place | Text   | Place of birth of the baptized individual |</span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>| baptized_birth_date | Date    | Date of birth of the baptized individual in ISO 8601 format |</span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>| baptized_legitimacy_status | Text | Legitimacy status at birth (<span class="in">`legitimo`</span>, <span class="in">`ilegitimo`</span>) |</span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>| father_name | Text         | Normalized name of the father |</span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>| father_lastname | Text     | Normalized or inferred surname(s) of the father |</span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>| father_social_condition | Text  | Social, ethnical, or political marker of the father (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>| mother_name | Text         | Normalized name of the mother |</span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>| mother_lastname | Text     | Normalized or inferred surname(s) of the mother |</span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>| mother_social_condition | Text  | Social, ethnical, or political marker of the mother (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>| parents_social_condition | Text | Combined social condition of both parents |</span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>| godfather_name | Text     | Normalized name of the godfather |</span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>| godfather_lastname | Text | Normalized or inferred surname(s) of the godfather |</span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>| godfather_social_condition | Text | Social, ethnical, or political marker of the godfather (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>| godmother_name | Text     | Normalized name of the godmother |</span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>| godmother_lastname | Text | Normalized or inferred surname(s) of the godmother |</span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>| godmother_social_condition | Text | Social, ethnical, or political marker of the godmother (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>| event_place | Text        | Place where the baptism event took place |</span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_1 | Text | Place or location mentioned in the record |</span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_2 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_3 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_4 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="fu">### Marriages</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>| event_date_precision | Text | Certainty level of <span class="in">`event_date`</span>. Values: <span class="in">`exact`</span> (original or format-corrected), <span class="in">`month`</span> (day filled with <span class="in">`01`</span>), <span class="in">`month_inferred`</span> (month borrowed from a neighbouring record), <span class="in">`year_inferred`</span> (year borrowed from a neighbouring record), <span class="in">`day_adjusted`</span> (nonexistent date corrected to nearest valid day), <span class="in">`estimated`</span> (torn record, day averaged from a range) |</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>| baptized_name | Text       | Normalized first and middle name(s) of the baptized individual |</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>| baptized_lastname | Text   | Normalized or inferred surname(s) of the baptized individual |</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>| baptized_birth_place | Text   | Place of birth of the baptized individual |</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>| baptized_birth_date | Date    | Date of birth of the baptized individual in ISO 8601 format |</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>| baptized_birth_date_precision | Text | Certainty level of <span class="in">`baptized_birth_date`</span>. Includes all values from <span class="in">`event_date_precision`</span>, plus <span class="in">`inferred_from_age`</span> (birth date back-calculated by subtracting a recorded age expression from the event date) |</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>| baptized_legitimacy_status | Text | Legitimacy status at birth (<span class="in">`legitimo`</span>, <span class="in">`ilegitimo`</span>) |</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>| father_name | Text         | Normalized name of the father |</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>| father_lastname | Text     | Normalized or inferred surname(s) of the father |</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>| father_social_condition | Text  | Social, ethnical, or political marker of the father (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>| mother_name | Text         | Normalized name of the mother |</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>| mother_lastname | Text     | Normalized or inferred surname(s) of the mother |</span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>| mother_social_condition | Text  | Social, ethnical, or political marker of the mother (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>| parents_social_condition | Text | Combined social condition of both parents |</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>| godfather_name | Text     | Normalized name of the godfather |</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>| godfather_lastname | Text | Normalized or inferred surname(s) of the godfather |</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>| godfather_social_condition | Text | Social, ethnical, or political marker of the godfather (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>| godmother_name | Text     | Normalized name of the godmother |</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>| godmother_lastname | Text | Normalized or inferred surname(s) of the godmother |</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>| godmother_social_condition | Text | Social, ethnical, or political marker of the godmother (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>| event_place | Text        | Place where the baptism event took place |</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_1 | Text | Place or location mentioned in the record |</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_2 | Text | Additional place or location mentioned in the record |</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_3 | Text | Additional place or location mentioned in the record |</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_4 | Text | Additional place or location mentioned in the record |</span>
 <span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dataset Structure</span></span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>marriages <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/matrimonios_clean.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>marriages <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>The <span class="in">`marriages`</span> table contains cleaned and standardized records of marriage events extracted from parish registers. Each row represents a unique marriage event with associated attributes for both spouses, their families, witnesses, and godparents.</span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### Marriages</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dataset Structure</span></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>marriages <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/matrimonios_clean.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>marriages <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>| Property     | Expected Type | Description |</span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>|--------------|---------------|-------------|</span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>| file      | Text          | Source file name from which the record was extracted |</span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>| identifier | Text          | Sequential identifier for the marriage event |</span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>| event_type | Text          | Type of event (<span class="in">`Matrimonio`</span>) |</span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>| event_date | Date          | Date of the marriage event in ISO 8601 format |</span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>| husband_name | Text       | Normalized first and middle name(s) of the husband |</span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>| husband_lastname | Text   | Normalized or inferred surname(s) of the husband |</span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>| husband_social_condition | Text  | Social, ethnical, or political marker of the husband (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>) |</span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>| husband_marital_status | Text | Marital status of the husband at the time of marriage (<span class="in">`soltero`</span>, <span class="in">`viudo`</span>) |</span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>| husband_birth_date | Date    | Date of birth of the husband in ISO 8601 format |</span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>| husband_birth_place | Text   | Place of birth of the husband |</span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>| husband_resident_in | Text   | Recorded place of residence of the husband at the time of the event |</span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>| husband_legitimacy_status | Text | Legitimacy status of the husband at birth (<span class="in">`legítimo`</span>, <span class="in">`ilegitimo`</span>, <span class="in">`natural`</span>) |</span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>| husband_father_name | Text  | Normalized name of the husband's father |</span>
-<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>| husband_father_lastname | Text | Normalized or inferred surname(s) of the husband's father |</span>
-<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>| husband_father_social_condition | Text | Social, ethnical, or political marker of the husband's father (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>) |</span>
-<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>| husband_mother_name | Text  | Normalized name of the husband's mother |</span>
-<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>| husband_mother_lastname | Text | Normalized or inferred surname(s) of the husband's mother |</span>
-<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>| husband_mother_social_condition | Text | Social, ethnical, or political marker of the husband's mother (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`doña`</span>) |</span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>| wife_name | Text         | Normalized first and middle name(s) of the wife |</span>
-<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>| wife_lastname | Text     | Normalized or inferred surname(s) of the wife |</span>
-<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>| wife_social_condition | Text  | Social, ethnical, or political marker of the wife (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`doña`</span>) |</span>
-<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a>| wife_marital_status | Text | Marital status of the wife at the time of marriage (<span class="in">`soltera`</span>, <span class="in">`viuda`</span>) |</span>
-<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a>| wife_birth_date | Date    | Date of birth of the wife in ISO 8601 format |</span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>| wife_birth_place | Text   | Place of birth of the wife |</span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>| wife_resident_in | Text   | Recorded place of residence of the wife at the time of the event |</span>
-<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>| wife_legitimacy_status | Text | Legitimacy status of the wife at birth (<span class="in">`legítima`</span>, <span class="in">`ilegitima`</span>, <span class="in">`natural`</span>) |</span>
-<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>| wife_father_name | Text    | Normalized name of the wife's father |</span>
-<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>| wife_father_lastname | Text | Normalized or inferred surname(s) of the wife's father |</span>
-<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>| wife_father_social_condition | Text | Social, ethnical, or political marker of the wife's father (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>) |</span>
-<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a>| wife_mother_name | Text    | Normalized name of the wife's mother |</span>
-<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>| wife_mother_lastname | Text | Normalized or inferred surname(s) of the wife's mother |</span>
-<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>| wife_mother_social_condition | Text | Social, ethnical, or political marker of the wife's mother (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`doña`</span>) |</span>
-<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>| godparent_1_name | Text   | Normalized name of the first godparent |</span>
-<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>| godparent_1_lastname | Text | Normalized or inferred surname(s) of the first godparent |</span>
-<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>| godparent_1_social_condition | Text | Social, ethnical, or political marker of the first godparent (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>, <span class="in">`doña`</span>) |</span>
-<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a>| godparent_2_name | Text   | Normalized name of the second godparent |</span>
-<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>| godparent_2_lastname | Text | Normalized or inferred surname(s) of the second godparent |</span>
-<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a>| godparent_2_social_condition | Text | Social, ethnical, or political marker of the second godparent (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>, <span class="in">`doña`</span>) |</span>
-<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a>| godparent_3_name | Text   | Normalized name of the third godparent (when applicable) |</span>
-<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a>| godparent_3_lastname | Text | Normalized or inferred surname(s) of the third godparent (when applicable) |</span>
-<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>| witness_1_name | Text     | Normalized name of the first witness |</span>
-<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>| witness_1_lastname | Text | Normalized or inferred surname(s) of the first witness |</span>
-<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a>| witness_2_name | Text     | Normalized name of the second witness |</span>
-<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>| witness_2_lastname | Text | Normalized or inferred surname(s) of the second witness |</span>
-<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>| witness_3_name | Text     | Normalized name of the third witness (when applicable) |</span>
-<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a>| witness_3_lastname | Text | Normalized or inferred surname(s) of the third witness (when applicable) |</span>
-<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>| witness_4_name | Text     | Normalized name of the fourth witness (when applicable) |</span>
-<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a>| witness_4_lastname | Text | Normalized or inferred surname(s) of the fourth witness (when applicable) |</span>
-<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a>| event_place | Text        | Place where the marriage event took place |</span>
-<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_1 | Text | Place or location mentioned in the record |</span>
-<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_2 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_3 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_4 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_5 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_6 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### Burials</span></span>
-<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dataset Structure</span></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>The <span class="in">`marriages`</span> table contains cleaned and standardized records of marriage events extracted from parish registers. Each row represents a unique marriage event with associated attributes for both spouses, their families, witnesses, and godparents.</span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>| Property     | Expected Type | Description |</span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>|--------------|---------------|-------------|</span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>| file      | Text          | Source file name from which the record was extracted |</span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>| identifier | Text          | Sequential identifier for the marriage event |</span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>| event_type | Text          | Type of event (<span class="in">`Matrimonio`</span>) |</span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>| event_date | Date          | Date of the marriage event in ISO 8601 format |</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>| event_date_precision | Text | Certainty level of <span class="in">`event_date`</span>. Values: <span class="in">`exact`</span>, <span class="in">`month`</span>, <span class="in">`month_inferred`</span>, <span class="in">`year_inferred`</span>, <span class="in">`day_adjusted`</span>, <span class="in">`estimated`</span> (see Baptisms for definitions) |</span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>| husband_name | Text       | Normalized first and middle name(s) of the husband |</span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>| husband_lastname | Text   | Normalized or inferred surname(s) of the husband |</span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>| husband_social_condition | Text  | Social, ethnical, or political marker of the husband (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>) |</span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>| husband_marital_status | Text | Marital status of the husband at the time of marriage (<span class="in">`soltero`</span>, <span class="in">`viudo`</span>) |</span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>| husband_birth_date | Date    | Date of birth of the husband in ISO 8601 format |</span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>| husband_birth_date_precision | Text | Certainty level of <span class="in">`husband_birth_date`</span>. Includes all values from <span class="in">`event_date_precision`</span>, plus <span class="in">`inferred_from_age`</span> |</span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>| husband_birth_place | Text   | Place of birth of the husband |</span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>| husband_resident_in | Text   | Recorded place of residence of the husband at the time of the event |</span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>| husband_legitimacy_status | Text | Legitimacy status of the husband at birth (<span class="in">`legítimo`</span>, <span class="in">`ilegitimo`</span>, <span class="in">`natural`</span>) |</span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>| husband_father_name | Text  | Normalized name of the husband's father |</span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>| husband_father_lastname | Text | Normalized or inferred surname(s) of the husband's father |</span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>| husband_father_social_condition | Text | Social, ethnical, or political marker of the husband's father (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>) |</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a>| husband_mother_name | Text  | Normalized name of the husband's mother |</span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>| husband_mother_lastname | Text | Normalized or inferred surname(s) of the husband's mother |</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a>| husband_mother_social_condition | Text | Social, ethnical, or political marker of the husband's mother (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`doña`</span>) |</span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a>| wife_name | Text         | Normalized first and middle name(s) of the wife |</span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>| wife_lastname | Text     | Normalized or inferred surname(s) of the wife |</span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>| wife_social_condition | Text  | Social, ethnical, or political marker of the wife (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`doña`</span>) |</span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>| wife_marital_status | Text | Marital status of the wife at the time of marriage (<span class="in">`soltera`</span>, <span class="in">`viuda`</span>) |</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>| wife_birth_date | Date    | Date of birth of the wife in ISO 8601 format |</span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>| wife_birth_date_precision | Text | Certainty level of <span class="in">`wife_birth_date`</span>. Includes all values from <span class="in">`event_date_precision`</span>, plus <span class="in">`inferred_from_age`</span> |</span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>| wife_birth_place | Text   | Place of birth of the wife |</span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a>| wife_resident_in | Text   | Recorded place of residence of the wife at the time of the event |</span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>| wife_legitimacy_status | Text | Legitimacy status of the wife at birth (<span class="in">`legítima`</span>, <span class="in">`ilegitima`</span>, <span class="in">`natural`</span>) |</span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>| wife_father_name | Text    | Normalized name of the wife's father |</span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>| wife_father_lastname | Text | Normalized or inferred surname(s) of the wife's father |</span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>| wife_father_social_condition | Text | Social, ethnical, or political marker of the wife's father (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>) |</span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>| wife_mother_name | Text    | Normalized name of the wife's mother |</span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a>| wife_mother_lastname | Text | Normalized or inferred surname(s) of the wife's mother |</span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>| wife_mother_social_condition | Text | Social, ethnical, or political marker of the wife's mother (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`doña`</span>) |</span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a>| godparent_1_name | Text   | Normalized name of the first godparent |</span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a>| godparent_1_lastname | Text | Normalized or inferred surname(s) of the first godparent |</span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a>| godparent_1_social_condition | Text | Social, ethnical, or political marker of the first godparent (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>, <span class="in">`doña`</span>) |</span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>| godparent_2_name | Text   | Normalized name of the second godparent |</span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>| godparent_2_lastname | Text | Normalized or inferred surname(s) of the second godparent |</span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a>| godparent_2_social_condition | Text | Social, ethnical, or political marker of the second godparent (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>, <span class="in">`doña`</span>) |</span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a>| godparent_3_name | Text   | Normalized name of the third godparent (when applicable) |</span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>| godparent_3_lastname | Text | Normalized or inferred surname(s) of the third godparent (when applicable) |</span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a>| witness_1_name | Text     | Normalized name of the first witness |</span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>| witness_1_lastname | Text | Normalized or inferred surname(s) of the first witness |</span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a>| witness_2_name | Text     | Normalized name of the second witness |</span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a>| witness_2_lastname | Text | Normalized or inferred surname(s) of the second witness |</span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a>| witness_3_name | Text     | Normalized name of the third witness (when applicable) |</span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a>| witness_3_lastname | Text | Normalized or inferred surname(s) of the third witness (when applicable) |</span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a>| witness_4_name | Text     | Normalized name of the fourth witness (when applicable) |</span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>| witness_4_lastname | Text | Normalized or inferred surname(s) of the fourth witness (when applicable) |</span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a>| event_place | Text        | Place where the marriage event took place |</span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_1 | Text | Place or location mentioned in the record |</span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_2 | Text | Additional place or location mentioned in the record |</span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_3 | Text | Additional place or location mentioned in the record |</span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_4 | Text | Additional place or location mentioned in the record |</span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_5 | Text | Additional place or location mentioned in the record |</span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_6 | Text | Additional place or location mentioned in the record |</span>
 <span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>burials <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/entierros_clean.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a>burials <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
-<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>The <span class="in">`burials`</span> table contains cleaned and standardized records of burial events extracted from parish registers. Each row represents a unique burial event with associated attributes such as date, location, and information about the deceased individual and their surviving family members.</span>
-<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>| Property     | Expected Type | Description |</span>
-<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a>|--------------|---------------|-------------|</span>
-<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a>| file      | Text          | Source file name from which the record was extracted |</span>
-<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a>| identifier | Text          | Sequential identifier for the burial event |</span>
-<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a>| event_type | Text          | Type of event (<span class="in">`Entierro`</span>) |</span>
-<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a>| event_date | Date          | Date of the burial event in ISO 8601 format |</span>
-<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a>| doctrine   | Text          | Name of the parish or doctrine where the burial was registered |</span>
-<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>| event_place | Text        | Place where the burial event took place |</span>
-<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a>| deceased_name | Text       | Normalized first and middle name(s) of the deceased individual |</span>
-<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a>| deceased_lastname | Text   | Normalized or inferred surname(s) of the deceased individual |</span>
-<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>| deceased_birth_date | Date    | Date of birth of the deceased individual in ISO 8601 format |</span>
-<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a>| deceased_birth_place | Text   | Place of birth of the deceased individual |</span>
-<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>| deceased_social_condition | Text  | Social, ethnical, or political marker of the deceased (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>, <span class="in">`doña`</span>) |</span>
-<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>| deceased_marital_status | Text | Marital status of the deceased at the time of death (<span class="in">`soltero/soltera`</span>, <span class="in">`casado/casada`</span>, <span class="in">`viudo/viuda`</span>, <span class="in">`marido que fue`</span>, <span class="in">`mujer que fue`</span>) |</span>
-<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>| deceased_legitimacy_status | Text | Legitimacy status of the deceased at birth (<span class="in">`legítimo`</span>, <span class="in">`ilegitimo`</span>, <span class="in">`natural`</span>) |</span>
-<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a>| father_name | Text         | Normalized name of the deceased's father |</span>
-<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a>| father_lastname | Text     | Normalized or inferred surname(s) of the deceased's father |</span>
-<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>| mother_name | Text         | Normalized name of the deceased's mother |</span>
-<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>| mother_lastname | Text     | Normalized or inferred surname(s) of the deceased's mother |</span>
-<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a>| husband_name | Text        | Normalized name of the deceased's husband (when deceased was married) |</span>
-<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a>| wife_name | Text           | Normalized name of the deceased's wife (when deceased was married) |</span>
-<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>| burial_place | Text        | Specific location where the deceased was buried |</span>
-<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_1 | Text | Place or location mentioned in the record |</span>
-<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_2 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_3 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_4 | Text | Additional place or location mentioned in the record |</span>
-<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>| husband_lastname | Text    | Normalized or inferred surname(s) of the deceased's husband |</span>
-<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>| wife_lastname | Text       | Normalized or inferred surname(s) of the deceased's wife |</span>
-<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a><span class="fu">## Places</span></span>
-<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a>The places table represents a controlled vocabulary of geographic locations extracted from all event records and normalized through a combination of manual curation and automated gazetteer matching. Each place has been geocoded and linked to external authorities (GeoNames, Getty Thesaurus of Geographic Names) when possible, enabling spatial analysis and visualization of the historical records.</span>
-<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dataset Structure</span></span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### Burials</span></span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dataset Structure</span></span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>burials <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/entierros_clean.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a>burials <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a>The <span class="in">`burials`</span> table contains cleaned and standardized records of burial events extracted from parish registers. Each row represents a unique burial event with associated attributes such as date, location, and information about the deceased individual and their surviving family members.</span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a>| Property     | Expected Type | Description |</span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a>|--------------|---------------|-------------|</span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>| file      | Text          | Source file name from which the record was extracted |</span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a>| identifier | Text          | Sequential identifier for the burial event |</span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a>| event_type | Text          | Type of event (<span class="in">`Entierro`</span>) |</span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>| event_date | Date          | Date of the burial event in ISO 8601 format |</span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a>| event_date_precision | Text | Certainty level of <span class="in">`event_date`</span>. Values: <span class="in">`exact`</span>, <span class="in">`month`</span>, <span class="in">`month_inferred`</span>, <span class="in">`year_inferred`</span>, <span class="in">`day_adjusted`</span>, <span class="in">`estimated`</span> (see Baptisms for definitions) |</span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>| doctrine   | Text          | Name of the parish or doctrine where the burial was registered |</span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>| event_place | Text        | Place where the burial event took place |</span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>| deceased_name | Text       | Normalized first and middle name(s) of the deceased individual |</span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a>| deceased_lastname | Text   | Normalized or inferred surname(s) of the deceased individual |</span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a>| deceased_birth_date | Date    | Date of birth of the deceased individual in ISO 8601 format |</span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>| deceased_birth_date_precision | Text | Certainty level of <span class="in">`deceased_birth_date`</span>. Includes all values from <span class="in">`event_date_precision`</span>, plus <span class="in">`inferred_from_age`</span> |</span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>| deceased_birth_place | Text   | Place of birth of the deceased individual |</span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a>| deceased_social_condition | Text  | Social, ethnical, or political marker of the deceased (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>, <span class="in">`don`</span>, <span class="in">`doña`</span>) |</span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a>| deceased_marital_status | Text | Marital status of the deceased at the time of death (<span class="in">`soltero/soltera`</span>, <span class="in">`casado/casada`</span>, <span class="in">`viudo/viuda`</span>, <span class="in">`marido que fue`</span>, <span class="in">`mujer que fue`</span>) |</span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>| deceased_legitimacy_status | Text | Legitimacy status of the deceased at birth (<span class="in">`legítimo`</span>, <span class="in">`ilegitimo`</span>, <span class="in">`natural`</span>) |</span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>| father_name | Text         | Normalized name of the deceased's father |</span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>| father_lastname | Text     | Normalized or inferred surname(s) of the deceased's father |</span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>| mother_name | Text         | Normalized name of the deceased's mother |</span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a>| mother_lastname | Text     | Normalized or inferred surname(s) of the deceased's mother |</span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>| husband_name | Text        | Normalized name of the deceased's husband (when deceased was married) |</span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>| wife_name | Text           | Normalized name of the deceased's wife (when deceased was married) |</span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a>| burial_place | Text        | Specific location where the deceased was buried |</span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_1 | Text | Place or location mentioned in the record |</span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_2 | Text | Additional place or location mentioned in the record |</span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_3 | Text | Additional place or location mentioned in the record |</span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a>| event_geographic_descriptor_4 | Text | Additional place or location mentioned in the record |</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a>| husband_lastname | Text    | Normalized or inferred surname(s) of the deceased's husband |</span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a>| wife_lastname | Text       | Normalized or inferred surname(s) of the deceased's wife |</span>
 <span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a>places <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/unique_places.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a>places <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
-<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>The <span class="in">`places`</span> table contains unique geographic locations mentioned in the parish records, along with their standardized names and geographic coordinates.</span>
-<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a>| Property     | Expected Type | Description |</span>
-<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a>|--------------|---------------|-------------|</span>
-<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>| place_id | Numeric        | Unique identifier for the place |</span>
-<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>| manually_normalized_name | Text | | Standardized name assigned during data cleaning |</span>
-<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a>| standardized_name | Text          | Name standardized using external gazetteers |</span>
-<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a>| language   | Text          | Language of the place name (e.g., <span class="in">`es`</span>, <span class="in">`en`</span>) |</span>
-<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>| latitude   | Numeric       | Latitude coordinate of the place |</span>
-<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>| longitude  | Numeric       | Longitude coordinate of the place |</span>
-<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>| source_gazetteer | Text       | Source gazetteer used for standardization (e.g., <span class="in">`geonames`</span>, <span class="in">`tgn`</span>) |</span>
-<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>| id  | Text          | Identifier of the place in the source gazetteer |</span>
-<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>| uri | Text          | URI linking to the place in the source gazetteer |</span>
-<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>| country_code | Text       | ISO country code of the place |</span>
-<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a>| part_of | Text         | Higher-level administrative division the place belongs to |</span>
-<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a>| part_of_uri | Text     | URI of the higher-level administrative division |</span>
-<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a>| confidence | Numeric    | Confidence score of the place standardization (0-100) |</span>
-<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a>| treshold | Numeric     | Treshold used for the place standardization |</span>
-<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a>| match_type | Text      | Type of match made during standardization (e.g., <span class="in">`exact`</span>, <span class="in">`fuzzy`</span>) |</span>
-<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a>| mentioned_as | Text   | Original text mention of the place in the records |</span>
-<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Personas</span></span>
-<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>Personas represent individual person mentions extracted from all event records and restructured into a person-centric format. Unlike the event tables which are organized around ceremonies, this table focuses on individuals and their attributes as documented across multiple events. Each row is a unique person mention with inferred demographic information, though multiple mentions may refer to the same historical individual. Future work will link these mentions through probabilistic record linkage to reconstruct life histories.</span>
-<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
-<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dataset Structure</span></span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Places</span></span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a>The places table represents a controlled vocabulary of geographic locations extracted from all event records and normalized through a combination of manual curation and automated gazetteer matching. Each place has been geocoded and linked to external authorities (GeoNames, Getty Thesaurus of Geographic Names) when possible, enabling spatial analysis and visualization of the historical records.</span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dataset Structure</span></span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a>places <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/places.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a>places <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a>The <span class="in">`places`</span> table contains unique geographic locations mentioned in the parish records, along with their standardized names and geographic coordinates.</span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>| Property     | Expected Type | Description |</span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>|--------------|---------------|-------------|</span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>| place_id | Numeric        | Unique identifier for the place |</span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>| manually_normalized_name | Text | | Standardized name assigned during data cleaning |</span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>| standardized_name | Text          | Name standardized using external gazetteers |</span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a>| language   | Text          | Language of the place name (e.g., <span class="in">`es`</span>, <span class="in">`en`</span>) |</span>
+<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a>| latitude   | Numeric       | Latitude coordinate of the place |</span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a>| longitude  | Numeric       | Longitude coordinate of the place |</span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a>| source_gazetteer | Text       | Source gazetteer used for standardization (e.g., <span class="in">`geonames`</span>, <span class="in">`tgn`</span>) |</span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a>| id  | Text          | Identifier of the place in the source gazetteer |</span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a>| uri | Text          | URI linking to the place in the source gazetteer |</span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a>| country_code | Text       | ISO country code of the place |</span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a>| part_of | Text         | Higher-level administrative division the place belongs to |</span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a>| part_of_uri | Text     | URI of the higher-level administrative division |</span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>| confidence | Numeric    | Confidence score of the place standardization (0-100) |</span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a>| treshold | Numeric     | Treshold used for the place standardization |</span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>| match_type | Text      | Type of match made during standardization (e.g., <span class="in">`exact`</span>, <span class="in">`fuzzy`</span>) |</span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a>| mentioned_as | Text   | Original text mention of the place in the records |</span>
 <span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a>personas <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/personas.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a>personas <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
-<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a>Personas represent individual mentions of people in the historical records before any aggregation through probabilistic record linkage (PRL). Each row corresponds to a unique mention with associated attributes such as name, birth and death details, and places.</span>
-<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a>| Property   | Expected Type | Description |</span>
-<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a>|------------|---------------|-------------|</span>
-<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a>| event_idno | Text          | Unique identifier for the event mention |</span>
-<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a>| original_identifier | Text          | Original identifier from the source document |</span>
-<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a>| name       | Text          | Normalized first and middle name(s) |</span>
-<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a>| lastname   | Text          | Normalized or inferred surname(s) |</span>
-<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a>| persona_type | Text          | Type of persona (e.g., <span class="in">`baptized`</span>, <span class="in">`parent`</span>, <span class="in">`godparent`</span>) |</span>
-<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a>| birth_date | Date          | Recorded or inferred date of birth in ISO 8601 format |</span>
-<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a>| birth_place | Text       | Place of birth |</span>
-<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a>| death_date | Date          | Recorded or inferred date of death in ISO 8601 format |</span>
-<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>| death_place | Text       | Place of death |</span>
-<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a>| gender     | Text          |  Inferred gender (<span class="in">`male`</span>, <span class="in">`female`</span>, <span class="in">`unknown`</span>) |</span>
-<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a>| resident_in | Text        | Recorded place of residence at the time of the event |</span>
-<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a>| legitimacy_status | Text    | Legitimacy status at birth (<span class="in">`legitimo`</span>, <span class="in">`ilegitimo`</span>) |</span>
-<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a>| marital_status | Text      | Marital status at the time of the event (<span class="in">`soltero`</span>, <span class="in">`casado`</span>) |</span>
-<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a>| social_condition | Text     | Social, ethnical, or political marker (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
-<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## Personas</span></span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a>Personas represent individual person mentions extracted from all event records and restructured into a person-centric format. Unlike the event tables which are organized around ceremonies, this table focuses on individuals and their attributes as documented across multiple events. Each row is a unique person mention with inferred demographic information, though multiple mentions may refer to the same historical individual. Future work will link these mentions through probabilistic record linkage to reconstruct life histories.</span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a>::: {.callout-note collapse="true"}</span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dataset Structure</span></span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a>personas <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"../../data/clean/personas.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a>personas <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a>Personas represent individual mentions of people in the historical records before any aggregation through probabilistic record linkage (PRL). Each row corresponds to a unique mention with associated attributes such as name, birth and death details, and places.</span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a>| Property   | Expected Type | Description |</span>
+<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a>|------------|---------------|-------------|</span>
+<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a>| event_idno | Text          | Unique identifier for the event mention |</span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>| original_identifier | Text          | Original identifier from the source document |</span>
+<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a>| name       | Text          | Normalized first and middle name(s) |</span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a>| lastname   | Text          | Normalized or inferred surname(s) |</span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a>| persona_type | Text          | Type of persona (e.g., <span class="in">`baptized`</span>, <span class="in">`parent`</span>, <span class="in">`godparent`</span>) |</span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a>| birth_date | Date          | Recorded or inferred date of birth in ISO 8601 format |</span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a>| birth_date_precision | Text | Certainty level of <span class="in">`birth_date`</span>. Includes all values from <span class="in">`event_date_precision`</span>, plus <span class="in">`inferred_from_age`</span> |</span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a>| birth_place | Text       | Place of birth |</span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>| death_date | Date          | Recorded or inferred date of death in ISO 8601 format |</span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a>| death_date_precision | Text | Certainty level of <span class="in">`death_date`</span>. Values: <span class="in">`exact`</span>, <span class="in">`month`</span>, <span class="in">`month_inferred`</span>, <span class="in">`year_inferred`</span>, <span class="in">`day_adjusted`</span>, <span class="in">`estimated`</span> (see Baptisms for definitions) |</span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a>| death_place | Text       | Place of death |</span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a>| gender     | Text          |  Inferred gender (<span class="in">`male`</span>, <span class="in">`female`</span>, <span class="in">`unknown`</span>) |</span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a>| resident_in | Text        | Recorded place of residence at the time of the event |</span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a>| legitimacy_status | Text    | Legitimacy status at birth (<span class="in">`legitimo`</span>, <span class="in">`ilegitimo`</span>) |</span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a>| marital_status | Text      | Marital status at the time of the event (<span class="in">`soltero`</span>, <span class="in">`casado`</span>) |</span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a>| social_condition | Text     | Social, ethnical, or political marker (<span class="in">`mestizo`</span>, <span class="in">`indio`</span>, <span class="in">`tributario`</span>, <span class="in">`vecino`</span>) |</span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>---</span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

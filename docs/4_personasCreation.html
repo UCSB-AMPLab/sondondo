@@ -288,10 +288,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>matrimonios <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/matrimonios_clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="96e68625" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>extractor <span class="op">=</span> Persona.PersonaExtractor([bautismos, matrimonios, entierros])</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>personas <span class="op">=</span> extractor.extract_personas()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>personas.describe(include<span class="op">=</span><span class="st">'all'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>extractor <span class="op">=</span> Persona.PersonaExtractor(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    [bautismos, matrimonios, entierros],</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    places_standardized_names<span class="op">=</span><span class="st">'../data/clean/places.csv'</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>personas <span class="op">=</span> extractor.extract_personas()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>personas.describe(include<span class="op">=</span><span class="st">'all'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
@@ -307,6 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">birth_place</th>
 <th data-quarto-table-cell-role="th">birth_date</th>
 <th data-quarto-table-cell-role="th">legitimacy_status</th>
+<th data-quarto-table-cell-role="th">birth_date_precision</th>
 <th data-quarto-table-cell-role="th">lastname</th>
 <th data-quarto-table-cell-role="th">persona_idno</th>
 <th data-quarto-table-cell-role="th">social_condition</th>
@@ -314,6 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">resident_in</th>
 <th data-quarto-table-cell-role="th">death_place</th>
 <th data-quarto-table-cell-role="th">death_date</th>
+<th data-quarto-table-cell-role="th">death_date_precision</th>
 <th data-quarto-table-cell-role="th">gender</th>
 </tr>
 </thead>
@@ -324,16 +329,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>47072</td>
 <td>47072</td>
 <td>46999</td>
-<td>5378</td>
+<td>5380</td>
 <td>8596</td>
 <td>11866</td>
+<td>8596</td>
 <td>46762</td>
 <td>47072</td>
 <td>9643</td>
 <td>4275</td>
-<td>925</td>
+<td>924</td>
 <td>1513</td>
 <td>2114</td>
+<td>2118</td>
 <td>47072</td>
 </tr>
 <tr class="even">
@@ -342,16 +349,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>10179</td>
 <td>14</td>
 <td>4286</td>
-<td>53</td>
+<td>50</td>
 <td>7001</td>
+<td>2</td>
 <td>2</td>
 <td>2616</td>
 <td>47072</td>
 <td>7</td>
 <td>3</td>
-<td>19</td>
+<td>18</td>
 <td>7</td>
 <td>1813</td>
+<td>4</td>
 <td>6</td>
 </tr>
 <tr class="odd">
@@ -363,6 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>pampamarca</td>
 <td>1901-09-04</td>
 <td>legitimo</td>
+<td>inferred_from_age</td>
 <td>quispe</td>
 <td>persona-1</td>
 <td>indio</td>
@@ -370,6 +380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>pampamarca</td>
 <td>aucará</td>
 <td>1871-11-04</td>
+<td>exact</td>
 <td>male</td>
 </tr>
 <tr class="even">
@@ -378,9 +389,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>12</td>
 <td>7614</td>
 <td>1556</td>
-<td>1919</td>
+<td>1923</td>
 <td>8</td>
 <td>9104</td>
+<td>7603</td>
 <td>2712</td>
 <td>1</td>
 <td>5654</td>
@@ -388,6 +400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>292</td>
 <td>1016</td>
 <td>7</td>
+<td>2092</td>
 <td>20150</td>
 </tr>
 </tbody>
@@ -407,26 +420,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 47072 entries, 0 to 47071
-Data columns (total 15 columns):
- #   Column               Non-Null Count  Dtype 
----  ------               --------------  ----- 
- 0   event_idno           47072 non-null  object
- 1   original_identifier  47072 non-null  object
- 2   persona_type         47072 non-null  object
- 3   name                 46999 non-null  object
- 4   birth_place          5378 non-null   object
- 5   birth_date           8596 non-null   object
- 6   legitimacy_status    11866 non-null  object
- 7   lastname             46762 non-null  object
- 8   persona_idno         47072 non-null  object
- 9   social_condition     9643 non-null   object
- 10  marital_status       4275 non-null   object
- 11  resident_in          925 non-null    object
- 12  death_place          1513 non-null   object
- 13  death_date           2114 non-null   object
- 14  gender               47072 non-null  object
-dtypes: object(15)
-memory usage: 5.4+ MB</code></pre>
+Data columns (total 17 columns):
+ #   Column                Non-Null Count  Dtype 
+---  ------                --------------  ----- 
+ 0   event_idno            47072 non-null  object
+ 1   original_identifier   47072 non-null  object
+ 2   persona_type          47072 non-null  object
+ 3   name                  46999 non-null  object
+ 4   birth_place           5380 non-null   object
+ 5   birth_date            8596 non-null   object
+ 6   legitimacy_status     11866 non-null  object
+ 7   birth_date_precision  8596 non-null   object
+ 8   lastname              46762 non-null  object
+ 9   persona_idno          47072 non-null  object
+ 10  social_condition      9643 non-null   object
+ 11  marital_status        4275 non-null   object
+ 12  resident_in           924 non-null    object
+ 13  death_place           1513 non-null   object
+ 14  death_date            2114 non-null   object
+ 15  death_date_precision  2118 non-null   object
+ 16  gender                47072 non-null  object
+dtypes: object(17)
+memory usage: 6.1+ MB</code></pre>
 </div>
 </div>
 </section>
@@ -443,26 +458,28 @@ memory usage: 5.4+ MB</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 Index: 383 entries, 62 to 46928
-Data columns (total 15 columns):
- #   Column               Non-Null Count  Dtype 
----  ------               --------------  ----- 
- 0   event_idno           383 non-null    object
- 1   original_identifier  383 non-null    object
- 2   persona_type         383 non-null    object
- 3   name                 310 non-null    object
- 4   birth_place          35 non-null     object
- 5   birth_date           52 non-null     object
- 6   legitimacy_status    41 non-null     object
- 7   lastname             73 non-null     object
- 8   persona_idno         383 non-null    object
- 9   social_condition     55 non-null     object
- 10  marital_status       20 non-null     object
- 11  resident_in          0 non-null      object
- 12  death_place          26 non-null     object
- 13  death_date           53 non-null     object
- 14  gender               383 non-null    object
-dtypes: object(15)
-memory usage: 47.9+ KB</code></pre>
+Data columns (total 17 columns):
+ #   Column                Non-Null Count  Dtype 
+---  ------                --------------  ----- 
+ 0   event_idno            383 non-null    object
+ 1   original_identifier   383 non-null    object
+ 2   persona_type          383 non-null    object
+ 3   name                  310 non-null    object
+ 4   birth_place           35 non-null     object
+ 5   birth_date            52 non-null     object
+ 6   legitimacy_status     41 non-null     object
+ 7   birth_date_precision  52 non-null     object
+ 8   lastname              73 non-null     object
+ 9   persona_idno          383 non-null    object
+ 10  social_condition      55 non-null     object
+ 11  marital_status        20 non-null     object
+ 12  resident_in           0 non-null      object
+ 13  death_place           26 non-null     object
+ 14  death_date            53 non-null     object
+ 15  death_date_precision  53 non-null     object
+ 16  gender                383 non-null    object
+dtypes: object(17)
+memory usage: 53.9+ KB</code></pre>
 </div>
 </div>
 <div id="e641938b" class="cell" data-execution_count="7">
@@ -670,7 +687,7 @@ Name: count, dtype: int64</code></pre>
 <pre><code>persona_type
 mother               7614
 father               7369
-baptized             4532
+baptized             4531
 witness              4249
 godparent            3260
 godmother            3251
@@ -679,9 +696,9 @@ mother_of_wife       1459
 mother_of_husband    1439
 father_of_wife       1438
 father_of_husband    1410
-wife                 1154
-husband              1114
-deceased              393
+wife                 1153
+husband              1115
+deceased              392
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
@@ -829,20 +846,20 @@ Name: count, dtype: int64</code></pre>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>personas.groupby(<span class="st">'persona_type'</span>)[<span class="st">'completeness_score'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>persona_type
-deceased             0.821415
-husband              0.656038
-wife                 0.651748
-baptized             0.629243
-mother_of_husband    0.506092
-mother_of_wife       0.505186
-father_of_husband    0.504492
-father_of_wife       0.503755
-mother               0.474424
-father               0.473651
-godmother            0.473372
-godparent            0.472822
-godfather            0.468216
-witness              0.466510
+deceased             0.840011
+baptized             0.604973
+husband              0.596294
+wife                 0.591947
+mother_of_husband    0.446552
+mother_of_wife       0.445753
+father_of_husband    0.445140
+father_of_wife       0.444490
+mother               0.418610
+father               0.417927
+godmother            0.417681
+godparent            0.417196
+godfather            0.413132
+witness              0.411626
 Name: completeness_score, dtype: float64</code></pre>
 </div>
 </div>
@@ -876,10 +893,10 @@ Name: completeness_score, dtype: float64</code></pre>
 <span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>personas.groupby(<span class="st">'persona_type'</span>)[<span class="st">'weighted_completeness'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>persona_type
-deceased             0.836722
-baptized             0.549558
-husband              0.536738
-wife                 0.531650
+deceased             0.836769
+baptized             0.549574
+husband              0.536665
+wife                 0.531699
 mother_of_husband    0.379222
 mother_of_wife       0.378410
 father_of_husband    0.375177

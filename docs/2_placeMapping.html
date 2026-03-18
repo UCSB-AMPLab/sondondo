@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#authoritative-place-resolution" id="toc-authoritative-place-resolution" class="nav-link" data-scroll-target="#authoritative-place-resolution">Authoritative Place Resolution</a></li>
   </ul></li>
   <li><a href="#database-integration" id="toc-database-integration" class="nav-link" data-scroll-target="#database-integration">Database Integration</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#visual-checking-and-manual-corrections" id="toc-visual-checking-and-manual-corrections" class="nav-link" data-scroll-target="#visual-checking-and-manual-corrections">Visual Checking and Manual Corrections</a></li>
   </ul>
 </nav>
     </div>
@@ -262,13 +262,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-preparation" class="level2">
 <h2 class="anchored" data-anchor-id="data-preparation">Data Preparation</h2>
 <p>We begin by loading the cleaned sacramental records, which have already undergone date normalization and attribute harmonization. Place names at this stage retain their original spelling variations as recorded in the historical documents.</p>
-<div id="397b225a" class="cell">
+<div id="397b225a" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="25eb6631" class="cell">
+<div id="25eb6631" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>PLACES_MAP <span class="op">=</span> <span class="st">'../data/mappings/places_types.json'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bd0f8157" class="cell">
+<div id="bd0f8157" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/bautismos_clean.csv"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/matrimonios_clean.csv"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/entierros_clean.csv"</span>)</span>
@@ -584,7 +584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We systematically process all place-related columns across the three sacramental record types, applying the extractor to standardize formatting and identify geographic descriptors.</p>
 <section id="extract-place-mentions" class="level3">
 <h3 class="anchored" data-anchor-id="extract-place-mentions">Extract Place Mentions</h3>
-<div id="c136c300" class="cell">
+<div id="c136c300" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.extractors <span class="im">import</span> placeRecognition</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>extractor <span class="op">=</span> placeRecognition.PlaceExtractor()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -600,9 +600,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> bautismos_place_columns:</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> BAUTISMOS_HARMONIZED.columns:</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        BAUTISMOS_HARMONIZED[col] <span class="op">=</span> extractor.extract_places_per_row(BAUTISMOS_HARMONIZED[col])</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[bautismos_place_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        BAUTISMOS_HARMONIZED[col] <span class="op">=</span> BAUTISMOS_HARMONIZED[col].<span class="bu">apply</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="kw">lambda</span> x: x <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">str</span>(x)) <span class="op">&gt;</span> <span class="dv">2</span> <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        BAUTISMOS_HARMONIZED[col] <span class="op">=</span> extractor.extract_places_per_row(BAUTISMOS_HARMONIZED[col])</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[bautismos_place_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
@@ -741,9 +744,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> matrimonios_place_columns:</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> MATRIMONIOS_HARMONIZED.columns:</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        MATRIMONIOS_HARMONIZED[col] <span class="op">=</span> extractor.extract_places_per_row(MATRIMONIOS_HARMONIZED[col])</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[matrimonios_place_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        MATRIMONIOS_HARMONIZED[col] <span class="op">=</span> MATRIMONIOS_HARMONIZED[col].<span class="bu">apply</span>(</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            <span class="kw">lambda</span> x: x <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">str</span>(x)) <span class="op">&gt;</span> <span class="dv">2</span> <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        MATRIMONIOS_HARMONIZED[col] <span class="op">=</span> extractor.extract_places_per_row(MATRIMONIOS_HARMONIZED[col])</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[matrimonios_place_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
@@ -939,9 +945,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> entierros_place_columns:</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">in</span> ENTIERROS_HARMONIZED.columns:</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        ENTIERROS_HARMONIZED[col] <span class="op">=</span> extractor.extract_places_per_row(ENTIERROS_HARMONIZED[col])</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[entierros_place_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        ENTIERROS_HARMONIZED[col] <span class="op">=</span> ENTIERROS_HARMONIZED[col].<span class="bu">apply</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="kw">lambda</span> x: x <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">str</span>(x)) <span class="op">&gt;</span> <span class="dv">2</span> <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        ENTIERROS_HARMONIZED[col] <span class="op">=</span> extractor.extract_places_per_row(ENTIERROS_HARMONIZED[col])</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[entierros_place_columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
@@ -1116,49 +1125,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="validation-against-manual-normalization" class="level3">
 <h3 class="anchored" data-anchor-id="validation-against-manual-normalization">Validation Against Manual Normalization</h3>
 <p>We compare the automated extraction results against the manually curated authority file to identify discrepancies and ensure completeness.</p>
-<div id="8a1639ee" class="cell">
+<div id="8a1639ee" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>uplaces <span class="op">=</span> pd.read_csv(<span class="st">'../data/interim/unique_places_manual.csv'</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>set_diff <span class="op">=</span> <span class="bu">set</span>(standardized_places[<span class="st">'standardize_label'</span>]) <span class="op">-</span> <span class="bu">set</span>(uplaces[<span class="st">'manually_normalized_place'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="dd60e552" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>set_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>{'Cachihuancaray',
- 'Carhuanca',
- 'Carlos Fitzcarrald',
+<pre><code>{'Cajamarca',
  'Ceibo Roto',
- 'Champa',
- 'Chaupicancha',
- 'Chipao',
- 'Chuschi',
  'Ciudad Libertad de las Américas',
- 'Cochas',
- 'Collay',
- 'Coracora',
+ 'Córdova',
  'Dos de Mayo',
- 'Huambo',
  'Huanacopampa',
- 'Huancapi',
- 'Huancaraylla',
- 'Illapata',
  'India Muerta',
  'Indio Piro',
  'Julca',
- 'Llusita',
- 'Marca',
  'Paico',
- 'Paire',
- 'Palco',
- 'Pausa',
- 'Pincocalla',
+ 'Pampa Grande',
  'Poma Patacollo',
- 'Queca',
- 'Querco',
+ 'San Juan',
  'San Pedro de Lloc',
  'Santa Anita - Los Ficus',
  'Santa Iglesia',
  'Santa María',
  'Taulli',
+ 'Villa San Juan',
  'Yanaccollpa'}</code></pre>
 </div>
 </div>
@@ -1180,7 +1172,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"tgn"</span><span class="fu">:</span> <span class="st">"administrative divisions"</span><span class="fu">,</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"whg"</span><span class="fu">:</span> <span class="st">"a"</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="abc97ae9" class="cell">
+<div id="abc97ae9" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>manual_data <span class="op">=</span> pd.read_csv(<span class="st">'../data/interim/unique_places_manual.csv'</span>)</span>
@@ -1196,12 +1188,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="database-integration" class="level2">
 <h2 class="anchored" data-anchor-id="database-integration">Database Integration</h2>
 <p>To prepare the gazetteer for relational database storage, we assign a unique integer identifier (<code>place_id</code>) to each canonical place. This serves as the primary key in the places table and enables efficient joins with sacramental records.</p>
-<div id="3d7d288d" class="cell" data-execution_count="14">
+<div id="3d7d288d" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>result_df[<span class="st">'place_id'</span>] <span class="op">=</span> result_df.index <span class="op">+</span> <span class="dv">1</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>result_df <span class="op">=</span> result_df.set_index(<span class="st">'place_id'</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>result_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="42">
 <div>
 
 
@@ -1318,22 +1310,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>[Aucara, Aucara Barrio de Mayo, Aucará, Barrio...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>Huaycahuaycho</td>
-<td>Huaycahuaycho</td>
+<td data-quarto-table-cell-role="th">9</td>
+<td>Cabana</td>
+<td>Cabana</td>
 <td>es</td>
-<td>-14.15000</td>
-<td>-74.01667</td>
+<td>-15.64288</td>
+<td>-70.27983</td>
 <td>GeoNames</td>
-<td>3939003.0</td>
-<td>http://sws.geonames.org/3939003/</td>
+<td>8349755.0</td>
+<td>http://sws.geonames.org/8349755/</td>
 <td>PE</td>
 <td></td>
 <td></td>
 <td>100.0</td>
 <td>90.0</td>
 <td>exact</td>
-<td>[Aucara Huaycahuacho, Huaicahuacho]</td>
+<td>[Aucara Cabana, Cabana]</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
@@ -1354,7 +1346,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">85</td>
+<td data-quarto-table-cell-role="th">79</td>
+<td>Sondondo</td>
+<td>Sondondo</td>
+<td>es</td>
+<td>-14.29795</td>
+<td>-73.93928</td>
+<td>GeoNames</td>
+<td>3928450.0</td>
+<td>http://sws.geonames.org/3928450/</td>
+<td>PE</td>
+<td></td>
+<td></td>
+<td>100.0</td>
+<td>90.0</td>
+<td>exact</td>
+<td>[Sondondo]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">80</td>
 <td>Soras Pata</td>
 <td>Soras Pata</td>
 <td>es</td>
@@ -1371,8 +1381,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>exact</td>
 <td>[Soras]</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">87</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">82</td>
 <td>Umasi</td>
 <td>Umasi</td>
 <td>es</td>
@@ -1389,8 +1399,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>exact</td>
 <td>[Umaci, Umasi]</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">88</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">83</td>
 <td>Urubamba</td>
 <td>Urubamba</td>
 <td>es</td>
@@ -1407,8 +1417,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>exact</td>
 <td>[Urabamba]</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">89</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">84</td>
 <td>Vilcashuamán</td>
 <td>Vilcashuamán</td>
 <td>es</td>
@@ -1425,52 +1435,131 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>exact</td>
 <td>[Vilcas]</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">90</td>
-<td>Villa San Juan</td>
-<td>Villa San Juan</td>
-<td>es</td>
-<td>-6.37252</td>
-<td>-79.80292</td>
-<td>GeoNames</td>
-<td>3820188.0</td>
-<td>http://sws.geonames.org/3820188/</td>
-<td>PE</td>
-<td></td>
-<td></td>
-<td>100.0</td>
-<td>90.0</td>
-<td>exact</td>
-<td>[Villa de San Juan]</td>
-</tr>
 </tbody>
 </table>
 
-<p>74 rows × 15 columns</p>
+<p>70 rows × 15 columns</p>
 </div>
 </div>
 </div>
-<div id="bad8462a" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>result_df.to_csv(<span class="st">"../data/clean/unique_places.csv"</span>, index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="bad8462a" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>result_df.to_csv(<span class="st">"../data/interim/unique_places_consolidated.csv"</span>, index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>This notebook established an authoritative gazetteer for the Sondondo sacramental records through a two-phase normalization process:</p>
-<ol type="1">
-<li><strong>Automated extraction</strong> identified place mentions across all three sacramental record types</li>
-<li><strong>Manual curation</strong> resolved ambiguous toponyms and linked canonical forms to authoritative geographic databases</li>
-<li><strong>Authority control</strong> produced a verified lookup table with stable identifiers and coordinates</li>
-</ol>
-<p>The resulting dataset (<code>data/clean/unique_places.csv</code>) provides:</p>
-<ul>
-<li>Controlled vocabulary for place names, reducing spelling variations</li>
-<li>Geographic coordinates enabling spatial analysis</li>
-<li>Links to authoritative gazetteers (GeoNames, TGN, WHG, Wikidata) for interoperability</li>
-<li>Hierarchical geographic context (administrative divisions, place types)</li>
-<li>Stable identifiers for database integration</li>
-</ul>
-<p>This gazetteer is essential for subsequent analyses involving geographic mobility, spatial clustering, and linking records across events.</p>
+<section id="visual-checking-and-manual-corrections" class="level2">
+<h2 class="anchored" data-anchor-id="visual-checking-and-manual-corrections">Visual Checking and Manual Corrections</h2>
+<p>Despite this iterative process, some places are not accurately resolved. A visual inspection of the geographic distribution helps to identify outliers and potential errors in the place mapping. This plot shows the resulting geographic distribution of <code>unique_places_consolidated.csv</code> before manual corrections:</p>
+<div id="4af672dc" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> contextily <span class="im">as</span> ctx</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8a654204" class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_places_on_map(people_places_dataframe, place_column<span class="op">=</span><span class="st">'place_name'</span>, map_title<span class="op">=</span><span class="st">'Plot of Places'</span>):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    gdf <span class="op">=</span> gpd.GeoDataFrame(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        people_places_dataframe,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        geometry<span class="op">=</span>gpd.points_from_xy(</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>            people_places_dataframe.longitude, </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            people_places_dataframe.latitude</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>            ),</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        crs<span class="op">=</span><span class="st">"EPSG:4326"</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    ).to_crs(epsg<span class="op">=</span><span class="dv">3857</span>)  <span class="co"># Web Mercator for contextily tiles</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    gdf.plot(</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>ax,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">'#333333'</span>,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.7</span>,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.4</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, row <span class="kw">in</span> gdf.iterrows():</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>        ax.annotate(</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>            row[place_column],</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>            xy<span class="op">=</span>(row.geometry.x, row.geometry.y),</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>            xytext<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>),</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>            textcoords<span class="op">=</span><span class="st">'offset points'</span>,</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">7</span>,</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span><span class="st">'#333333'</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    ctx.add_basemap(ax, source<span class="op">=</span>ctx.providers.CartoDB.Positron) <span class="co"># type: ignore</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    ax.set_axis_off()</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>    ax.set_title(map_title, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>    fig.tight_layout()</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="59d072c4" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plot_places_on_map(result_df, place_column<span class="op">=</span><span class="st">'standardize_label'</span>, map_title<span class="op">=</span><span class="st">'Unique Places'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2_placeMapping_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Outliers and misplacements can be identified through this visualization. The list of places that require manual correction is:</p>
+<div id="8892ace8" class="cell" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>places_to_fix <span class="op">=</span> [</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">'place_name'</span>: <span class="st">'Moyobamba'</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'correct_name'</span>: <span class="st">'Moyobamba'</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'latitude'</span>: <span class="op">-</span><span class="fl">14.37597</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'longitude'</span>: <span class="op">-</span><span class="fl">73.89332</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'source'</span>: <span class="st">'GeoNames'</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'id'</span>: <span class="dv">3959819</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'uri'</span>: <span class="st">'http://sws.geonames.org/3959819/'</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'place_name'</span>: <span class="st">'Champa'</span>,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">'correct_name'</span>: <span class="st">'Santa Isabel de Chapa'</span>,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">'latitude'</span>: <span class="op">-</span><span class="fl">14.2757613</span>,</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">'longitude'</span>: <span class="op">-</span><span class="fl">74.0158869</span>,</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'source'</span>: <span class="st">'OpenStreetMap'</span>,</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">'id'</span>: <span class="dv">3588141573</span>,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">'uri'</span>: <span class="st">'https://www.openstreetmap.org/node/3588141573#map=18/-14.275680/-74.015896'</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">'place_name'</span>: <span class="st">'Pampamarca'</span>,</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">'correct_name'</span>: <span class="st">'Pampamarca'</span>,</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">'latitude'</span>: <span class="op">-</span><span class="fl">14.23287</span>,</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">'longitude'</span>: <span class="op">-</span><span class="fl">74.04139</span>,</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">'source'</span>: <span class="st">'GeoNames'</span>,</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">'id'</span>: <span class="dv">13580561</span>,</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">'uri'</span>: <span class="st">'http://sws.geonames.org/13580561/'</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="ddf69bdd" class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the incorrect entries in the result_df with the corrected information</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> place <span class="kw">in</span> places_to_fix:</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> result_df[<span class="st">'standardize_label'</span>] <span class="op">==</span> place[<span class="st">'place_name'</span>]</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    result_df.loc[mask, <span class="st">'standardize_label'</span>] <span class="op">=</span> place[<span class="st">'correct_name'</span>]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    result_df.loc[mask, <span class="st">'latitude'</span>] <span class="op">=</span> place[<span class="st">'latitude'</span>]</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    result_df.loc[mask, <span class="st">'longitude'</span>] <span class="op">=</span> place[<span class="st">'longitude'</span>]</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    result_df.loc[mask, <span class="st">'source'</span>] <span class="op">=</span> place[<span class="st">'source'</span>]</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    result_df.loc[mask, <span class="st">'id'</span>] <span class="op">=</span> place[<span class="st">'id'</span>]</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    result_df.loc[mask, <span class="st">'uri'</span>] <span class="op">=</span> place[<span class="st">'uri'</span>]</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>result_df.to_csv(<span class="st">"../data/clean/places.csv"</span>, index<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="434545df" class="cell" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visually check the corrected places on the map</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plot_places_on_map(result_df, place_column<span class="op">=</span><span class="st">'standardize_label'</span>, map_title<span class="op">=</span><span class="st">'Unique Places (Corrected)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2_placeMapping_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>

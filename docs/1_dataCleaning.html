@@ -457,7 +457,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="schema-mapping" class="level3">
 <h3 class="anchored" data-anchor-id="schema-mapping">Schema Mapping</h3>
 <p>Column mappings are defined in JSON files located in <code>data/mappings/</code>, which specify how raw column names should be renamed to match our standardized schema.</p>
-<div id="29ef8524" class="cell">
+<div id="29ef8524" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the ColumnManager utility for applying schema mappings</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils.ColumnManager <span class="im">import</span> ColumnManager</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -636,12 +636,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="column-selection-and-filtering" class="level3">
 <h3 class="anchored" data-anchor-id="column-selection-and-filtering">Column Selection and Filtering</h3>
 <p>After harmonization, we reduce each dataset to only the columns relevant for person entity extraction and record linkage. This simplifies downstream processing and removes fields that don’t contribute to linkage (e.g., administrative notes, scribal annotations).</p>
-<div id="b8809026" class="cell">
+<div id="b8809026" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the mapping of useful columns for each record type</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This defines which fields are relevant for entity extraction and linkage</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>useful_columns <span class="op">=</span> json.load(<span class="bu">open</span>(<span class="st">"../data/mappings/usefulColumnsMapping.json"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="965be0bd" class="cell">
+<div id="965be0bd" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter baptism records to useful columns only</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED <span class="op">=</span> BAUTISMOS_HARMONIZED[useful_columns[<span class="st">'bautizo'</span>]]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -662,7 +662,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       dtype='object')</code></pre>
 </div>
 </div>
-<div id="933b4eeb" class="cell">
+<div id="933b4eeb" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter marriage records to useful columns only</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED <span class="op">=</span> MATRIMONIOS_HARMONIZED[useful_columns[<span class="st">'matrimonio'</span>]]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -697,7 +697,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       dtype='object')</code></pre>
 </div>
 </div>
-<div id="e55f51ae" class="cell">
+<div id="e55f51ae" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter burial records to useful columns only</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED <span class="op">=</span> ENTIERROS_HARMONIZED[useful_columns[<span class="st">'entierro'</span>]]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -725,7 +725,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="null-value-standardization" class="level3">
 <h3 class="anchored" data-anchor-id="null-value-standardization">Null Value Standardization</h3>
 <p>Standardize the representation of missing data by converting various placeholder strings (e.g., ‘-’, ‘n/a’, ‘null’) to proper <code>np.nan</code> values. This ensures consistent missing data handling throughout the analysis pipeline.</p>
-<div id="4ae727f2" class="cell">
+<div id="4ae727f2" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define helper function to replace placeholder strings with numpy NaN</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> replace_empty_with_na(df):</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -898,7 +898,7 @@ Name: 5415, dtype: object</code></pre>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.normalizers.DatesNormalizer <span class="im">import</span> DateNormalizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="42b656ef" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>] <span class="op">=</span> DateNormalizer(BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>]).normalize()</span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>], BAUTISMOS_HARMONIZED[<span class="st">'event_date_precision'</span>] <span class="op">=</span> DateNormalizer(BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>]).normalize()</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>0       1790-10-04
@@ -916,7 +916,7 @@ Name: event_date, Length: 6340, dtype: object</code></pre>
 </div>
 </div>
 <div id="9fd9da42" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>] <span class="op">=</span> DateNormalizer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).normalize()</span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>], MATRIMONIOS_HARMONIZED[<span class="st">'event_date_precision'</span>] <span class="op">=</span> DateNormalizer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).normalize()</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>0       1816-12-06
@@ -934,7 +934,7 @@ Name: event_date, Length: 1719, dtype: object</code></pre>
 </div>
 </div>
 <div id="257fca92" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>] <span class="op">=</span> DateNormalizer(ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]).normalize()</span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>], ENTIERROS_HARMONIZED[<span class="st">'event_date_precision'</span>] <span class="op">=</span> DateNormalizer(ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]).normalize()</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>0       1846-10-06
@@ -959,8 +959,8 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.generators.AgeInferrer <span class="im">import</span> AgeInferrer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="37cbca72" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[<span class="st">'baptized_birth_date'</span>] <span class="op">=</span> AgeInferrer(BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(BAUTISMOS_HARMONIZED[<span class="st">'baptized_birth_date'</span>])</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'baptized_birth_date'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[<span class="st">'baptized_birth_date'</span>], BAUTISMOS_HARMONIZED[<span class="st">'baptized_birth_date_precision'</span>] <span class="op">=</span> AgeInferrer(BAUTISMOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(BAUTISMOS_HARMONIZED[<span class="st">'baptized_birth_date'</span>])</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>BAUTISMOS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'baptized_birth_date'</span>, <span class="st">'baptized_birth_date_precision'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div>
 
@@ -971,6 +971,7 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">event_date</th>
 <th data-quarto-table-cell-role="th">baptized_birth_date</th>
+<th data-quarto-table-cell-role="th">baptized_birth_date_precision</th>
 </tr>
 </thead>
 <tbody>
@@ -978,29 +979,35 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <td data-quarto-table-cell-role="th">0</td>
 <td>1790-10-04</td>
 <td>1790-08-04</td>
+<td>exact</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>1790-10-06</td>
 <td>1790-08-04</td>
+<td>exact</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>1790-10-07</td>
 <td>1790-08-04</td>
+<td>exact</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>1790-10-20</td>
 <td>1790-10-15</td>
+<td>exact</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>1790-10-20</td>
 <td>1790-10-19</td>
+<td>exact</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
 <td>...</td>
 <td>...</td>
 </tr>
@@ -1008,35 +1015,40 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <td data-quarto-table-cell-role="th">6336</td>
 <td>1888-12-10</td>
 <td>1888-12-09</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">6337</td>
 <td>1888-12-11</td>
 <td>1888-12-07</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6338</td>
 <td>1888-12-12</td>
 <td>1888-12-06</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">6339</td>
 <td>1888-12-15</td>
 <td>1888-11-30</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6340</td>
 <td>1888-12-16</td>
 <td>1888-12-01</td>
+<td>inferred_from_age</td>
 </tr>
 </tbody>
 </table>
 
-<p>6340 rows × 2 columns</p>
+<p>6340 rows × 3 columns</p>
 </div>
 </div>
 </div>
-<div id="6e70b578" class="cell">
+<div id="6e70b578" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">### Date Validation</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for chronologically inconsistent dates: event_date should be after baptized_birth_date</span></span>
@@ -1057,9 +1069,9 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <p>Unfortunately, these records were incorrectly recorded. To fix this, it is necessary to check with the original records.</p>
 </blockquote>
 <div id="0314f4d5" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'husband_birth_date'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'husband_birth_date'</span>])</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'wife_birth_date'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'wife_birth_date'</span>])</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'husband_birth_date'</span>, <span class="st">'wife_birth_date'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'husband_birth_date'</span>], MATRIMONIOS_HARMONIZED[<span class="st">'husband_birth_date_precision'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'husband_birth_date'</span>])</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[<span class="st">'wife_birth_date'</span>], MATRIMONIOS_HARMONIZED[<span class="st">'wife_birth_date_precision'</span>] <span class="op">=</span> AgeInferrer(MATRIMONIOS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(MATRIMONIOS_HARMONIZED[<span class="st">'wife_birth_date'</span>])</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>MATRIMONIOS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'husband_birth_date'</span>, <span class="st">'husband_birth_date_precision'</span>, <span class="st">'wife_birth_date'</span>, <span class="st">'wife_birth_date_precision'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <div>
 
@@ -1070,7 +1082,9 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">event_date</th>
 <th data-quarto-table-cell-role="th">husband_birth_date</th>
+<th data-quarto-table-cell-role="th">husband_birth_date_precision</th>
 <th data-quarto-table-cell-role="th">wife_birth_date</th>
+<th data-quarto-table-cell-role="th">wife_birth_date_precision</th>
 </tr>
 </thead>
 <tbody>
@@ -1078,34 +1092,46 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <td data-quarto-table-cell-role="th">0</td>
 <td>1816-12-06</td>
 <td>NaN</td>
+<td>None</td>
 <td>NaN</td>
+<td>None</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>1816-12-12</td>
 <td>NaN</td>
+<td>None</td>
 <td>NaN</td>
+<td>None</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>1817-03-05</td>
 <td>NaN</td>
+<td>None</td>
 <td>NaN</td>
+<td>None</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>1817-03-10</td>
 <td>NaN</td>
+<td>None</td>
 <td>NaN</td>
+<td>None</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>1817-03-12</td>
 <td>NaN</td>
+<td>None</td>
 <td>NaN</td>
+<td>None</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
 <td>...</td>
 <td>...</td>
 <td>...</td>
@@ -1114,42 +1140,52 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <td data-quarto-table-cell-role="th">1714</td>
 <td>1907-10-27</td>
 <td>1882-11-01</td>
+<td>inferred_from_age</td>
 <td>1880-11-01</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1715</td>
 <td>1908-01-13</td>
 <td>1880-01-19</td>
+<td>inferred_from_age</td>
 <td>1879-01-19</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">1716</td>
 <td>1908-01-15</td>
 <td>1886-01-19</td>
+<td>inferred_from_age</td>
 <td>1888-01-19</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1717</td>
 <td>1908-02-15</td>
 <td>1883-02-20</td>
+<td>inferred_from_age</td>
 <td>1886-02-19</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">1718</td>
 <td>1908-03-17</td>
 <td>1880-03-23</td>
+<td>inferred_from_age</td>
 <td>1879-03-24</td>
+<td>inferred_from_age</td>
 </tr>
 </tbody>
 </table>
 
-<p>1719 rows × 3 columns</p>
+<p>1719 rows × 5 columns</p>
 </div>
 </div>
 </div>
 <div id="991f9686" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'deceased_birth_date'</span>] <span class="op">=</span> AgeInferrer(ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(ENTIERROS_HARMONIZED[<span class="st">'deceased_birth_date'</span>])</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'deceased_birth_date'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[<span class="st">'deceased_birth_date'</span>], ENTIERROS_HARMONIZED[<span class="st">'deceased_birth_date_precision'</span>] <span class="op">=</span> AgeInferrer(ENTIERROS_HARMONIZED[<span class="st">'event_date'</span>]).infer_all(ENTIERROS_HARMONIZED[<span class="st">'deceased_birth_date'</span>])</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>ENTIERROS_HARMONIZED[[<span class="st">'event_date'</span>, <span class="st">'deceased_birth_date'</span>, <span class="st">'deceased_birth_date_precision'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <div>
 
@@ -1160,6 +1196,7 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">event_date</th>
 <th data-quarto-table-cell-role="th">deceased_birth_date</th>
+<th data-quarto-table-cell-role="th">deceased_birth_date_precision</th>
 </tr>
 </thead>
 <tbody>
@@ -1167,29 +1204,35 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <td data-quarto-table-cell-role="th">0</td>
 <td>1846-10-06</td>
 <td>NaN</td>
+<td>None</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>1846-10-07</td>
 <td>1821-10-13</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>1846-11-02</td>
 <td>1766-11-21</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>1846-12-08</td>
 <td>1806-12-18</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>1847-02-23</td>
 <td>1797-03-06</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
 <td>...</td>
 <td>...</td>
 </tr>
@@ -1197,31 +1240,36 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <td data-quarto-table-cell-role="th">2193</td>
 <td>1920-10-12</td>
 <td>1920-02-15</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2194</td>
 <td>1920-10-19</td>
 <td>1870-10-31</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2195</td>
 <td>1920-10-19</td>
 <td>1913-10-21</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2196</td>
 <td>1920-10-20</td>
 <td>1919-10-21</td>
+<td>inferred_from_age</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2197</td>
 <td>1920-10-21</td>
 <td>1920-10-19</td>
+<td>inferred_from_age</td>
 </tr>
 </tbody>
 </table>
 
-<p>2192 rows × 2 columns</p>
+<p>2192 rows × 3 columns</p>
 </div>
 </div>
 </div>
@@ -1235,7 +1283,7 @@ Name: event_date, Length: 2192, dtype: object</code></pre>
 <div id="48770e07" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> actions.normalizers.NamesNormalizer <span class="im">import</span> NamesNormalizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bf199189" class="cell">
+<div id="bf199189" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define helper function to apply name normalization to a series</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalize_names_columns(series):</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Apply NamesNormalizer to clean and standardize a series of name values."""</span></span>
@@ -1941,7 +1989,7 @@ Name: baptized_lastname, Length: 6340, dtype: object</code></pre>
 <section id="burials-full-name-splitting" class="level4">
 <h4 class="anchored" data-anchor-id="burials-full-name-splitting">Burials: Full Name Splitting</h4>
 <p>In burial records, deceased spouses (husband/wife) were recorded as full names in a single field. We need to split these into separate first name and surname fields for consistency with other datasets.</p>
-<div id="3f8867c8" class="cell">
+<div id="3f8867c8" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define helper function to split full names into first name and surname</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> name_splitter(name):</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -2466,7 +2514,7 @@ Name: baptized_lastname, Length: 6340, dtype: object</code></pre>
 </div>
 </div>
 </div>
-<div id="d67452f6" class="cell">
+<div id="d67452f6" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">### Raw Place Export</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract all unique place names from all datasets and save for subsequent normalization</span></span>
