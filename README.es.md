@@ -91,6 +91,8 @@ Los conjuntos de datos representan registros parroquiales históricos de Sondond
 
 **Valores ausentes:** Los campos sin información registrada se representan como celdas vacías en todas las tablas. No se utiliza ningún código de sustitución explícito (p. ej., `NA`, `null`).
 
+**Precisión de fechas:** Varios campos de fecha tienen una columna compañera `*_precision` que indica la certeza del valor normalizado. Véase [`METADATA_DICTIONARY.md`](METADATA_DICTIONARY.md) para el vocabulario completo de valores de precisión.
+
 ### Bautismos (`bautismos_clean.csv`)
 
 | Propiedad    | Tipo esperado | Descripción |
@@ -99,10 +101,12 @@ Los conjuntos de datos representan registros parroquiales históricos de Sondond
 | identifier | Texto          | Identificador secuencial del evento de bautismo |
 | event_type | Texto          | Tipo de evento (`Bautizo`) |
 | event_date | Fecha          | Fecha del bautismo en formato ISO 8601 |
+| event_date_precision | Texto | Nivel de certeza de `event_date` (`exact`, `month`, `month_inferred`, `year_inferred`, `day_adjusted`, `estimated`) |
 | baptized_name | Texto       | Nombre(s) de pila normalizados del bautizado |
 | baptized_lastname | Texto   | Apellido(s) normalizados o inferidos del bautizado |
 | baptized_birth_place | Texto   | Lugar de nacimiento del bautizado |
 | baptized_birth_date | Fecha    | Fecha de nacimiento del bautizado en formato ISO 8601 |
+| baptized_birth_date_precision | Texto | Nivel de certeza de `baptized_birth_date` — incluye todos los valores de `event_date_precision` más `inferred_from_age` |
 | baptized_legitimacy_status | Texto | Estado de filiación al nacer (`legitimo`, `ilegitimo`) |
 | father_name | Texto         | Nombre normalizado del padre |
 | father_lastname | Texto     | Apellido(s) normalizados o inferidos del padre |
@@ -133,11 +137,13 @@ La tabla de matrimonios contiene registros limpios y estandarizados de eventos m
 | identifier | Texto          | Identificador secuencial del evento matrimonial |
 | event_type | Texto          | Tipo de evento (`Matrimonio`) |
 | event_date | Fecha          | Fecha del matrimonio en formato ISO 8601 |
+| event_date_precision | Texto | Nivel de certeza de `event_date` (`exact`, `month`, `month_inferred`, `year_inferred`, `day_adjusted`, `estimated`) |
 | husband_name | Texto       | Nombre(s) de pila normalizados del esposo |
 | husband_lastname | Texto   | Apellido(s) normalizados o inferidos del esposo |
 | husband_social_condition | Texto  | Marcador social, étnico o político del esposo (`mestizo`, `indio`, `tributario`, `vecino`, `don`) |
 | husband_marital_status | Texto | Estado civil del esposo al momento del matrimonio (`soltero`, `viudo`) |
 | husband_birth_date | Fecha    | Fecha de nacimiento del esposo en formato ISO 8601 |
+| husband_birth_date_precision | Texto | Nivel de certeza de `husband_birth_date` — incluye todos los valores de `event_date_precision` más `inferred_from_age` |
 | husband_birth_place | Texto   | Lugar de nacimiento del esposo |
 | husband_resident_in | Texto   | Lugar de residencia registrado del esposo al momento del evento |
 | husband_legitimacy_status | Texto | Estado de filiación del esposo al nacer (`legítimo`, `ilegitimo`, `natural`) |
@@ -152,6 +158,7 @@ La tabla de matrimonios contiene registros limpios y estandarizados de eventos m
 | wife_social_condition | Texto  | Marcador social, étnico o político de la esposa (`mestizo`, `indio`, `tributario`, `vecino`, `doña`) |
 | wife_marital_status | Texto | Estado civil de la esposa al momento del matrimonio (`soltera`, `viuda`) |
 | wife_birth_date | Fecha    | Fecha de nacimiento de la esposa en formato ISO 8601 |
+| wife_birth_date_precision | Texto | Nivel de certeza de `wife_birth_date` — incluye todos los valores de `event_date_precision` más `inferred_from_age` |
 | wife_birth_place | Texto   | Lugar de nacimiento de la esposa |
 | wife_resident_in | Texto   | Lugar de residencia registrado de la esposa al momento del evento |
 | wife_legitimacy_status | Texto | Estado de filiación de la esposa al nacer (`legítima`, `ilegitima`, `natural`) |
@@ -195,11 +202,13 @@ La tabla de entierros contiene registros limpios y estandarizados de eventos de 
 | identifier | Texto          | Identificador secuencial del evento de entierro |
 | event_type | Texto          | Tipo de evento (`Entierro`) |
 | event_date | Fecha          | Fecha del entierro en formato ISO 8601 |
+| event_date_precision | Texto | Nivel de certeza de `event_date` (`exact`, `month`, `month_inferred`, `year_inferred`, `day_adjusted`, `estimated`) |
 | doctrine   | Texto          | Nombre de la parroquia o doctrina donde se registró el entierro |
 | event_place | Texto        | Lugar donde se realizó el entierro |
 | deceased_name | Texto       | Nombre(s) de pila normalizados del fallecido |
 | deceased_lastname | Texto   | Apellido(s) normalizados o inferidos del fallecido |
 | deceased_birth_date | Fecha    | Fecha de nacimiento del fallecido en formato ISO 8601 |
+| deceased_birth_date_precision | Texto | Nivel de certeza de `deceased_birth_date` — incluye todos los valores de `event_date_precision` más `inferred_from_age` |
 | deceased_birth_place | Texto   | Lugar de nacimiento del fallecido |
 | deceased_social_condition | Texto  | Marcador social, étnico o político del fallecido (`mestizo`, `indio`, `tributario`, `vecino`, `don`, `doña`) |
 | deceased_marital_status | Texto | Estado civil del fallecido al momento de la muerte (`soltero/soltera`, `casado/casada`, `viudo/viuda`, `marido que fue`, `mujer que fue`) |
@@ -254,8 +263,10 @@ Las personas representan menciones individuales de individuos extraídas de todo
 | lastname   | Texto          | Apellido(s) normalizados o inferidos |
 | persona_type | Texto          | Tipo de persona (p. ej., `baptized`, `parent`, `godparent`) |
 | birth_date | Fecha          | Fecha de nacimiento registrada o inferida en formato ISO 8601 |
+| birth_date_precision | Texto | Nivel de certeza de `birth_date` — incluye todos los valores de `event_date_precision` más `inferred_from_age` |
 | birth_place | Texto       | Lugar de nacimiento |
 | death_date | Fecha          | Fecha de defunción registrada o inferida en formato ISO 8601 |
+| death_date_precision | Texto | Nivel de certeza de `death_date` (`exact`, `month`, `month_inferred`, `year_inferred`, `day_adjusted`, `estimated`) |
 | death_place | Texto       | Lugar de defunción |
 | gender     | Texto          | Género inferido (`male`, `female`, `unknown`) |
 | resident_in | Texto        | Lugar de residencia registrado al momento del evento |

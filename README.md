@@ -91,6 +91,8 @@ The datasets represent historical parish records from Sondondo, Peru, covering v
 
 **Missing values:** Fields with no recorded information are represented as empty cells in all tables. No explicit placeholder code (e.g., `NA`, `null`) is used.
 
+**Date precision:** Several date fields have a companion `*_precision` column indicating the certainty of the normalized value. See [`METADATA_DICTIONARY.md`](METADATA_DICTIONARY.md) for the full vocabulary of precision values.
+
 ### Baptisms (`bautismos_clean.csv`)
 
 | Property     | Expected Type | Description |
@@ -99,10 +101,12 @@ The datasets represent historical parish records from Sondondo, Peru, covering v
 | identifier | Text          | Sequential identifier for the baptism event |
 | event_type | Text          | Type of event (`Bautizo`) |
 | event_date | Date          | Date of the baptism event in ISO 8601 format |
+| event_date_precision | Text | Certainty level of `event_date` (`exact`, `month`, `month_inferred`, `year_inferred`, `day_adjusted`, `estimated`) |
 | baptized_name | Text       | Normalized first and middle name(s) of the baptized individual |
 | baptized_lastname | Text   | Normalized or inferred surname(s) of the baptized individual |
 | baptized_birth_place | Text   | Place of birth of the baptized individual |
 | baptized_birth_date | Date    | Date of birth of the baptized individual in ISO 8601 format |
+| baptized_birth_date_precision | Text | Certainty level of `baptized_birth_date` — includes all `event_date_precision` values plus `inferred_from_age` |
 | baptized_legitimacy_status | Text | Legitimacy status at birth (`legitimo`, `ilegitimo`) |
 | father_name | Text         | Normalized name of the father |
 | father_lastname | Text     | Normalized or inferred surname(s) of the father |
@@ -133,11 +137,13 @@ The `marriages` table contains cleaned and standardized records of marriage even
 | identifier | Text          | Sequential identifier for the marriage event |
 | event_type | Text          | Type of event (`Matrimonio`) |
 | event_date | Date          | Date of the marriage event in ISO 8601 format |
+| event_date_precision | Text | Certainty level of `event_date` (`exact`, `month`, `month_inferred`, `year_inferred`, `day_adjusted`, `estimated`) |
 | husband_name | Text       | Normalized first and middle name(s) of the husband |
 | husband_lastname | Text   | Normalized or inferred surname(s) of the husband |
 | husband_social_condition | Text  | Social, ethnical, or political marker of the husband (`mestizo`, `indio`, `tributario`, `vecino`, `don`) |
 | husband_marital_status | Text | Marital status of the husband at the time of marriage (`soltero`, `viudo`) |
 | husband_birth_date | Date    | Date of birth of the husband in ISO 8601 format |
+| husband_birth_date_precision | Text | Certainty level of `husband_birth_date` — includes all `event_date_precision` values plus `inferred_from_age` |
 | husband_birth_place | Text   | Place of birth of the husband |
 | husband_resident_in | Text   | Recorded place of residence of the husband at the time of the event |
 | husband_legitimacy_status | Text | Legitimacy status of the husband at birth (`legítimo`, `ilegitimo`, `natural`) |
@@ -152,6 +158,7 @@ The `marriages` table contains cleaned and standardized records of marriage even
 | wife_social_condition | Text  | Social, ethnical, or political marker of the wife (`mestizo`, `indio`, `tributario`, `vecino`, `doña`) |
 | wife_marital_status | Text | Marital status of the wife at the time of marriage (`soltera`, `viuda`) |
 | wife_birth_date | Date    | Date of birth of the wife in ISO 8601 format |
+| wife_birth_date_precision | Text | Certainty level of `wife_birth_date` — includes all `event_date_precision` values plus `inferred_from_age` |
 | wife_birth_place | Text   | Place of birth of the wife |
 | wife_resident_in | Text   | Recorded place of residence of the wife at the time of the event |
 | wife_legitimacy_status | Text | Legitimacy status of the wife at birth (`legítima`, `ilegitima`, `natural`) |
@@ -195,11 +202,13 @@ The `burials` table contains cleaned and standardized records of burial events e
 | identifier | Text          | Sequential identifier for the burial event |
 | event_type | Text          | Type of event (`Entierro`) |
 | event_date | Date          | Date of the burial event in ISO 8601 format |
+| event_date_precision | Text | Certainty level of `event_date` (`exact`, `month`, `month_inferred`, `year_inferred`, `day_adjusted`, `estimated`) |
 | doctrine   | Text          | Name of the parish or doctrine where the burial was registered |
 | event_place | Text        | Place where the burial event took place |
 | deceased_name | Text       | Normalized first and middle name(s) of the deceased individual |
 | deceased_lastname | Text   | Normalized or inferred surname(s) of the deceased individual |
 | deceased_birth_date | Date    | Date of birth of the deceased individual in ISO 8601 format |
+| deceased_birth_date_precision | Text | Certainty level of `deceased_birth_date` — includes all `event_date_precision` values plus `inferred_from_age` |
 | deceased_birth_place | Text   | Place of birth of the deceased individual |
 | deceased_social_condition | Text  | Social, ethnical, or political marker of the deceased (`mestizo`, `indio`, `tributario`, `vecino`, `don`, `doña`) |
 | deceased_marital_status | Text | Marital status of the deceased at the time of death (`soltero/soltera`, `casado/casada`, `viudo/viuda`, `marido que fue`, `mujer que fue`) |
@@ -254,8 +263,10 @@ Personas represent individual person mentions extracted from all event records a
 | lastname   | Text          | Normalized or inferred surname(s) |
 | persona_type | Text          | Type of persona (e.g., `baptized`, `parent`, `godparent`) |
 | birth_date | Date          | Recorded or inferred date of birth in ISO 8601 format |
+| birth_date_precision | Text | Certainty level of `birth_date` — includes all `event_date_precision` values plus `inferred_from_age` |
 | birth_place | Text       | Place of birth |
 | death_date | Date          | Recorded or inferred date of death in ISO 8601 format |
+| death_date_precision | Text | Certainty level of `death_date` (`exact`, `month`, `month_inferred`, `year_inferred`, `day_adjusted`, `estimated`) |
 | death_place | Text       | Place of death |
 | gender     | Text          |  Inferred gender (`male`, `female`, `unknown`) |
 | resident_in | Text        | Recorded place of residence at the time of the event |
