@@ -170,26 +170,24 @@ Each row represents a unique burial event with associated attributes for the dec
 
 ## Places — `data/clean/places.csv`
 
-The places table represents a controlled vocabulary of geographic locations extracted from all event records and normalized through a combination of manual curation and automated gazetteer matching. Each place has been geocoded and linked to external authorities (GeoNames, Getty Thesaurus of Geographic Names) when possible.
+The places table is an authoritative gazetteer of geographic locations documented in the sacramental records. It is based on a GIS dataset curated by a collaborator (`data/manual/toponimos.geojson`) containing toponyms identified through primary-source research and fieldwork. Place mentions in the records are linked to gazetteer entries via exact and fuzzy string comparison. Coordinates are verified field values converted from WGS 84 / UTM Zone 18S (EPSG:32718) to decimal degrees.
 
 | Property | Expected Type | Description |
 |---|---|---|
-| place_id | Numeric | Unique identifier for the place |
-| manually_normalized_name | Text | Standardized name assigned during data cleaning |
-| standardized_name | Text | Name standardized using external gazetteers |
-| language | Text | Language of the place name (e.g., `es`, `en`) |
-| latitude | Numeric | Latitude coordinate of the place |
-| longitude | Numeric | Longitude coordinate of the place |
-| source_gazetteer | Text | Source gazetteer used for standardization (e.g., `geonames`, `tgn`) |
-| id | Text | Identifier of the place in the source gazetteer |
-| uri | Text | URI linking to the place in the source gazetteer |
-| country_code | Text | ISO country code of the place |
-| part_of | Text | Higher-level administrative division the place belongs to |
-| part_of_uri | Text | URI of the higher-level administrative division |
-| confidence | Numeric | Confidence score of the place standardization (0–100) |
-| treshold | Numeric | Threshold used for the place standardization |
-| match_type | Text | Type of match made during standardization (e.g., `exact`, `fuzzy`) |
-| mentioned_as | Text | Original text mention of the place in the records |
+| place_id | Numeric | Unique identifier for the place (corresponds to `Lugar_id` in the source GIS data) |
+| lugar_id | Numeric | Original identifier from the collaborator's GIS dataset |
+| place_name | Text | Full canonical name of the place from the GIS data (may contain alternatives separated by `\|`) |
+| standardize_label | Text | Primary display name (first segment of `place_name`) |
+| alt_names | Text | Known spelling variants, separated by `\|` |
+| place_type | Text | Place type classification (e.g., `iglesia parroquial`, `caserio`, `parroquia`) |
+| es_parte | Text | `Lugar_id` of the superior jurisdiction, if applicable |
+| language | Text | Language of the place name (`es`) |
+| latitude | Numeric | Latitude in decimal degrees (WGS 84) |
+| longitude | Numeric | Longitude in decimal degrees (WGS 84) |
+| source | Text | Origin of the geographic data (`Grecia Roque (collaborator GIS data)`) |
+| uri | Text | External URI, if available |
+| country_code | Text | ISO country code (`PE`) |
+| mentioned_as | Text | Python list of all raw record strings linked to this place |
 
 ---
 

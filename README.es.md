@@ -24,7 +24,8 @@ data/
 ├── raw/        # Transcripciones estructuradas originales de los registros parroquiales
 ├── interim/    # Conjuntos de datos intermedios generados durante la normalización
 ├── clean/      # Conjuntos de datos finales limpios utilizados para el análisis
-└── mappings/   # Archivos de mapeo utilizados para la armonización y normalización
+├── mappings/   # Archivos de mapeo usados para la armonización y normalización
+└── manual/     # Conjuntos de datos de referencia curados por expertos (gazetteers, archivos de autoridad)
 ```
 
 ### Datos brutos (`raw/`)
@@ -65,7 +66,7 @@ Estas tablas representan la versión normalizada y lista para el análisis del c
 
 El archivo `personas.csv` contiene **entidades individuales extraídas de los registros sacramentales**, con información contextual sobre sus roles dentro de cada registro (p. ej., niño bautizado, padre/madre, testigo).
 
-El archivo `unique_places.csv` contiene los lugares geográficos estandarizados mencionados en los registros, junto con sus coordenadas geocodificadas y enlaces a gazetteers externos.
+El archivo `unique_places.csv` contiene los lugares geográficos estandarizados mencionados en los registros, junto con sus coordenadas verificadas derivadas de un gazetteer curado por una colaboradora (`data/manual/toponimos.geojson`).
 
 ---
 
@@ -80,6 +81,14 @@ Ejemplos incluyen:
 - `entierrosMapping.json`
 - `conditionMapping.json`
 - `places_types.json`
+
+---
+
+### Datos de referencia manuales (`manual/`)
+
+El directorio `manual/` contiene conjuntos de datos de referencia curados por expertos que sirven como insumos autoritativos para el flujo de procesamiento. A diferencia de la carpeta `mappings/` (que contiene tablas de búsqueda guiadas por código), estos archivos representan conocimiento especializado compilado a través de investigación en fuentes primarias y trabajo de campo.
+
+- `toponimos.geojson` — gazetteer autoritativo de topónimos documentados en los registros sacramentales, con coordenadas verificadas (WGS 84 / zona UTM 18S), nombres canónicos, variantes ortográficas conocidas, clasificaciones de tipo de lugar y jerarquías de jurisdicción eclesiástica
 
 ---
 
@@ -229,26 +238,24 @@ La tabla de entierros contiene registros limpios y estandarizados de eventos de 
 
 ## Lugares (`unique_places.csv`)
 
-La tabla de lugares representa un vocabulario controlado de localizaciones geográficas extraídas de todos los registros de eventos y normalizadas mediante una combinación de curación manual y emparejamiento automatizado con gazetteers. Cada lugar ha sido geocodificado y vinculado a autoridades externas (GeoNames, Getty Thesaurus of Geographic Names) cuando fue posible, lo que permite el análisis espacial y la visualización de los registros históricos.
+La tabla de lugares es un gazetteer autoritativo de localizaciones geográficas documentadas en los registros sacramentales. Está basado en un conjunto de datos GIS curado por una colaboradora (`data/manual/toponimos.geojson`) que contiene topónimos identificados mediante investigación en fuentes primarias y trabajo de campo. Las menciones de lugares en los registros se vinculan a entradas del gazetteer mediante comparación de cadenas exacta y difusa. Las coordenadas son valores de campo verificados convertidos de WGS 84 / zona UTM 18S (EPSG:32718) a grados decimales.
 
 | Propiedad    | Tipo esperado | Descripción |
 |--------------|---------------|-------------|
-| place_id | Numérico        | Identificador único del lugar |
-| manually_normalized_place | Texto | Nombre de lugar estandarizado durante la limpieza de datos |
-| standardize_label | Texto         | Nombre estandarizado mediante gazetteers externos |
-| language   | Texto          | Idioma del topónimo (p. ej., `es`, `en`) |
-| latitude   | Numérico       | Coordenada de latitud del lugar |
-| longitude  | Numérico       | Coordenada de longitud del lugar |
-| source | Texto               | Gazetteer fuente utilizado para la estandarización (p. ej., `geonames`, `tgn`) |
-| id  | Texto          | Identificador del lugar en el gazetteer fuente |
-| uri | Texto          | URI que enlaza al lugar en el gazetteer fuente |
-| country_code | Texto       | Código ISO del país del lugar |
-| part_of | Texto         | División administrativa superior a la que pertenece el lugar |
-| part_of_uri | Texto     | URI de la división administrativa superior |
-| confidence | Numérico    | Puntuación de confianza de la estandarización del lugar (0–100) |
-| threshold | Numérico     | Umbral utilizado para la estandarización del lugar |
-| match_type | Texto      | Tipo de coincidencia realizada durante la estandarización (p. ej., `exact`, `fuzzy`) |
-| mentioned_as | Texto   | Mención original del lugar en los registros |
+| place_id | Numérico | Identificador único del lugar (corresponde a `Lugar_id` en los datos GIS fuente) |
+| lugar_id | Numérico | Identificador original del conjunto de datos GIS de la colaboradora |
+| place_name | Texto | Nombre canónico completo del lugar según los datos GIS (puede contener alternativas separadas por `\|`) |
+| standardize_label | Texto | Nombre de visualización principal (primer segmento de `place_name`) |
+| alt_names | Texto | Variantes ortográficas conocidas, separadas por `\|` |
+| place_type | Texto | Clasificación del tipo de lugar (p. ej., `iglesia parroquial`, `caserio`, `parroquia`) |
+| es_parte | Texto | `Lugar_id` de la jurisdicción superior, si aplica |
+| language | Texto | Idioma del nombre del lugar (`es`) |
+| latitude | Numérico | Latitud en grados decimales (WGS 84) |
+| longitude | Numérico | Longitud en grados decimales (WGS 84) |
+| source | Texto | Origen de los datos geográficos (`Grecia Roque (collaborator GIS data)`) |
+| uri | Texto | URI externo, si está disponible |
+| country_code | Texto | Código de país ISO (`PE`) |
+| mentioned_as | Texto | Lista Python de todas las cadenas brutas de los registros vinculadas a este lugar |
 
 ## Personas (`personas.csv`)
 
@@ -286,7 +293,7 @@ Las transcripciones brutas fueron limpiadas para eliminar filas vacías, normali
 Se utilizaron archivos de mapeo para estandarizar los nombres de columnas, los descriptores sociales y las diferencias estructurales entre los tres tipos de registros sacramentales.
 
 ### 3. Estandarización de lugares
-Los descriptores geográficos registrados en los libros parroquiales fueron normalizados y emparejados con referencias de lugares estandarizadas.
+Los descriptores geográficos brutos registrados en los libros parroquiales fueron vinculados a un gazetteer autoritativo curado por una colaboradora (`data/manual/toponimos.geojson`) mediante comparación de cadenas exacta y difusa. Las coordenadas — proporcionadas como valores de campo verificados en WGS 84 / zona UTM 18S — fueron convertidas a grados decimales.
 
 ### 4. Extracción de entidades
 Los individuos mencionados en los registros fueron extraídos y asociados con roles específicos (p. ej., niño bautizado, padre/madre, testigo).
@@ -315,8 +322,8 @@ El procesamiento de datos fue implementado en *Python (versión 3.8 o posterior)
 - pandas  
 - numpy  
 - pathlib  
-- spacy  
-- georesolver  
+- rapidfuzz  
+- pyproj  
 
 El repositorio incluye cuadernos Jupyter y módulos Python que documentan el flujo de trabajo utilizado para transformar las transcripciones brutas en el conjunto de datos limpio.
 
@@ -331,7 +338,7 @@ Estos scripts implementan procedimientos para:
 
 # Citar como
 
-Melo Flórez, J. A., Ramos, G., de la Puente Luna, J. C., Cobo Betancourt, J., Ancho, B., Xue, D., Ayinaparthi, S., Roque, G., & Gonzales Rojas, E. (2026). The People of Aucará (1760–1921): A Dataset of Individuals Reconstructed from Parish Records of the Sondondo Valley, Peru (Version 1.0.0) [Conjunto de datos]. https://doi.org/10.5281/zenodo.18969893
+Melo Flórez, J. A., Ramos, G., de la Puente Luna, J. C., Cobo Betancourt, J., Ancho, B., Xue, D., Ayinaparthi, S., Roque Ortega, G., Gonzales Rojas, E., Quillca, J., Velarde Loayza, J., Asto Campos, C., & UCSB - Archives, Memory & Preservation Lab. (2026). The People of Aucará (1760–1921): A Dataset of Individuals Reconstructed from Parish Records of the Sondondo Valley, Peru (v1.0.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.18969892
 
 ---
 

@@ -24,7 +24,8 @@ data/
 ├── raw/        # Original structured transcriptions of parish records
 ├── interim/    # Intermediate datasets generated during normalization
 ├── clean/      # Final cleaned datasets used for analysis
-└── mappings/   # Mapping files used for harmonization and normalization
+├── mappings/   # Mapping files used for harmonization and normalization
+└── manual/     # Expert-curated reference datasets (gazetteers, authority files)
 ```
 
 ### Raw Data
@@ -65,7 +66,7 @@ These tables represent the normalized and analysis-ready version of the dataset.
 
 The `personas.csv` file contains **individual entities extracted from the sacramental records**, with contextual information about their roles within each record (e.g., baptized child, parent, witness).
 
-The `unique_places.csv` file contains standardized geographic locations mentioned in the records, along with their geocoded coordinates and links to external gazetteers.
+The `unique_places.csv` file contains standardized geographic locations mentioned in the records, along with their verified coordinates derived from a collaborator-curated gazetteer (`data/manual/toponimos.geojson`).
 
 ---
 
@@ -80,6 +81,14 @@ Examples include:
 - `entierrosMapping.json`
 - `conditionMapping.json`
 - `places_types.json`
+
+---
+
+### Manual Reference Data (`manual/`)
+
+The `manual/` directory contains expert-curated reference datasets that serve as authoritative inputs to the pipeline. Unlike the `mappings/` folder (which contains code-driven lookup tables), these files represent domain knowledge compiled through primary source research and field work.
+
+- `toponimos.geojson` — authoritative gazetteer of place names documented in the sacramental records, with verified coordinates (WGS 84 / UTM Zone 18S), canonical names, known orthographic variants, place-type classifications, and ecclesiastical jurisdiction hierarchies
 
 ---
 
@@ -229,26 +238,24 @@ The `burials` table contains cleaned and standardized records of burial events e
 
 ## Places (`unique_places.csv`)
 
-The places table represents a controlled vocabulary of geographic locations extracted from all event records and normalized through a combination of manual curation and automated gazetteer matching. Each place has been geocoded and linked to external authorities (GeoNames, Getty Thesaurus of Geographic Names) when possible, enabling spatial analysis and visualization of the historical records.
+The places table is an authoritative gazetteer of geographic locations documented in the sacramental records. It is grounded in a collaborator-curated GIS dataset (`data/manual/toponimos.geojson`) containing toponyms identified through primary source research and field work. Raw place mentions in the records are linked to gazetteer entries via exact and fuzzy string matching. Coordinates are verified field values converted from WGS 84 / UTM Zone 18S (EPSG:32718) to decimal degrees.
 
 | Property     | Expected Type | Description |
-|--------------|---------------|-------------|
-| place_id | Numeric        | Unique identifier for the place |
-| manually_normalized_place | Text | Standardized place name assigned during data cleaning |
-| standardize_label | Text         | Name standardized using external gazetteers |
-| language   | Text          | Language of the place name (e.g., `es`, `en`) |
-| latitude   | Numeric       | Latitude coordinate of the place |
-| longitude  | Numeric       | Longitude coordinate of the place |
-| source | Text               | Source gazetteer used for standardization (e.g., `geonames`, `tgn`) |
-| id  | Text          | Identifier of the place in the source gazetteer |
-| uri | Text          | URI linking to the place in the source gazetteer |
-| country_code | Text       | ISO country code of the place |
-| part_of | Text         | Higher-level administrative division the place belongs to |
-| part_of_uri | Text     | URI of the higher-level administrative division |
-| confidence | Numeric    | Confidence score of the place standardization (0-100) |
-| threshold | Numeric     | Threshold used for the place standardization |
-| match_type | Text      | Type of match made during standardization (e.g., `exact`, `fuzzy`) |
-| mentioned_as | Text   | Original text mention of the place in the records |
+|--------------|---------------|--------------|
+| place_id | Numeric | Unique identifier for the place (corresponds to `Lugar_id` in the source GIS data) |
+| lugar_id | Numeric | Original identifier from the collaborator GIS dataset |
+| place_name | Text | Full canonical place name as recorded in the GIS data (may contain `\|`-separated alternatives) |
+| standardize_label | Text | Primary display name (first segment of `place_name`) |
+| alt_names | Text | Known orthographic variants, `\|`-separated |
+| place_type | Text | Place type classification (e.g., `iglesia parroquial`, `caserio`, `parroquia`) |
+| es_parte | Text | `Lugar_id` of the parent jurisdiction, if applicable |
+| language | Text | Language of the place name (`es`) |
+| latitude | Numeric | Latitude in decimal degrees (WGS 84) |
+| longitude | Numeric | Longitude in decimal degrees (WGS 84) |
+| source | Text | Origin of the geographic data (`Grecia Roque (collaborator GIS data)`) |
+| uri | Text | External URI, if available |
+| country_code | Text | ISO country code (`PE`) |
+| mentioned_as | Text | Python list of all raw record strings matched to this place |
 
 ## Personas (`personas.csv`)
 
@@ -286,7 +293,7 @@ Raw transcriptions were cleaned to remove empty rows, normalize column names, an
 Mapping files were used to standardize column names, social descriptors, and structural differences between the three sacramental record types.
 
 ### 3. Place Standardization
-Geographic descriptors recorded in the parish registers were normalized and matched against standardized place references.
+Raw geographic descriptors recorded in the parish registers were matched against an authoritative collaborator-curated gazetteer (`data/manual/toponimos.geojson`) using exact and fuzzy string comparison. Coordinates — provided as verified field values in WGS 84 / UTM Zone 18S — were converted to decimal degrees.
 
 ### 4. Entity Extraction
 Individuals mentioned in the records were extracted and associated with specific roles (e.g., baptized child, parent, witness).
@@ -315,8 +322,8 @@ Data processing was implemented in *Python (version 3.8 or later)* using the fol
 - pandas  
 - numpy  
 - pathlib  
-- spacy  
-- georesolver  
+- rapidfuzz  
+- pyproj  
 
 The repository includes Jupyter notebooks and Python modules that document the workflow used to transform raw transcriptions into the cleaned dataset.
 
@@ -331,7 +338,7 @@ These scripts implement procedures for:
 
 # Citation
 
-Melo Flórez, J. A., Ramos, G., de la Puente Luna, J. C., Cobo Betancourt, J., Ancho, B., Xue, D., Ayinaparthi, S., Roque, G., & Gonzales Rojas, E. (2026). The People of Aucará (1760–1921): A Dataset of Individuals Reconstructed from Parish Records of the Sondondo Valley, Peru (Version 1.0.0) [Data set]. https://doi.org/10.5281/zenodo.18969893
+Melo Flórez, J. A., Ramos, G., de la Puente Luna, J. C., Cobo Betancourt, J., Ancho, B., Xue, D., Ayinaparthi, S., Roque Ortega, G., Gonzales Rojas, E., Quillca, J., Velarde Loayza, J., Asto Campos, C., & UCSB - Archives, Memory & Preservation Lab. (2026). The People of Aucará (1760–1921): A Dataset of Individuals Reconstructed from Parish Records of the Sondondo Valley, Peru (v1.0.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.18969892
 ---
 
 # License
