@@ -221,13 +221,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="506f11f3" class="cell" data-execution_count="1">
+<div id="506f11f3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a49a1cc1" class="cell" data-execution_count="10">
+<div id="a49a1cc1" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>personas <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/personas.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>personas.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/37/816y3tg93hn7pnnrd0c33c_00000gn/T/ipykernel_71360/641431091.py:1: DtypeWarning: Columns (13,14,15) have mixed types. Specify dtype option on import or set low_memory=False.
+  personas = pd.read_csv("../data/clean/personas.csv")</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -242,6 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">birth_place</th>
 <th data-quarto-table-cell-role="th">birth_date</th>
 <th data-quarto-table-cell-role="th">legitimacy_status</th>
+<th data-quarto-table-cell-role="th">birth_date_precision</th>
 <th data-quarto-table-cell-role="th">lastname</th>
 <th data-quarto-table-cell-role="th">persona_idno</th>
 <th data-quarto-table-cell-role="th">social_condition</th>
@@ -249,6 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">resident_in</th>
 <th data-quarto-table-cell-role="th">death_place</th>
 <th data-quarto-table-cell-role="th">death_date</th>
+<th data-quarto-table-cell-role="th">death_date_precision</th>
 <th data-quarto-table-cell-role="th">gender</th>
 </tr>
 </thead>
@@ -262,8 +268,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>NaN</td>
 <td>1790-08-04</td>
 <td>legitimo</td>
+<td>exact</td>
 <td>ayquipa</td>
 <td>persona-1</td>
+<td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
@@ -280,8 +288,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
+<td>NaN</td>
 <td>ayquipa</td>
 <td>persona-2</td>
+<td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
@@ -298,8 +308,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
+<td>NaN</td>
 <td>quispe</td>
 <td>persona-3</td>
+<td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
@@ -316,8 +328,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
+<td>NaN</td>
 <td>guamani</td>
 <td>persona-4</td>
+<td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
@@ -334,8 +348,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>NaN</td>
 <td>1790-08-04</td>
 <td>legitimo</td>
+<td>exact</td>
 <td>lulia</td>
 <td>persona-5</td>
+<td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
 <td>NaN</td>
@@ -349,21 +365,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="0e4a6fe6" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="0e4a6fe6" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f2ad88c7" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bar chart of birth years</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>personas[<span class="st">'birth_year'</span>] <span class="op">=</span> pd.to_datetime(personas[<span class="st">'birth_date'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>).dt.year.astype(<span class="st">'Int64'</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>counts_births <span class="op">=</span> personas[<span class="st">'birth_year'</span>].value_counts().sort_index()</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>ax.bar(counts_births.index, counts_births.values)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Birth Year'</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Count'</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of Birth Years'</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="f2ad88c7" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bar chart of birth years</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>personas[<span class="st">'birth_year'</span>] <span class="op">=</span> pd.to_datetime(personas[<span class="st">'birth_date'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>).dt.year.astype(<span class="st">'Int64'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>counts_births <span class="op">=</span> personas[<span class="st">'birth_year'</span>].value_counts().sort_index()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ax.bar(counts_births.index, counts_births.values)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Birth Year'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Count'</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of Birth Years'</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -372,16 +388,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="f800b0e3" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>personas[<span class="st">'death_year'</span>] <span class="op">=</span> pd.to_datetime(personas[<span class="st">'death_date'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>).dt.year.astype(<span class="st">'Int64'</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>counts_deaths <span class="op">=</span> personas[<span class="st">'death_year'</span>].value_counts().sort_index()</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ax.bar(counts_deaths.index, counts_deaths.values)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Death Year'</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Count'</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of Death Years'</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="f800b0e3" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>personas[<span class="st">'death_year'</span>] <span class="op">=</span> pd.to_datetime(personas[<span class="st">'death_date'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>).dt.year.astype(<span class="st">'Int64'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>counts_deaths <span class="op">=</span> personas[<span class="st">'death_year'</span>].value_counts().sort_index()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ax.bar(counts_deaths.index, counts_deaths.values)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Death Year'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Count'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of Death Years'</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -390,33 +406,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="915a31d2" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>all_years <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(counts_births.index) <span class="op">|</span> <span class="bu">set</span>(counts_deaths.index))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">len</span>(all_years))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="fl">0.4</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>births_vals <span class="op">=</span> [counts_births.get(y, <span class="dv">0</span>) <span class="cf">for</span> y <span class="kw">in</span> all_years]</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>deaths_vals <span class="op">=</span> [counts_deaths.get(y, <span class="dv">0</span>) <span class="cf">for</span> y <span class="kw">in</span> all_years]</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>ax.bar(x <span class="op">-</span> width<span class="op">/</span><span class="dv">2</span>, births_vals, width<span class="op">=</span>width, label<span class="op">=</span><span class="st">'Births'</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>ax.bar(x <span class="op">+</span> width<span class="op">/</span><span class="dv">2</span>, deaths_vals, width<span class="op">=</span>width, label<span class="op">=</span><span class="st">'Deaths'</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Show only every 10th year label to avoid clutter</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>step <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>tick_positions <span class="op">=</span> x[::step]</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>tick_labels <span class="op">=</span> [<span class="bu">str</span>(all_years[i]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(all_years), step)]</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(tick_positions)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(tick_labels, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Year'</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Count'</span>)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of Birth and Death Years'</span>)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="915a31d2" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>all_years <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(counts_births.index) <span class="op">|</span> <span class="bu">set</span>(counts_deaths.index))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="bu">len</span>(all_years))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="fl">0.4</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>births_vals <span class="op">=</span> [counts_births.get(y, <span class="dv">0</span>) <span class="cf">for</span> y <span class="kw">in</span> all_years]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>deaths_vals <span class="op">=</span> [counts_deaths.get(y, <span class="dv">0</span>) <span class="cf">for</span> y <span class="kw">in</span> all_years]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ax.bar(x <span class="op">-</span> width<span class="op">/</span><span class="dv">2</span>, births_vals, width<span class="op">=</span>width, label<span class="op">=</span><span class="st">'Births'</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>ax.bar(x <span class="op">+</span> width<span class="op">/</span><span class="dv">2</span>, deaths_vals, width<span class="op">=</span>width, label<span class="op">=</span><span class="st">'Deaths'</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Show only every 10th year label to avoid clutter</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>step <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>tick_positions <span class="op">=</span> x[::step]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>tick_labels <span class="op">=</span> [<span class="bu">str</span>(all_years[i]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(all_years), step)]</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(tick_positions)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels(tick_labels, rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Year'</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Count'</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Distribution of Birth and Death Years'</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -424,6 +440,1514 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
+</div>
+<div id="9eaf22db" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>personas[<span class="st">'death_date_precision'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>death_date_precision
+exact           2092
+estimated         22
+day_adjusted       3
+month              1
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="6de448b0" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bautismos <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/bautismos_clean.csv"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>matrimonios <span class="op">=</span> pd.read_csv(<span class="st">"../data/clean/matrimonios_clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c874d0b4" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>libres <span class="op">=</span> personas.loc[personas[<span class="st">'social_condition'</span>] <span class="op">==</span> <span class="st">'libre'</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>bautismos[<span class="st">'original_identifier'</span>] <span class="op">=</span> bautismos[<span class="st">'file'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">"-"</span>.join(x.split()))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>bautismos[<span class="st">'original_identifier'</span>] <span class="op">=</span> bautismos[<span class="st">'original_identifier'</span>] <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> bautismos[<span class="st">'identifier'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="33e76d06" class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>libres_bap <span class="op">=</span> bautismos.loc[bautismos[<span class="st">'original_identifier'</span>].isin(libres[<span class="st">'original_identifier'</span>])]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>libres_bap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">file</th>
+<th data-quarto-table-cell-role="th">identifier</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">event_date</th>
+<th data-quarto-table-cell-role="th">baptized_name</th>
+<th data-quarto-table-cell-role="th">baptized_birth_place</th>
+<th data-quarto-table-cell-role="th">baptized_birth_date</th>
+<th data-quarto-table-cell-role="th">baptized_legitimacy_status</th>
+<th data-quarto-table-cell-role="th">father_name</th>
+<th data-quarto-table-cell-role="th">father_lastname</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">godmother_social_condition</th>
+<th data-quarto-table-cell-role="th">event_place</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_3</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_4</th>
+<th data-quarto-table-cell-role="th">event_date_precision</th>
+<th data-quarto-table-cell-role="th">baptized_birth_date_precision</th>
+<th data-quarto-table-cell-role="th">baptized_lastname</th>
+<th data-quarto-table-cell-role="th">original_identifier</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">34</td>
+<td>APAucará LB L001</td>
+<td>B035</td>
+<td>Bautizo</td>
+<td>1791-03-07</td>
+<td>ramon</td>
+<td>NaN</td>
+<td>1790-08-31</td>
+<td>hijo legitimo</td>
+<td>eusebio</td>
+<td>yanquihuarcaya</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>yanquihuarcaya</td>
+<td>APAucará-LB-L001_B035</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">55</td>
+<td>APAucará LB L001</td>
+<td>B056</td>
+<td>Bautizo</td>
+<td>1791-06-02</td>
+<td>manuel</td>
+<td>NaN</td>
+<td>1791-05-30</td>
+<td>hijo legitimo</td>
+<td>manuel</td>
+<td>marcca cuzco</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>marcca cuzco</td>
+<td>APAucará-LB-L001_B056</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">77</td>
+<td>APAucará LB L001</td>
+<td>B078</td>
+<td>Bautizo</td>
+<td>1791-07-24</td>
+<td>buena bentura</td>
+<td>NaN</td>
+<td>1791-07-14</td>
+<td>hijo legitimo</td>
+<td>andres</td>
+<td>roxas</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>roxas</td>
+<td>APAucará-LB-L001_B078</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">82</td>
+<td>APAucará LB L001</td>
+<td>B083</td>
+<td>Bautizo</td>
+<td>1791-08-31</td>
+<td>bacilio</td>
+<td>NaN</td>
+<td>1791-06-14</td>
+<td>hijo legitimo</td>
+<td>bernardo</td>
+<td>pisarro</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>pisarro</td>
+<td>APAucará-LB-L001_B083</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">85</td>
+<td>APAucará LB L001</td>
+<td>B086</td>
+<td>Bautizo</td>
+<td>1791-09-22</td>
+<td>luis</td>
+<td>NaN</td>
+<td>1791-09-10</td>
+<td>hijo legitimo</td>
+<td>vicente</td>
+<td>aparco</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>aparco</td>
+<td>APAucará-LB-L001_B086</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">92</td>
+<td>APAucará LB L001</td>
+<td>B093</td>
+<td>Bautizo</td>
+<td>1791-10-15</td>
+<td>edguardo</td>
+<td>NaN</td>
+<td>1791-10-13</td>
+<td>hijo natural</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>coyllo</td>
+<td>APAucará-LB-L001_B093</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">95</td>
+<td>APAucará LB L001</td>
+<td>B096</td>
+<td>Bautizo</td>
+<td>1791-10-28</td>
+<td>raphael</td>
+<td>NaN</td>
+<td>1791-10-25</td>
+<td>hijo natural</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>sosa</td>
+<td>APAucará-LB-L001_B096</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">133</td>
+<td>APAucará LB L001</td>
+<td>B134</td>
+<td>Bautizo</td>
+<td>1792-03-12</td>
+<td>feliciana</td>
+<td>NaN</td>
+<td>1792-02-21</td>
+<td>hija legitima</td>
+<td>xavier</td>
+<td>quespi</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Chacralla</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>quespi</td>
+<td>APAucará-LB-L001_B134</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">147</td>
+<td>APAucará LB L001</td>
+<td>B148</td>
+<td>Bautizo</td>
+<td>1792-05-08</td>
+<td>juana</td>
+<td>NaN</td>
+<td>1792-05-06</td>
+<td>hija legitima</td>
+<td>phelipe</td>
+<td>damian</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Ishua</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>damian</td>
+<td>APAucará-LB-L001_B148</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">223</td>
+<td>APAucará LB L001</td>
+<td>B224</td>
+<td>Bautizo</td>
+<td>1793-02-13</td>
+<td>faustino</td>
+<td>NaN</td>
+<td>1793-02-12</td>
+<td>hijo legitimo</td>
+<td>rudecindo</td>
+<td>ramires</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>ramires</td>
+<td>APAucará-LB-L001_B224</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">238</td>
+<td>APAucará LB L001</td>
+<td>B239</td>
+<td>Bautizo</td>
+<td>1793-05-25</td>
+<td>manuel</td>
+<td>NaN</td>
+<td>1793-05-13</td>
+<td>hijo legitimo</td>
+<td>ylario</td>
+<td>ramires</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>ramires</td>
+<td>APAucará-LB-L001_B239</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">242</td>
+<td>APAucará LB L001</td>
+<td>B243</td>
+<td>Bautizo</td>
+<td>1793-06-26</td>
+<td>bonifacio</td>
+<td>NaN</td>
+<td>1793-05-24</td>
+<td>hijo legitimo</td>
+<td>manuel</td>
+<td>albares</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Chacralla</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>albares</td>
+<td>APAucará-LB-L001_B243</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">542</td>
+<td>APAucará LB L001</td>
+<td>B543</td>
+<td>Bautizo</td>
+<td>1796-04-01</td>
+<td>cesareo</td>
+<td>NaN</td>
+<td>1796-02-26</td>
+<td>hijo legitimo</td>
+<td>joseph</td>
+<td>ortis</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>ortis</td>
+<td>APAucará-LB-L001_B543</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">616</td>
+<td>APAucará LB L001</td>
+<td>B617</td>
+<td>Bautizo</td>
+<td>1797-01-15</td>
+<td>manuel</td>
+<td>NaN</td>
+<td>1797-01-10</td>
+<td>hijo legitimo</td>
+<td>luis</td>
+<td>cuevas</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>cuevas</td>
+<td>APAucará-LB-L001_B617</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">657</td>
+<td>APAucará LB L001</td>
+<td>B658</td>
+<td>Bautizo</td>
+<td>1797-05-18</td>
+<td>alexandro</td>
+<td>NaN</td>
+<td>1797-03-15</td>
+<td>hijo natural</td>
+<td>pasqual</td>
+<td>peres</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>peres</td>
+<td>APAucará-LB-L001_B658</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">780</td>
+<td>APAucará LB L001</td>
+<td>B781</td>
+<td>Bautizo</td>
+<td>1799-01-04</td>
+<td>clemente</td>
+<td>NaN</td>
+<td>1799-01-02</td>
+<td>hijo legitimo</td>
+<td>manuel</td>
+<td>rojas</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>rojas</td>
+<td>APAucará-LB-L001_B781</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">798</td>
+<td>APAucará LB L001</td>
+<td>B799</td>
+<td>Bautizo</td>
+<td>1799-02-20</td>
+<td>clemente</td>
+<td>NaN</td>
+<td>1798-11-13</td>
+<td>hijo legitimo</td>
+<td>manuel</td>
+<td>roxas</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>roxas</td>
+<td>APAucará-LB-L001_B799</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">800</td>
+<td>APAucará LB L001</td>
+<td>B801</td>
+<td>Bautizo</td>
+<td>1799-08-08</td>
+<td>dominga</td>
+<td>NaN</td>
+<td>1799-08-04</td>
+<td>hija legitima</td>
+<td>romualdo</td>
+<td>osorio</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>osorio</td>
+<td>APAucará-LB-L001_B801</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">802</td>
+<td>APAucará LB L001</td>
+<td>B803</td>
+<td>Bautizo</td>
+<td>1799-06-28</td>
+<td>marcos</td>
+<td>NaN</td>
+<td>1799-06-20</td>
+<td>hijo legitimo</td>
+<td>dionicio</td>
+<td>chabes</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>chabes</td>
+<td>APAucará-LB-L001_B803</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">817</td>
+<td>APAucará LB L001</td>
+<td>B818</td>
+<td>Bautizo</td>
+<td>1799-08-30</td>
+<td>antonio</td>
+<td>NaN</td>
+<td>1799-08-17</td>
+<td>hijo legitimo</td>
+<td>benito</td>
+<td>tipi</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>exact</td>
+<td>tipi</td>
+<td>APAucará-LB-L001_B818</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1463</td>
+<td>APAucará LB L001</td>
+<td>B1464</td>
+<td>Bautizo</td>
+<td>1811-04-02</td>
+<td>francisca simeona</td>
+<td>NaN</td>
+<td>1811-03-25</td>
+<td>Tributaria de Aucara. Hija legitima</td>
+<td>damian</td>
+<td>crus</td>
+<td>...</td>
+<td>"libre"</td>
+<td>Chacralla, pueblo</td>
+<td>Aucara</td>
+<td>Chacralla</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>inferred_from_age</td>
+<td>crus</td>
+<td>APAucará-LB-L001_B1464</td>
+</tr>
+</tbody>
+</table>
+
+<p>21 rows × 30 columns</p>
+</div>
+</div>
+</div>
+<div id="619478b8" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>matrimonios[<span class="st">'original_identifier'</span>] <span class="op">=</span> matrimonios[<span class="st">'file'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">"-"</span>.join(x.split()))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>matrimonios[<span class="st">'original_identifier'</span>] <span class="op">=</span> matrimonios[<span class="st">'original_identifier'</span>] <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> matrimonios[<span class="st">'identifier'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f54d7678" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>libres_mat <span class="op">=</span> matrimonios.loc[matrimonios[<span class="st">'original_identifier'</span>].isin(libres[<span class="st">'original_identifier'</span>])]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>libres_mat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">file</th>
+<th data-quarto-table-cell-role="th">identifier</th>
+<th data-quarto-table-cell-role="th">event_type</th>
+<th data-quarto-table-cell-role="th">event_date</th>
+<th data-quarto-table-cell-role="th">husband_name</th>
+<th data-quarto-table-cell-role="th">husband_lastname</th>
+<th data-quarto-table-cell-role="th">husband_social_condition</th>
+<th data-quarto-table-cell-role="th">husband_marital_status</th>
+<th data-quarto-table-cell-role="th">husband_birth_date</th>
+<th data-quarto-table-cell-role="th">husband_birth_place</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_1</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_2</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_3</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_4</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_5</th>
+<th data-quarto-table-cell-role="th">event_geographic_descriptor_6</th>
+<th data-quarto-table-cell-role="th">event_date_precision</th>
+<th data-quarto-table-cell-role="th">husband_birth_date_precision</th>
+<th data-quarto-table-cell-role="th">wife_birth_date_precision</th>
+<th data-quarto-table-cell-role="th">original_identifier</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">466</td>
+<td>APAucará LM L001</td>
+<td>M467</td>
+<td>Matrimonio</td>
+<td>1761-02-04</td>
+<td>alexo</td>
+<td>nolasco</td>
+<td>NaN</td>
+<td>soltero</td>
+<td>NaN</td>
+<td>Ishua</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Ishua</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>APAucará-LM-L001_M467</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">470</td>
+<td>APAucará LM L001</td>
+<td>M471</td>
+<td>Matrimonio</td>
+<td>1761-05-14</td>
+<td>calisto</td>
+<td>pisarro</td>
+<td>libres</td>
+<td>soltero</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>...</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>APAucará-LM-L001_M471</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">475</td>
+<td>APAucará LM L001</td>
+<td>M476</td>
+<td>Matrimonio</td>
+<td>1761-10-10</td>
+<td>joseph</td>
+<td>espinosa</td>
+<td>libres</td>
+<td>soltero</td>
+<td>NaN</td>
+<td>Pampamarca</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>APAucará-LM-L001_M476</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">496</td>
+<td>APAucará LM L001</td>
+<td>M497</td>
+<td>Matrimonio</td>
+<td>1763-11-14</td>
+<td>antonio</td>
+<td>ramos</td>
+<td>originarios y tributarios del dicho pueblo de ...</td>
+<td>viudo</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Ishua</td>
+<td>San Jeronimo</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>exact</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>APAucará-LM-L001_M497</td>
+</tr>
+</tbody>
+</table>
+
+<p>4 rows × 59 columns</p>
+</div>
+</div>
+</div>
+<div id="4afebd68" class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>libres_bap.to_csv(<span class="st">"../data/stats/libres_bautismos.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>libres_mat.to_csv(<span class="st">"../data/stats/libres_matrimonios.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="3ccb1b9c" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>matrimonios_raw <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/matrimonios.csv"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>matrimonios_raw.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Secuencia</th>
+<th data-quarto-table-cell-role="th">Unidad Documental Compuesta (a la que pertenece)</th>
+<th data-quarto-table-cell-role="th">Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)</th>
+<th data-quarto-table-cell-role="th">Título (incluir un título breve para cada documento)</th>
+<th data-quarto-table-cell-role="th">Nivel de descripción</th>
+<th data-quarto-table-cell-role="th">Folio inicial del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Folio final del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Imagen inicial (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Imagen final (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Tipo de evento</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Lugar de casamiento</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 1</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 2</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 3</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 4</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 5</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 6</th>
+<th data-quarto-table-cell-role="th">Notas adicionales del documento</th>
+<th data-quarto-table-cell-role="th">Caracterísitcas físicas (Estado de Convervación de los materiales fisicos)</th>
+<th data-quarto-table-cell-role="th">Historia de revisión (de los materiales digitalizados)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>APAucará LM L001</td>
+<td>M001</td>
+<td>Aucara. Don José Roca con Doña Juana Rogrigues...</td>
+<td>Unidad Documental Simple</td>
+<td>1r</td>
+<td>1r</td>
+<td>DSC_0666</td>
+<td>DSC_0666</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara, santa iglesia</td>
+<td>Aucara</td>
+<td>Huamanga</td>
+<td>Coracora</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Los tres testigos tienen la condición de don.</td>
+<td>Bueno</td>
+<td>Registrado por Grecia Roque en 2023</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>APAucará LM L001</td>
+<td>M002</td>
+<td>Aucara. Esteban Castillo con Ambrocia Tasqui.</td>
+<td>Unidad Documental Simple</td>
+<td>1r</td>
+<td>1r</td>
+<td>DSC_0666</td>
+<td>DSC_0666</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara, santa iglesia</td>
+<td>Aucara</td>
+<td>Colca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular. Presenta algunas manchas de humedad.</td>
+<td>Registrado por Grecia Roque en 2023</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>APAucará LM L001</td>
+<td>M003</td>
+<td>Alexandro Ramires con Sipriana Coillo. Pampamarca</td>
+<td>Unidad Documental Simple</td>
+<td>1v</td>
+<td>1v</td>
+<td>DSC_0667</td>
+<td>DSC_0667</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara, santa iglesia</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Bueno</td>
+<td>Registrado por Grecia Roque en 2023</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>APAucará LM L001</td>
+<td>M004</td>
+<td>Jose Cuchu con Cacimira Flores de Pampamarca.</td>
+<td>Unidad Documental Simple</td>
+<td>1v</td>
+<td>1v</td>
+<td>DSC_0667</td>
+<td>DSC_0667</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Pampamarca, santa iglesia, anexo</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular. Presenta algunas manchas de humedad.</td>
+<td>Registrado por Grecia Roque en 2023</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>APAucará LM L001</td>
+<td>M005</td>
+<td>Pampama. [Pampamarca]. Domingo Tito con Petron...</td>
+<td>Unidad Documental Simple</td>
+<td>2r</td>
+<td>2r</td>
+<td>DSC_0667</td>
+<td>DSC_0667</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Pampamarca, santa iglesia, anexo</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Bueno</td>
+<td>Registrado por Grecia Roque en 2023</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 66 columns</p>
+</div>
+</div>
+</div>
+<div id="9f24384e" class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>file_str <span class="op">=</span> <span class="st">"Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>identifier_str <span class="op">=</span> <span class="st">"Unidad Documental Compuesta (a la que pertenece)"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>matrimonios_raw[<span class="st">'original_identifier'</span>] <span class="op">=</span> matrimonios_raw[identifier_str].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">"-"</span>.join(x.split())) <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> matrimonios_raw[file_str]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>matrimonios_raw.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="52">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Secuencia</th>
+<th data-quarto-table-cell-role="th">Unidad Documental Compuesta (a la que pertenece)</th>
+<th data-quarto-table-cell-role="th">Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)</th>
+<th data-quarto-table-cell-role="th">Título (incluir un título breve para cada documento)</th>
+<th data-quarto-table-cell-role="th">Nivel de descripción</th>
+<th data-quarto-table-cell-role="th">Folio inicial del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Folio final del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Imagen inicial (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Imagen final (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Tipo de evento</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 1</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 2</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 3</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 4</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 5</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 6</th>
+<th data-quarto-table-cell-role="th">Notas adicionales del documento</th>
+<th data-quarto-table-cell-role="th">Caracterísitcas físicas (Estado de Convervación de los materiales fisicos)</th>
+<th data-quarto-table-cell-role="th">Historia de revisión (de los materiales digitalizados)</th>
+<th data-quarto-table-cell-role="th">original_identifier</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>APAucará LM L001</td>
+<td>M001</td>
+<td>Aucara. Don José Roca con Doña Juana Rogrigues...</td>
+<td>Unidad Documental Simple</td>
+<td>1r</td>
+<td>1r</td>
+<td>DSC_0666</td>
+<td>DSC_0666</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Huamanga</td>
+<td>Coracora</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Los tres testigos tienen la condición de don.</td>
+<td>Bueno</td>
+<td>Registrado por Grecia Roque en 2023</td>
+<td>APAucará-LM-L001_M001</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>APAucará LM L001</td>
+<td>M002</td>
+<td>Aucara. Esteban Castillo con Ambrocia Tasqui.</td>
+<td>Unidad Documental Simple</td>
+<td>1r</td>
+<td>1r</td>
+<td>DSC_0666</td>
+<td>DSC_0666</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Colca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular. Presenta algunas manchas de humedad.</td>
+<td>Registrado por Grecia Roque en 2023</td>
+<td>APAucará-LM-L001_M002</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>APAucará LM L001</td>
+<td>M003</td>
+<td>Alexandro Ramires con Sipriana Coillo. Pampamarca</td>
+<td>Unidad Documental Simple</td>
+<td>1v</td>
+<td>1v</td>
+<td>DSC_0667</td>
+<td>DSC_0667</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Bueno</td>
+<td>Registrado por Grecia Roque en 2023</td>
+<td>APAucará-LM-L001_M003</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>APAucará LM L001</td>
+<td>M004</td>
+<td>Jose Cuchu con Cacimira Flores de Pampamarca.</td>
+<td>Unidad Documental Simple</td>
+<td>1v</td>
+<td>1v</td>
+<td>DSC_0667</td>
+<td>DSC_0667</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular. Presenta algunas manchas de humedad.</td>
+<td>Registrado por Grecia Roque en 2023</td>
+<td>APAucará-LM-L001_M004</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>APAucará LM L001</td>
+<td>M005</td>
+<td>Pampama. [Pampamarca]. Domingo Tito con Petron...</td>
+<td>Unidad Documental Simple</td>
+<td>2r</td>
+<td>2r</td>
+<td>DSC_0667</td>
+<td>DSC_0667</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Bueno</td>
+<td>Registrado por Grecia Roque en 2023</td>
+<td>APAucará-LM-L001_M005</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 67 columns</p>
+</div>
+</div>
+</div>
+<div id="074e12ad" class="cell" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>libres_mat_raw <span class="op">=</span> matrimonios_raw.loc[matrimonios_raw[<span class="st">'original_identifier'</span>].isin(libres[<span class="st">'original_identifier'</span>])]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>libres_mat_raw.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="53">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Secuencia</th>
+<th data-quarto-table-cell-role="th">Unidad Documental Compuesta (a la que pertenece)</th>
+<th data-quarto-table-cell-role="th">Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)</th>
+<th data-quarto-table-cell-role="th">Título (incluir un título breve para cada documento)</th>
+<th data-quarto-table-cell-role="th">Nivel de descripción</th>
+<th data-quarto-table-cell-role="th">Folio inicial del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Folio final del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Imagen inicial (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Imagen final (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Tipo de evento</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 1</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 2</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 3</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 4</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 5</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 6</th>
+<th data-quarto-table-cell-role="th">Notas adicionales del documento</th>
+<th data-quarto-table-cell-role="th">Caracterísitcas físicas (Estado de Convervación de los materiales fisicos)</th>
+<th data-quarto-table-cell-role="th">Historia de revisión (de los materiales digitalizados)</th>
+<th data-quarto-table-cell-role="th">original_identifier</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">466</td>
+<td>467</td>
+<td>APAucará LM L001</td>
+<td>M467</td>
+<td>Alexo Nolasco con Ysidora Guamani libre</td>
+<td>Unidad Documental Simple</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>DSC_0760</td>
+<td>DSC_0760</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Ishua</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Cada contrayente tiene dos testigos, "fueron t...</td>
+<td>Regular</td>
+<td>Registrado por Grecia Roque en 2023</td>
+<td>APAucará-LM-L001_M467</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">470</td>
+<td>471</td>
+<td>APAucará LM L001</td>
+<td>M471</td>
+<td>Calisto Pisarro con Fransisca Tixeros livres</td>
+<td>Unidad Documental Simple</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>DSC_0761 y DSC_0762</td>
+<td>DSC_0761 y DSC_0762</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Cada contrayente tiene dos testigos, "fueron t...</td>
+<td>Regular. Hay manchas de humedad.</td>
+<td>Registrado por Grecia Roque en 2023</td>
+<td>APAucará-LM-L001_M471</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">475</td>
+<td>476</td>
+<td>APAucará LM L001</td>
+<td>M476</td>
+<td>Joseph Espinosa con Maria Coillo libres</td>
+<td>Unidad Documental Simple</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>DSC_0763</td>
+<td>DSC_0763</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Cada contrayente tiene dos testigos, "fueron t...</td>
+<td>Regular. Hay manchas de humedad.</td>
+<td>Registrado por Grecia Roque en 2023</td>
+<td>APAucará-LM-L001_M476</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">496</td>
+<td>497</td>
+<td>APAucará LM L001</td>
+<td>M497</td>
+<td>Antonio Ramos con Petrona Supanta</td>
+<td>Unidad Documental Simple</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>DSC_0771</td>
+<td>DSC_0771</td>
+<td>Matrimonio</td>
+<td>...</td>
+<td>Aucara</td>
+<td>Ishua</td>
+<td>San Jeronimo</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Este registro dice que todos son "originarios ...</td>
+<td>Regular. Hay manchas de humedad.</td>
+<td>Registrado por Grecia Roque en 2023</td>
+<td>APAucará-LM-L001_M497</td>
+</tr>
+</tbody>
+</table>
+
+<p>4 rows × 67 columns</p>
+</div>
+</div>
+</div>
+<div id="8cb632c7" class="cell" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>libres_mat_raw.to_csv(<span class="st">"../data/stats/libres_matrimonios_raw.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="042e0e53" class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>bautismos_raw <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/bautismos.csv"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>bautismos_raw.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="55">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Secuencia</th>
+<th data-quarto-table-cell-role="th">Unidad Documental Compuesta (a la que pertenece)</th>
+<th data-quarto-table-cell-role="th">Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)</th>
+<th data-quarto-table-cell-role="th">Título (incluir un título breve para cada documento)</th>
+<th data-quarto-table-cell-role="th">Folio inicial del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Folio final del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Imagen inicial (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Imagen final (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Tipo de evento</th>
+<th data-quarto-table-cell-role="th">Fecha aaaa-mm-dd</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Condición de la madrina</th>
+<th data-quarto-table-cell-role="th">Lugar de bautizo</th>
+<th data-quarto-table-cell-role="th">Notas adicionales del documento</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 1</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 2</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 3</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">Características físicas (Estado de conservación de los materiales físicos)</th>
+<th data-quarto-table-cell-role="th">Historia de revisión (de los materiales digitalizados)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.0</td>
+<td>APAucará LB L001</td>
+<td>B001</td>
+<td>Bautizo. Domingo. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-04</td>
+<td>...</td>
+<td>NaN</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2.0</td>
+<td>APAucará LB L001</td>
+<td>B002</td>
+<td>Bautizo. Dominga. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-06</td>
+<td>...</td>
+<td>NaN</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3.0</td>
+<td>APAucará LB L001</td>
+<td>B003</td>
+<td>Bautizo. Bartola. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-07</td>
+<td>...</td>
+<td>NaN</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4.0</td>
+<td>APAucará LB L001</td>
+<td>B004</td>
+<td>Bautizo. Francisca</td>
+<td>3v</td>
+<td>3v</td>
+<td>IMG_7000b</td>
+<td>IMG_7000b</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>...</td>
+<td>NaN</td>
+<td>Aucara, iglesia</td>
+<td>Abreviatura poco visible en el margen</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5.0</td>
+<td>APAucará LB L001</td>
+<td>B005</td>
+<td>Bautizo. Pedro</td>
+<td>3v</td>
+<td>3v</td>
+<td>IMG_7000b</td>
+<td>IMG_7000b</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>...</td>
+<td>NaN</td>
+<td>Aucara, iglesia</td>
+<td>Margen roto y manchado de tinta</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 36 columns</p>
+</div>
+</div>
+</div>
+<div id="2b54a76a" class="cell" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bautismos_raw[<span class="st">'original_identifier'</span>] <span class="op">=</span> bautismos_raw[identifier_str].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">"-"</span>.join(x.split())) <span class="op">+</span> <span class="st">"_"</span> <span class="op">+</span> bautismos_raw[file_str]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>bautismos_raw.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="56">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Secuencia</th>
+<th data-quarto-table-cell-role="th">Unidad Documental Compuesta (a la que pertenece)</th>
+<th data-quarto-table-cell-role="th">Identificador (es recomendable seguir una secuencia numeral como la mostrada en los ejemplos)</th>
+<th data-quarto-table-cell-role="th">Título (incluir un título breve para cada documento)</th>
+<th data-quarto-table-cell-role="th">Folio inicial del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Folio final del documento (convertir como se muestra abajo)</th>
+<th data-quarto-table-cell-role="th">Imagen inicial (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Imagen final (estos valores serán añadidos cuando comienze el proceso de revisión de imágenes)</th>
+<th data-quarto-table-cell-role="th">Tipo de evento</th>
+<th data-quarto-table-cell-role="th">Fecha aaaa-mm-dd</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Lugar de bautizo</th>
+<th data-quarto-table-cell-role="th">Notas adicionales del documento</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 1</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 2</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 3</th>
+<th data-quarto-table-cell-role="th">Descriptor Geográfico 4</th>
+<th data-quarto-table-cell-role="th">5</th>
+<th data-quarto-table-cell-role="th">Características físicas (Estado de conservación de los materiales físicos)</th>
+<th data-quarto-table-cell-role="th">Historia de revisión (de los materiales digitalizados)</th>
+<th data-quarto-table-cell-role="th">original_identifier</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.0</td>
+<td>APAucará LB L001</td>
+<td>B001</td>
+<td>Bautizo. Domingo. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-04</td>
+<td>...</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+<td>APAucará-LB-L001_B001</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2.0</td>
+<td>APAucará LB L001</td>
+<td>B002</td>
+<td>Bautizo. Dominga. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-06</td>
+<td>...</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+<td>APAucará-LB-L001_B002</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3.0</td>
+<td>APAucará LB L001</td>
+<td>B003</td>
+<td>Bautizo. Bartola. Tributarios</td>
+<td>3r</td>
+<td>3r</td>
+<td>IMG_7000a</td>
+<td>IMG_7000a</td>
+<td>Bautizo</td>
+<td>1790-10-07</td>
+<td>...</td>
+<td>Pampamarca, iglesia</td>
+<td>NaN</td>
+<td>Aucara</td>
+<td>Pampamarca</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+<td>APAucará-LB-L001_B003</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4.0</td>
+<td>APAucará LB L001</td>
+<td>B004</td>
+<td>Bautizo. Francisca</td>
+<td>3v</td>
+<td>3v</td>
+<td>IMG_7000b</td>
+<td>IMG_7000b</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>...</td>
+<td>Aucara, iglesia</td>
+<td>Abreviatura poco visible en el margen</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+<td>APAucará-LB-L001_B004</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5.0</td>
+<td>APAucará LB L001</td>
+<td>B005</td>
+<td>Bautizo. Pedro</td>
+<td>3v</td>
+<td>3v</td>
+<td>IMG_7000b</td>
+<td>IMG_7000b</td>
+<td>Bautizo</td>
+<td>1790-10-20</td>
+<td>...</td>
+<td>Aucara, iglesia</td>
+<td>Margen roto y manchado de tinta</td>
+<td>Aucara</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Regular</td>
+<td>Registrado por Edwin Gonzales en 2023</td>
+<td>APAucará-LB-L001_B005</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 37 columns</p>
+</div>
+</div>
+</div>
+<div id="86c5ba46" class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>libres_bap_raw <span class="op">=</span> bautismos_raw.loc[bautismos_raw[<span class="st">'original_identifier'</span>].isin(libres[<span class="st">'original_identifier'</span>])]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>libres_bap_raw.to_csv(<span class="st">"../data/stats/libres_bautismos_raw.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

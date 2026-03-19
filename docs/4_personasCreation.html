@@ -329,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>47072</td>
 <td>47072</td>
 <td>46999</td>
-<td>5380</td>
+<td>5514</td>
 <td>8596</td>
 <td>11866</td>
 <td>8596</td>
@@ -337,8 +337,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>47072</td>
 <td>9643</td>
 <td>4275</td>
-<td>924</td>
-<td>1513</td>
+<td>946</td>
+<td>1541</td>
 <td>2114</td>
 <td>2118</td>
 <td>47072</td>
@@ -349,7 +349,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>10179</td>
 <td>14</td>
 <td>4286</td>
-<td>50</td>
+<td>73</td>
 <td>7001</td>
 <td>2</td>
 <td>2</td>
@@ -357,8 +357,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>47072</td>
 <td>7</td>
 <td>3</td>
-<td>18</td>
-<td>7</td>
+<td>24</td>
+<td>12</td>
 <td>1813</td>
 <td>4</td>
 <td>6</td>
@@ -389,7 +389,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>12</td>
 <td>7614</td>
 <td>1556</td>
-<td>1923</td>
+<td>1903</td>
 <td>8</td>
 <td>9104</td>
 <td>7603</td>
@@ -427,7 +427,7 @@ Data columns (total 17 columns):
  1   original_identifier   47072 non-null  object
  2   persona_type          47072 non-null  object
  3   name                  46999 non-null  object
- 4   birth_place           5380 non-null   object
+ 4   birth_place           5514 non-null   object
  5   birth_date            8596 non-null   object
  6   legitimacy_status     11866 non-null  object
  7   birth_date_precision  8596 non-null   object
@@ -435,8 +435,8 @@ Data columns (total 17 columns):
  9   persona_idno          47072 non-null  object
  10  social_condition      9643 non-null   object
  11  marital_status        4275 non-null   object
- 12  resident_in           924 non-null    object
- 13  death_place           1513 non-null   object
+ 12  resident_in           946 non-null    object
+ 13  death_place           1541 non-null   object
  14  death_date            2114 non-null   object
  15  death_date_precision  2118 non-null   object
  16  gender                47072 non-null  object
@@ -681,13 +681,13 @@ Name: count, dtype: int64</code></pre>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing birth places: </span><span class="sc">{</span>percentage_nonbirthplace<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>nonbirthplace[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Percentage of personas with missing birth places: 88.57%</code></pre>
+<pre><code>Percentage of personas with missing birth places: 88.29%</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>persona_type
 mother               7614
 father               7369
-baptized             4531
+baptized             4500
 witness              4249
 godparent            3260
 godmother            3251
@@ -696,9 +696,9 @@ mother_of_wife       1459
 mother_of_husband    1439
 father_of_wife       1438
 father_of_husband    1410
-wife                 1153
-husband              1115
-deceased              392
+wife                 1136
+husband              1097
+deceased              324
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
@@ -709,7 +709,7 @@ Name: count, dtype: int64</code></pre>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with missing death places: </span><span class="sc">{</span>percentage_nodeathplace<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>nodeathplace[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Percentage of personas with missing death places: 96.79%</code></pre>
+<pre><code>Percentage of personas with missing death places: 96.73%</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>persona_type
@@ -726,7 +726,7 @@ mother_of_wife       1459
 mother_of_husband    1439
 father_of_wife       1438
 father_of_husband    1410
-deceased              607
+deceased              579
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
@@ -738,11 +738,11 @@ Name: count, dtype: int64</code></pre>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of personas with both birth and death places present: </span><span class="sc">{</span>percentage_birth_and_death_places<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>birth_and_death_places[<span class="st">'persona_type'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Percentage of personas with both birth and death places present: 2.59%</code></pre>
+<pre><code>Percentage of personas with both birth and death places present: 2.74%</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>persona_type
-deceased    1219
+deceased    1291
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
@@ -846,10 +846,10 @@ Name: count, dtype: int64</code></pre>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>personas.groupby(<span class="st">'persona_type'</span>)[<span class="st">'completeness_score'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>persona_type
-deceased             0.840011
-baptized             0.604973
-husband              0.596294
-wife                 0.591947
+deceased             0.842675
+baptized             0.605261
+husband              0.597155
+wife                 0.592718
 mother_of_husband    0.446552
 mother_of_wife       0.445753
 father_of_husband    0.445140
@@ -893,10 +893,10 @@ Name: completeness_score, dtype: float64</code></pre>
 <span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>personas.groupby(<span class="st">'persona_type'</span>)[<span class="st">'weighted_completeness'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>persona_type
-deceased             0.836769
-baptized             0.549574
-husband              0.536665
-wife                 0.531699
+deceased             0.841297
+baptized             0.550063
+husband              0.537835
+wife                 0.532767
 mother_of_husband    0.379222
 mother_of_wife       0.378410
 father_of_husband    0.375177
